@@ -102,12 +102,18 @@ class WebsiteBuildTests(unittest.TestCase):
                     target = self.output / parsed.path.lstrip("/")
                 self.assertTrue(target.exists(), f"{page.relative_to(self.output)} -> {href}")
 
-    def test_site_shell_requires_no_javascript_or_forms(self):
+    def test_site_shell_allows_only_bounded_analytics_javascript_and_no_forms(self):
+        expected_script = (
+            '<script src="https://collect.merrinworld.uk/beacon.js" '
+            'data-site="nd_oracle" defer></script>'
+        )
         for page in self.html_pages():
-            text = page.read_text(encoding="utf-8").lower()
-            self.assertNotIn("<script", text)
-            self.assertNotIn("<form", text)
-            self.assertNotIn("style=", text)
+            text = page.read_text(encoding="utf-8")
+            lower = text.lower()
+            self.assertEqual(text.count(expected_script), 1)
+            self.assertEqual(lower.count("<script"), 1)
+            self.assertNotIn("<form", lower)
+            self.assertNotIn("style=", lower)
 
     def test_accessibility_basics_are_present_on_every_page(self):
         for page in self.html_pages():
