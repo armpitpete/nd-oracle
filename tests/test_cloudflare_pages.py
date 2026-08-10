@@ -19,13 +19,13 @@ class CloudflarePagesHardeningTests(unittest.TestCase):
         generated = (self.output / "_headers").read_bytes()
         self.assertEqual(generated, source)
 
-    def test_security_policy_is_restrictive_for_current_static_site(self):
+    def test_security_policy_is_restrictive_for_static_site_with_bounded_analytics(self):
         headers = (self.output / "_headers").read_text(encoding="utf-8")
         required = [
             "default-src 'none'",
             "style-src 'self'",
-            "script-src 'none'",
-            "connect-src 'none'",
+            "script-src https://collect.merrinworld.uk",
+            "connect-src https://collect.merrinworld.uk",
             "object-src 'none'",
             "base-uri 'none'",
             "form-action 'none'",
@@ -43,13 +43,33 @@ class CloudflarePagesHardeningTests(unittest.TestCase):
             self.assertIn(value, headers)
         self.assertNotIn("'unsafe-inline'", headers)
         self.assertNotIn("'unsafe-eval'", headers)
+        self.assertNotIn("script-src 'self'", headers)
+        self.assertNotIn("connect-src 'self'", headers)
 
-    def test_generated_html_matches_javascript_free_form_free_policy(self):
+    def test_generated_html_has_only_optional_analytics_javascript_and_no_forms(self):
+        expected_script = (
+            '<script src="https://collect.merrinworld.uk/beacon.js" '
+            'data-site="nd_oracle" defer></script>'
+        )
         for page in sorted(self.output.rglob("*.html")):
-            text = page.read_text(encoding="utf-8").lower()
-            self.assertNotIn("<script", text)
-            self.assertNotIn("<form", text)
-            self.assertNotIn("style=", text)
+            text = page.read_text(encoding="utf-8")
+            lower = text.lower()
+            self.assertEqual(text.count(expected_script), 1)
+            self.assertEqual(lower.count("<script"), 1)
+            self.assertNotIn("<form", lower)
+            self.assertNotIn("style=", lower)
+
+    def test_privacy_page_discloses_visitor_estimation_boundary(self):
+        privacy = (self.output / "privacy" / "index.html").read_text(encoding="utf-8")
+        required = [
+            "random site-local browser token",
+            "no IP address",
+            "raw visitor token",
+            "cross-site visitor identity",
+            "fully readable if the analytics script is blocked",
+        ]
+        for value in required:
+            self.assertIn(value, privacy)
 
     def test_release_contract_requires_exact_commit_owner_gate_and_pinned_cli(self):
         notes = (build_site.SITE_DIR / "README.md").read_text(encoding="utf-8")
