@@ -30,8 +30,12 @@ class CloudflarePagesHardeningTests(unittest.TestCase):
             "base-uri 'none'",
             "form-action 'none'",
             "frame-ancestors 'none'",
+            "Strict-Transport-Security: max-age=31536000",
+            "Cross-Origin-Opener-Policy: same-origin",
+            "Cross-Origin-Resource-Policy: same-origin",
             "X-Frame-Options: DENY",
             "X-Content-Type-Options: nosniff",
+            "X-Permitted-Cross-Domain-Policies: none",
             "Referrer-Policy: no-referrer",
             "Permissions-Policy:",
         ]
@@ -41,8 +45,7 @@ class CloudflarePagesHardeningTests(unittest.TestCase):
         self.assertNotIn("'unsafe-eval'", headers)
 
     def test_generated_html_matches_javascript_free_form_free_policy(self):
-        pages = [self.output / "index.html", *sorted((self.output / "concepts").glob("*.html"))]
-        for page in pages:
+        for page in sorted(self.output.rglob("*.html")):
             text = page.read_text(encoding="utf-8").lower()
             self.assertNotIn("<script", text)
             self.assertNotIn("<form", text)

@@ -1,8 +1,26 @@
-# ND Oracle website candidate
+# The Neurodiverse Oracle — Site Shell v0.1
 
-This directory contains presentation assets for the first reading-first ND Oracle website candidate.
+This directory contains the minimal public-site foundation for The Neurodiverse Oracle.
 
-The website is generated from the authoritative knowledge objects in `objects/concepts/`; it does not maintain a second copy of claim text, sources, uncertainties, or perspectives.
+The shell is deliberately plain: semantic HTML, system fonts, restrained colours, visible keyboard focus and no required JavaScript. Its purpose is to make future tools, games, resources, community contribution routes and Oracle integration easy to add without rebuilding the site structure.
+
+The generated Understand pages continue to come from the authoritative knowledge objects in `objects/concepts/`. The website does not maintain a second copy of claim text, sources, uncertainties or perspectives.
+
+## Structural routes
+
+The build reserves these durable top-level routes:
+
+- `/understand/`
+- `/tools/`
+- `/games/`
+- `/resources/`
+- `/community/`
+- `/oracle/`
+- `/about/`
+- `/accessibility/`
+- `/privacy/`
+
+Tools, games, community features and the Oracle are inactive placeholders in v0.1. Reserving their routes now does not authorise their implementation or weaken their later privacy, security, evidence or governance gates.
 
 ## Build
 
@@ -12,9 +30,25 @@ python scripts/build_site.py
 
 The generated site is written to `dist/` and is intentionally not committed.
 
+## Security defaults
+
+The current shell is static and deliberately narrow:
+
+- no JavaScript;
+- no forms;
+- no accounts;
+- no analytics or advertising trackers;
+- no personal-data collection;
+- no Pages Functions or other server-side runtime;
+- restrictive Content Security Policy;
+- anti-framing, MIME-sniffing, referrer, permissions and cross-origin headers;
+- HSTS emitted with the static deployment headers.
+
+The default policy should remain restrictive. When a future game or tool genuinely needs JavaScript or network access, relax policy only for the smallest necessary route and origin rather than weakening the global site policy.
+
 ## Cloudflare Pages release contract
 
-The intended hosting target is Cloudflare Pages using Direct Upload of the already-built `dist/` directory. The repository remains authoritative; Cloudflare receives only generated static assets.
+The intended hosting target remains Cloudflare Pages using Direct Upload of the already-built `dist/` directory. The repository is authoritative; Cloudflare receives generated static assets only.
 
 Before any deployment:
 
@@ -41,4 +75,4 @@ Custom-domain attachment and DNS changes are later protected actions and are not
 
 ## Boundary
 
-This is a non-public candidate only. Repository governance treats publication and deployment as protected changes. Building or reviewing this candidate does not authorise Cloudflare Pages project creation, deployment, DNS changes, a public custom domain, analytics, accounts, forms, personal-data collection, or representation as clinical guidance.
+Building or reviewing Site Shell v0.1 does not authorise Cloudflare Pages project creation, deployment, DNS changes, custom-domain attachment, analytics, accounts, forms, community data collection, an Oracle chatbot, AI-generated answers, or representation as clinical guidance.
