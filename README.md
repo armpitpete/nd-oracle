@@ -34,6 +34,7 @@ schema/schema-v0.1.md              Human-readable model and decisions
 site/                              Static public site source
 scripts/validate.py                Schema, governance-route, and graph checks
 docs/SITE_SHELL_v0.1.md            Public shell contract
+docs/ANALYTICS_INTEGRATION_v0.1.md Bounded readership-analytics proposal
 docs/PRODUCTION_STATE_v0.1.md      Accepted production identity and evidence
 GOVERNANCE.md                      Decision rights and protected changes
 CONTRIBUTING.md                    Contribution and provenance rules
@@ -49,7 +50,7 @@ python -m unittest discover -s tests
 
 ## Public shell and future interface work
 
-Site Shell v0.1 is intentionally small, semantic, reading-first, and functional without JavaScript. Search, graph exploration, AI answers, accounts, comments, analytics, and other application features remain separate later lanes and are not implied by the existence of the public shell.
+Site Shell v0.1 remains intentionally small, semantic, reading-first, and fully functional without JavaScript. This branch proposes one bounded exception to the earlier no-analytics state: the optional Merrin Analytics readership beacon described in `docs/ANALYTICS_INTEGRATION_v0.1.md`. Search, graph exploration, AI answers, accounts, comments, and other application features remain separate later lanes.
 
 ## Licensing status
 
