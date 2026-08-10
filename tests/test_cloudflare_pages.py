@@ -51,12 +51,14 @@ class CloudflarePagesHardeningTests(unittest.TestCase):
             self.assertNotIn("<form", text)
             self.assertNotIn("style=", text)
 
-    def test_release_contract_requires_exact_commit_and_owner_gate(self):
+    def test_release_contract_requires_exact_commit_owner_gate_and_pinned_cli(self):
         notes = (build_site.SITE_DIR / "README.md").read_text(encoding="utf-8")
+        self.assertIn("npx --yes wrangler@4.114.0 pages deploy dist", notes)
         self.assertIn("--commit-hash=<EXACT_MAIN_SHA>", notes)
         self.assertIn("--commit-dirty=false", notes)
         self.assertIn("explicit owner authorisation", notes)
         self.assertIn("Custom-domain attachment and DNS changes are later protected actions", notes)
+        self.assertNotIn("\nnpx wrangler pages deploy", notes)
 
 
 if __name__ == "__main__":

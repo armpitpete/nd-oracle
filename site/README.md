@@ -57,12 +57,15 @@ Before any deployment:
 3. run the repository validator and complete test suite;
 4. build `dist/` from that exact commit;
 5. inspect the generated site and security headers;
-6. stop for explicit owner authorisation before creating a Pages project or publishing any deployment.
+6. verify the pinned Wrangler version and deployment flags against current Cloudflare documentation;
+7. stop for explicit owner authorisation before creating a Pages project or publishing any deployment.
+
+The deployment CLI is deliberately version-pinned. Updating the Wrangler version is a release-tooling change and must be reviewed rather than silently inherited from `npx` latest.
 
 After authorisation, the release command should attach the exact Git identity explicitly:
 
 ```sh
-npx wrangler pages deploy dist \
+npx --yes wrangler@4.114.0 pages deploy dist \
   --project-name=nd-oracle \
   --branch=main \
   --commit-hash=<EXACT_MAIN_SHA> \
@@ -72,6 +75,8 @@ npx wrangler pages deploy dist \
 Do not substitute a remembered SHA for `<EXACT_MAIN_SHA>`; resolve and verify it immediately before deployment.
 
 Custom-domain attachment and DNS changes are later protected actions and are not implied by a Pages deployment.
+
+Direct Upload is an intentional release-control choice: Cloudflare does not allow an existing Direct Upload Pages project to be converted to Git integration later. Moving to Git integration would require a new Pages project and a separately reviewed migration.
 
 ## Boundary
 
