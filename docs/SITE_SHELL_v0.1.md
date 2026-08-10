@@ -1,6 +1,12 @@
 # The Neurodiverse Oracle — Site Shell v0.1
 
-Status: implementation candidate
+Status: accepted production
+
+Accepted production release: `5fa502bf717adb0e4c900eda7594bcbc4f74a6f0`
+
+Canonical domain: `https://ndoracle.org`
+
+Production evidence: `docs/PRODUCTION_STATE_v0.1.md`
 
 ## Decision
 
@@ -14,6 +20,12 @@ The project now proceeds in two parallel lanes:
 2. **Oracle Knowledge System** — repository-first knowledge objects, validation, evidence, uncertainty, provenance and later search/graph infrastructure.
 
 A later integration lane may connect the two. The website consumes validated Oracle knowledge; it does not replace the Oracle as the knowledge authority.
+
+## Production identity rule
+
+Site Shell v0.1 has been accepted in production from exact repository commit `5fa502bf717adb0e4c900eda7594bcbc4f74a6f0`.
+
+That identity is historical accepted evidence, not a shortcut for future deployments. Repository state and production state remain separate. Before any later production claim, re-resolve the repository candidate, deployed release and live behaviour independently.
 
 ## Site-shell purpose
 
@@ -81,6 +93,8 @@ Site Shell v0.1 is structurally acceptable when:
 - styling uses a small shared token set;
 - deployment security headers are regression-tested;
 - publication remains a separate protected action.
+
+These criteria were accepted for the recorded production release. Later changes must prove them again where applicable rather than inheriting acceptance automatically.
 
 ## Non-goals for v0.1
 
