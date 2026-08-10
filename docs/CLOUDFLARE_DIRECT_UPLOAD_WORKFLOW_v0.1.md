@@ -18,17 +18,19 @@ The workflow must fail unless all of these remain true:
 2. the selected workflow ref is `main`;
 3. `release_sha` is an exact lowercase 40-character SHA;
 4. that SHA is the current GitHub `main` when the guard runs;
-5. the checkout resolves to that exact SHA and is clean;
-6. repository validation and the complete regression suite pass again;
-7. `dist/` rebuilds successfully from that checkout;
-8. the release remains static: no `functions/`, `_worker.js` or Wrangler configuration is present;
-9. the pinned deployment CLI reports Wrangler `4.114.0`;
-10. Cloudflare credentials are present as GitHub Actions secrets;
-11. an existing Pages project named `nd-oracle` is found;
-12. the project production branch is `main`;
-13. the project is Direct Upload rather than Git-integrated;
-14. `ndoracle.org` is not attached as a custom domain;
-15. immediately before upload, the release SHA is still current GitHub `main` and the Cloudflare project still satisfies the protected boundary.
+5. the GitHub environment `cloudflare-pages-production` already exists before dispatch;
+6. that environment is restricted to protected branches rather than relying on implicit environment creation;
+7. the checkout resolves to that exact SHA and is clean;
+8. repository validation and the complete regression suite pass again;
+9. `dist/` rebuilds successfully from that checkout;
+10. the release remains static: no `functions/`, `_worker.js` or Wrangler configuration is present;
+11. the pinned deployment CLI reports Wrangler `4.114.0`;
+12. Cloudflare credentials are present as GitHub Actions secrets;
+13. an existing Pages project named `nd-oracle` is found;
+14. the project production branch is `main`;
+15. the project is Direct Upload rather than Git-integrated;
+16. `ndoracle.org` is not attached as a custom domain;
+17. immediately before upload, the release SHA is still current GitHub `main` and the Cloudflare project still satisfies the protected boundary.
 
 If any invariant fails, deployment stops before the upload command.
 
@@ -38,7 +40,11 @@ Before the first dispatch, create a GitHub Actions environment named:
 
 `cloudflare-pages-production`
 
-Prefer storing the Cloudflare credentials as **environment secrets** rather than broad repository secrets. Configure the environment so deployments are allowed only from protected `main` where the repository plan/settings support deployment-branch restrictions.
+Configure its deployment branches to **Protected branches only**. The release workflow's first `guard` job checks the GitHub environment API before the deployment job starts and refuses to continue unless the environment already exists with `protected_branches=true`, `custom_branch_policies=false`, and a branch-policy protection rule.
+
+This extra guard is intentional. GitHub documents that running a workflow which references an environment that does not exist can create the environment automatically. Production must not depend on that implicit path because it could create an environment without the intended protection policy.
+
+Prefer storing the Cloudflare credentials as **environment secrets** rather than broad repository secrets.
 
 Required secret names:
 
@@ -48,6 +54,19 @@ Required secret names:
 The Cloudflare token should be a least-privilege custom API token scoped to the intended account with **Cloudflare Pages Write** access. Do not give this release token DNS/zone-edit permissions; this workflow does not require them.
 
 Do not commit either value to the repository.
+
+### Current prerequisite state checked 2026-08-10
+
+Repository environment inspection found:
+
+- `cloudflare-pages-production`: **absent**;
+- `github-pages`: present.
+
+The existing `github-pages` environment does not satisfy this workflow and must not be substituted for the Cloudflare production environment.
+
+Because the GitHub connector available during implementation has read access to environment metadata but not environment-administration or secret-management operations, creation of `cloudflare-pages-production`, its protected-branch policy, and its two secrets remains an explicit GitHub settings action before first dispatch.
+
+For private repositories, GitHub currently requires GitHub Pro, Team, or Enterprise for environment secrets and deployment-branch restrictions. If the repository plan does not expose those controls, do not weaken this workflow silently; choose and review an alternative secret/isolation design first.
 
 ## Existing Pages project requirement
 
@@ -85,11 +104,14 @@ The workflow does not contain project-create, custom-domain or DNS commands.
 
 ## How to run after merge
 
-1. Resolve protected `main` immediately before release.
-2. In GitHub Actions, choose **Deploy Cloudflare Pages (manual)**.
-3. Select the `main` ref.
-4. Paste the full current `main` SHA into `release_sha`.
-5. Run the workflow.
+1. Verify `cloudflare-pages-production` exists and is restricted to protected branches.
+2. Verify its two Cloudflare environment secrets are set.
+3. Verify the existing Cloudflare Pages project satisfies the Direct Upload requirements.
+4. Resolve protected `main` immediately before release.
+5. In GitHub Actions, choose **Deploy Cloudflare Pages (manual)**.
+6. Select the `main` ref.
+7. Paste the full current `main` SHA into `release_sha`.
+8. Run the workflow.
 
 Do not reuse a remembered SHA after another merge. If `main` changes between authorisation and upload, the workflow fails closed.
 
@@ -98,6 +120,7 @@ Do not reuse a remembered SHA after another merge. If `main` changes between aut
 A successful workflow run proves that:
 
 - the supplied SHA was current `main` at the release guards;
+- the production environment already existed with protected-branch restriction before the deployment job;
 - that exact commit was rebuilt and validated;
 - the generated artifact satisfied the static release boundary;
 - the intended existing Direct Upload project was used;
