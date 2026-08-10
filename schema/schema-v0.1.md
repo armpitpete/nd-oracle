@@ -16,6 +16,8 @@ Each concept contains:
 - practical entry points across the wider ecosystem;
 - provenance for the object itself.
 
+Object and internal identifiers use lowercase, hyphen-separated stable IDs. Empty identifiers and empty descriptive values are invalid.
+
 ## Confidence vocabulary
 
 - `high`: consistent, directly relevant support with important limits understood.
@@ -29,6 +31,8 @@ Confidence is local to a claim's exact wording and scope.
 ## Evidence routes
 
 Claims refer to source IDs rather than embedding citations. They also refer to uncertainty IDs. A validator rejects broken routes and serious claims without both routes. `none_identified` is allowed only as an explicit uncertainty record, so absence of a known limitation is itself visible and revisitable.
+
+Evidence and perspective routes are reciprocal: every claim or perspective that cites a source must be listed by that source in `supports`, and every supported item must cite the source back. This prevents contradictory one-way mappings from appearing complete.
 
 ## Provenance
 
