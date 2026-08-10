@@ -1,4 +1,4 @@
-import json
+import html
 import tempfile
 import unittest
 from pathlib import Path
@@ -27,14 +27,14 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn("reading-first", page)
         self.assertIn("not diagnosis or medical advice", page)
         for concept in self.concepts:
-            self.assertIn(concept["name"], page)
+            self.assertIn(html.escape(concept["name"]), page)
             self.assertIn(f"concepts/{concept['id']}.html", page)
 
     def test_every_claim_keeps_visible_evidence_and_uncertainty_routes(self):
         for concept in self.concepts:
             page = (self.output / "concepts" / f"{concept['id']}.html").read_text(encoding="utf-8")
             for claim in concept["claims"]:
-                self.assertIn(claim["text"], page)
+                self.assertIn(html.escape(claim["text"], quote=True), page)
                 for source_id in claim["source_ids"]:
                     self.assertIn(f'href="#source-{source_id}"', page)
                 for uncertainty_id in claim["uncertainty_ids"]:
