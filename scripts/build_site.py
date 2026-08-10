@@ -197,6 +197,7 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> Path:
 
     prepare_output(output_dir)
     shutil.copy2(SITE_DIR / "styles.css", output_dir / "styles.css")
+    shutil.copy2(SITE_DIR / "_headers", output_dir / "_headers")
 
     (output_dir / "index.html").write_text(render_index(concepts), encoding="utf-8")
     for concept in concepts:
