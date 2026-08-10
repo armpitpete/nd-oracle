@@ -4,15 +4,26 @@ import html
 import json
 import shutil
 from pathlib import Path
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 OBJECTS_DIR = ROOT / "objects" / "concepts"
 SITE_DIR = ROOT / "site"
 DEFAULT_OUTPUT_DIR = ROOT / "dist"
+OUTPUT_MARKER = "nd-oracle-site-v0.1\n"
 
 
 def esc(value: object) -> str:
     return html.escape(str(value), quote=True)
+
+
+def safe_http_url(value: object) -> str | None:
+    if not isinstance(value, str):
+        return None
+    parsed = urlsplit(value)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return None
+    return value
 
 
 def load_concepts() -> list[dict]:
@@ -77,6 +88,14 @@ def render_concept(concept: dict) -> str:
     source_map = {source["id"]: source for source in concept["sources"]}
     uncertainty_map = {item["id"]: item for item in concept["uncertainties"]}
 
+    for claim in concept["claims"]:
+        for source_id in claim["source_ids"]:
+            if source_id not in source_map:
+                raise ValueError(f"{concept['id']}: missing source {source_id}")
+        for uncertainty_id in claim["uncertainty_ids"]:
+            if uncertainty_id not in uncertainty_map:
+                raise ValueError(f"{concept['id']}: missing uncertainty {uncertainty_id}")
+
     claims = []
     for claim in concept["claims"]:
         source_links = ", ".join(
@@ -119,8 +138,8 @@ def render_concept(concept: dict) -> str:
 
     sources = []
     for source in concept["sources"]:
-        url = source.get("url")
-        link = f'<a href="{esc(url)}" rel="noopener noreferrer">Open source</a>' if url else "No public URL recorded"
+        url = safe_http_url(source.get("url"))
+        link = f'<a href="{esc(url)}" rel="noopener noreferrer">Open source</a>' if url else "No safe public URL recorded"
         sources.append(
             f"""<article class="source" id="source-{esc(source['id'])}">
   <h3>{esc(source['citation'])}</h3>
@@ -156,16 +175,19 @@ def render_concept(concept: dict) -> str:
 </main>
 <footer class="site-footer"><div class="site-shell reading-column">Stable object ID: {esc(concept['id'])} · schema {esc(concept['schema_version'])}</div></footer>"""
 
-    # Fail loudly if a route referenced by a claim is absent from the object.
-    for claim in concept["claims"]:
-        for source_id in claim["source_ids"]:
-            if source_id not in source_map:
-                raise ValueError(f"{concept['id']}: missing source {source_id}")
-        for uncertainty_id in claim["uncertainty_ids"]:
-            if uncertainty_id not in uncertainty_map:
-                raise ValueError(f"{concept['id']}: missing uncertainty {uncertainty_id}")
-
     return page_shell(concept["name"], body, "../styles.css")
+
+
+def prepare_output(output_dir: Path) -> None:
+    marker = output_dir / ".nd-oracle-generated"
+    if output_dir.is_symlink():
+        raise ValueError(f"Refusing to replace symlink output directory: {output_dir}")
+    if output_dir.exists():
+        if not marker.is_file() or marker.read_text(encoding="utf-8") != OUTPUT_MARKER:
+            raise ValueError(f"Refusing to replace unmarked output directory: {output_dir}")
+        shutil.rmtree(output_dir)
+    (output_dir / "concepts").mkdir(parents=True)
+    marker.write_text(OUTPUT_MARKER, encoding="utf-8")
 
 
 def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> Path:
@@ -173,9 +195,7 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> Path:
     if not concepts:
         raise ValueError("No concept objects found")
 
-    if output_dir.exists():
-        shutil.rmtree(output_dir)
-    (output_dir / "concepts").mkdir(parents=True)
+    prepare_output(output_dir)
     shutil.copy2(SITE_DIR / "styles.css", output_dir / "styles.css")
 
     (output_dir / "index.html").write_text(render_index(concepts), encoding="utf-8")
