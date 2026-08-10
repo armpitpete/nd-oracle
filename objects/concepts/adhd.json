@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1", "id": "adhd", "type": "concept", "name": "ADHD", "aliases": ["attention-deficit/hyperactivity disorder"], "status": "seed",
+  "summary": "ADHD is a developmental condition described by persistent patterns of inattention and/or hyperactivity-impulsivity that begin in childhood and can affect life across settings and adulthood.",
+  "scope": {"includes": ["clinical descriptions across the lifespan", "lived impact, strengths, identity, support, and environmental fit", "co-occurrence and differential assessment"], "excludes": ["individual diagnosis", "the idea that ordinary distraction alone establishes ADHD", "a universal claim about strengths or impairments"]},
+  "claims": [
+    {"id": "adhd-claim-1", "text": "ADHD can persist into adulthood and can affect social, educational, and work functioning.", "confidence": "high", "source_ids": ["adhd-source-nimh"], "uncertainty_ids": ["adhd-uncertainty-lifespan"]},
+    {"id": "adhd-claim-2", "text": "There is no single diagnostic test; assessment considers history, impairment across settings, and alternative or co-occurring explanations.", "confidence": "high", "source_ids": ["adhd-source-cdc"], "uncertainty_ids": ["adhd-uncertainty-equity"]}
+  ],
+  "sources": [
+    {"id": "adhd-source-nimh", "kind": "authoritative_guidance", "citation": "National Institute of Mental Health. Attention-Deficit/Hyperactivity Disorder: What You Need to Know.", "url": "https://www.nimh.nih.gov/health/publications/attention-deficit-hyperactivity-disorder-what-you-need-to-know", "accessed": "2026-08-10", "supports": ["adhd-claim-1", "adhd-perspective-developmental"]},
+    {"id": "adhd-source-cdc", "kind": "authoritative_guidance", "citation": "US Centers for Disease Control and Prevention. Diagnosing ADHD (1 June 2026).", "url": "https://www.cdc.gov/adhd/diagnosis/index.html", "accessed": "2026-08-10", "supports": ["adhd-claim-2"]}
+  ],
+  "uncertainties": [
+    {"id": "adhd-uncertainty-lifespan", "question": "Which supports remain useful as demands and ADHD presentation change across adulthood and ageing?", "why_it_matters": "Evidence and services have historically emphasized children.", "what_would_reduce_it": ["longitudinal adult studies", "person-defined functional outcomes", "research including older adults and varied support needs"], "status": "open"},
+    {"id": "adhd-uncertainty-equity", "question": "How do culture, gender, race, class, masking, and access pathways affect recognition and misdiagnosis?", "why_it_matters": "Assessment tools and referral patterns may not transfer equitably.", "what_would_reduce_it": ["measurement-invariance studies", "community-led research with underserved groups", "audits of referral, diagnosis, and outcome pathways"], "status": "open"}
+  ],
+  "perspectives": [
+    {"id": "adhd-perspective-developmental", "held_by": "National Institute of Mental Health", "summary": "ADHD is a developmental disorder with persistent inattention, hyperactivity, and/or impulsivity that can interfere with daily life.", "source_ids": ["adhd-source-nimh"]}
+  ],
+  "relations": [
+    {"type": "narrower_than", "target_id": "neurodiversity", "note": "ADHD is commonly situated within neurodiversity discourse."},
+    {"type": "related_to", "target_id": "executive-function", "note": "Executive-function constructs are often used to investigate ADHD but are not synonymous with it."},
+    {"type": "commonly_co_occurs_with", "target_id": "autism", "note": "Co-occurrence is clinically recognised; this relation does not estimate prevalence."}
+  ],
+  "ecosystem_entry_points": [
+    {"category": "apps", "questions": ["Does the app reduce work or merely add reminders to manage?", "What data does it collect and monetize?"]},
+    {"category": "accommodations", "questions": ["Does the accommodation change time, interruption, memory, or task-initiation demands?", "Is it available without disclosure?"]},
+    {"category": "services", "questions": ["Is support available across the lifespan?", "Are co-occurring conditions and patient goals considered?"]},
+    {"category": "games", "questions": ["Is benefit shown outside the trained game?", "What comparator and follow-up were used?"]}
+  ],
+  "provenance": {"created": "2026-08-10", "created_by": "Codex from user-authorised seed scope", "method": "Structured synthesis of cited public sources; no community review yet", "review_state": "unreviewed_seed", "last_reviewed": null}
+}
