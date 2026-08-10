@@ -56,6 +56,10 @@ Future interactive features must use the smallest route-specific relaxation poss
 
 Use a built `dist/` artifact produced from an exact accepted `main` SHA. Direct Upload is preferred while deployment remains an explicit protected action because a repository merge must not silently become a production deployment.
 
+The release command must use a reviewed, version-pinned Wrangler CLI rather than floating `npx wrangler` latest. The currently reviewed deployment version is `wrangler@4.114.0`. Updating that version requires a deliberate release-tooling change and renewed command-syntax verification.
+
+Direct Upload is a deliberate control choice. Cloudflare does not support converting an existing Direct Upload Pages project to Git integration; changing that architecture would require a new project and separately reviewed migration.
+
 ### Static response controls
 
 The deployment includes a Cloudflare Pages `_headers` file with:
@@ -113,10 +117,11 @@ Before accepting a release, preserve separate evidence for:
 1. exact repository commit;
 2. passing validation/tests;
 3. deterministic site build;
-4. deployment identity;
-5. custom-domain identity;
-6. live HTTPS response;
-7. live security headers;
-8. navigation/function checks against the real public site.
+4. pinned deployment-tool identity;
+5. deployment identity;
+6. custom-domain identity;
+7. live HTTPS response;
+8. live security headers;
+9. navigation/function checks against the real public site.
 
 Do not substitute a preview, local build, Pages project, DNS record or successful deployment command for verification of the actual public site.
