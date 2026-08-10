@@ -26,6 +26,15 @@ class CloudflareDeployWorkflowTests(unittest.TestCase):
         self.assertIn("refs/heads/main", self.text)
         self.assertGreaterEqual(self.text.count("/commits/main"), 2)
 
+    def test_preexisting_protected_environment_is_required(self):
+        self.assertIn("actions: read", self.text)
+        self.assertIn("/environments/{encoded_environment}", self.text)
+        self.assertIn("cloudflare-pages-production must exist before dispatch", self.text)
+        self.assertIn("refusing GitHub's implicit environment auto-creation path", self.text)
+        self.assertIn('policy.get("protected_branches") is not True', self.text)
+        self.assertIn('policy.get("custom_branch_policies") is not False', self.text)
+        self.assertIn('rule.get("type") == "branch_policy"', self.text)
+
     def test_actions_and_wrangler_are_pinned(self):
         self.assertIn(
             "actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd",
