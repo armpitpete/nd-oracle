@@ -29,7 +29,7 @@ The seed objects are orientation material, not diagnosis or medical advice. They
 objects/concepts/       Root knowledge objects
 schema/object-v0.1.json Machine-readable contract
 schema/schema-v0.1.md   Human-readable model and decisions
-scripts/validate.py     Dependency-free integrity checks
+scripts/validate.py     Schema, governance-route, and graph checks
 GOVERNANCE.md           Decision rights and protected changes
 CONTRIBUTING.md         Contribution and provenance rules
 ```
@@ -37,7 +37,9 @@ CONTRIBUTING.md         Contribution and provenance rules
 ## Validate
 
 ```shell
+python -m pip install -r requirements-dev.txt
 python scripts/validate.py
+python -m unittest discover -s tests
 ```
 
 ## Design direction (deferred)

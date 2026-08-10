@@ -1,35 +1,23 @@
 #!/usr/bin/env python3
-"""Dependency-free structural and graph checks for ND Oracle v0.1."""
+"""JSON Schema, governance-route, and graph checks for ND Oracle v0.1."""
 
 from __future__ import annotations
 
 import json
-import re
 import sys
 from pathlib import Path
 
+from jsonschema import Draft202012Validator, FormatChecker
+
 ROOT = Path(__file__).resolve().parents[1]
 OBJECTS = ROOT / "objects"
-REQUIRED = {
-    "schema_version", "id", "type", "name", "status", "summary", "scope",
-    "claims", "sources", "uncertainties", "perspectives", "relations",
-    "ecosystem_entry_points", "provenance",
-}
-ID_PATTERN = re.compile(r"^[a-z][a-z0-9-]*$")
+SCHEMA_PATH = ROOT / "schema" / "object-v0.1.json"
 ALLOWED_CONFIDENCE = {"high", "moderate", "low", "contested", "not_applicable"}
 
 
 def validate_object(path: Path, obj: dict, all_ids: set[str]) -> list[str]:
     errors: list[str] = []
     label = path.relative_to(ROOT).as_posix()
-    missing = REQUIRED - obj.keys()
-    if missing:
-        errors.append(f"{label}: missing fields {sorted(missing)}")
-        return errors
-    if obj["schema_version"] != "0.1":
-        errors.append(f"{label}: schema_version must be 0.1")
-    if not ID_PATTERN.fullmatch(obj["id"]):
-        errors.append(f"{label}: invalid stable id {obj['id']!r}")
     if path.stem != obj["id"]:
         errors.append(f"{label}: filename must match object id")
 
@@ -78,6 +66,16 @@ def validate_object(path: Path, obj: dict, all_ids: set[str]) -> list[str]:
 
 
 def main() -> int:
+    try:
+        schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+        Draft202012Validator.check_schema(schema)
+    except (OSError, json.JSONDecodeError) as exc:
+        print(f"ERROR: cannot load schema: {exc}", file=sys.stderr)
+        return 1
+    except Exception as exc:
+        print(f"ERROR: invalid schema: {exc}", file=sys.stderr)
+        return 1
+    schema_validator = Draft202012Validator(schema, format_checker=FormatChecker())
     paths = sorted(OBJECTS.rglob("*.json"))
     if not paths:
         print("ERROR: no knowledge objects found", file=sys.stderr)
@@ -86,7 +84,15 @@ def main() -> int:
     errors: list[str] = []
     for path in paths:
         try:
-            loaded.append((path, json.loads(path.read_text(encoding="utf-8"))))
+            obj = json.loads(path.read_text(encoding="utf-8"))
+            schema_errors = sorted(schema_validator.iter_errors(obj), key=lambda item: list(item.absolute_path))
+            if schema_errors:
+                label = path.relative_to(ROOT).as_posix()
+                for error in schema_errors:
+                    location = ".".join(str(part) for part in error.absolute_path) or "<root>"
+                    errors.append(f"{label}: schema {location}: {error.message}")
+            elif isinstance(obj, dict):
+                loaded.append((path, obj))
         except (OSError, json.JSONDecodeError) as exc:
             errors.append(f"{path}: {exc}")
     ids = [obj.get("id") for _, obj in loaded]
@@ -100,7 +106,7 @@ def main() -> int:
         for error in errors:
             print(f"- {error}", file=sys.stderr)
         return 1
-    print(f"Validated {len(loaded)} objects; all evidence, uncertainty, perspective, and graph routes resolve.")
+    print(f"Validated {len(loaded)} objects against schema v0.1; all evidence, uncertainty, perspective, and graph routes resolve.")
     return 0
 
 

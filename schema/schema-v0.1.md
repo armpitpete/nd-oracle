@@ -2,7 +2,7 @@
 
 ## Unit of knowledge
 
-An object is a stable, versioned node. v0.1 implements `concept`; the shared envelope is designed to support later `resource`, `evidence`, `uncertainty`, `perspective`, `organisation`, `community`, `service`, `accommodation`, `tool`, `game`, `app`, and `media` objects without forcing them into a clinical hierarchy.
+An object is a stable, versioned node. v0.1 accepts only `concept`. Later schema versions may add `resource`, `evidence`, `uncertainty`, `perspective`, `organisation`, `community`, `service`, `accommodation`, `tool`, `game`, `app`, and `media` using type-specific structures rather than forcing them into the concept envelope.
 
 Each concept contains:
 
@@ -34,10 +34,14 @@ Claims refer to source IDs rather than embedding citations. They also refer to u
 
 Every object records creator, creation method, creation date, and review state. Sources distinguish peer-reviewed research, authoritative guidance, community or lived-experience material, historical material, and other source kinds. v0.1 does not pretend these kinds are interchangeable.
 
+## Source kinds and conflicts
+
+Sources distinguish peer-reviewed research, authoritative guidance, community material, lived experience, historical material, books, commercial material, practical material, and other sources. Commercial sources must include an explicit `conflicts_of_interest` array; an empty array means none declared or identified, not that independence has been established.
+
 ## Deliberate limits
 
 - The five seed nodes are not an ontology of people and do not define who is neurodivergent.
 - Relations are useful navigation assertions, not causal claims.
 - Practical entry points are categories to populate, not endorsements.
-- Evidence items are embedded in concepts for v0.1; normalization into standalone evidence objects is deferred until real reuse patterns justify it.
+- Evidence items are embedded in concepts for v0.1; type-specific standalone objects are deferred until real reuse patterns justify their structures.
 - Uncertainty resolution history, translations, fine-grained claim authorship, and community review attestations need a later schema migration.
