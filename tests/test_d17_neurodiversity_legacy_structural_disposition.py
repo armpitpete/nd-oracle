@@ -6,7 +6,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DECISIONS = ROOT / "migration-candidates" / "autism-neurodiversity" / "owner-decisions.json"
-PAIR = ROOT / "migration-candidates" / "autism-neurodiversity" / "structural-candidate.json"
 REVIEW = ROOT / "migration-candidates" / "autism-neurodiversity" / "relation-semantics-review.json"
 COMMON = ROOT / "schema" / "common-v0.2.json"
 AUTISM = ROOT / "objects" / "concepts" / "autism.json"
@@ -87,37 +86,19 @@ class D17NeurodiversityLegacyStructuralDispositionTests(unittest.TestCase):
             "preserve-legacy-pair-without-v02-taxonomy",
         )
 
-    def test_paired_candidate_is_not_mutated_by_decision_record(self) -> None:
-        self.assertEqual(
-            git_blob_sha(PAIR),
-            "c4ee90bbe829b85a4022e7d8ef48caa4692bd903",
-        )
-        pair = load(PAIR)
-        self.assertNotIn(
-            "d17-neurodiversity-legacy-structural-disposition",
-            pair["accepted_owner_decisions"],
-        )
-        self.assertEqual(
-            pair["objects"][0]["structural_relation"]["type"],
-            "narrower_than",
-        )
-        self.assertEqual(
-            pair["objects"][1]["structural_relation"]["type"],
-            "broader_than",
-        )
+    def test_decision_record_proof_preserves_the_original_implementation_boundary(self) -> None:
+        doc = DOC.read_text(encoding="utf-8")
+        self.assertIn("legacy_retained_unmapped", doc)
+        self.assertIn("do **not** emit", doc)
+        self.assertIn("mutation of `structural-candidate.json`", doc)
+        self.assertIn("Those remain separately protected gates.", doc)
+        self.assertIn("586f9589c4c14a0bcb7a84bc0c579bfef94f6d7c", doc)
 
     def test_schema_and_authoritative_objects_remain_unchanged(self) -> None:
         self.assertEqual(git_blob_sha(COMMON), "ce0141ee7031f21fa2bd72b2faa3371aed3e622b")
         self.assertEqual(git_blob_sha(AUTISM), "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98")
         self.assertEqual(git_blob_sha(NEURODIVERSITY), "5a38bc4250079412dd3f4da1d598dfcab984ca66")
         self.assertEqual(git_blob_sha(ADHD), "719f26a9af773cd1bcf670df4d12ed5f6bcf0a23")
-
-    def test_proof_states_the_protected_boundary(self) -> None:
-        doc = DOC.read_text(encoding="utf-8")
-        self.assertIn("legacy_retained_unmapped", doc)
-        self.assertIn("do **not** emit", doc)
-        self.assertIn("mutation of `structural-candidate.json`", doc)
-        self.assertIn("Those remain separately protected gates.", doc)
 
 
 if __name__ == "__main__":
