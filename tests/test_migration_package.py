@@ -78,13 +78,41 @@ class AutismMigrationPackageTests(unittest.TestCase):
         pending = {item["id"] for item in decisions if item["status"] == "pending"}
         self.assertEqual(
             {
-                "d2-related-to-mapping",
                 "d3-uncertainty-reduction-shape",
                 "d4-ecosystem-entry-points-home",
                 "d5-autism-neurodiversity-structural-closure",
             },
             pending,
         )
+
+    def test_d2_defers_related_to_without_mapping_or_inventing_confidence(self) -> None:
+        decisions = self.load("owner-decisions.json")["decisions"]
+        by_id = {item["id"]: item for item in decisions}
+        d2 = by_id["d2-related-to-mapping"]
+        self.assertEqual("accepted", d2["status"])
+        self.assertEqual("legacy_retained_unmapped", d2["accepted_disposition"])
+        self.assertFalse(d2["map_to_associated_with_authorised"])
+        self.assertFalse(d2["invent_relation_confidence_authorised"])
+        self.assertFalse(d2["authoritative_v01_mutation_authorised"])
+        self.assertFalse(d2["authoritative_v02_replacement_authorised"])
+
+        ledger = self.load("preservation-ledger.json")
+        related = [
+            item
+            for item in ledger["entries"]
+            if item["unit"].startswith("relation:") and '\"type\":\"related_to\"' in item["unit"]
+        ]
+        self.assertEqual(2, len(related))
+        self.assertTrue(all(item["disposition"] == "legacy_retained_unmapped" for item in related))
+        self.assertTrue(all(item["owner_decision_ref"] == "d2-related-to-mapping" for item in related))
+        self.assertTrue(all(item["legacy_value"]["type"] == "related_to" for item in related))
+        self.assertTrue(all("confidence" not in item["legacy_value"] for item in related))
+        self.assertEqual(
+            {"sensory-processing", "executive-function"},
+            {item["legacy_value"]["target_id"] for item in related},
+        )
+        self.assertTrue(all("candidate_destination" not in item for item in related))
+        self.assertEqual(AUTISM_V01_BLOB, git_blob_sha(SOURCE))
 
     def test_evidence_roles_remain_bounded(self) -> None:
         ledger = self.load("enrichment-ledger.json")
