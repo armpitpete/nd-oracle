@@ -16,6 +16,7 @@ from scripts.validate_migration import git_blob_sha, validate_package
 ROOT = Path(__file__).resolve().parents[1]
 AUTISM_BLOB = "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98"
 NEURODIVERSITY_BLOB = "5a38bc4250079412dd3f4da1d598dfcab984ca66"
+D17 = "d17-neurodiversity-legacy-structural-disposition"
 
 
 class PairedMigrationCandidateTests(unittest.TestCase):
@@ -50,87 +51,94 @@ class PairedMigrationCandidateTests(unittest.TestCase):
         self.assertEqual(AUTISM_BLOB, git_blob_sha(AUTISM_SOURCE))
         self.assertEqual(NEURODIVERSITY_BLOB, git_blob_sha(NEURODIVERSITY_SOURCE))
 
-    def test_structural_pair_preserves_reciprocity_without_inventing_confidence(self) -> None:
+    def test_structural_pair_preserves_legacy_reciprocity_without_emitting_v02_edge(self) -> None:
         candidate = self.load("candidate/structural-pair.json")
         self.assertEqual("partial_structural_pair", candidate["candidate_kind"])
         self.assertFalse(candidate["authoritative"])
         self.assertEqual(BASE_COMMIT, candidate["source_repository_commit"])
         self.assertEqual("d5-autism-neurodiversity-structural-closure", candidate["decision_ref"])
         self.assertEqual("d6-structural-relation-confidence", candidate["confidence_policy_ref"])
+        self.assertEqual(D17, candidate["structural_disposition_decision_ref"])
+        self.assertIn(D17, candidate["accepted_owner_decisions"])
 
         objects = {item["id"]: item for item in candidate["objects"]}
         autism = objects["autism"]["structural_relation"]
         neurodiversity = objects["neurodiversity"]["structural_relation"]
 
-        self.assertEqual("narrower_than", autism["type"])
-        self.assertEqual({"type": "concept", "id": "neurodiversity"}, autism["target"])
-        self.assertEqual("broader_than", neurodiversity["type"])
-        self.assertEqual({"type": "concept", "id": "autism"}, neurodiversity["target"])
-        self.assertEqual("explicit_enrichment_or_schema_policy_required", autism["confidence_status"])
-        self.assertEqual("explicit_enrichment_or_schema_policy_required", neurodiversity["confidence_status"])
-        self.assertEqual("d6-structural-relation-confidence", autism["confidence_policy_ref"])
-        self.assertEqual("d6-structural-relation-confidence", neurodiversity["confidence_policy_ref"])
-        self.assertNotIn("confidence", autism)
-        self.assertNotIn("confidence", neurodiversity)
+        for relation in (autism, neurodiversity):
+            self.assertEqual("legacy_retained_unmapped", relation["disposition"])
+            self.assertFalse(relation["emit_v02_semantic_edge"])
+            self.assertEqual(D17, relation["decision_ref"])
+            self.assertNotIn("type", relation)
+            self.assertNotIn("target", relation)
+            self.assertNotIn("confidence", relation)
+            self.assertEqual("not_required_without_v02_edge", relation["confidence_status"])
+
         self.assertEqual(
-            "Autism is commonly situated within neurodiversity discourse.",
-            autism["legacy_relation"]["note"],
+            {
+                "type": "narrower_than",
+                "target_id": "neurodiversity",
+                "note": "Autism is commonly situated within neurodiversity discourse.",
+            },
+            autism["legacy_relation"],
         )
         self.assertEqual(
-            "Autism is commonly discussed within the neurodiversity ecosystem.",
-            neurodiversity["legacy_relation"]["note"],
+            {
+                "type": "broader_than",
+                "target_id": "autism",
+                "note": "Autism is commonly discussed within the neurodiversity ecosystem.",
+            },
+            neurodiversity["legacy_relation"],
         )
-        self.assertFalse(candidate["authorisations"]["weaken_reciprocity_validator"])
+        self.assertFalse(candidate["authorisations"]["emit_v02_taxonomy_edge_from_legacy_pair"])
         self.assertFalse(candidate["authorisations"]["authoritative_v02_replacement"])
         self.assertFalse(candidate["authorisations"]["infer_or_default_structural_confidence"])
         self.assertFalse(candidate["authorisations"]["use_not_applicable_as_confidence_shortcut"])
+        self.assertFalse(candidate["authorisations"]["new_semantic_graph_relation_authorised"])
 
-    def test_d6_is_accepted_but_confidence_value_remains_pending(self) -> None:
-        decisions = self.load("owner-decisions.json")["decisions"]
-        by_id = {item["id"]: item for item in decisions}
-        d6 = by_id["d6-structural-relation-confidence"]
-        self.assertEqual("accepted", d6["status"])
-        self.assertFalse(d6["infer_or_default_confidence_authorised"])
-        self.assertFalse(d6["use_not_applicable_as_validation_shortcut_authorised"])
-        self.assertTrue(d6["evidence_backed_confidence_enrichment_allowed"])
-        self.assertTrue(d6["separate_structural_confidence_schema_policy_allowed"])
-        self.assertTrue(d6["current_candidate_confidence_must_remain_absent"])
-        self.assertFalse(d6["schema_change_authorised"])
-        self.assertFalse(d6["authoritative_v02_replacement_authorised"])
+    def test_d6_remains_historical_but_structural_confidence_enrichment_is_no_longer_generated(self) -> None:
+        candidate = self.load("candidate/structural-pair.json")
+        self.assertEqual("d6-structural-relation-confidence", candidate["confidence_policy_ref"])
+        self.assertFalse(candidate["authorisations"]["paired_structural_confidence_required_for_legacy_pair"])
 
         enrichment = self.load("enrichment-ledger.json")["entries"]
-        confidence = next(
-            item for item in enrichment
-            if item["id"] == "resolve-autism-neurodiversity-structural-confidence"
-        )
-        self.assertEqual("pending", confidence["review_state"])
-        self.assertEqual("pending", confidence["value_origin"])
-        self.assertIsNone(confidence["proposed_value"])
-        self.assertEqual([], confidence["evidence_route"])
-        self.assertTrue(any("not_applicable" in item for item in confidence["limitations"]))
+        ids = {item["id"] for item in enrichment}
+        self.assertNotIn("resolve-autism-neurodiversity-structural-confidence", ids)
 
-    def test_pair_dependency_remains_open_and_adhd_edge_is_not_silently_dropped(self) -> None:
+        log = (self.package / "decision-log.md").read_text(encoding="utf-8")
+        self.assertIn("D6 remains preserved historically", log)
+        self.assertIn("no migrated edge exists to score", log)
+
+    def test_d17_resolves_pair_dependency_but_adhd_dependency_remains_open(self) -> None:
         dependencies = self.load("dependency-ledger.json")["entries"]
         by_id = {item["id"]: item for item in dependencies}
-        self.assertEqual("unresolved", by_id["dependency-autism-neurodiversity"]["resolution_status"])
+        self.assertEqual("resolved", by_id["dependency-autism-neurodiversity"]["resolution_status"])
+        self.assertTrue(
+            any("D17 accepts" in item for item in by_id["dependency-autism-neurodiversity"]["resolution_evidence"])
+        )
         self.assertEqual("unresolved", by_id["dependency-neurodiversity-adhd"]["resolution_status"])
         self.assertEqual("adhd", by_id["dependency-neurodiversity-adhd"]["dependent_object"])
-        self.assertTrue(
-            any("D6 forbids" in item for item in by_id["dependency-autism-neurodiversity"]["resolution_evidence"])
-        )
 
         preservation = self.load("preservation-ledger.json")["entries"]
+        autism_relation = next(
+            item for item in preservation
+            if item["source_object_id"] == "autism" and item["unit"].startswith("relation:")
+        )
+        self.assertEqual("legacy_retained_unmapped", autism_relation["disposition"])
+        self.assertEqual(D17, autism_relation["owner_decision_ref"])
+
         nd_relations = [
             item
             for item in preservation
             if item["source_object_id"] == "neurodiversity" and item["unit"].startswith("relation:")
         ]
         self.assertEqual(2, len(nd_relations))
-        refs = {item["dependency_ref"] for item in nd_relations}
-        self.assertEqual(
-            {"dependency-autism-neurodiversity", "dependency-neurodiversity-adhd"},
-            refs,
-        )
+        nd_to_autism = next(item for item in nd_relations if item.get("legacy_value", {}).get("target_id") == "autism")
+        self.assertEqual("legacy_retained_unmapped", nd_to_autism["disposition"])
+        self.assertEqual(D17, nd_to_autism["owner_decision_ref"])
+        nd_to_adhd = next(item for item in nd_relations if "adhd" in item["unit"])
+        self.assertEqual("structural_dependency", nd_to_adhd["disposition"])
+        self.assertEqual("dependency-neurodiversity-adhd", nd_to_adhd["dependency_ref"])
 
     def test_multi_source_preservation_units_are_source_scoped(self) -> None:
         ledger = self.load("preservation-ledger.json")
@@ -144,7 +152,7 @@ class PairedMigrationCandidateTests(unittest.TestCase):
         errors = validate_package(self.package)
         self.assertTrue(any("multi-source package requires source_object_id" in item for item in errors))
 
-    def test_ready_state_is_blocked_by_unresolved_candidate_semantics(self) -> None:
+    def test_ready_state_remains_blocked_by_other_unresolved_migration_work(self) -> None:
         manifest = self.load("manifest.json")
         manifest["package_status"] = "ready_for_authoritative_review"
         self.save("manifest.json", manifest)

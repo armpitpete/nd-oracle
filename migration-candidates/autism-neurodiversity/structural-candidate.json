@@ -6,6 +6,22 @@
   "source_repository_commit": "1b7e4261c70bd6a86346d34a1f08abf90c3deece",
   "decision_ref": "d5-autism-neurodiversity-structural-closure",
   "confidence_policy_ref": "d6-structural-relation-confidence",
+  "structural_disposition_decision_ref": "d17-neurodiversity-legacy-structural-disposition",
+  "implementation_authority": {
+    "kind": "owner_directed_non_authoritative_candidate_implementation",
+    "authorised_against_main": "266362fe083fb278fc1dcc8f0a90619906194f07",
+    "governing_decision": "d17-neurodiversity-legacy-structural-disposition",
+    "scope": "Apply D17 to the non-authoritative paired candidate only by retaining the exact reciprocal legacy records as legacy_retained_unmapped and removing the proposed v0.2 taxonomy emission.",
+    "does_not_authorise": [
+      "authoritative v0.1 mutation",
+      "authoritative v0.2 replacement",
+      "replacement semantic relation",
+      "relation confidence",
+      "schema or validator change",
+      "ADHD migration scope expansion",
+      "publication or deployment"
+    ]
+  },
   "accepted_owner_decisions": [
     "d7-autism-who-perspective-framing",
     "d8-neurodiversity-botha-citation-correction",
@@ -16,7 +32,8 @@
     "d13-singer-edition-specific-contribution-bindings",
     "d14-singer-2016-claim2-binding-followup",
     "d15-embedded-uncertainty-lossless-representation",
-    "d16-embedded-uncertainty-schema-implementation"
+    "d16-embedded-uncertainty-schema-implementation",
+    "d17-neurodiversity-legacy-structural-disposition"
   ],
   "owner_decision_refs": [
     "migration-candidates/autism-neurodiversity/owner-decisions.json"
@@ -27,7 +44,8 @@
     "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json",
     "migration-candidates/autism-neurodiversity/singer-2016-followup-research.json",
     "migration-candidates/autism-neurodiversity/uncertainty-shape-research.json",
-    "migration-candidates/autism-neurodiversity/embedded-uncertainty-schema-implementation-candidate.json"
+    "migration-candidates/autism-neurodiversity/embedded-uncertainty-schema-implementation-candidate.json",
+    "migration-candidates/autism-neurodiversity/relation-semantics-review.json"
   ],
   "sources": [
     {
@@ -46,11 +64,11 @@
       "id": "autism",
       "type": "concept",
       "structural_relation": {
-        "type": "narrower_than",
-        "target": {"type": "concept", "id": "neurodiversity"},
-        "reason_from_legacy_note": "Autism is commonly situated within neurodiversity discourse.",
-        "confidence_status": "explicit_enrichment_or_schema_policy_required",
+        "disposition": "legacy_retained_unmapped",
+        "emit_v02_semantic_edge": false,
+        "decision_ref": "d17-neurodiversity-legacy-structural-disposition",
         "confidence_policy_ref": "d6-structural-relation-confidence",
+        "confidence_status": "not_required_without_v02_edge",
         "legacy_relation": {
           "type": "narrower_than",
           "target_id": "neurodiversity",
@@ -62,17 +80,27 @@
       "id": "neurodiversity",
       "type": "concept",
       "structural_relation": {
-        "type": "broader_than",
-        "target": {"type": "concept", "id": "autism"},
-        "reason_from_legacy_note": "Autism is commonly discussed within the neurodiversity ecosystem.",
-        "confidence_status": "explicit_enrichment_or_schema_policy_required",
+        "disposition": "legacy_retained_unmapped",
+        "emit_v02_semantic_edge": false,
+        "decision_ref": "d17-neurodiversity-legacy-structural-disposition",
         "confidence_policy_ref": "d6-structural-relation-confidence",
+        "confidence_status": "not_required_without_v02_edge",
         "legacy_relation": {
           "type": "broader_than",
           "target_id": "autism",
           "note": "Autism is commonly discussed within the neurodiversity ecosystem."
         }
       }
+    }
+  ],
+  "resolved_structural_items": [
+    {
+      "id": "autism-neurodiversity-legacy-pair",
+      "decision_ref": "d17-neurodiversity-legacy-structural-disposition",
+      "disposition": "legacy_retained_unmapped",
+      "emit_v02_semantic_edge": false,
+      "confidence_required_for_migrated_edge": false,
+      "detail": "D17 preserves the reciprocal v0.1 records together but does not emit them as a v0.2 broader_than/narrower_than edge. D6 remains historical policy; confidence becomes relevant only if a new semantic graph relation is separately proposed."
     }
   ],
   "separate_structural_dependencies": [
@@ -87,9 +115,10 @@
   "blockers": [
     {
       "id": "paired-structural-relation-confidence",
-      "kind": "accepted_policy_requirement",
-      "decision_ref": "d6-structural-relation-confidence",
-      "detail": "D6 forbids inferring or defaulting migrated structural confidence, including using not_applicable merely to satisfy validation. Confidence remains absent until evidence-backed enrichment or a separately accepted structural-confidence schema policy supplies a non-fabricating representation."
+      "kind": "resolved_by_d17_no_v02_edge",
+      "decision_ref": "d17-neurodiversity-legacy-structural-disposition",
+      "policy_ref": "d6-structural-relation-confidence",
+      "detail": "Historical blocker retained for traceability. D17 emits no migrated Autism/Neurodiversity taxonomy edge, so there is no legacy-pair confidence value to supply. D6 remains preserved and applies again only to a separately proposed new semantic relation."
     },
     {
       "id": "autism-uncertainty-shape",
@@ -123,6 +152,10 @@
     "expand_pair_to_adhd": false,
     "infer_or_default_structural_confidence": false,
     "use_not_applicable_as_confidence_shortcut": false,
+    "neurodiversity_legacy_structural_disposition_accepted": true,
+    "emit_v02_taxonomy_edge_from_legacy_pair": false,
+    "paired_structural_confidence_required_for_legacy_pair": false,
+    "new_semantic_graph_relation_authorised": false,
     "autism_who_perspective_framing_accepted": true,
     "neurodiversity_botha_citation_correction_accepted": true,
     "neurodiversity_collective_perspective_framing_accepted": true,

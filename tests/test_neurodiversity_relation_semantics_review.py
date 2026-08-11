@@ -8,7 +8,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REVIEW = ROOT / "migration-candidates" / "autism-neurodiversity" / "relation-semantics-review.json"
-PAIR = ROOT / "migration-candidates" / "autism-neurodiversity" / "structural-candidate.json"
 AUTISM = ROOT / "objects" / "concepts" / "autism.json"
 NEURODIVERSITY = ROOT / "objects" / "concepts" / "neurodiversity.json"
 ADHD = ROOT / "objects" / "concepts" / "adhd.json"
@@ -36,8 +35,12 @@ class NeurodiversityRelationSemanticsReviewTests(unittest.TestCase):
         self.assertFalse(review["authoritative_replacement"])
         self.assertTrue(all(value is False for value in review["boundaries"].values()))
 
-    def test_review_does_not_mutate_current_candidate_schema_or_sources(self) -> None:
-        self.assertEqual("c4ee90bbe829b85a4022e7d8ef48caa4692bd903", git_blob_sha(PAIR))
+    def test_review_preserves_its_original_candidate_anchor_while_schema_and_sources_stay_exact(self) -> None:
+        review = load(REVIEW)
+        self.assertEqual(
+            "c4ee90bbe829b85a4022e7d8ef48caa4692bd903",
+            review["repository_anchors"]["paired_candidate"]["blob_sha"],
+        )
         self.assertEqual("ce0141ee7031f21fa2bd72b2faa3371aed3e622b", git_blob_sha(COMMON))
         self.assertEqual("b2d3809ecfcdb1d81c793a2401f0533a4b17ea98", git_blob_sha(AUTISM))
         self.assertEqual("5a38bc4250079412dd3f4da1d598dfcab984ca66", git_blob_sha(NEURODIVERSITY))

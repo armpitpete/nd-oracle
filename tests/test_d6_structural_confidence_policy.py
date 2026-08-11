@@ -30,16 +30,26 @@ class D6StructuralConfidencePolicyTests(unittest.TestCase):
         self.assertFalse(d6["authoritative_v01_mutation_authorised"])
         self.assertFalse(d6["authoritative_v02_replacement_authorised"])
 
-    def test_current_paired_candidate_keeps_confidence_absent(self) -> None:
+    def test_d17_avoids_manufacturing_confidence_by_emitting_no_v02_edge(self) -> None:
         candidate = json.loads(PAIR.read_text(encoding="utf-8"))
         self.assertEqual("d6-structural-relation-confidence", candidate["confidence_policy_ref"])
+        self.assertEqual(
+            "d17-neurodiversity-legacy-structural-disposition",
+            candidate["structural_disposition_decision_ref"],
+        )
         for obj in candidate["objects"]:
             relation = obj["structural_relation"]
+            self.assertEqual("legacy_retained_unmapped", relation["disposition"])
+            self.assertFalse(relation["emit_v02_semantic_edge"])
+            self.assertNotIn("type", relation)
+            self.assertNotIn("target", relation)
             self.assertNotIn("confidence", relation)
-            self.assertEqual("explicit_enrichment_or_schema_policy_required", relation["confidence_status"])
+            self.assertEqual("not_required_without_v02_edge", relation["confidence_status"])
             self.assertEqual("d6-structural-relation-confidence", relation["confidence_policy_ref"])
         self.assertFalse(candidate["authorisations"]["infer_or_default_structural_confidence"])
         self.assertFalse(candidate["authorisations"]["use_not_applicable_as_confidence_shortcut"])
+        self.assertFalse(candidate["authorisations"]["paired_structural_confidence_required_for_legacy_pair"])
+        self.assertFalse(candidate["authorisations"]["new_semantic_graph_relation_authorised"])
 
     def test_authoritative_sources_remain_exact(self) -> None:
         self.assertEqual(AUTISM_BLOB, git_blob_sha(AUTISM))
