@@ -209,6 +209,39 @@
       "authoritative_v02_replacement_authorised": false,
       "schema_change_authorised": false,
       "publication_or_deployment_authorised": false
+    },
+    {
+      "id": "d15-embedded-uncertainty-lossless-representation",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "a9bed79b827f6308cbaa8f2a11edda1b9c5d3da8",
+      "scope": "Migration policy direction for preserving v0.1 embedded uncertainties in future non-authoritative v0.2 migration candidates; exact schema syntax and implementation remain separately reviewable.",
+      "supersedes_research_decision_candidate": {
+        "path": "migration-candidates/autism-neurodiversity/uncertainty-shape-research.json",
+        "id": "nd-embedded-uncertainty-lossless-representation"
+      },
+      "accepted_policy": {
+        "preserve_one_legacy_uncertainty_as_one_embedded_uncertainty_by_default": true,
+        "preserve_multiple_reduction_or_reopening_routes_as_distinct_items": true,
+        "preserve_lifecycle_state_explicitly": true,
+        "preserve_legacy_interrogative_wording_without_forced_declarative_conversion": true,
+        "question_promotion_requires_separate_explicit_justification": true
+      },
+      "deferred_implementation_decisions": [
+        "Exact v0.2 field names for embedded uncertainty text and plural conditions.",
+        "Whether the schema uses a canonical plural array only or a compatibility union during transition.",
+        "Final embedded-Uncertainty lifecycle vocabulary and mappings from v0.1 status values.",
+        "Whether any specific current uncertainty independently qualifies for promotion to a standalone Question."
+      ],
+      "schema_change_authorised": false,
+      "validator_change_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "automatic_question_promotion_authorised": false,
+      "uncertainty_split_authorised": false,
+      "list_flattening_authorised": false,
+      "status_remapping_authorised": false,
+      "publication_or_deployment_authorised": false
     }
   ]
 }
