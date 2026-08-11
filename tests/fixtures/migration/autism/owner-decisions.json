@@ -92,6 +92,27 @@
       "authoritative_v01_mutation_authorised": false,
       "authoritative_v02_replacement_authorised": false,
       "reopening_condition": "Reopen the missing-confidence blocker only when an evidence-backed confidence value is proposed for explicit review or a separate structural-confidence schema policy is proposed and accepted."
+    },
+    {
+      "id": "d7-autism-who-perspective-framing",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "cae42eaf485f91f2920dcc1a15176bc335286719",
+      "scope": "Future non-authoritative v0.2 Autism WHO Perspective candidate only.",
+      "perspective_id": "autism-perspective-clinical",
+      "accepted_fields": {
+        "held_by.scope": "WHO institutional global public-health guidance on autism; not a statement representing all clinicians, autistic people, families, researchers or WHO Member States individually.",
+        "reasoning": "WHO frames autism as diverse, with variable and evolving abilities and needs, and links health and quality of life to accessible, inclusive, person-responsive services plus community and societal support.",
+        "scope": "Global public-health description of autism, health and care needs, inclusion and support across the life course; excludes individual diagnosis and does not purport to capture the full range of autistic lived experience or community perspectives."
+      },
+      "evidence_route": [
+        "https://www.who.int/news-room/fact-sheets/detail/autism-spectrum-disorders",
+        "https://www.who.int/about/"
+      ],
+      "authoritative_perspective_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "publication_or_deployment_authorised": false
     }
   ]
 }
