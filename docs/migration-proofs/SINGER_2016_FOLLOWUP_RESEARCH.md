@@ -19,11 +19,11 @@ Result: keep `2016-07-03` as a secondary-catalogue candidate. It is **not ready 
 
 The evidence is materially stronger than at D13.
 
-Singer's own July 2016 announcement of the Kindle edition describes the work as operating from post-modern, social-constructionist, feminist and disability-rights perspectives while also criticizing social-constructionist fundamentalism. That is first-party, edition-specific evidence that the work does not reduce its position to a simple social-model-only account.
+Singer's July 2016 announcement identifies the Kindle edition as the republished thesis plus a new introduction and reproduces a publisher's blurb describing the work as operating from post-modern, social-constructionist, feminist and disability-rights perspectives while criticizing social-constructionist fundamentalism. That is first-party evidence for the edition identity and a first-party-hosted description of its framing; it is not a page-level copy of the Kindle text.
 
-Patrick Dwyer's peer-reviewed 2022 article in *Human Development* (`doi:10.1159/000523723`) cites Singer (2016) by Kindle location numbers and characterises Singer's approach as rejecting a simple Medical Model versus Social Model binary and occupying a middle ground. Dwyer also explains that this middle-ground approach can recognise disability, supports and limited individual interventions without making normalization or cure the goal.
+Patrick Dwyer's peer-reviewed 2022 article in *Human Development* (`doi:10.1159/000523723`) cites Singer (2016) by Kindle location numbers and characterises Singer's position as rejecting a simple Medical Model versus Social Model binary and occupying a middle ground. Dwyer later proposes a middle-ground neurodiversity approach that can recognise disability, supports and limited individual interventions without making normalization or cure the goal. Those later prescriptive details are Dwyer's proposal and are not attributed here to Singer.
 
-Result: the 2016 Kindle -> Neurodiversity Claim 2 `compatible` binding is now an **owner-review candidate after stronger edition-specific evidence**. It remains unaccepted until an explicit owner decision.
+Result: the 2016 Kindle -> Neurodiversity Claim 2 `compatible` binding is now an **owner-review candidate after stronger edition-specific evidence**. The evidence materially strengthens compatibility without treating Dwyer's later framework as Singer's own. The binding remains unaccepted until an explicit owner decision.
 
 ## Preserved boundaries
 
