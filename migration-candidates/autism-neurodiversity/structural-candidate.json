@@ -9,7 +9,8 @@
   "accepted_owner_decisions": [
     "d7-autism-who-perspective-framing",
     "d8-neurodiversity-botha-citation-correction",
-    "d9-neurodiversity-collective-perspective-framing"
+    "d9-neurodiversity-collective-perspective-framing",
+    "d10-neurodiversity-paradigm-perspective-framing"
   ],
   "owner_decision_refs": [
     "migration-candidates/autism-neurodiversity/owner-decisions.json"
@@ -95,11 +96,6 @@
       "detail": "Neurodiversity has list-valued legacy uncertainty reduction conditions and no accepted v0.2 mapping decision."
     },
     {
-      "id": "neurodiversity-perspective-framing",
-      "kind": "partial_owner_decision",
-      "detail": "D9 accepts the evidence-backed held_by.scope, reasoning and scope fields for neurodiversity-perspective-collective only. The separate neurodiversity-perspective-paradigm framing proposal remains an owner decision."
-    },
-    {
       "id": "neurodiversity-adhd-structural-edge",
       "kind": "structural_dependency",
       "detail": "Neurodiversity also has broader_than -> adhd. D5 does not authorise expanding the paired candidate to ADHD, so the edge remains separately unresolved."
@@ -117,6 +113,8 @@
     "autism_who_perspective_framing_accepted": true,
     "neurodiversity_botha_citation_correction_accepted": true,
     "neurodiversity_collective_perspective_framing_accepted": true,
+    "neurodiversity_paradigm_perspective_framing_accepted": true,
+    "neurodiversity_all_perspective_framings_accepted": true,
     "neurodiversity_research_accepts_pending_owner_decisions": false,
     "neurodiversity_research_accepts_other_pending_owner_decisions": false
   }

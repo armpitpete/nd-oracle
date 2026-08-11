@@ -13,6 +13,7 @@ RESEARCH = ROOT / "migration-candidates" / "autism-neurodiversity" / "neurodiver
 PAIR = ROOT / "migration-candidates" / "autism-neurodiversity" / "structural-candidate.json"
 SOURCE_BLOB = "5a38bc4250079412dd3f4da1d598dfcab984ca66"
 D9_BASE = "3365190d8acc00c80439fa079f13de17c1346612"
+D9_ID = "d9-neurodiversity-collective-perspective-framing"
 PERSPECTIVE_ID = "neurodiversity-perspective-collective"
 EXPECTED_FIELDS = {
     "held_by.scope": "Botha, Chapman, Giwa Onaiwu, Kapp, Stannard Ashley and Walker as an international group of autistic scholars writing on the historical origins of neurodiversity; not a statement representing all autistic people or all neurodiversity scholarship.",
@@ -27,7 +28,7 @@ class D9NeurodiversityCollectivePerspectiveFramingTests(unittest.TestCase):
 
     def d9(self) -> dict:
         decisions = self.load(DECISIONS)["decisions"]
-        return next(item for item in decisions if item["id"] == "d9-neurodiversity-collective-perspective-framing")
+        return next(item for item in decisions if item["id"] == D9_ID)
 
     def test_d9_records_exact_owner_acceptance(self) -> None:
         decision = self.d9()
@@ -54,13 +55,10 @@ class D9NeurodiversityCollectivePerspectiveFramingTests(unittest.TestCase):
         self.assertNotIn("reasoning", perspective)
         self.assertNotIn("scope", perspective)
 
-    def test_pair_binds_d9_without_closing_other_blockers(self) -> None:
+    def test_pair_preserves_d9_without_freezing_later_governance_state(self) -> None:
         pair = self.load(PAIR)
-        self.assertIn("d9-neurodiversity-collective-perspective-framing", pair["accepted_owner_decisions"])
+        self.assertIn(D9_ID, pair["accepted_owner_decisions"])
         self.assertTrue(pair["authorisations"]["neurodiversity_collective_perspective_framing_accepted"])
-        blocker = next(item for item in pair["blockers"] if item["id"] == "neurodiversity-perspective-framing")
-        self.assertEqual("partial_owner_decision", blocker["kind"])
-        self.assertIn("neurodiversity-perspective-paradigm", blocker["detail"])
         self.assertTrue(any(item["id"] == "neurodiversity-uncertainty-shape" for item in pair["blockers"]))
         self.assertTrue(any(item["id"] == "neurodiversity-adhd-structural-edge" for item in pair["blockers"]))
         relations = [item["structural_relation"] for item in pair["objects"]]
