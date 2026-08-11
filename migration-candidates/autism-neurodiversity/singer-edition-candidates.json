@@ -4,7 +4,8 @@
   "decision_ref": "d11-singer-edition-identity-preservation",
   "accepted_enrichment_decision_refs": [
     "d12-singer-2017-date-enrichment",
-    "d13-singer-edition-specific-contribution-bindings"
+    "d13-singer-edition-specific-contribution-bindings",
+    "d14-singer-2016-claim2-binding-followup"
   ],
   "authoritative": false,
   "research_refs": [
@@ -42,25 +43,24 @@
       "full_schema_date_status": "not_accepted_by_d11",
       "date_research_status": "secondary_catalogue_candidate_still_not_ready_for_verified_enrichment",
       "followup_research_ref": "migration-candidates/autism-neurodiversity/singer-2016-followup-research.json",
-      "contribution_status": "claim_1_accepted_by_d13_claim_2_owner_review_candidate_after_followup",
-      "contribution_research_status": "claim_1_accepted_claim_2_owner_review_ready_after_stronger_edition_specific_evidence",
+      "contribution_status": "claim_1_accepted_by_d13_claim_2_accepted_by_d14",
+      "contribution_research_status": "claim_1_and_claim_2_accepted_after_followup_owner_decision",
       "accepted_contribution_bindings": [
         {
           "claim_ref": "neurodiversity#neurodiversity-claim-1",
           "role": "compatible",
           "decision_ref": "d13-singer-edition-specific-contribution-bindings",
           "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2016-kindle.contribution_bindings.neurodiversity-claim-1"
-        }
-      ],
-      "pending_contribution_bindings": [
+        },
         {
           "claim_ref": "neurodiversity#neurodiversity-claim-2",
           "role": "compatible",
-          "status": "owner_review_candidate_after_stronger_edition_specific_evidence",
+          "decision_ref": "d14-singer-2016-claim2-binding-followup",
           "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2016-kindle.contribution_bindings.neurodiversity-claim-2",
           "followup_research_ref": "migration-candidates/autism-neurodiversity/singer-2016-followup-research.json#claim_2_binding_assessment"
         }
-      ]
+      ],
+      "pending_contribution_bindings": []
     },
     {
       "id": "neurodiversity-source-singer-2017-revised-print",
