@@ -15,7 +15,8 @@
     "d12-singer-2017-date-enrichment",
     "d13-singer-edition-specific-contribution-bindings",
     "d14-singer-2016-claim2-binding-followup",
-    "d15-embedded-uncertainty-lossless-representation"
+    "d15-embedded-uncertainty-lossless-representation",
+    "d16-embedded-uncertainty-schema-implementation"
   ],
   "owner_decision_refs": [
     "migration-candidates/autism-neurodiversity/owner-decisions.json"
@@ -25,7 +26,8 @@
     "migration-candidates/autism-neurodiversity/singer-edition-candidates.json",
     "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json",
     "migration-candidates/autism-neurodiversity/singer-2016-followup-research.json",
-    "migration-candidates/autism-neurodiversity/uncertainty-shape-research.json"
+    "migration-candidates/autism-neurodiversity/uncertainty-shape-research.json",
+    "migration-candidates/autism-neurodiversity/embedded-uncertainty-schema-implementation-candidate.json"
   ],
   "sources": [
     {
@@ -91,9 +93,9 @@
     },
     {
       "id": "autism-uncertainty-shape",
-      "kind": "accepted_policy_schema_implementation_pending",
-      "decision_ref": "d15-embedded-uncertainty-lossless-representation",
-      "detail": "D15 accepts the lossless embedded-Uncertainty policy direction: one legacy uncertainty remains one embedded uncertainty by default, multiple reduction/reopening routes remain distinct, lifecycle state remains explicit, and legacy interrogative wording is not forcibly converted into a declarative statement. Exact v0.2 schema syntax, validator mechanics, status mappings, and any Question promotion remain unaccepted, so the current schema still cannot complete authoritative conversion."
+      "kind": "accepted_schema_implementation",
+      "decision_ref": "d16-embedded-uncertainty-schema-implementation",
+      "detail": "D16 accepts the exact D15 embedded-Uncertainty implementation: neutral text, canonical plural reopening_or_reduction_conditions preserving order and duplicates, direct legacy lifecycle vocabulary with identity-only mapping, and no compatibility union. This uncertainty-shape issue is resolved at schema level; authoritative Autism migration remains separately unauthorised."
     },
     {
       "id": "neurodiversity-evidence-enrichment",
@@ -102,9 +104,9 @@
     },
     {
       "id": "neurodiversity-uncertainty-shape",
-      "kind": "accepted_policy_schema_implementation_pending",
-      "decision_ref": "d15-embedded-uncertainty-lossless-representation",
-      "detail": "D15 resolves the policy direction for Neurodiversity uncertainty preservation but does not authorise schema or validator mutation. The current v0.2 embedded-Uncertainty shape still lacks native plural reduction/reopening routes and lifecycle state, so implementation remains a separate protected lane."
+      "kind": "accepted_schema_implementation",
+      "decision_ref": "d16-embedded-uncertainty-schema-implementation",
+      "detail": "D16 resolves the Neurodiversity uncertainty-shape implementation at schema level using the exact D15-compatible lossless representation. This does not authorise authoritative Neurodiversity migration or replacement."
     },
     {
       "id": "neurodiversity-adhd-structural-edge",
@@ -138,8 +140,9 @@
     "neurodiversity_singer_selected_contribution_bindings_accepted": true,
     "neurodiversity_singer_2016_claim_2_contribution_binding_accepted": true,
     "embedded_uncertainty_lossless_policy_accepted": true,
-    "embedded_uncertainty_schema_change_authorised": false,
-    "embedded_uncertainty_validator_change_authorised": false,
+    "embedded_uncertainty_schema_implementation_accepted": true,
+    "embedded_uncertainty_schema_change_authorised": true,
+    "embedded_uncertainty_validator_change_authorised": true,
     "automatic_question_promotion_authorised": false,
     "uncertainty_split_authorised": false,
     "uncertainty_list_flattening_authorised": false,
