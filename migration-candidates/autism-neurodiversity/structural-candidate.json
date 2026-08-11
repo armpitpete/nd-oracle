@@ -7,7 +7,11 @@
   "decision_ref": "d5-autism-neurodiversity-structural-closure",
   "confidence_policy_ref": "d6-structural-relation-confidence",
   "accepted_owner_decisions": [
-    "d7-autism-who-perspective-framing"
+    "d7-autism-who-perspective-framing",
+    "d8-neurodiversity-botha-citation-correction"
+  ],
+  "owner_decision_refs": [
+    "migration-candidates/autism-neurodiversity/owner-decisions.json"
   ],
   "research_refs": [
     "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json"
@@ -82,7 +86,7 @@
     {
       "id": "neurodiversity-evidence-enrichment",
       "kind": "research_prepared_owner_decisions_pending",
-      "detail": "Evidence-backed Neurodiversity proposals are prepared. Botha title/date/authorship and claim-1 contribution semantics are verified; Singer title/authorship and both contribution proposals are evidence-backed, but Singer date/edition identity remains unresolved and the verified Botha citation correction still requires owner acceptance."
+      "detail": "Evidence-backed Neurodiversity proposals are prepared. D8 accepts the verified Botha citation/DOI correction for the future non-authoritative v0.2 Botha Evidence candidate while preserving v0.1 unchanged. Singer title/authorship and both contribution proposals are evidence-backed, but Singer date/edition identity remains unresolved."
     },
     {
       "id": "neurodiversity-uncertainty-shape",
@@ -110,6 +114,8 @@
     "infer_or_default_structural_confidence": false,
     "use_not_applicable_as_confidence_shortcut": false,
     "autism_who_perspective_framing_accepted": true,
-    "neurodiversity_research_accepts_pending_owner_decisions": false
+    "neurodiversity_botha_citation_correction_accepted": true,
+    "neurodiversity_research_accepts_pending_owner_decisions": false,
+    "neurodiversity_research_accepts_other_pending_owner_decisions": false
   }
 }
