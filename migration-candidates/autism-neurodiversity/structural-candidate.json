@@ -12,7 +12,8 @@
     "d9-neurodiversity-collective-perspective-framing",
     "d10-neurodiversity-paradigm-perspective-framing",
     "d11-singer-edition-identity-preservation",
-    "d12-singer-2017-date-enrichment"
+    "d12-singer-2017-date-enrichment",
+    "d13-singer-edition-specific-contribution-bindings"
   ],
   "owner_decision_refs": [
     "migration-candidates/autism-neurodiversity/owner-decisions.json"
@@ -91,8 +92,8 @@
     },
     {
       "id": "neurodiversity-evidence-enrichment",
-      "kind": "2017_date_accepted_contribution_review_pending",
-      "detail": "D8 accepts the Botha correction, D11 preserves separate Singer edition identities, and D12 accepts 2017-09-05 for the future non-authoritative revised-print Evidence identity. No Singer contribution binding is accepted. The 2017 compatible Claim 1 and Claim 2 bindings and the 2016 Claim 1 binding remain owner-review candidates; the 2016 day-level date and Claim 2 binding remain deliberately weaker pending stronger edition-level evidence/direct text."
+      "kind": "three_singer_bindings_accepted_2016_claim2_and_date_pending",
+      "detail": "D8 accepts the Botha correction, D11 preserves separate Singer edition identities, D12 accepts 2017-09-05 for the future non-authoritative revised-print Evidence identity, and D13 accepts three edition-specific compatible bindings: 2016 Kindle to Claim 1, 2017 revised print to Claim 1, and 2017 revised print to Claim 2. The 2016 Kindle Claim 2 binding remains pending stronger direct-text evidence, the 2016 day-level date remains unaccepted, and no Claim support is copied automatically between editions."
     },
     {
       "id": "neurodiversity-uncertainty-shape",
@@ -127,6 +128,8 @@
     "neurodiversity_singer_2017_full_date_accepted": true,
     "neurodiversity_singer_2016_full_date_accepted": false,
     "neurodiversity_singer_contribution_bindings_accepted": false,
+    "neurodiversity_singer_selected_contribution_bindings_accepted": true,
+    "neurodiversity_singer_2016_claim_2_contribution_binding_accepted": false,
     "neurodiversity_research_accepts_pending_owner_decisions": false,
     "neurodiversity_research_accepts_other_pending_owner_decisions": false
   }
