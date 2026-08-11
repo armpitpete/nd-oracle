@@ -18,7 +18,16 @@
     },
     {
       "id": "d2-related-to-mapping",
-      "status": "pending"
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "274b27e66a6c548575bf7774fdd204c78fe4624e",
+      "scope": "The two Autism v0.1 related_to relation units remain recoverable as legacy-retained-unmapped migration data until a later explicit relation-migration policy or individual semantic review provides a non-fabricating v0.2 representation.",
+      "accepted_disposition": "legacy_retained_unmapped",
+      "map_to_associated_with_authorised": false,
+      "invent_relation_confidence_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "reopening_condition": "Reopen only if a later accepted relation-migration policy can represent the legacy relation without inventing confidence, or if an individual relation is explicitly reviewed as a new semantic act."
     },
     {
       "id": "d3-uncertainty-reduction-shape",

@@ -1,10 +1,12 @@
 # Autism migration decision log
 
-Status: **owner decision pending**. D1 is accepted. D2–D5 remain pending. No authoritative replacement is authorised by this file.
+Status: **owner decision pending**. D1 and D2 are accepted. D3–D5 remain pending. No authoritative replacement is authorised by this file.
 
 Research pass: 2026-08-11, against repository `main` `0f6042e8841149da0485fe1b279dcd1bc9e5ff1f` and unchanged authoritative Autism blob `b2d3809ecfcdb1d81c793a2401f0533a4b17ea98`.
 
 Owner decision D1 was accepted on 2026-08-11 against protected repository `main` `ebb6439d265a2e53920818aec9bb001940f6511d`.
+
+Owner decision D2 was accepted on 2026-08-11 against protected repository `main` `274b27e66a6c548575bf7774fdd204c78fe4624e`.
 
 ## Evidence-backed enrichment findings
 
@@ -48,7 +50,7 @@ but PMID `32711809` and DOI `10.1016/bs.pmbts.2020.04.020` identify the authors 
 
 The v0.1 object remains unchanged.
 
-## Accepted decision
+## Accepted decisions
 
 ### D1 — Correct the neurobiology citation in the future v0.2 Evidence object — **ACCEPTED**
 
@@ -65,7 +67,22 @@ Evidence routes:
 
 **Boundary:** this decision does not authorise mutation of `objects/concepts/autism.json`, authoritative v0.2 replacement, migration of Neurodiversity, or acceptance of D2–D5.
 
-The machine-readable record is `owner-decisions.json`.
+### D2 — Legacy `related_to` mapping — **ACCEPTED AS DEFERRED MAPPING**
+
+**Accepted rule:** retain both Autism v0.1 `related_to` relations as `legacy_retained_unmapped` migration units. Do not map them to v0.2 `associated_with`, and do not invent relation confidence.
+
+The exact retained legacy relations are:
+
+- `related_to -> sensory-processing` with note `Sensory differences are common but heterogeneous.`;
+- `related_to -> executive-function` with note `Executive demands can shape daily access and support; this is not a defining equivalence.`
+
+**Reason:** `associated_with` is only the nearest v0.2 vocabulary, not an exact deterministic equivalent, and v0.2 relations additionally require a confidence value absent from v0.1. Assigning `low`, `moderate`, `not_applicable`, or another confidence merely to make the schema pass would manufacture semantics.
+
+**Reopening condition:** revisit only if a later accepted relation-migration policy can represent the legacy relation without inventing confidence, or if an individual relation is explicitly reviewed as a new semantic act.
+
+**Boundary:** D2 does not delete the relations, change the authoritative v0.1 Autism object, authorise `associated_with`, authorise a confidence value, construct an authoritative v0.2 candidate, or accept D3–D5.
+
+The machine-readable decision records are in `owner-decisions.json`; the exact legacy relation payloads remain recoverable in `preservation-ledger.json`.
 
 ## Perspective proposals — not accepted
 
@@ -86,18 +103,6 @@ Proposed Perspective `scope`:
 These remain `owner_decision` proposals because they are framing choices rather than raw source metadata.
 
 ## Pending decision candidates
-
-### D2 — Legacy `related_to` mapping — **PENDING**
-
-The nearest v0.2 vocabulary is `associated_with`, but this is not yet safely mechanical. Every v0.2 relation also requires `confidence`, while the two v0.1 `related_to` records contain no confidence field.
-
-Options:
-
-1. accept `related_to -> associated_with` plus a separately governed migration rule for missing relation confidence;
-2. retain the relations as legacy-unmapped until v0.2 has a non-fabricating representation for missing legacy confidence;
-3. review each relation individually as a new semantic act.
-
-**Recommendation:** option 2 for now. Do not invent `low`, `moderate`, or `not_applicable` merely to satisfy the schema.
 
 ### D3 — List-valued `what_would_reduce_it` — **PENDING**
 
