@@ -109,6 +109,33 @@
       "authoritative_v02_replacement_authorised": false,
       "schema_change_authorised": false,
       "publication_or_deployment_authorised": false
+    },
+    {
+      "id": "d12-singer-2017-date-enrichment",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "f56355b7edaec7fad020bebeab0d80ec04ebc37e",
+      "scope": "Future non-authoritative v0.2 Neurodiversity Singer revised-print Evidence identity candidate only.",
+      "evidence_id": "neurodiversity-source-singer-2017-revised-print",
+      "supersedes_research_decision_candidate": {
+        "path": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json",
+        "id": "nd-singer-2017-date-enrichment"
+      },
+      "accepted_full_publication_date": "2017-09-05",
+      "basis": "ISBN-bound catalogue corroboration for the 82-page revised 2017 print identity using ISBN 9780648154709.",
+      "evidence_route": [
+        "https://wellcomecollection.org/works/ywrdd8ff",
+        "https://books.google.com/books/about/NeuroDiversity.html?id=Ox_7uQEACAAJ",
+        "https://openlibrary.org/books/OL30658778M/NeuroDiversity"
+      ],
+      "preserve_authoritative_v01_source_unchanged": true,
+      "accept_2016_full_date": false,
+      "accept_any_contribution_binding": false,
+      "authoritative_evidence_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "schema_change_authorised": false,
+      "publication_or_deployment_authorised": false
     }
   ]
 }
