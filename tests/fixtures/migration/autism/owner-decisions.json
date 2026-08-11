@@ -76,6 +76,22 @@
       "authoritative_neurodiversity_v01_mutation_authorised": false,
       "authoritative_v02_replacement_authorised": false,
       "reopening_condition": "The structural dependency may be closed only after a paired non-authoritative Autism and Neurodiversity candidate is prepared and validates the reciprocal v0.2 relation without weakening the reciprocity rule."
+    },
+    {
+      "id": "d6-structural-relation-confidence",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "653938871190b454696df12abcc5bc0260ce19fd",
+      "scope": "Migrated structural broader_than and narrower_than relations with no legacy confidence must remain without a confidence value until evidence-backed enrichment or a separately accepted structural-confidence schema policy supplies a non-fabricating representation.",
+      "infer_or_default_confidence_authorised": false,
+      "use_not_applicable_as_validation_shortcut_authorised": false,
+      "evidence_backed_confidence_enrichment_allowed": true,
+      "separate_structural_confidence_schema_policy_allowed": true,
+      "current_candidate_confidence_must_remain_absent": true,
+      "schema_change_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "reopening_condition": "Reopen the missing-confidence blocker only when an evidence-backed confidence value is proposed for explicit review or a separate structural-confidence schema policy is proposed and accepted."
     }
   ]
 }
