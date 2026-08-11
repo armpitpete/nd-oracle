@@ -116,7 +116,8 @@ class D17NeurodiversityLegacyStructuralDispositionTests(unittest.TestCase):
         doc = DOC.read_text(encoding="utf-8")
         self.assertIn("legacy_retained_unmapped", doc)
         self.assertIn("do **not** emit", doc)
-        self.assertIn("paired migration candidate itself remains untouched", doc.lower() if False else "paired migration candidate itself remains untouched")
+        self.assertIn("mutation of `structural-candidate.json`", doc)
+        self.assertIn("Those remain separately protected gates.", doc)
 
 
 if __name__ == "__main__":
