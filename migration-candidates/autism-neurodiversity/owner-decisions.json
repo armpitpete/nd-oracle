@@ -50,6 +50,32 @@
       "authoritative_v02_replacement_authorised": false,
       "schema_change_authorised": false,
       "publication_or_deployment_authorised": false
+    },
+    {
+      "id": "d10-neurodiversity-paradigm-perspective-framing",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "de2d111cb465d30c03b90f99eb4f43781be9b16c",
+      "scope": "Future non-authoritative v0.2 Neurodiversity paradigm Perspective candidate only.",
+      "perspective_id": "neurodiversity-perspective-paradigm",
+      "supersedes_research_decision_candidate": {
+        "path": "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json",
+        "id": "nd-paradigm-perspective-framing"
+      },
+      "accepted_fields": {
+        "held_by.scope": "Neurodiversity advocates and scholars using disability-rights, sociological and inclusion-oriented framings; not a claim that all neurodivergent people, clinicians, researchers or advocates hold one position.",
+        "reasoning": "Singer's work situates neurological variation within disability-rights, social-constructionist and feminist analysis, combines autobiographical and autistic-community observation, and argues for balancing medical accounts with sociological or adaptive understandings rather than treating diagnosis as the whole meaning of difference.",
+        "scope": "A social and political framing of neurological variation, disability, rights, environment, inclusion and movement-building; excludes individual diagnosis, person-specific support prescriptions and any claim that all neurological differences are beneficial."
+      },
+      "evidence_route": [
+        "https://wellcomecollection.org/works/ywrdd8ff",
+        "https://www.bbk.ac.uk/about-us/fellows/judy-singer"
+      ],
+      "authoritative_perspective_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "schema_change_authorised": false,
+      "publication_or_deployment_authorised": false
     }
   ]
 }
