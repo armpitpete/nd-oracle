@@ -31,7 +31,17 @@
     },
     {
       "id": "d3-uncertainty-reduction-shape",
-      "status": "pending"
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "2979996e82f7461a4431476c8c297d67bdb1b236",
+      "scope": "The two Autism v0.1 uncertainty units retain their exact list-valued what_would_reduce_it arrays as legacy-retained-unmapped migration data until a later accepted schema-policy can represent one-or-many reduction conditions directly.",
+      "accepted_disposition": "legacy_retained_unmapped",
+      "flatten_to_prose_authorised": false,
+      "canonical_string_encoding_authorised": false,
+      "schema_change_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "reopening_condition": "Reopen only through an explicit schema-policy decision that preserves one-or-many reduction conditions directly, or another explicitly accepted reversible representation that does not erase item boundaries."
     },
     {
       "id": "d4-ecosystem-entry-points-home",
