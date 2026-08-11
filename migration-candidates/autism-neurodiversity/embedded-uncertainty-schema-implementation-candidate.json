@@ -5,7 +5,8 @@
   "authoritative": false,
   "authoritative_replacement": false,
   "governing_owner_decision": "d15-embedded-uncertainty-lossless-representation",
-  "scope": "Exact separately reviewable schema implementation candidate for the D15 lossless embedded-Uncertainty policy. This candidate changes the non-authoritative v0.2 schema/fixtures on its branch but does not migrate or modify authoritative v0.1 knowledge objects.",
+  "accepted_owner_decision": "d16-embedded-uncertainty-schema-implementation",
+  "scope": "Exact separately reviewable schema implementation candidate for the D15 lossless embedded-Uncertainty policy. D16 accepts this exact schema implementation, but does not migrate or modify authoritative v0.1 knowledge objects or authorise authoritative v0.2 replacement.",
   "schema_anchor_before_candidate": {
     "path": "schema/common-v0.2.json",
     "blob_sha": "2c0fc2344fcafde88340b8a5882e0d171246ea02",
@@ -53,7 +54,7 @@
       ],
       "mapping_policy": "identity_only",
       "semantic_remapping": false,
-      "rationale": "The exact v0.1 uncertainty lifecycle vocabulary is accepted directly so legacy state can be preserved without inventing a mapping. This candidate does not add new embedded-Uncertainty lifecycle meanings."
+      "rationale": "The exact v0.1 uncertainty lifecycle vocabulary is accepted directly so legacy state can be preserved without inventing a mapping. This implementation does not add new embedded-Uncertainty lifecycle meanings."
     },
     "compatibility_strategy": {
       "mode": "canonical_plural_shape_only",
@@ -96,8 +97,11 @@
   },
   "decision_candidate": {
     "id": "nd-embedded-uncertainty-schema-implementation",
-    "status": "owner_decision_required",
+    "status": "accepted",
+    "accepted_as": "d16-embedded-uncertainty-schema-implementation",
+    "accepted_on": "2026-08-11",
+    "accepted_against_main": "1bc63e07c7da026d2a2cba36bb05eb72980e7f19",
     "question": "Accept the exact D15 embedded-Uncertainty schema implementation candidate: neutral text, canonical plural reopening_or_reduction_conditions array preserving order and duplicates, direct legacy status vocabulary with identity-only mapping, and no compatibility union?",
-    "recommended_action": "Accept the exact implementation candidate only. If accepted, record the acceptance as D16 against the unchanged protected base, update the paired candidate from schema-implementation-pending to schema-implementation-accepted, revalidate the new exact head, and then present a guarded merge gate."
+    "accepted_answer": "yes"
   }
 }
