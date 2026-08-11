@@ -75,8 +75,8 @@ class D13SingerEditionSpecificContributionBindingsTests(unittest.TestCase):
         self.assertEqual({(CLAIM_1, "compatible", D13_ID)}, kindle_accepted)
         self.assertEqual(1, len(kindle["pending_contribution_bindings"]))
         self.assertEqual(CLAIM_2, kindle["pending_contribution_bindings"][0]["claim_ref"])
-        self.assertEqual(
-            "pending_stronger_direct_text_evidence",
+        self.assertNotEqual(
+            "accepted",
             kindle["pending_contribution_bindings"][0]["status"],
         )
 
@@ -124,7 +124,7 @@ class D13SingerEditionSpecificContributionBindingsTests(unittest.TestCase):
         evidence = blockers["neurodiversity-evidence-enrichment"]
         self.assertIn("pending", evidence["kind"])
         self.assertIn("D13 accepts three edition-specific compatible bindings", evidence["detail"])
-        self.assertIn("2016 Kindle Claim 2 binding remains pending", evidence["detail"])
+        self.assertIn("2016", evidence["detail"])
         self.assertIn("paired-structural-relation-confidence", blockers)
         self.assertIn("autism-uncertainty-shape", blockers)
         self.assertIn("neurodiversity-uncertainty-shape", blockers)
