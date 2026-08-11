@@ -59,9 +59,21 @@ Canonical cross-object claim references use `<object-id>#<claim-id>`. The valida
 
 ## Uncertainty and Question
 
-A local Uncertainty is an embedded limitation or unresolved boundary tied to a specific Claim, Evidence Contribution, or relation. It requires a stable local ID, statement, why it matters, and a reopening or reduction condition.
+A local Uncertainty is an embedded limitation or unresolved boundary tied to a specific Claim, Evidence Contribution, or relation. Under the D15 lossless implementation candidate it requires exactly:
 
-A Question is standalone only when the inquiry is independently reusable, navigable, or researchable. Local uncertainties do not need standalone Questions.
+- stable local `id`;
+- neutral non-blank `text` that may preserve interrogative or declarative wording verbatim;
+- non-blank `why_it_matters`;
+- one or more `reopening_or_reduction_conditions` as distinct ordered array items; and
+- explicit `status` using `open`, `partially_resolved`, or `none_identified`.
+
+The plural condition array deliberately does not require uniqueness because v0.1 allowed duplicate entries; migration must be able to preserve original order and duplicates without normalisation. The embedded-Uncertainty lifecycle vocabulary is accepted directly from v0.1 for identity-only migration and is distinct from the standalone Question lifecycle.
+
+A deterministic v0.1 uncertainty mapping therefore copies `question` to neutral `text` verbatim, copies `what_would_reduce_it` to `reopening_or_reduction_conditions` as the same ordered array, and copies `status` without semantic remapping. One legacy uncertainty remains one embedded uncertainty by default.
+
+The superseded v0.2 `statement` plus single-string `reopening_or_reduction_condition` shape is not retained as a compatibility union. No authoritative v0.2 objects depend on that earlier fixture-only shape; historical research and proof snapshots preserve it as historical state instead.
+
+A Question is standalone only when the inquiry is independently reusable, navigable, or researchable. Local uncertainties do not need standalone Questions, and migration must not promote them automatically.
 
 ## Evidence
 
@@ -90,6 +102,8 @@ An Experience represents an aggregated or published experiential pattern. It is 
 ## Typed references
 
 Important cross-object references either use a field whose target type is fixed, such as `evidence_ids`, or an explicit typed reference containing `type` and `id`. The validator rejects missing targets and target-type mismatches.
+
+Canonical claim references remain a special typed reference because they point to a local claim inside a permitted parent object.
 
 ## Relations
 
