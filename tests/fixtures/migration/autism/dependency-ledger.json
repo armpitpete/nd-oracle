@@ -8,7 +8,10 @@
       "dependent_object": "neurodiversity",
       "reason": "The accepted v0.2 structural relation requires a reciprocal broader_than relation in the candidate graph.",
       "resolution_status": "unresolved",
-      "resolution_evidence": []
+      "resolution_evidence": [
+        "objects/concepts/neurodiversity.json@blob:5a38bc4250079412dd3f4da1d598dfcab984ca66 contains v0.1 broader_than -> autism",
+        "Semantic reciprocity exists in v0.1, but current v0.2 validation requires both sides in v0.2 relation shape; no authoritative migration is authorised."
+      ]
     }
   ]
 }
