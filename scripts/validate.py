@@ -375,7 +375,7 @@ def validate_repository(root: Path = ROOT, fixture_root: Path | None = None) -> 
 
     ids = [obj.get("id") for _, obj in schema_valid]
     if len(ids) != len(set(ids)):
-        errors.append("duplicate object id across validation graph")
+        errors.append("duplicate object id across repository")
     objects_by_id = {obj.get("id"): obj for _, obj in schema_valid if obj.get("id")}
     all_ids = set(objects_by_id)
 
