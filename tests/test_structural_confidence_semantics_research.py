@@ -109,7 +109,6 @@ class StructuralConfidenceSemanticsResearchTests(unittest.TestCase):
         self.assertEqual(decision["id"], "nd-structural-semantics-before-confidence")
         self.assertEqual(decision["status"], "owner_decision_required")
         self.assertIn("do not yet choose a replacement relation type", decision["recommended_action"].lower())
-        self.assertIn("do not yet choose a replacement relation type", decision["recommended_action"].lower())
         self.assertFalse(research["boundaries"]["relation_type_change_authorised"])
         self.assertFalse(research["boundaries"]["relation_target_change_authorised"])
         self.assertFalse(research["boundaries"]["confidence_enrichment_authorised"])
