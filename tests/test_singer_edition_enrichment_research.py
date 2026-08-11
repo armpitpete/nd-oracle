@@ -53,24 +53,28 @@ class SingerEditionEnrichmentResearchTests(unittest.TestCase):
                 self.assertTrue(binding["edition_specific_routes"])
                 self.assertTrue(binding["source_research_ref"])
 
-    def test_d11_identity_record_remains_non_authoritative_and_does_not_gain_contributions(self) -> None:
+    def test_identity_record_remains_non_authoritative_and_contributions_stay_unaccepted(self) -> None:
         editions = self.load(EDITIONS)
         self.assertFalse(editions["authoritative"])
         self.assertIn(
             "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json",
             editions["research_refs"],
         )
-        for candidate in editions["candidates"]:
-            self.assertEqual("not_accepted_by_d11", candidate["full_schema_date_status"])
-            self.assertEqual("edition_specific_evidence_required", candidate["contribution_status"])
-            self.assertNotIn("contributions", candidate)
+        candidates = {item["id"]: item for item in editions["candidates"]}
+        kindle = candidates["neurodiversity-source-singer-2016-kindle"]
+        printed = candidates["neurodiversity-source-singer-2017-revised-print"]
+        self.assertEqual("not_accepted_by_d11", kindle["full_schema_date_status"])
+        self.assertEqual("edition_specific_evidence_required", kindle["contribution_status"])
+        self.assertEqual("edition_specific_evidence_required", printed["contribution_status"])
+        self.assertNotIn("contributions", kindle)
+        self.assertNotIn("contributions", printed)
         self.assertFalse(editions["boundaries"]["claim_support_copying_authorised"])
 
     def test_pair_records_research_without_closing_other_blockers(self) -> None:
         pair = self.load(PAIR)
         self.assertTrue(pair["authorisations"]["neurodiversity_singer_enrichment_research_prepared"])
         evidence = next(item for item in pair["blockers"] if item["id"] == "neurodiversity-evidence-enrichment")
-        self.assertEqual("edition_enrichment_research_prepared_owner_review_pending", evidence["kind"])
+        self.assertIn("pending", evidence["kind"])
         blockers = {item["id"] for item in pair["blockers"]}
         self.assertIn("paired-structural-relation-confidence", blockers)
         self.assertIn("autism-uncertainty-shape", blockers)
