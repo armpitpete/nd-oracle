@@ -8,7 +8,8 @@
   ],
   "authoritative": false,
   "research_refs": [
-    "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json"
+    "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json",
+    "migration-candidates/autism-neurodiversity/singer-2016-followup-research.json"
   ],
   "legacy_source": {
     "object_id": "neurodiversity",
@@ -34,12 +35,15 @@
       "publication_year": 2016,
       "format": "Kindle",
       "evidence_routes": [
-        "https://neurodiversity2.blogspot.com/p/bibliography-how-to-cite-my-work.html"
+        "https://neurodiversity2.blogspot.com/p/bibliography-how-to-cite-my-work.html",
+        "https://neurodiversity2.blogspot.com/2016/07/my-new-book-neurodiversity-birth-of-idea.html",
+        "https://doi.org/10.1159/000523723"
       ],
       "full_schema_date_status": "not_accepted_by_d11",
-      "date_research_status": "secondary_catalogue_candidate_not_yet_verified_enrichment",
-      "contribution_status": "claim_1_accepted_by_d13_claim_2_pending_direct_text",
-      "contribution_research_status": "claim_1_owner_review_candidate_claim_2_direct_text_preferred",
+      "date_research_status": "secondary_catalogue_candidate_still_not_ready_for_verified_enrichment",
+      "followup_research_ref": "migration-candidates/autism-neurodiversity/singer-2016-followup-research.json",
+      "contribution_status": "claim_1_accepted_by_d13_claim_2_owner_review_candidate_after_followup",
+      "contribution_research_status": "claim_1_accepted_claim_2_owner_review_ready_after_stronger_edition_specific_evidence",
       "accepted_contribution_bindings": [
         {
           "claim_ref": "neurodiversity#neurodiversity-claim-1",
@@ -52,8 +56,9 @@
         {
           "claim_ref": "neurodiversity#neurodiversity-claim-2",
           "role": "compatible",
-          "status": "pending_stronger_direct_text_evidence",
-          "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2016-kindle.contribution_bindings.neurodiversity-claim-2"
+          "status": "owner_review_candidate_after_stronger_edition_specific_evidence",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2016-kindle.contribution_bindings.neurodiversity-claim-2",
+          "followup_research_ref": "migration-candidates/autism-neurodiversity/singer-2016-followup-research.json#claim_2_binding_assessment"
         }
       ]
     },
