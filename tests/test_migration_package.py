@@ -12,6 +12,7 @@ from scripts.validate_migration import git_blob_sha, validate_package
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "tests" / "fixtures" / "migration" / "autism"
 SOURCE = ROOT / "objects" / "concepts" / "autism.json"
+AUTISM_V01_BLOB = "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98"
 
 
 class AutismMigrationPackageTests(unittest.TestCase):
@@ -40,7 +41,7 @@ class AutismMigrationPackageTests(unittest.TestCase):
         self.assertEqual("owner_decision_pending", manifest["package_status"])
         self.assertFalse(manifest["authoritative_replacement"])
 
-    def test_enrichment_pass_is_evidence_backed_but_not_owner_accepted(self) -> None:
+    def test_enrichment_pass_is_evidence_backed_with_perspective_decisions_pending(self) -> None:
         ledger = self.load("enrichment-ledger.json")
         verified = [item for item in ledger["entries"] if item["review_state"] == "verified"]
         pending = [item for item in ledger["entries"] if item["review_state"] == "pending"]
@@ -61,6 +62,29 @@ class AutismMigrationPackageTests(unittest.TestCase):
         self.assertIn("Lau", correction["proposed_value"])
         self.assertIn("conflicts", correction["limitations"][0].lower())
         self.assertIn("Kawakami", SOURCE.read_text(encoding="utf-8"))
+
+    def test_d1_accepts_corrected_future_citation_without_mutating_v01(self) -> None:
+        decisions = self.load("owner-decisions.json")["decisions"]
+        by_id = {item["id"]: item for item in decisions}
+        d1 = by_id["d1-neurobiology-citation-correction"]
+        self.assertEqual("accepted", d1["status"])
+        self.assertIn("Cheung", d1["accepted_value"])
+        self.assertIn("Lau", d1["accepted_value"])
+        self.assertTrue(d1["preserve_legacy_source_text"])
+        self.assertFalse(d1["authoritative_v01_mutation_authorised"])
+        self.assertFalse(d1["authoritative_v02_replacement_authorised"])
+        self.assertEqual(AUTISM_V01_BLOB, git_blob_sha(SOURCE))
+        self.assertIn("Kawakami, S. et al.", SOURCE.read_text(encoding="utf-8"))
+        pending = {item["id"] for item in decisions if item["status"] == "pending"}
+        self.assertEqual(
+            {
+                "d2-related-to-mapping",
+                "d3-uncertainty-reduction-shape",
+                "d4-ecosystem-entry-points-home",
+                "d5-autism-neurodiversity-structural-closure",
+            },
+            pending,
+        )
 
     def test_evidence_roles_remain_bounded(self) -> None:
         ledger = self.load("enrichment-ledger.json")

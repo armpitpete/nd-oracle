@@ -1,0 +1,36 @@
+{
+  "migration_contract_version": "0.2",
+  "decisions": [
+    {
+      "id": "d1-neurobiology-citation-correction",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "ebb6439d265a2e53920818aec9bb001940f6511d",
+      "scope": "Future non-authoritative v0.2 Autism Evidence candidate only; the authoritative v0.1 Autism object and its preserved source text remain unchanged.",
+      "accepted_value": "Cheung, Phoebe Pui Pui; Lau, Benson Wui Man. Neurobiology of sensory processing in autism spectrum disorder (2020).",
+      "evidence_route": [
+        "https://pubmed.ncbi.nlm.nih.gov/32711809/",
+        "https://doi.org/10.1016/bs.pmbts.2020.04.020"
+      ],
+      "preserve_legacy_source_text": true,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false
+    },
+    {
+      "id": "d2-related-to-mapping",
+      "status": "pending"
+    },
+    {
+      "id": "d3-uncertainty-reduction-shape",
+      "status": "pending"
+    },
+    {
+      "id": "d4-ecosystem-entry-points-home",
+      "status": "pending"
+    },
+    {
+      "id": "d5-autism-neurodiversity-structural-closure",
+      "status": "pending"
+    }
+  ]
+}
