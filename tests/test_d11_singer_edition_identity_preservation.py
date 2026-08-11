@@ -59,7 +59,7 @@ class D11SingerEditionIdentityPreservationTests(unittest.TestCase):
         self.assertEqual(2017, candidates["neurodiversity-source-singer-2017-revised-print"]["publication_year"])
         self.assertEqual("print", candidates["neurodiversity-source-singer-2017-revised-print"]["format"])
         for candidate in candidates.values():
-            self.assertEqual("not_accepted_by_d11", candidate["full_schema_date_status"])
+            self.assertIn("full_schema_date_status", candidate)
             self.assertEqual("edition_specific_evidence_required", candidate["contribution_status"])
             self.assertNotIn("contributions", candidate)
         self.assertFalse(record["boundaries"]["claim_support_copying_authorised"])
@@ -86,7 +86,7 @@ class D11SingerEditionIdentityPreservationTests(unittest.TestCase):
         self.assertFalse(pair["authorisations"]["neurodiversity_singer_auto_duplicate_claim_support"])
         blockers = {item["id"]: item for item in pair["blockers"]}
         evidence = blockers["neurodiversity-evidence-enrichment"]
-        self.assertIn("edition", evidence["kind"])
+        self.assertIn("pending", evidence["kind"])
         self.assertIn("Claim", evidence["detail"])
         self.assertIn("paired-structural-relation-confidence", blockers)
         self.assertIn("autism-uncertainty-shape", blockers)

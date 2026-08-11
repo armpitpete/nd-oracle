@@ -2,6 +2,9 @@
   "candidate_kind": "non_authoritative_evidence_identity_split",
   "migration_contract_version": "0.2",
   "decision_ref": "d11-singer-edition-identity-preservation",
+  "accepted_enrichment_decision_refs": [
+    "d12-singer-2017-date-enrichment"
+  ],
   "authoritative": false,
   "research_refs": [
     "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json"
@@ -44,12 +47,16 @@
       "authorship": "Judy Singer",
       "edition_identity": "revised 2017 print edition",
       "publication_year": 2017,
+      "publication_date": "2017-09-05",
       "format": "print",
       "evidence_routes": [
-        "https://wellcomecollection.org/works/ywrdd8ff"
+        "https://wellcomecollection.org/works/ywrdd8ff",
+        "https://books.google.com/books/about/NeuroDiversity.html?id=Ox_7uQEACAAJ",
+        "https://openlibrary.org/books/OL30658778M/NeuroDiversity"
       ],
-      "full_schema_date_status": "not_accepted_by_d11",
-      "date_research_status": "corroborated_catalogue_candidate",
+      "full_schema_date_status": "accepted_by_d12_for_future_non_authoritative_candidate",
+      "date_research_status": "owner_accepted_from_corroborated_catalogue_candidate",
+      "date_decision_ref": "d12-singer-2017-date-enrichment",
       "contribution_status": "edition_specific_evidence_required",
       "contribution_research_status": "claim_1_and_claim_2_owner_review_candidates"
     }
