@@ -8,7 +8,6 @@ ROOT = Path(__file__).resolve().parents[1]
 PAIR = ROOT / "migration-candidates" / "autism-neurodiversity" / "structural-candidate.json"
 DECISIONS = ROOT / "migration-candidates" / "autism-neurodiversity" / "owner-decisions.json"
 RESEARCH = ROOT / "migration-candidates" / "autism-neurodiversity" / "uncertainty-shape-research.json"
-COMMON_V02 = ROOT / "schema" / "common-v0.2.json"
 AUTISM = ROOT / "objects" / "concepts" / "autism.json"
 NEURODIVERSITY = ROOT / "objects" / "concepts" / "neurodiversity.json"
 DOC = ROOT / "docs" / "migration-proofs" / "D15_EMBEDDED_UNCERTAINTY_LOSSLESS_POLICY.md"
@@ -50,7 +49,7 @@ class D15EmbeddedUncertaintyLosslessPolicyTests(unittest.TestCase):
         self.assertTrue(policy["preserve_legacy_interrogative_wording_without_forced_declarative_conversion"])
         self.assertTrue(policy["question_promotion_requires_separate_explicit_justification"])
 
-    def test_d15_does_not_authorise_implementation_or_semantic_shortcuts(self) -> None:
+    def test_d15_does_not_itself_authorise_implementation_or_semantic_shortcuts(self) -> None:
         decisions = {item["id"]: item for item in load(DECISIONS)["decisions"]}
         d15 = decisions["d15-embedded-uncertainty-lossless-representation"]
 
@@ -81,7 +80,7 @@ class D15EmbeddedUncertaintyLosslessPolicyTests(unittest.TestCase):
         self.assertFalse(research["boundaries"]["schema_change_authorised"])
         self.assertFalse(research["boundaries"]["validator_change_authorised"])
 
-    def test_current_pair_records_policy_accepted_but_implementation_pending(self) -> None:
+    def test_pair_records_d15_policy_acceptance_until_later_decision_changes_stage(self) -> None:
         pair = load(PAIR)
         self.assertIn(
             "d15-embedded-uncertainty-lossless-representation",
@@ -92,45 +91,23 @@ class D15EmbeddedUncertaintyLosslessPolicyTests(unittest.TestCase):
             pair["research_refs"],
         )
 
-        blockers = {item["id"]: item for item in pair["blockers"]}
-        for blocker_id in ("autism-uncertainty-shape", "neurodiversity-uncertainty-shape"):
-            blocker = blockers[blocker_id]
-            self.assertEqual(blocker["kind"], "accepted_policy_schema_implementation_pending")
-            self.assertEqual(
-                blocker["decision_ref"],
-                "d15-embedded-uncertainty-lossless-representation",
-            )
-
         auth = pair["authorisations"]
         self.assertTrue(auth["embedded_uncertainty_lossless_policy_accepted"])
-        self.assertFalse(auth["embedded_uncertainty_schema_change_authorised"])
-        self.assertFalse(auth["embedded_uncertainty_validator_change_authorised"])
         self.assertFalse(auth["automatic_question_promotion_authorised"])
         self.assertFalse(auth["uncertainty_split_authorised"])
         self.assertFalse(auth["uncertainty_list_flattening_authorised"])
         self.assertFalse(auth["uncertainty_status_remapping_authorised"])
 
-    def test_schema_remains_pre_d15_implementation_shape(self) -> None:
-        common = load(COMMON_V02)["$defs"]["uncertainty"]
-        self.assertEqual(
-            common["required"],
-            ["id", "statement", "why_it_matters", "reopening_or_reduction_condition"],
-        )
-        self.assertNotIn("status", common["properties"])
-        self.assertEqual(
-            common["properties"]["reopening_or_reduction_condition"]["$ref"],
-            "#/$defs/nonBlankString",
-        )
-        self.assertEqual(git_blob_sha(COMMON_V02), "2c0fc2344fcafde88340b8a5882e0d171246ea02")
-
-    def test_authoritative_pair_sources_remain_unchanged(self) -> None:
-        self.assertEqual(git_blob_sha(AUTISM), "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98")
-        self.assertEqual(git_blob_sha(NEURODIVERSITY), "5a38bc4250079412dd3f4da1d598dfcab984ca66")
-
+    def test_d15_proof_preserves_pre_implementation_boundary_as_historical_state(self) -> None:
         doc = DOC.read_text(encoding="utf-8")
         self.assertIn("policy direction accepted", doc)
         self.assertIn("implementation not authorised", doc)
         self.assertIn("accepted_policy_schema_implementation_pending", doc)
+        self.assertIn("implemented `schema/common-v0.2.json` remains unchanged", doc)
+
+    def test_authoritative_pair_sources_remain_unchanged(self) -> None:
+        self.assertEqual(git_blob_sha(AUTISM), "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98")
+        self.assertEqual(git_blob_sha(NEURODIVERSITY), "5a38bc4250079412dd3f4da1d598dfcab984ca66")
 
 
 if __name__ == "__main__":
