@@ -1,6 +1,6 @@
 # Autism migration decision log
 
-Status: **migration decisions D1–D5 accepted**. The package remains non-authoritative and not ready for authoritative replacement: the three Perspective framing proposals remain pending and the Autism ↔ Neurodiversity structural dependency remains unresolved until a paired candidate is actually prepared and validates.
+Status: **migration decisions D1–D6 accepted**. The package remains non-authoritative and not ready for authoritative replacement: the three Perspective framing proposals remain pending; the paired Autism ↔ Neurodiversity candidate is prepared but its structural confidence field remains an explicit enrichment/schema-policy requirement; and the Neurodiversity → ADHD structural dependency remains unresolved.
 
 Research pass: 2026-08-11, against repository `main` `0f6042e8841149da0485fe1b279dcd1bc9e5ff1f` and unchanged authoritative Autism blob `b2d3809ecfcdb1d81c793a2401f0533a4b17ea98`.
 
@@ -13,6 +13,8 @@ Owner decision D3 was accepted on 2026-08-11 against protected repository `main`
 Owner decision D4 was accepted on 2026-08-11 against protected repository `main` `0cb73f1642f6a857049e41767bf69c677dccf0ac`.
 
 Owner decision D5 was accepted on 2026-08-11 against protected repository `main` `e2f535ad2abdb97750d54c7c30233a3c802a8e74`.
+
+Owner decision D6 was accepted on 2026-08-11 against protected repository `main` `653938871190b454696df12abcc5bc0260ce19fd`.
 
 ## Evidence-backed enrichment findings
 
@@ -133,13 +135,27 @@ The authoritative legacy reciprocal remains:
 
 **Reason:** semantic reciprocity already exists in v0.1, but the v0.2 validator requires both sides in v0.2 relation shape. Migrating Autism alone would therefore create an invalid structural candidate unless reciprocity validation were weakened, which is explicitly rejected.
 
-**Current dependency state:** still `unresolved`. Acceptance of the pairing policy does not itself create either candidate object or satisfy the v0.2 graph validator.
+**Current dependency state:** still `unresolved`. The paired non-authoritative candidate has now been prepared, but it cannot yet validate as complete v0.2 relation data because the legacy relations do not supply the required confidence field.
 
-**Closure condition:** prepare a paired non-authoritative Autism + Neurodiversity candidate and demonstrate that its reciprocal relation validates under the unchanged v0.2 reciprocity rule.
+**Closure condition:** demonstrate an exact paired v0.2 relation under the unchanged reciprocity rule once all required relation semantics have a non-fabricating representation.
 
 **Boundary:** D5 authorises preparation of that paired non-authoritative candidate only. It does not authorise mutation of either authoritative v0.1 object, authoritative replacement of either object, weakening of the reciprocity validator, deployment, or publication.
 
-The machine-readable decision records are in `owner-decisions.json`; exact retained relation, uncertainty and ecosystem payloads remain recoverable in `preservation-ledger.json`, and the unresolved structural dependency remains recorded in `dependency-ledger.json`.
+### D6 — Missing structural relation confidence — **ACCEPTED AS ENRICHMENT/SCHEMA-POLICY DEFERRAL**
+
+**Accepted rule:** do not infer or default `confidence` for migrated structural `broader_than` / `narrower_than` relations when the legacy relation contains no confidence value. Preserve the paired Autism ↔ Neurodiversity candidate without `confidence` until either an evidence-backed confidence value is proposed and reviewed or a separate structural-confidence schema policy is accepted.
+
+`not_applicable` is explicitly **not** authorised merely as a way to make the current v0.2 schema validate.
+
+**Reason:** the current schema requires a confidence field, but the authoritative v0.1 structural relations do not contain one. Supplying a default would turn a schema-completion step into invented knowledge. Using `not_applicable` without a semantic policy would hide that invention behind a nominally valid enum value.
+
+**Current state:** the policy choice is resolved, but the field itself remains unresolved. This is now an explicit enrichment/schema-policy requirement rather than an invitation to choose a convenient default.
+
+**Reopening condition:** revisit when an evidence-backed confidence value is proposed for explicit review or when a distinct structural-confidence schema policy is proposed. Acceptance of either remains a separate decision.
+
+**Boundary:** D6 authorises no confidence value, no schema change, no authoritative v0.1 mutation, no authoritative v0.2 replacement, and no weakening of reciprocity validation.
+
+The machine-readable decision records are in `owner-decisions.json`; exact retained relation, uncertainty and ecosystem payloads remain recoverable in `preservation-ledger.json`, and unresolved structural dependencies remain recorded in the dependency ledger.
 
 ## Perspective proposals — not accepted
 

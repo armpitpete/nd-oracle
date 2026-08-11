@@ -148,7 +148,7 @@ def _neurodiversity_preservation(source: dict) -> list[dict]:
                     disposition="structural_dependency",
                     dependency_ref="dependency-autism-neurodiversity",
                     unresolved_reason=(
-                        "D5 requires the reciprocal Autism/Neurodiversity pair, but the current v0.2 relation confidence is still absent from v0.1."
+                        "D5 requires the reciprocal Autism/Neurodiversity pair. D6 requires missing structural confidence to remain absent until evidence-backed enrichment or a separately accepted schema policy resolves it."
                     ),
                 )
             elif relation.get("type") == "broader_than" and target == "adhd":
@@ -223,14 +223,20 @@ def _neurodiversity_enrichment(source: dict) -> list[dict]:
         item for item in source["relations"]
         if item["type"] == "broader_than" and item["target_id"] == "autism"
     )
-    entries.append(
-        _pending_enrichment(
-            "decide-autism-neurodiversity-structural-confidence",
-            "paired-structural-relation:autism<->neurodiversity.confidence",
-            _relation_unit(autism_relation) + " | " + _relation_unit(neuro_relation),
-            owner_decision=True,
-        )
+    confidence = _pending_enrichment(
+        "resolve-autism-neurodiversity-structural-confidence",
+        "paired-structural-relation:autism<->neurodiversity.confidence",
+        _relation_unit(autism_relation) + " | " + _relation_unit(neuro_relation),
     )
+    confidence["supplied_by"] = (
+        "D6 structural-confidence policy accepted 2026-08-11; actual confidence value still requires evidence-backed enrichment or a separately accepted schema policy."
+    )
+    confidence["limitations"] = [
+        "D6 forbids inferring or defaulting confidence from legacy structural relations.",
+        "The value not_applicable must not be inserted merely to satisfy the current v0.2 schema.",
+        "No confidence value is proposed by this record."
+    ]
+    entries.append(confidence)
     return entries
 
 
@@ -283,7 +289,7 @@ def build_candidate(destination: Path) -> Path:
     autism_dependencies = _load(AUTISM_FIXTURE / "dependency-ledger.json")
     pair_dependency = copy.deepcopy(autism_dependencies["entries"][0])
     pair_dependency.setdefault("resolution_evidence", []).append(
-        "D5 paired structural candidate prepared from exact Autism and Neurodiversity v0.1 blobs; relation confidence remains unresolved, so the dependency is not closed."
+        "D5 paired structural candidate prepared from exact Autism and Neurodiversity v0.1 blobs. D6 forbids inferred/defaulted confidence, so the dependency remains unresolved until confidence is evidence-backed or a separate structural-confidence schema policy is accepted."
     )
     dependencies = {
         "migration_contract_version": "0.2",
@@ -322,7 +328,7 @@ def build_candidate(destination: Path) -> Path:
 
 D5 authorises preparation of a non-authoritative Autism + Neurodiversity paired structural candidate only. The exact source anchors are Autism blob `b2d3809ecfcdb1d81c793a2401f0533a4b17ea98` and Neurodiversity blob `5a38bc4250079412dd3f4da1d598dfcab984ca66`, against repository main `1b7e4261c70bd6a86346d34a1f08abf90c3deece`.
 
-The reciprocal legacy relation is preserved in `candidate/structural-pair.json`. No relation confidence is invented: both v0.1 relations lack that v0.2-required field, so structural confidence remains an owner-decision blocker. The D5 Autism/Neurodiversity dependency therefore remains unresolved until an exact paired v0.2 candidate can validate without weakening reciprocity.
+The reciprocal legacy relation is preserved in `candidate/structural-pair.json`. D6 now governs the missing confidence field: no confidence is inferred or defaulted, and `not_applicable` is not used merely to satisfy validation. The field remains absent until evidence-backed enrichment or a separately accepted structural-confidence schema policy supplies a non-fabricating representation. The D5 Autism/Neurodiversity dependency therefore remains unresolved.
 
 Neurodiversity also contains `broader_than -> adhd`. That edge is recorded as a separate structural dependency and is not silently dropped, but ADHD is not added to this candidate because D5 did not authorise expanding the migration unit beyond the accepted pair.
 

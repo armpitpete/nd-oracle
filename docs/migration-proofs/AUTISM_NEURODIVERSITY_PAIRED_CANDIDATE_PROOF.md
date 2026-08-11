@@ -1,10 +1,14 @@
 # Autism + Neurodiversity paired migration candidate proof
 
-Status: **non-authoritative paired candidate prepared; owner decisions and enrichment remain pending**.
+Status: **non-authoritative paired candidate prepared; D6 confidence policy accepted; enrichment and other owner decisions remain pending**.
 
 Prepared on 2026-08-11 against protected repository `main`:
 
 `1b7e4261c70bd6a86346d34a1f08abf90c3deece`
+
+D6 structural-confidence policy accepted on 2026-08-11 against protected repository `main`:
+
+`653938871190b454696df12abcc5bc0260ce19fd`
 
 Source anchors:
 
@@ -15,12 +19,15 @@ Source anchors:
 
 D5 authorises preparation of a **paired non-authoritative Autism + Neurodiversity migration candidate** so their reciprocal legacy structural relationship is not broken merely to migrate one side first.
 
-It does not authorise:
+D6 governs the missing structural confidence field: do not infer or default it, and do not use `not_applicable` merely to satisfy validation. The field stays absent until evidence-backed enrichment or a separately accepted structural-confidence schema policy supplies a non-fabricating representation.
+
+These decisions do not authorise:
 
 - mutation of either authoritative v0.1 object;
 - authoritative v0.2 replacement;
 - weakening the v0.2 reciprocity validator;
-- invention of missing relation confidence;
+- invention or defaulting of relation confidence;
+- use of `not_applicable` as a schema-completion shortcut;
 - automatic expansion of the candidate to ADHD;
 - silent acceptance of pending Perspective or other semantic choices.
 
@@ -35,7 +42,7 @@ It preserves the exact reciprocal legacy pair:
 - Autism `narrower_than -> neurodiversity`, legacy note: `Autism is commonly situated within neurodiversity discourse.`;
 - Neurodiversity `broader_than -> autism`, legacy note: `Autism is commonly discussed within the neurodiversity ecosystem.`
 
-The candidate records the v0.2 typed targets but deliberately does **not** supply a `confidence` value. Both v0.1 relations lack confidence and D5 did not authorise manufacturing one.
+The candidate records the v0.2 typed targets but deliberately does **not** supply a `confidence` value. Both v0.1 relations lack confidence. D6 confirms that absence must remain visible rather than being filled by inference, default, or `not_applicable`.
 
 Therefore the candidate proves the pairing direction and reciprocal structural shape, but it does **not** claim full v0.2 Concept validity.
 
@@ -47,7 +54,7 @@ That is unsafe for a real paired package because two source objects can legitima
 
 The repair is migration-only and backward-compatible:
 
-- `preservation-ledger-v0.2.json` now permits optional `source_object_id`;
+- `preservation-ledger-v0.2.json` permits optional `source_object_id`;
 - single-source packages may continue omitting it;
 - multi-source packages must identify the source object for every preservation entry;
 - uniqueness and coverage are checked on `(source_object_id, unit)` rather than `unit` alone.
@@ -67,7 +74,9 @@ The generated package contains:
 - the committed structural candidate;
 - the accepted Autism owner-decision record and an appended paired-candidate decision log.
 
-The package remains `owner_decision_pending` and `authoritative_replacement: false`.
+After D6, the generated structural-confidence record is a **pending enrichment/schema-policy requirement**, not a pending invitation to choose a convenient confidence value. It proposes no value and explicitly records that `not_applicable` is not authorised as a validation shortcut.
+
+The package remains `owner_decision_pending` and `authoritative_replacement: false` because other owner decisions remain unresolved.
 
 ## Disconfirming finding: the D5 pair is not full structural closure
 
@@ -81,11 +90,18 @@ The ADHD edge is therefore retained as a separate unresolved structural dependen
 
 ## Remaining blockers
 
-### 1. Reciprocal structural relation confidence
+### 1. Reciprocal structural relation confidence — policy resolved, representation unresolved
 
 The current v0.2 relation schema requires `confidence`. Neither v0.1 reciprocal relation supplies it.
 
-A later owner decision must determine whether structural relations use an accepted confidence rule or whether the schema should distinguish structural assertions differently. Until then no confidence value is inserted.
+D6 resolves the migration policy:
+
+- do not infer confidence;
+- do not default confidence;
+- do not use `not_applicable` merely to make the candidate validate;
+- keep the field absent until an evidence-backed confidence value or a separately accepted structural-confidence schema policy is reviewed.
+
+So this is no longer an unresolved default-selection decision. It remains an explicit enrichment/schema-policy requirement.
 
 ### 2. Autism uncertainty shape
 
@@ -117,8 +133,10 @@ The legacy `broader_than -> adhd` edge remains unresolved and outside this D5 ca
 
 ## Result
 
-The paired candidate has now been prepared **without fabricating the missing semantics that would make it look complete**.
+The paired candidate has been prepared **without fabricating the missing semantics that would make it look complete**.
 
-The D5 structural dependency remains open because the accepted closure condition is stronger than merely writing both IDs into one candidate: an exact paired v0.2 candidate must eventually validate reciprocal structure without weakening the reciprocity rule.
+D6 further locks that principle for structural confidence: schema validity is not evidence. A confidence enum cannot be inserted simply because the schema requires one.
+
+The D5 structural dependency remains open because its accepted closure condition is stronger than merely writing both IDs into one candidate: an exact paired v0.2 candidate must eventually validate reciprocal structure without weakening the reciprocity rule and without fabricating required relation semantics.
 
 No authoritative object, site, deployment, DNS, analytics configuration, or production state is changed by this proof.

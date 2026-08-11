@@ -5,6 +5,7 @@
   "authoritative": false,
   "source_repository_commit": "1b7e4261c70bd6a86346d34a1f08abf90c3deece",
   "decision_ref": "d5-autism-neurodiversity-structural-closure",
+  "confidence_policy_ref": "d6-structural-relation-confidence",
   "sources": [
     {
       "object_id": "autism",
@@ -25,7 +26,8 @@
         "type": "narrower_than",
         "target": {"type": "concept", "id": "neurodiversity"},
         "reason_from_legacy_note": "Autism is commonly situated within neurodiversity discourse.",
-        "confidence_status": "owner_decision_required",
+        "confidence_status": "explicit_enrichment_or_schema_policy_required",
+        "confidence_policy_ref": "d6-structural-relation-confidence",
         "legacy_relation": {
           "type": "narrower_than",
           "target_id": "neurodiversity",
@@ -40,7 +42,8 @@
         "type": "broader_than",
         "target": {"type": "concept", "id": "autism"},
         "reason_from_legacy_note": "Autism is commonly discussed within the neurodiversity ecosystem.",
-        "confidence_status": "owner_decision_required",
+        "confidence_status": "explicit_enrichment_or_schema_policy_required",
+        "confidence_policy_ref": "d6-structural-relation-confidence",
         "legacy_relation": {
           "type": "broader_than",
           "target_id": "autism",
@@ -61,8 +64,9 @@
   "blockers": [
     {
       "id": "paired-structural-relation-confidence",
-      "kind": "owner_decision",
-      "detail": "v0.2 relations require confidence, but neither reciprocal v0.1 relation contains confidence. D5 did not authorise inventing one."
+      "kind": "accepted_policy_requirement",
+      "decision_ref": "d6-structural-relation-confidence",
+      "detail": "D6 forbids inferring or defaulting migrated structural confidence, including using not_applicable merely to satisfy validation. Confidence remains absent until evidence-backed enrichment or a separately accepted structural-confidence schema policy supplies a non-fabricating representation."
     },
     {
       "id": "autism-uncertainty-shape",
@@ -101,6 +105,8 @@
     "authoritative_neurodiversity_v01_mutation": false,
     "authoritative_v02_replacement": false,
     "weaken_reciprocity_validator": false,
-    "expand_pair_to_adhd": false
+    "expand_pair_to_adhd": false,
+    "infer_or_default_structural_confidence": false,
+    "use_not_applicable_as_confidence_shortcut": false
   }
 }
