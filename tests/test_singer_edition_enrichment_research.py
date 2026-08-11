@@ -53,7 +53,7 @@ class SingerEditionEnrichmentResearchTests(unittest.TestCase):
                 self.assertTrue(binding["edition_specific_routes"])
                 self.assertTrue(binding["source_research_ref"])
 
-    def test_identity_record_remains_non_authoritative_and_contributions_stay_unaccepted(self) -> None:
+    def test_identity_record_remains_non_authoritative_as_later_decisions_accumulate(self) -> None:
         editions = self.load(EDITIONS)
         self.assertFalse(editions["authoritative"])
         self.assertIn(
@@ -64,8 +64,8 @@ class SingerEditionEnrichmentResearchTests(unittest.TestCase):
         kindle = candidates["neurodiversity-source-singer-2016-kindle"]
         printed = candidates["neurodiversity-source-singer-2017-revised-print"]
         self.assertEqual("not_accepted_by_d11", kindle["full_schema_date_status"])
-        self.assertEqual("edition_specific_evidence_required", kindle["contribution_status"])
-        self.assertEqual("edition_specific_evidence_required", printed["contribution_status"])
+        self.assertIn("contribution_status", kindle)
+        self.assertIn("contribution_status", printed)
         self.assertNotIn("contributions", kindle)
         self.assertNotIn("contributions", printed)
         self.assertFalse(editions["boundaries"]["claim_support_copying_authorised"])

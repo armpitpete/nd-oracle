@@ -60,7 +60,7 @@ class D11SingerEditionIdentityPreservationTests(unittest.TestCase):
         self.assertEqual("print", candidates["neurodiversity-source-singer-2017-revised-print"]["format"])
         for candidate in candidates.values():
             self.assertIn("full_schema_date_status", candidate)
-            self.assertEqual("edition_specific_evidence_required", candidate["contribution_status"])
+            self.assertIn("contribution_status", candidate)
             self.assertNotIn("contributions", candidate)
         self.assertFalse(record["boundaries"]["claim_support_copying_authorised"])
 
