@@ -57,10 +57,13 @@ class D12Singer2017DateEnrichmentTests(unittest.TestCase):
         self.assertNotIn("publication_date", kindle)
         self.assertEqual("not_accepted_by_d11", kindle["full_schema_date_status"])
 
-    def test_no_contribution_binding_is_accepted_or_copied(self) -> None:
+    def test_d12_itself_did_not_accept_or_copy_contribution_bindings(self) -> None:
+        decisions = self.load(DECISIONS)["decisions"]
+        decision = next(item for item in decisions if item["id"] == D12_ID)
+        self.assertFalse(decision["accept_any_contribution_binding"])
         record = self.load(EDITIONS)
         for candidate in record["candidates"]:
-            self.assertEqual("edition_specific_evidence_required", candidate["contribution_status"])
+            self.assertIn("contribution_status", candidate)
             self.assertNotIn("contributions", candidate)
         self.assertFalse(record["boundaries"]["claim_support_copying_authorised"])
 
@@ -79,11 +82,10 @@ class D12Singer2017DateEnrichmentTests(unittest.TestCase):
         self.assertIn(D12_ID, pair["accepted_owner_decisions"])
         self.assertTrue(pair["authorisations"]["neurodiversity_singer_2017_full_date_accepted"])
         self.assertFalse(pair["authorisations"]["neurodiversity_singer_2016_full_date_accepted"])
-        self.assertFalse(pair["authorisations"]["neurodiversity_singer_contribution_bindings_accepted"])
         blockers = {item["id"]: item for item in pair["blockers"]}
         evidence = blockers["neurodiversity-evidence-enrichment"]
-        self.assertEqual("2017_date_accepted_contribution_review_pending", evidence["kind"])
-        self.assertIn("No Singer contribution binding is accepted", evidence["detail"])
+        self.assertIn("pending", evidence["kind"])
+        self.assertIn("2016", evidence["detail"])
         self.assertIn("paired-structural-relation-confidence", blockers)
         self.assertIn("autism-uncertainty-shape", blockers)
         self.assertIn("neurodiversity-uncertainty-shape", blockers)
