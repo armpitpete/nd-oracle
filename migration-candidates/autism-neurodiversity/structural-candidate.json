@@ -6,6 +6,9 @@
   "source_repository_commit": "1b7e4261c70bd6a86346d34a1f08abf90c3deece",
   "decision_ref": "d5-autism-neurodiversity-structural-closure",
   "confidence_policy_ref": "d6-structural-relation-confidence",
+  "accepted_owner_decisions": [
+    "d7-autism-who-perspective-framing"
+  ],
   "sources": [
     {
       "object_id": "autism",
@@ -74,11 +77,6 @@
       "detail": "D3 preserves Autism list-valued uncertainty reduction conditions as legacy-unmapped; the current v0.2 Claim schema still requires embedded Uncertainty records."
     },
     {
-      "id": "autism-perspective-framing",
-      "kind": "owner_decision",
-      "detail": "The three Autism Perspective framing proposals remain unaccepted."
-    },
-    {
       "id": "neurodiversity-evidence-enrichment",
       "kind": "enrichment",
       "detail": "Neurodiversity Evidence metadata and claim-specific Evidence Contribution semantics have not yet been evidence-backed for v0.2."
@@ -107,6 +105,7 @@
     "weaken_reciprocity_validator": false,
     "expand_pair_to_adhd": false,
     "infer_or_default_structural_confidence": false,
-    "use_not_applicable_as_confidence_shortcut": false
+    "use_not_applicable_as_confidence_shortcut": false,
+    "autism_who_perspective_framing_accepted": true
   }
 }
