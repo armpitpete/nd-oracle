@@ -242,6 +242,38 @@
       "list_flattening_authorised": false,
       "status_remapping_authorised": false,
       "publication_or_deployment_authorised": false
+    },
+    {
+      "id": "d16-embedded-uncertainty-schema-implementation",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "1bc63e07c7da026d2a2cba36bb05eb72980e7f19",
+      "scope": "Exact v0.2 embedded-Uncertainty schema implementation only; authoritative v0.1 migration and authoritative v0.2 replacement remain separately protected.",
+      "supersedes_implementation_candidate": {
+        "path": "migration-candidates/autism-neurodiversity/embedded-uncertainty-schema-implementation-candidate.json",
+        "id": "nd-embedded-uncertainty-schema-implementation"
+      },
+      "accepted_exact_design": {
+        "text_field": "text",
+        "text_is_neutral": true,
+        "reopening_or_reduction_conditions_field": "reopening_or_reduction_conditions",
+        "conditions_are_canonical_plural_array": true,
+        "conditions_preserve_order": true,
+        "conditions_preserve_duplicates": true,
+        "status_vocabulary": ["open", "partially_resolved", "none_identified"],
+        "status_mapping_policy": "identity_only",
+        "compatibility_union": false
+      },
+      "schema_change_authorised": true,
+      "validator_change_authorised": true,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "automatic_question_promotion_authorised": false,
+      "uncertainty_split_authorised": false,
+      "list_flattening_authorised": false,
+      "status_remapping_authorised": false,
+      "new_uncertainty_status_semantics_authorised": false,
+      "publication_or_deployment_authorised": false
     }
   ]
 }
