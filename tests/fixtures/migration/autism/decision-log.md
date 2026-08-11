@@ -1,6 +1,6 @@
 # Autism migration decision log
 
-Status: **owner decision pending**. D1–D4 are accepted. D5 remains pending. No authoritative replacement is authorised by this file.
+Status: **migration decisions D1–D5 accepted**. The package remains non-authoritative and not ready for authoritative replacement: the three Perspective framing proposals remain pending and the Autism ↔ Neurodiversity structural dependency remains unresolved until a paired candidate is actually prepared and validates.
 
 Research pass: 2026-08-11, against repository `main` `0f6042e8841149da0485fe1b279dcd1bc9e5ff1f` and unchanged authoritative Autism blob `b2d3809ecfcdb1d81c793a2401f0533a4b17ea98`.
 
@@ -11,6 +11,8 @@ Owner decision D2 was accepted on 2026-08-11 against protected repository `main`
 Owner decision D3 was accepted on 2026-08-11 against protected repository `main` `2979996e82f7461a4431476c8c297d67bdb1b236`.
 
 Owner decision D4 was accepted on 2026-08-11 against protected repository `main` `0cb73f1642f6a857049e41767bf69c677dccf0ac`.
+
+Owner decision D5 was accepted on 2026-08-11 against protected repository `main` `e2f535ad2abdb97750d54c7c30233a3c802a8e74`.
 
 ## Evidence-backed enrichment findings
 
@@ -118,9 +120,26 @@ Each category's original embedded questions remain part of its exact retained le
 
 **Reopening condition:** revisit when a first-class ecosystem or navigation model is explicitly designed. An embedded question may be considered independently only through a separate review of whether it is independently reusable as a standalone Question.
 
-**Boundary:** D4 authorises no auto-promotion, no forced mapping, no new schema or object type, no mutation of the authoritative v0.1 Autism object, no authoritative v0.2 replacement, and no acceptance of D5.
+**Boundary:** D4 authorises no auto-promotion, no forced mapping, no new schema or object type, no mutation of the authoritative v0.1 Autism object, no authoritative v0.2 replacement, and no acceptance of later decisions.
 
-The machine-readable decision records are in `owner-decisions.json`; exact retained relation, uncertainty and ecosystem payloads remain recoverable in `preservation-ledger.json`.
+### D5 — Autism ↔ Neurodiversity structural closure — **ACCEPTED AS STRUCTURAL-PAIRING POLICY**
+
+**Accepted rule:** when structural migration is prepared, Autism and Neurodiversity must be handled as the minimum paired non-authoritative candidate required to preserve the reciprocal `narrower_than` / `broader_than` relationship. Do not weaken the v0.2 reciprocity validator.
+
+The authoritative legacy reciprocal remains:
+
+- Autism: `narrower_than -> neurodiversity`;
+- Neurodiversity: `broader_than -> autism`.
+
+**Reason:** semantic reciprocity already exists in v0.1, but the v0.2 validator requires both sides in v0.2 relation shape. Migrating Autism alone would therefore create an invalid structural candidate unless reciprocity validation were weakened, which is explicitly rejected.
+
+**Current dependency state:** still `unresolved`. Acceptance of the pairing policy does not itself create either candidate object or satisfy the v0.2 graph validator.
+
+**Closure condition:** prepare a paired non-authoritative Autism + Neurodiversity candidate and demonstrate that its reciprocal relation validates under the unchanged v0.2 reciprocity rule.
+
+**Boundary:** D5 authorises preparation of that paired non-authoritative candidate only. It does not authorise mutation of either authoritative v0.1 object, authoritative replacement of either object, weakening of the reciprocity validator, deployment, or publication.
+
+The machine-readable decision records are in `owner-decisions.json`; exact retained relation, uncertainty and ecosystem payloads remain recoverable in `preservation-ledger.json`, and the unresolved structural dependency remains recorded in `dependency-ledger.json`.
 
 ## Perspective proposals — not accepted
 
@@ -139,16 +158,6 @@ Proposed Perspective `scope`:
 > Global public-health description of autism, health and care needs, inclusion and support across the life course; excludes individual diagnosis and does not purport to capture the full range of autistic lived experience or community perspectives.
 
 These remain `owner_decision` proposals because they are framing choices rather than raw source metadata.
-
-## Pending decision candidates
-
-### D5 — Autism ↔ Neurodiversity structural closure — **PENDING**
-
-The v0.1 Neurodiversity object already contains the reciprocal `broader_than -> autism` relation, so the semantic reciprocal is present in legacy data. The dependency remains unresolved because the v0.2 validator requires both sides in v0.2 relation shape.
-
-**Candidate:** when structural migration is authorised, prepare Autism and Neurodiversity as the minimum paired structural candidate rather than weaken reciprocity validation.
-
-**Recommendation:** use the paired-candidate approach; do not weaken the v0.2 reciprocity rule.
 
 ## Preserved rejected shortcut
 

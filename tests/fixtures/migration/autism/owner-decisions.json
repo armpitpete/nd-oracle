@@ -60,7 +60,22 @@
     },
     {
       "id": "d5-autism-neurodiversity-structural-closure",
-      "status": "pending"
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "e2f535ad2abdb97750d54c7c30233a3c802a8e74",
+      "scope": "When structural migration is prepared, Autism and Neurodiversity form the minimum paired non-authoritative candidate required to preserve their reciprocal narrower_than and broader_than relationship under the v0.2 graph contract.",
+      "minimum_candidate_objects": [
+        "autism",
+        "neurodiversity"
+      ],
+      "preserve_reciprocity_required": true,
+      "paired_candidate_preparation_authorised": true,
+      "weaken_reciprocity_validator_authorised": false,
+      "structural_dependency_resolved_by_policy": false,
+      "authoritative_autism_v01_mutation_authorised": false,
+      "authoritative_neurodiversity_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "reopening_condition": "The structural dependency may be closed only after a paired non-authoritative Autism and Neurodiversity candidate is prepared and validates the reciprocal v0.2 relation without weakening the reciprocity rule."
     }
   ]
 }

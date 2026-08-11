@@ -12,7 +12,9 @@ from scripts.validate_migration import git_blob_sha, validate_package
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "tests" / "fixtures" / "migration" / "autism"
 SOURCE = ROOT / "objects" / "concepts" / "autism.json"
+NEURODIVERSITY_SOURCE = ROOT / "objects" / "concepts" / "neurodiversity.json"
 AUTISM_V01_BLOB = "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98"
+NEURODIVERSITY_V01_BLOB = "5a38bc4250079412dd3f4da1d598dfcab984ca66"
 
 
 class AutismMigrationPackageTests(unittest.TestCase):
@@ -76,10 +78,7 @@ class AutismMigrationPackageTests(unittest.TestCase):
         self.assertEqual(AUTISM_V01_BLOB, git_blob_sha(SOURCE))
         self.assertIn("Kawakami, S. et al.", SOURCE.read_text(encoding="utf-8"))
         pending = {item["id"] for item in decisions if item["status"] == "pending"}
-        self.assertEqual(
-            {"d5-autism-neurodiversity-structural-closure"},
-            pending,
-        )
+        self.assertEqual(set(), pending)
 
     def test_d2_defers_related_to_without_mapping_or_inventing_confidence(self) -> None:
         decisions = self.load("owner-decisions.json")["decisions"]
@@ -200,6 +199,45 @@ class AutismMigrationPackageTests(unittest.TestCase):
             by_category,
         )
         self.assertEqual(AUTISM_V01_BLOB, git_blob_sha(SOURCE))
+
+    def test_d5_accepts_pairing_policy_without_closing_dependency(self) -> None:
+        decisions = self.load("owner-decisions.json")["decisions"]
+        by_id = {item["id"]: item for item in decisions}
+        d5 = by_id["d5-autism-neurodiversity-structural-closure"]
+        self.assertEqual("accepted", d5["status"])
+        self.assertEqual(["autism", "neurodiversity"], d5["minimum_candidate_objects"])
+        self.assertTrue(d5["preserve_reciprocity_required"])
+        self.assertTrue(d5["paired_candidate_preparation_authorised"])
+        self.assertFalse(d5["weaken_reciprocity_validator_authorised"])
+        self.assertFalse(d5["structural_dependency_resolved_by_policy"])
+        self.assertFalse(d5["authoritative_autism_v01_mutation_authorised"])
+        self.assertFalse(d5["authoritative_neurodiversity_v01_mutation_authorised"])
+        self.assertFalse(d5["authoritative_v02_replacement_authorised"])
+
+        dependency = self.load("dependency-ledger.json")["entries"][0]
+        self.assertEqual("dependency-autism-neurodiversity", dependency["id"])
+        self.assertEqual("unresolved", dependency["resolution_status"])
+        self.assertTrue(any("D5 accepted" in item for item in dependency["resolution_evidence"]))
+        self.assertTrue(any("minimum paired" in item for item in dependency["resolution_evidence"]))
+        self.assertTrue(any("weakening" in item for item in dependency["resolution_evidence"]))
+        self.assertFalse((self.package / "candidate").exists())
+
+        autism = json.loads(SOURCE.read_text(encoding="utf-8"))
+        neurodiversity = json.loads(NEURODIVERSITY_SOURCE.read_text(encoding="utf-8"))
+        self.assertTrue(
+            any(
+                relation["type"] == "narrower_than" and relation["target_id"] == "neurodiversity"
+                for relation in autism["relations"]
+            )
+        )
+        self.assertTrue(
+            any(
+                relation["type"] == "broader_than" and relation["target_id"] == "autism"
+                for relation in neurodiversity["relations"]
+            )
+        )
+        self.assertEqual(AUTISM_V01_BLOB, git_blob_sha(SOURCE))
+        self.assertEqual(NEURODIVERSITY_V01_BLOB, git_blob_sha(NEURODIVERSITY_SOURCE))
 
     def test_evidence_roles_remain_bounded(self) -> None:
         ledger = self.load("enrichment-ledger.json")
