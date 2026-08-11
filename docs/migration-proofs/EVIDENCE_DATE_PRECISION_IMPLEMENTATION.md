@@ -39,11 +39,13 @@ The existing exact synthetic Evidence fixture keeps its original `date` value `2
 "date_precision": "day"
 ```
 
+The normalized paired migration candidate already materializes several non-authoritative Evidence objects whose publication dates are verified at full-day precision. Its Evidence constructor now requires an explicit precision argument, and each currently materialized exact-date call passes `"day"`. Precision is not inferred from string length or defaulted inside the constructor. Singer 2016 remains unmaterialized in this implementation candidate.
+
 The human-readable v0.2 schema contract is updated to state the same rule.
 
 ## Required proof
 
-Dedicated tests cover:
+Dedicated and existing regression tests cover:
 
 1. `2016` + `year` validates;
 2. `2016-07` + `month` validates;
@@ -55,7 +57,8 @@ Dedicated tests cover:
 8. missing or unrecognised `date_precision` fails;
 9. `accessed` still requires a full date;
 10. the authoritative object count remains five and the fixture graph validates;
-11. the Singer-required year-only shape can validate without storing `2016-07-03` as the source date.
+11. the Singer-required year-only shape can validate without storing `2016-07-03` as the source date;
+12. normalized migration Evidence objects remain v0.2 schema-valid with explicit `day` precision while Singer 2016 remains pending.
 
 ## Singer 2016 consequence
 
