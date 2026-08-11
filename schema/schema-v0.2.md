@@ -77,7 +77,17 @@ A Question is standalone only when the inquiry is independently reusable, naviga
 
 ## Evidence
 
-An Evidence object represents source identity plus one or more Evidence Contributions. Source identity includes title, source kind, citation, typed locator, date, accessed date, authorship, provenance, and optional funding/conflicts.
+An Evidence object represents source identity plus one or more Evidence Contributions. Source identity includes title, source kind, citation, typed locator, publication/source `date`, required `date_precision`, exact accessed date, authorship, provenance, and optional funding/conflicts.
+
+Publication/source dates use a string value plus explicit precision:
+
+- `date_precision: "year"` requires `date` in `YYYY` form;
+- `date_precision: "month"` requires `date` in `YYYY-MM` form with a valid month;
+- `date_precision: "day"` requires a full calendar date validated with JSON Schema `format: date`.
+
+The validator fails closed when the declared precision and stored value disagree. Existing exact v0.2 Evidence dates retain their textual value and declare `date_precision: "day"`. Missing calendar components must never be invented merely to satisfy validation.
+
+`date_precision` records how much of the publication/source calendar date is established; it is not a confidence score. Uncertain evidence quality is not converted into a precision value. The `accessed` field remains an exact full calendar date and does not use `date_precision`.
 
 Supported locator types are HTTPS URL, DOI, ISBN, archive identifier, repository/dataset identifier, and explicit offline citation.
 
@@ -116,6 +126,8 @@ Initial vocabulary is `broader_than`, `narrower_than`, `associated_with`, `exper
 ## Repository validation
 
 `scripts/validate.py` validates every schema as JSON Schema 2020-12, dispatches by `schema_version`, preserves established v0.1 semantic checks, validates v0.2 path/type consistency, enforces global/local ID uniqueness, resolves typed and exact Claim references, enforces Claim ↔ Evidence Contribution routing, checks Question/Evidence/Experience/relation references, enforces structural reciprocity, and fails closed on unsupported schema versions.
+
+Evidence publication-date precision is enforced through the v0.2 Evidence JSON Schema loaded by this validator; no parallel date-normalisation or inferred-date code path is permitted.
 
 The CLI validates authoritative objects only. Tests can explicitly add `tests/fixtures/v0.2/` to the validation graph while the authoritative object count remains unchanged.
 
