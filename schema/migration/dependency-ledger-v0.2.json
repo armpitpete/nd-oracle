@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ndoracle.org/schema/migration/dependency-ledger-v0.2.json",
+  "title": "ND Oracle migration dependency ledger v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["migration_contract_version", "entries"],
+  "properties": {
+    "migration_contract_version": {"const": "0.2"},
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "source_object", "relation", "dependent_object", "reason", "resolution_status"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+          "source_object": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+          "relation": {"type": "string", "minLength": 1},
+          "dependent_object": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+          "reason": {"type": "string", "minLength": 1},
+          "resolution_status": {"enum": ["unresolved", "resolved"]},
+          "resolution_evidence": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    }
+  }
+}

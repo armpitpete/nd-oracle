@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ndoracle.org/schema/migration/manifest-v0.2.json",
+  "title": "ND Oracle migration package manifest v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["migration_contract_version", "source_repository_commit", "sources", "candidate_object_ids", "package_status", "created", "updated", "authoritative_replacement"],
+  "properties": {
+    "migration_contract_version": {"const": "0.2"},
+    "source_repository_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "blob_sha", "schema_version", "object_id"],
+        "properties": {
+          "path": {"type": "string", "pattern": "^objects/[^/]+/[^/]+\\.json$"},
+          "blob_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "schema_version": {"const": "0.1"},
+          "object_id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"}
+        }
+      }
+    },
+    "candidate_object_ids": {"type": "array", "items": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"}, "uniqueItems": true},
+    "package_status": {"enum": ["inventoried", "mapped", "enrichment_pending", "owner_decision_pending", "structural_dependency_pending", "candidate_complete", "ready_for_authoritative_review", "accepted_for_authoritative_replacement"]},
+    "created": {"type": "string", "format": "date"},
+    "updated": {"type": "string", "format": "date"},
+    "authoritative_replacement": {"const": false}
+  }
+}
