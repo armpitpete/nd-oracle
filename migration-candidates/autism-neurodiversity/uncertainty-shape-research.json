@@ -1,0 +1,185 @@
+{
+  "research_version": "1.0",
+  "prepared_on": "2026-08-11",
+  "prepared_against_main": "a95a7772f6ca69d2c5b58cbcdcc6240110cc9ce8",
+  "authoritative": false,
+  "authoritative_replacement": false,
+  "scope": "Lossless representation of v0.1 embedded uncertainties under the implemented v0.2 Uncertainty schema, with immediate relevance to the Autism/Neurodiversity paired migration candidate and a repository-wide compatibility check across all five authoritative v0.1 concepts.",
+  "schema_anchors": {
+    "v01": {
+      "path": "schema/object-v0.1.json",
+      "blob_sha": "44d8c210d5a02afb3b53b8d1774a4209d0fd856d",
+      "uncertainty_shape": {
+        "required": [
+          "id",
+          "question",
+          "why_it_matters",
+          "what_would_reduce_it",
+          "status"
+        ],
+        "what_would_reduce_it_type": "array",
+        "status_values": [
+          "open",
+          "partially_resolved",
+          "none_identified"
+        ]
+      }
+    },
+    "v02": {
+      "path": "schema/common-v0.2.json",
+      "blob_sha": "2c0fc2344fcafde88340b8a5882e0d171246ea02",
+      "uncertainty_shape": {
+        "required": [
+          "id",
+          "statement",
+          "why_it_matters",
+          "reopening_or_reduction_condition"
+        ],
+        "reopening_or_reduction_condition_type": "string",
+        "status_field_present": false
+      }
+    },
+    "question_v02": {
+      "path": "schema/types/question-v0.2.json",
+      "blob_sha": "cfde12cfdd35360b17f69f7174eb1f10fdb99d6c",
+      "reopening_conditions_type": "array",
+      "evidence_needed_type": "array",
+      "promotion_is_not_automatic": true
+    }
+  },
+  "authoritative_source_inventory": [
+    {
+      "object_id": "autism",
+      "path": "objects/concepts/autism.json",
+      "blob_sha": "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98",
+      "uncertainty_count": 2,
+      "reduction_conditions_per_uncertainty": [3, 3],
+      "statuses": ["open", "open"]
+    },
+    {
+      "object_id": "neurodiversity",
+      "path": "objects/concepts/neurodiversity.json",
+      "blob_sha": "5a38bc4250079412dd3f4da1d598dfcab984ca66",
+      "uncertainty_count": 2,
+      "reduction_conditions_per_uncertainty": [3, 3],
+      "statuses": ["open", "open"]
+    },
+    {
+      "object_id": "adhd",
+      "path": "objects/concepts/adhd.json",
+      "blob_sha": "719f26a9af773cd1bcf670df4d12ed5f6bcf0a23",
+      "uncertainty_count": 2,
+      "reduction_conditions_per_uncertainty": [3, 3],
+      "statuses": ["open", "open"]
+    },
+    {
+      "object_id": "executive-function",
+      "path": "objects/concepts/executive-function.json",
+      "blob_sha": "f67e1a73e89245f9e6c6c2a34d4acc47169b8273",
+      "uncertainty_count": 2,
+      "reduction_conditions_per_uncertainty": [3, 3],
+      "statuses": ["open", "open"]
+    },
+    {
+      "object_id": "sensory-processing",
+      "path": "objects/concepts/sensory-processing.json",
+      "blob_sha": "7626d61a2844aae88ce6811760dfe97b5baa94bc",
+      "uncertainty_count": 2,
+      "reduction_conditions_per_uncertainty": [3, 3],
+      "statuses": ["open", "open"]
+    }
+  ],
+  "observed_mismatch": {
+    "authoritative_uncertainty_count": 10,
+    "all_current_uncertainties_use_multiple_reduction_conditions": true,
+    "all_current_reduction_condition_lists_have_three_items": true,
+    "all_current_uncertainties_have_explicit_status": true,
+    "current_v02_embedded_uncertainty_can_preserve_list_structure_directly": false,
+    "current_v02_embedded_uncertainty_can_preserve_status_directly": false,
+    "question_to_statement_is_semantically_neutral_without_policy": false,
+    "finding": "The implemented v0.2 embedded Uncertainty record cannot natively preserve two structural properties present in every current authoritative v0.1 uncertainty: a list of distinct reduction routes and an explicit lifecycle status. The question-to-statement field change also requires an explicit semantic rule if interrogative wording is to remain verbatim.",
+    "consequence": "A schema-valid embedded-Uncertainty conversion under the current v0.2 shape would either lose structure/state or require an unaccepted semantic transformation. The migration package can preserve the legacy record, but an authoritative v0.2 replacement would remain semantically incomplete."
+  },
+  "option_assessment": [
+    {
+      "id": "u1-flatten-list-into-one-string",
+      "description": "Join all v0.1 what_would_reduce_it items into the single v0.2 reopening_or_reduction_condition string.",
+      "preserves_words": true,
+      "preserves_structure": false,
+      "preserves_logical_relationship": false,
+      "status_preserved": false,
+      "assessment": "reject_as_default",
+      "reason": "The migration contract already states that joining a list into prose is not lossless merely because all words remain. It also introduces an unstated conjunction, disjunction, sequence, or example relationship among the items."
+    },
+    {
+      "id": "u2-split-one-legacy-uncertainty-into-many",
+      "description": "Create one v0.2 embedded Uncertainty for each v0.1 reduction condition, duplicating the legacy question and why_it_matters.",
+      "preserves_list_items": true,
+      "preserves_uncertainty_identity": false,
+      "status_preserved": false,
+      "assessment": "reject_without_separate_semantic_change",
+      "reason": "One legacy uncertainty would become several epistemic records. That changes identity and grouping, duplicates explanatory material, and can falsely imply that the source contained several distinct uncertainties rather than one uncertainty with several reduction routes."
+    },
+    {
+      "id": "u3-promote-to-standalone-question",
+      "description": "Represent the v0.1 uncertainty as a v0.2 Question because Question supports plural evidence_needed and reopening_conditions arrays.",
+      "preserves_plural_routes": true,
+      "automatic_promotion_allowed": false,
+      "requires_new_current_understanding": true,
+      "assessment": "not_a_general_migration_rule",
+      "reason": "Question and embedded Uncertainty are deliberately distinct. Promotion requires independent usefulness/reusability and an explicit mapping, and the current Question schema requires current_understanding that v0.1 does not provide deterministically."
+    },
+    {
+      "id": "u4-retain-legacy-unmapped",
+      "description": "Keep the exact v0.1 uncertainty only in the preservation ledger and leave the v0.2 claim uncertainty incomplete.",
+      "lossless": true,
+      "schema_change_required": false,
+      "migration_completion": false,
+      "assessment": "safe_interim_state_only",
+      "reason": "This is the correct fail-closed behaviour before a policy is accepted, but it deliberately leaves authoritative v0.2 replacement blocked."
+    },
+    {
+      "id": "u5-native-embedded-uncertainty-repair",
+      "description": "Adopt a separately reviewed schema-policy repair so embedded Uncertainty can natively preserve multiple reduction/reopening conditions, explicit lifecycle state, and neutral text capable of retaining legacy interrogative wording without forced semantic conversion.",
+      "lossless_direction": true,
+      "schema_change_required": true,
+      "assessment": "recommended_for_owner_review",
+      "reason": "The mismatch occurs in all ten current authoritative uncertainties, so a native representation addresses the model-level incompatibility instead of creating object-specific encoding tricks. Exact field names, status vocabulary and compatibility mechanics remain an implementation decision after the policy principle is accepted."
+    }
+  ],
+  "recommended_direction": {
+    "id": "native-lossless-embedded-uncertainty",
+    "status": "owner_review_candidate",
+    "principles": [
+      "Preserve each legacy uncertainty as one embedded uncertainty unless a separately reviewed semantic split or Question promotion is accepted.",
+      "Preserve multiple reduction or reopening routes as distinct items rather than flattening them into prose.",
+      "Preserve lifecycle state explicitly rather than dropping it during migration.",
+      "Permit legacy interrogative uncertainty wording to remain verbatim without pretending that a question has become a declarative statement.",
+      "Keep Question promotion explicit and evidence/reuse-driven rather than automatic.",
+      "Do not invent status mappings, conjunction semantics, current understanding, or additional evidential claims merely to satisfy schema."
+    ],
+    "not_yet_decided": [
+      "Exact v0.2 field names for embedded uncertainty text and plural conditions.",
+      "Whether the schema uses a canonical plural array only or a compatibility union during transition.",
+      "Final embedded-Uncertainty lifecycle vocabulary and any mapping from v0.1 partially_resolved or none_identified.",
+      "Whether any specific current uncertainty independently qualifies for promotion to a standalone Question."
+    ]
+  },
+  "decision_candidate": {
+    "id": "nd-embedded-uncertainty-lossless-representation",
+    "status": "owner_decision_required",
+    "question": "Accept the native lossless embedded-Uncertainty policy direction: preserve one legacy uncertainty as one embedded uncertainty by default, preserve multiple reduction/reopening routes as distinct items, preserve lifecycle state explicitly, and avoid forced question-to-statement conversion; leave exact schema syntax for a separately reviewed implementation candidate?",
+    "recommended_action": "Accept the policy direction only. Do not yet authorise schema mutation, validator change, authoritative migration, automatic Question promotion, or a specific status remapping."
+  },
+  "boundaries": {
+    "authoritative_v01_mutation_authorised": false,
+    "authoritative_v02_replacement_authorised": false,
+    "schema_change_authorised": false,
+    "validator_change_authorised": false,
+    "automatic_question_promotion_authorised": false,
+    "uncertainty_split_authorised": false,
+    "list_flattening_authorised": false,
+    "status_remapping_authorised": false,
+    "publication_or_deployment_authorised": false
+  }
+}
