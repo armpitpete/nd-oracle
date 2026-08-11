@@ -1,0 +1,119 @@
+{
+  "design_version": "1.0",
+  "prepared_on": "2026-08-11",
+  "prepared_against_main": "622da858f5803be32f409a54f7e0c6742f19e373",
+  "authoritative": false,
+  "schema_change_authorised": false,
+  "scope": "General precision-aware publication-date design for v0.2 Evidence source identity, motivated by the unresolved Singer 2016 Kindle date representation.",
+  "current_contract": {
+    "evidence_schema_path": "schema/types/evidence-v0.2.json",
+    "date_required": true,
+    "date_type": "string",
+    "date_format": "date",
+    "date_precision_field_present": false,
+    "problem": "The current contract cannot represent a known publication year or month without inventing day-level precision or omitting the Evidence object."
+  },
+  "governing_rule": "Store only the date precision the evidence actually establishes; never manufacture missing calendar components to satisfy validation.",
+  "alternatives": [
+    {
+      "id": "structured-date-object",
+      "example": {
+        "date": {
+          "value": "2016",
+          "precision": "year"
+        }
+      },
+      "disposition": "not_preferred",
+      "reason": "Explicit but changes the type and shape of every existing exact date and creates unnecessary consumer and migration churn."
+    },
+    {
+      "id": "string-plus-explicit-precision",
+      "example": {
+        "date": "2016",
+        "date_precision": "year"
+      },
+      "disposition": "preferred",
+      "reason": "Preserves the string shape and every exact date value while making reduced precision explicit and machine-checkable."
+    },
+    {
+      "id": "exact-date-plus-fallback-fields",
+      "examples": [
+        "publication_year",
+        "nullable date",
+        "sentinel date such as 2016-01-01",
+        "parallel candidate date"
+      ],
+      "disposition": "reject",
+      "reason": "Creates duplicate temporal authorities, inconsistent fallback semantics, or invented precision."
+    }
+  ],
+  "preferred_contract": {
+    "date": {
+      "type": "string",
+      "required": true
+    },
+    "date_precision": {
+      "type": "string",
+      "required": true,
+      "enum": [
+        "year",
+        "month",
+        "day"
+      ]
+    },
+    "value_rules": {
+      "year": "YYYY",
+      "month": "YYYY-MM",
+      "day": "JSON Schema format: date"
+    },
+    "accessed_changes": false,
+    "date_confidence_field_proposed": false,
+    "date_confidence_reason": "Precision and evidential confidence are different concepts. This design solves known reduced precision only and does not introduce a new confidence scoring mechanism."
+  },
+  "singer_2016_example": {
+    "identity": "neurodiversity-source-singer-2016-kindle",
+    "asin": "B01HY0QTEE",
+    "representation_if_design_implemented": {
+      "date": "2016",
+      "date_precision": "year"
+    },
+    "day_level_candidate": "2016-07-03",
+    "day_level_candidate_goes_in_evidence_date": false,
+    "reason": "2016 is strongly supported; the exact day remains insufficiently verified for unqualified source-identity use."
+  },
+  "versioning": {
+    "preferred_direction": "repair-v0.2-in-place-before-authoritative-migration",
+    "new_schema_version_proposed": false,
+    "reason": "The repository currently gives v0.2 one schema meaning and authoritative knowledge remains v0.1. A separately reviewed atomic repair can update fixture-only v0.2 semantics before authoritative migration without preserving a superseded compatibility union."
+  },
+  "required_future_tests": [
+    "year value with year precision validates",
+    "month value with month precision validates",
+    "full date with day precision validates",
+    "existing exact date strings remain unchanged",
+    "precision and value mismatches fail",
+    "invalid months fail",
+    "invalid full calendar dates fail",
+    "missing date_precision fails",
+    "accessed remains a full date",
+    "all authoritative v0.1 objects remain unchanged",
+    "Singer 2016 can be represented year-only without placing 2016-07-03 in Evidence.date"
+  ],
+  "decision_candidate": {
+    "id": "nd-evidence-date-precision-design",
+    "status": "owner_decision_required",
+    "recommended_acceptance": "Accept the string-plus-explicit-precision design direction for Evidence publication dates: retain date as a string, add required date_precision with year, month, or day, validate the value against the declared precision, keep accessed exact, and represent Singer 2016 as date 2016 with year precision. Treat implementation as a separately reviewed v0.2 schema-repair candidate; this acceptance does not itself authorise schema mutation or acceptance of 2016-07-03 as an exact fact.",
+    "does_not_authorise": [
+      "schema/types/evidence-v0.2.json mutation",
+      "schema/common-v0.2.json mutation",
+      "validator change",
+      "authoritative v0.1 mutation",
+      "authoritative v0.2 migration or replacement",
+      "acceptance of 2016-07-03 as an exact Singer publication fact",
+      "Singer 2017 change",
+      "ADHD migration or Neurodiversity-to-ADHD semantic disposition",
+      "merge of PR 60",
+      "publication or deployment"
+    ]
+  }
+}
