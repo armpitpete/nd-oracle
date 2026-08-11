@@ -1,0 +1,68 @@
+{
+  "migration_contract_version": "0.2",
+  "candidate_kind": "paired_migration_candidate",
+  "status": "enrichment_pending",
+  "authoritative": false,
+  "normalized_against_main": "657e7f7f0093c6f8765f5955dab8357e4bc17f1d",
+  "source_repository_commit": "1b7e4261c70bd6a86346d34a1f08abf90c3deece",
+  "accepted_owner_decisions": [
+    "d1-neurobiology-citation-correction",
+    "d2-related-to-mapping",
+    "d3-uncertainty-reduction-shape",
+    "d4-ecosystem-entry-points-home",
+    "d5-autism-neurodiversity-structural-closure",
+    "d6-structural-relation-confidence",
+    "d7-autism-who-perspective-framing",
+    "d8-neurodiversity-botha-citation-correction",
+    "d9-neurodiversity-collective-perspective-framing",
+    "d10-neurodiversity-paradigm-perspective-framing",
+    "d11-singer-edition-identity-preservation",
+    "d12-singer-2017-date-enrichment",
+    "d13-singer-edition-specific-contribution-bindings",
+    "d14-singer-2016-claim2-binding-followup",
+    "d15-embedded-uncertainty-lossless-representation",
+    "d16-embedded-uncertainty-schema-implementation",
+    "d17-neurodiversity-legacy-structural-disposition"
+  ],
+  "resolved": [
+    {"id": "autism-evidence-enrichment", "through": ["d1-neurobiology-citation-correction"]},
+    {"id": "autism-who-perspective", "through": ["d7-autism-who-perspective-framing"]},
+    {"id": "neurodiversity-botha-evidence", "through": ["d8-neurodiversity-botha-citation-correction"]},
+    {"id": "neurodiversity-perspectives", "through": ["d9-neurodiversity-collective-perspective-framing", "d10-neurodiversity-paradigm-perspective-framing"]},
+    {"id": "singer-edition-identities-and-bindings", "through": ["d11-singer-edition-identity-preservation", "d12-singer-2017-date-enrichment", "d13-singer-edition-specific-contribution-bindings", "d14-singer-2016-claim2-binding-followup"], "except": "2016 Kindle full date"},
+    {"id": "embedded-uncertainty-shape", "through": ["d15-embedded-uncertainty-lossless-representation", "d16-embedded-uncertainty-schema-implementation"]},
+    {"id": "autism-neurodiversity-legacy-pair", "through": ["d17-neurodiversity-legacy-structural-disposition"], "disposition": "legacy_retained_unmapped", "emit_v02_semantic_edge": false}
+  ],
+  "open_blockers": [
+    {
+      "id": "singer-2016-full-date",
+      "kind": "required_evidence_enrichment",
+      "object_id": "neurodiversity-source-singer-2016-kindle",
+      "required_field": "date",
+      "reason": "v0.2 Evidence requires a full YYYY-MM-DD date. Identity and claim bindings are accepted, but 2016-07-03 remains secondary-catalogue evidence and is not accepted.",
+      "resolution_routes": ["stronger edition-specific date evidence", "separately accepted partial-date schema policy", "explicit owner disposition retaining the 2016 identity unmapped"]
+    },
+    {
+      "id": "dependency-neurodiversity-adhd",
+      "kind": "semantic_structural_dependency",
+      "source_object": "neurodiversity",
+      "dependent_object": "adhd",
+      "reason": "The legacy broader_than/narrower_than labels conflict with their discourse/ecosystem notes in the same way observed for Autism. The consistency test documented the issue but D17 did not authorise an ADHD disposition.",
+      "resolution_routes": ["separately reviewed legacy_retained_unmapped disposition", "evidence-backed alternative semantic relation", "other explicit owner decision"]
+    }
+  ],
+  "legacy_retained_unmapped_not_candidate_complete_blockers": [
+    "Autism related_to relations accepted under D2",
+    "Autism ecosystem entry points accepted under D4",
+    "Autism/Neurodiversity reciprocal legacy pair accepted under D17",
+    "Neurodiversity ecosystem entry points retained under the migration compatibility contract"
+  ],
+  "next_state_rule": "candidate_complete is permitted only after required enrichment is verified, structural dependencies are resolved, and no owner_decision_required or structural_dependency preservation dispositions remain. legacy_retained_unmapped may remain until the later ready_for_authoritative_review audit.",
+  "boundaries": {
+    "authoritative_v01_mutation": false,
+    "authoritative_v02_replacement": false,
+    "new_semantic_relation": false,
+    "adhd_migration_scope_expansion": false,
+    "publication_or_deployment": false
+  }
+}
