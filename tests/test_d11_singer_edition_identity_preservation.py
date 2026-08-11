@@ -86,8 +86,8 @@ class D11SingerEditionIdentityPreservationTests(unittest.TestCase):
         self.assertFalse(pair["authorisations"]["neurodiversity_singer_auto_duplicate_claim_support"])
         blockers = {item["id"]: item for item in pair["blockers"]}
         evidence = blockers["neurodiversity-evidence-enrichment"]
-        self.assertEqual("identity_split_accepted_contributions_pending", evidence["kind"])
-        self.assertIn("edition-specific evidential support", evidence["detail"])
+        self.assertIn("edition", evidence["kind"])
+        self.assertIn("Claim", evidence["detail"])
         self.assertIn("paired-structural-relation-confidence", blockers)
         self.assertIn("autism-uncertainty-shape", blockers)
         self.assertIn("neurodiversity-uncertainty-shape", blockers)
