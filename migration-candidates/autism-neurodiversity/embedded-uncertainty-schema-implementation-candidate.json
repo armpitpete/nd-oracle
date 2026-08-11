@@ -1,0 +1,103 @@
+{
+  "candidate_version": "1.0",
+  "prepared_on": "2026-08-11",
+  "prepared_against_main": "1bc63e07c7da026d2a2cba36bb05eb72980e7f19",
+  "authoritative": false,
+  "authoritative_replacement": false,
+  "governing_owner_decision": "d15-embedded-uncertainty-lossless-representation",
+  "scope": "Exact separately reviewable schema implementation candidate for the D15 lossless embedded-Uncertainty policy. This candidate changes the non-authoritative v0.2 schema/fixtures on its branch but does not migrate or modify authoritative v0.1 knowledge objects.",
+  "schema_anchor_before_candidate": {
+    "path": "schema/common-v0.2.json",
+    "blob_sha": "2c0fc2344fcafde88340b8a5882e0d171246ea02",
+    "uncertainty_required": [
+      "id",
+      "statement",
+      "why_it_matters",
+      "reopening_or_reduction_condition"
+    ],
+    "status_present": false
+  },
+  "exact_design": {
+    "schema_version": "0.2",
+    "schema_version_bump_required": false,
+    "schema_version_rationale": "No authoritative v0.2 objects exist; v0.2 remains an implementation candidate during the compatibility phase, so repairing its embedded record shape does not require introducing a second implicit v0.2 type-schema version.",
+    "uncertainty_required": [
+      "id",
+      "text",
+      "why_it_matters",
+      "reopening_or_reduction_conditions",
+      "status"
+    ],
+    "text": {
+      "field": "text",
+      "type": "nonBlankString",
+      "neutral_between_question_and_statement": true,
+      "legacy_question_may_be_preserved_verbatim": true
+    },
+    "reopening_or_reduction_conditions": {
+      "field": "reopening_or_reduction_conditions",
+      "type": "array",
+      "min_items": 1,
+      "item_type": "nonBlankString",
+      "unique_items": false,
+      "preserve_order": true,
+      "preserve_duplicate_items_if_present": true,
+      "rationale": "v0.1 what_would_reduce_it is an ordered array with minItems 1 and does not require uniqueness. Adding deduplication would reject or transform schema-valid legacy state."
+    },
+    "status": {
+      "field": "status",
+      "enum": [
+        "open",
+        "partially_resolved",
+        "none_identified"
+      ],
+      "mapping_policy": "identity_only",
+      "semantic_remapping": false,
+      "rationale": "The exact v0.1 uncertainty lifecycle vocabulary is accepted directly so legacy state can be preserved without inventing a mapping. This candidate does not add new embedded-Uncertainty lifecycle meanings."
+    },
+    "compatibility_strategy": {
+      "mode": "canonical_plural_shape_only",
+      "accept_legacy_v02_statement_field": false,
+      "accept_legacy_v02_single_condition_field": false,
+      "rationale": "The repository has no authoritative v0.2 objects. A compatibility union would preserve only test-fixture history while creating two valid uncertainty shapes and additional ambiguity. Historical research/proof snapshots remain preserved as historical files instead."
+    }
+  },
+  "deterministic_v01_mapping": {
+    "id": "id verbatim",
+    "question": "text verbatim",
+    "why_it_matters": "why_it_matters verbatim",
+    "what_would_reduce_it": "reopening_or_reduction_conditions verbatim as the same ordered array",
+    "status": "status verbatim",
+    "uncertainty_record_count": "one legacy uncertainty remains one embedded uncertainty",
+    "standalone_question_creation": false
+  },
+  "implementation_scope": [
+    "schema/common-v0.2.json",
+    "schema/schema-v0.2.md",
+    "tests/fixtures/v0.2 uncertainty-bearing fixture records",
+    "tests proving exact lossless mapping and rejection of the superseded v0.2 uncertainty shape",
+    "historical-snapshot regression tests made forward-compatible where they previously froze the pre-D15 schema"
+  ],
+  "historical_snapshot_policy": {
+    "rewrite_uncertainty_shape_research": false,
+    "rewrite_pre_d15_proofs": false,
+    "rewrite_prior_migration_research": false,
+    "reason": "Historical files continue to describe the schema and decision state at the time they were prepared."
+  },
+  "boundaries": {
+    "authoritative_v01_mutation_authorised": false,
+    "authoritative_v02_replacement_authorised": false,
+    "automatic_question_promotion_authorised": false,
+    "uncertainty_split_authorised": false,
+    "list_flattening_authorised": false,
+    "status_remapping_authorised": false,
+    "new_uncertainty_status_semantics_authorised": false,
+    "publication_or_deployment_authorised": false
+  },
+  "decision_candidate": {
+    "id": "nd-embedded-uncertainty-schema-implementation",
+    "status": "owner_decision_required",
+    "question": "Accept the exact D15 embedded-Uncertainty schema implementation candidate: neutral text, canonical plural reopening_or_reduction_conditions array preserving order and duplicates, direct legacy status vocabulary with identity-only mapping, and no compatibility union?",
+    "recommended_action": "Accept the exact implementation candidate only. If accepted, record the acceptance as D16 against the unchanged protected base, update the paired candidate from schema-implementation-pending to schema-implementation-accepted, revalidate the new exact head, and then present a guarded merge gate."
+  }
+}
