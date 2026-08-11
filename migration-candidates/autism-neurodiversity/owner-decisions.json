@@ -181,6 +181,34 @@
       "authoritative_v02_replacement_authorised": false,
       "schema_change_authorised": false,
       "publication_or_deployment_authorised": false
+    },
+    {
+      "id": "d14-singer-2016-claim2-binding-followup",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "e916d56ba25ce761afd1a6a587c2f403a9f44b0d",
+      "scope": "Future non-authoritative v0.2 Neurodiversity Singer 2016 Kindle Evidence Contribution binding candidate only.",
+      "supersedes_research_decision_candidate": {
+        "path": "migration-candidates/autism-neurodiversity/singer-2016-followup-research.json",
+        "id": "nd-singer-2016-claim2-binding-followup"
+      },
+      "accepted_binding": {
+        "evidence_id": "neurodiversity-source-singer-2016-kindle",
+        "claim_ref": "neurodiversity#neurodiversity-claim-2",
+        "role": "compatible",
+        "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2016-kindle.contribution_bindings.neurodiversity-claim-2",
+        "followup_research_ref": "migration-candidates/autism-neurodiversity/singer-2016-followup-research.json#claim_2_binding_assessment"
+      },
+      "basis": "Strengthened edition-specific evidence supports compatibility: Singer's July 2016 announcement identifies the Kindle edition and hosts the publisher's framing description, while Dwyer 2022 cites Singer 2016 by Kindle location and characterises Singer as taking a middle ground between simple Medical Model and Social Model positions. Dwyer's later intervention framework remains attributed to Dwyer rather than Singer.",
+      "preserve_2016_full_publication_date_unresolved": true,
+      "accept_2016_full_date": false,
+      "automatic_claim_support_copying": false,
+      "preserve_authoritative_v01_source_unchanged": true,
+      "authoritative_evidence_contribution_creation_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "schema_change_authorised": false,
+      "publication_or_deployment_authorised": false
     }
   ]
 }
