@@ -90,12 +90,14 @@ STATIC_PAGES = {
     },
     "privacy": {
         "title": "Privacy",
-        "intro": "Site Shell v0.1 is designed to collect no personal data.",
+        "intro": "The site uses privacy-first readership analytics without cross-site visitor tracking.",
         "body": (
-            "<p>There are currently no accounts, forms, analytics scripts, advertising trackers or "
-            "personalised features in the generated site.</p>"
-            "<p>Any feature that stores queries, profiles, health information or community submissions "
-            "requires a separate privacy and threat-model review before release.</p>"
+            "<p>There are no accounts, forms, advertising trackers or personalised features in the generated site.</p>"
+            "<p>Merrin Analytics records page views and approximate town or country information supplied by "
+            "Cloudflare. A random site-local browser token is used only to estimate visitor numbers. The "
+            "collector stores no IP address, raw visitor token, full visitor-token hash, precise location or "
+            "cross-site visitor identity.</p>"
+            "<p>The site remains fully readable if the analytics script is blocked or JavaScript is disabled.</p>"
         ),
     },
 }
@@ -170,6 +172,7 @@ def page_shell(title: str, intro: str, body: str, current: str | None = None) ->
     </nav>
   </div>
 </footer>
+<script src="https://collect.merrinworld.uk/beacon.js" data-site="nd_oracle" defer></script>
 </body>
 </html>
 """
