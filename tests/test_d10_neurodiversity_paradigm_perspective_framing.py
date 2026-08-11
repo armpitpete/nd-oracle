@@ -60,7 +60,7 @@ class D10NeurodiversityParadigmPerspectiveFramingTests(unittest.TestCase):
         self.assertNotIn("reasoning", perspective)
         self.assertNotIn("scope", perspective)
 
-    def test_pair_binds_d10_and_closes_only_perspective_framing_blocker(self) -> None:
+    def test_pair_preserves_d10_after_later_bounded_decisions(self) -> None:
         pair = self.load(PAIR)
         self.assertIn(D10_ID, pair["accepted_owner_decisions"])
         self.assertTrue(pair["authorisations"]["neurodiversity_paradigm_perspective_framing_accepted"])
@@ -73,7 +73,6 @@ class D10NeurodiversityParadigmPerspectiveFramingTests(unittest.TestCase):
         self.assertIn("neurodiversity-evidence-enrichment", blockers)
         self.assertIn("neurodiversity-uncertainty-shape", blockers)
         self.assertIn("neurodiversity-adhd-structural-edge", blockers)
-        self.assertIn("Singer date/edition identity remains unresolved", blockers["neurodiversity-evidence-enrichment"]["detail"])
         relations = [item["structural_relation"] for item in pair["objects"]]
         self.assertTrue(all("confidence" not in relation for relation in relations))
         self.assertFalse(pair["authorisations"]["authoritative_neurodiversity_v01_mutation"])
