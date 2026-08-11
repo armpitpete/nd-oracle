@@ -1,0 +1,72 @@
+{
+  "research_version": "1.0",
+  "prepared_on": "2026-08-11",
+  "prepared_against_main": "75b2aab6d6aa2646e18b4780ea0fb0380a42d009",
+  "authoritative": false,
+  "authoritative_replacement": false,
+  "scope": "Follow-up research on the unresolved 2016 Kindle full publication date and the 2016 Kindle -> Neurodiversity Claim 2 compatible binding after D13.",
+  "candidate_ref": "migration-candidates/autism-neurodiversity/singer-edition-candidates.json",
+  "legacy_source_anchor": {
+    "path": "objects/concepts/neurodiversity.json",
+    "source_id": "neurodiversity-source-singer",
+    "blob_sha": "5a38bc4250079412dd3f4da1d598dfcab984ca66"
+  },
+  "evidence_routes": {
+    "singer_2016_announcement": "https://neurodiversity2.blogspot.com/2016/07/my-new-book-neurodiversity-birth-of-idea.html",
+    "singer_bibliography": "https://neurodiversity2.blogspot.com/p/bibliography-how-to-cite-my-work.html",
+    "goodreads_2016": "https://www.goodreads.com/book/show/31671068-neurodiversity",
+    "dwyer_2022_publisher": "https://karger.com/hde/article/66/2/73/828432/The-Neurodiversity-Approach-es-What-Are-They-and",
+    "dwyer_2022_pubmed": "https://pubmed.ncbi.nlm.nih.gov/36158596/",
+    "dwyer_2022_doi": "https://doi.org/10.1159/000523723"
+  },
+  "publication_date_assessment": {
+    "candidate_value": "2016-07-03",
+    "status": "secondary_catalogue_candidate_still_not_ready_for_verified_enrichment",
+    "finding": "Goodreads continues to identify the 98-page Kindle edition as published on 2016-07-03. Singer's own bibliography identifies the work as a 2016 Kindle edition, and Singer's dated 2016-07-16 announcement confirms that she had republished the thesis on Kindle by that date. No stronger first-party or edition-level bibliographic source inspected in this pass independently supplies the exact day-level date.",
+    "evidence_strength": {
+      "year_and_kindle_identity": "first_party",
+      "published_by_2016_07_16": "first_party",
+      "exact_2016_07_03_day": "secondary_catalogue_only"
+    },
+    "decision_readiness": "not_ready",
+    "reason_not_ready": "The schema requires a full YYYY-MM-DD date. The exact day remains supported only by secondary catalogue data, so promoting 2016-07-03 would flatten a material evidence-strength distinction already preserved by D11-D13."
+  },
+  "claim_2_binding_assessment": {
+    "evidence_id": "neurodiversity-source-singer-2016-kindle",
+    "claim_ref": "neurodiversity#neurodiversity-claim-2",
+    "proposed_role": "compatible",
+    "status": "owner_review_candidate_after_stronger_edition_specific_evidence",
+    "finding": "Singer's own July 2016 announcement explicitly identifies the announced Kindle edition as the republished thesis plus a new introduction and describes the work as operating from post-modern, social-constructionist, feminist and disability-rights perspectives while also criticizing social-constructionist fundamentalism. Dwyer (2022), a peer-reviewed Human Development article, cites Singer (2016) by Kindle location and describes Singer's approach as rejecting a simple Medical Model versus Social Model binary and taking a middle ground that can recognize individual disability, supports and limited interventions without making normalization or cure the goal.",
+    "edition_specificity": "The primary route is Singer's own announcement of the 2016 Kindle edition; the peer-reviewed route explicitly cites Singer 2016 with Kindle location numbers rather than relying on the later 2017 print edition.",
+    "limitations": [
+      "Singer's announcement is a first-party description of the Kindle edition rather than a page-level copy of the edition itself.",
+      "Dwyer 2022 is a secondary scholarly interpretation, although it cites Singer 2016 with Kindle location numbers.",
+      "Acceptance would remain a compatible Evidence Contribution binding, not proof that every contemporary neurodiversity position shares Singer's framing."
+    ],
+    "decision_readiness": "owner_review_ready"
+  },
+  "next_decision_candidates": [
+    {
+      "id": "nd-singer-2016-claim2-binding-followup",
+      "status": "owner_decision_required",
+      "question": "Accept the 2016 Kindle -> Neurodiversity Claim 2 compatible binding now that first-party edition-specific description and peer-reviewed Kindle-location evidence independently support the framing, while keeping the 2016 full publication date unresolved?"
+    }
+  ],
+  "preserved_blockers": {
+    "2016_full_date": "2016-07-03 remains a secondary-catalogue candidate and is not promoted by this research pass.",
+    "uncertainty_shape": "Neurodiversity and Autism list-valued uncertainty mapping remains unresolved/deferred.",
+    "structural_confidence": "D6 continues to forbid inferred/defaulted structural confidence.",
+    "adhd_dependency": "Neurodiversity broader_than -> adhd remains outside the D5 pair."
+  },
+  "boundaries": {
+    "owner_decision_made": false,
+    "2016_full_date_accepted": false,
+    "2016_claim_2_binding_accepted": false,
+    "authoritative_v01_mutation_authorised": false,
+    "authoritative_evidence_creation_authorised": false,
+    "authoritative_v02_replacement_authorised": false,
+    "automatic_claim_support_copying_authorised": false,
+    "schema_change_authorised": false,
+    "publication_or_deployment_authorised": false
+  }
+}
