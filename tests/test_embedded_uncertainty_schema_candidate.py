@@ -55,7 +55,7 @@ def map_v01_uncertainty(legacy: dict) -> dict:
 
 
 class EmbeddedUncertaintySchemaCandidateTests(unittest.TestCase):
-    def test_candidate_is_bounded_and_requires_owner_decision(self) -> None:
+    def test_candidate_is_bounded_and_records_d16_acceptance(self) -> None:
         candidate = load(CANDIDATE)
         self.assertEqual(candidate["candidate_version"], "1.0")
         self.assertEqual(
@@ -69,10 +69,18 @@ class EmbeddedUncertaintySchemaCandidateTests(unittest.TestCase):
             "d15-embedded-uncertainty-lossless-representation",
         )
         self.assertEqual(
+            candidate["accepted_owner_decision"],
+            "d16-embedded-uncertainty-schema-implementation",
+        )
+        self.assertEqual(
             candidate["decision_candidate"]["id"],
             "nd-embedded-uncertainty-schema-implementation",
         )
-        self.assertEqual(candidate["decision_candidate"]["status"], "owner_decision_required")
+        self.assertEqual(candidate["decision_candidate"]["status"], "accepted")
+        self.assertEqual(
+            candidate["decision_candidate"]["accepted_as"],
+            "d16-embedded-uncertainty-schema-implementation",
+        )
         self.assertTrue(all(value is False for value in candidate["boundaries"].values()))
 
     def test_exact_schema_shape_matches_candidate(self) -> None:
