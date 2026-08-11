@@ -8,7 +8,8 @@
   "confidence_policy_ref": "d6-structural-relation-confidence",
   "accepted_owner_decisions": [
     "d7-autism-who-perspective-framing",
-    "d8-neurodiversity-botha-citation-correction"
+    "d8-neurodiversity-botha-citation-correction",
+    "d9-neurodiversity-collective-perspective-framing"
   ],
   "owner_decision_refs": [
     "migration-candidates/autism-neurodiversity/owner-decisions.json"
@@ -95,8 +96,8 @@
     },
     {
       "id": "neurodiversity-perspective-framing",
-      "kind": "owner_decision",
-      "detail": "Evidence-backed holder-scope, reasoning and scope proposals are prepared for both Neurodiversity Perspectives, but none is accepted by this research pass."
+      "kind": "partial_owner_decision",
+      "detail": "D9 accepts the evidence-backed held_by.scope, reasoning and scope fields for neurodiversity-perspective-collective only. The separate neurodiversity-perspective-paradigm framing proposal remains an owner decision."
     },
     {
       "id": "neurodiversity-adhd-structural-edge",
@@ -115,6 +116,7 @@
     "use_not_applicable_as_confidence_shortcut": false,
     "autism_who_perspective_framing_accepted": true,
     "neurodiversity_botha_citation_correction_accepted": true,
+    "neurodiversity_collective_perspective_framing_accepted": true,
     "neurodiversity_research_accepts_pending_owner_decisions": false,
     "neurodiversity_research_accepts_other_pending_owner_decisions": false
   }
