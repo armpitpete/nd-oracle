@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ndoracle.org/schema/migration/enrichment-ledger-v0.2.json",
+  "title": "ND Oracle migration enrichment ledger v0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["migration_contract_version", "entries"],
+  "properties": {
+    "migration_contract_version": {"const": "0.2"},
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "target_field", "trigger_unit", "proposed_value", "evidence_route", "value_origin", "supplied_by", "review_state", "limitations"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+          "target_field": {"type": "string", "minLength": 1},
+          "trigger_unit": {"type": "string", "minLength": 1},
+          "proposed_value": {},
+          "evidence_route": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "value_origin": {"enum": ["pending", "verified_evidence", "owner_decision"]},
+          "supplied_by": {"type": "string", "minLength": 1},
+          "review_state": {"enum": ["pending", "verified", "rejected"]},
+          "limitations": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    }
+  }
+}
