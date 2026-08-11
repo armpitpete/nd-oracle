@@ -1,12 +1,14 @@
 # Autism migration decision log
 
-Status: **owner decision pending**. D1 and D2 are accepted. D3–D5 remain pending. No authoritative replacement is authorised by this file.
+Status: **owner decision pending**. D1–D3 are accepted. D4–D5 remain pending. No authoritative replacement is authorised by this file.
 
 Research pass: 2026-08-11, against repository `main` `0f6042e8841149da0485fe1b279dcd1bc9e5ff1f` and unchanged authoritative Autism blob `b2d3809ecfcdb1d81c793a2401f0533a4b17ea98`.
 
 Owner decision D1 was accepted on 2026-08-11 against protected repository `main` `ebb6439d265a2e53920818aec9bb001940f6511d`.
 
 Owner decision D2 was accepted on 2026-08-11 against protected repository `main` `274b27e66a6c548575bf7774fdd204c78fe4624e`.
+
+Owner decision D3 was accepted on 2026-08-11 against protected repository `main` `2979996e82f7461a4431476c8c297d67bdb1b236`.
 
 ## Evidence-backed enrichment findings
 
@@ -65,7 +67,7 @@ Evidence routes:
 - https://pubmed.ncbi.nlm.nih.gov/32711809/
 - https://doi.org/10.1016/bs.pmbts.2020.04.020
 
-**Boundary:** this decision does not authorise mutation of `objects/concepts/autism.json`, authoritative v0.2 replacement, migration of Neurodiversity, or acceptance of D2–D5.
+**Boundary:** this decision does not authorise mutation of `objects/concepts/autism.json`, authoritative v0.2 replacement, migration of Neurodiversity, or acceptance of later decisions.
 
 ### D2 — Legacy `related_to` mapping — **ACCEPTED AS DEFERRED MAPPING**
 
@@ -80,9 +82,24 @@ The exact retained legacy relations are:
 
 **Reopening condition:** revisit only if a later accepted relation-migration policy can represent the legacy relation without inventing confidence, or if an individual relation is explicitly reviewed as a new semantic act.
 
-**Boundary:** D2 does not delete the relations, change the authoritative v0.1 Autism object, authorise `associated_with`, authorise a confidence value, construct an authoritative v0.2 candidate, or accept D3–D5.
+**Boundary:** D2 does not delete the relations, change the authoritative v0.1 Autism object, authorise `associated_with`, authorise a confidence value, construct an authoritative v0.2 candidate, or accept later decisions.
 
-The machine-readable decision records are in `owner-decisions.json`; the exact legacy relation payloads remain recoverable in `preservation-ledger.json`.
+### D3 — List-valued `what_would_reduce_it` — **ACCEPTED AS SCHEMA-POLICY DEFERRAL**
+
+**Accepted rule:** retain both Autism v0.1 uncertainty units as `legacy_retained_unmapped` with their exact `what_would_reduce_it` arrays. Do not flatten the arrays into prose and do not encode them into the current v0.2 single-string field.
+
+The retained reduction-condition arrays are:
+
+- `autism-uncertainty-measurement`: `longitudinal community-led studies`; `multidimensional support descriptions`; `validation across ages, cultures, communication modes, and intellectual abilities`;
+- `autism-uncertainty-sensory`: `participatory trials of accommodations`; `ecologically valid measures`; `reporting of benefit, burden, and adverse effects`.
+
+**Reason:** flattening makes item boundaries convention-dependent; a canonical string could be reversible but would still force structured one-or-many semantics into a prose field. Neither is required merely to satisfy the current schema.
+
+**Reopening condition:** revisit through an explicit schema-policy decision that supports one-or-many reduction conditions directly, or another explicitly accepted reversible representation that preserves item boundaries.
+
+**Boundary:** D3 authorises no schema change now, no flattening, no canonical-string encoding, no mutation of the authoritative v0.1 Autism object, no authoritative v0.2 replacement, and no acceptance of D4 or D5.
+
+The machine-readable decision records are in `owner-decisions.json`; exact legacy relation and uncertainty payloads remain recoverable in `preservation-ledger.json`.
 
 ## Perspective proposals — not accepted
 
@@ -103,16 +120,6 @@ Proposed Perspective `scope`:
 These remain `owner_decision` proposals because they are framing choices rather than raw source metadata.
 
 ## Pending decision candidates
-
-### D3 — List-valued `what_would_reduce_it` — **PENDING**
-
-Options:
-
-1. flatten the list into prose — **not recommended**, because reversibility and item boundaries become convention-dependent;
-2. encode the original array as a canonical string — reversible but semantically awkward inside a prose field;
-3. revise the v0.2 uncertainty representation in a later schema-policy lane to preserve one-or-many reduction conditions directly.
-
-**Recommendation:** option 3. Keep the original arrays in the preservation ledger until that policy is accepted.
 
 ### D4 — `ecosystem_entry_points` — **PENDING**
 
