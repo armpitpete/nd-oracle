@@ -3,7 +3,8 @@
   "migration_contract_version": "0.2",
   "decision_ref": "d11-singer-edition-identity-preservation",
   "accepted_enrichment_decision_refs": [
-    "d12-singer-2017-date-enrichment"
+    "d12-singer-2017-date-enrichment",
+    "d13-singer-edition-specific-contribution-bindings"
   ],
   "authoritative": false,
   "research_refs": [
@@ -37,8 +38,24 @@
       ],
       "full_schema_date_status": "not_accepted_by_d11",
       "date_research_status": "secondary_catalogue_candidate_not_yet_verified_enrichment",
-      "contribution_status": "edition_specific_evidence_required",
-      "contribution_research_status": "claim_1_owner_review_candidate_claim_2_direct_text_preferred"
+      "contribution_status": "claim_1_accepted_by_d13_claim_2_pending_direct_text",
+      "contribution_research_status": "claim_1_owner_review_candidate_claim_2_direct_text_preferred",
+      "accepted_contribution_bindings": [
+        {
+          "claim_ref": "neurodiversity#neurodiversity-claim-1",
+          "role": "compatible",
+          "decision_ref": "d13-singer-edition-specific-contribution-bindings",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2016-kindle.contribution_bindings.neurodiversity-claim-1"
+        }
+      ],
+      "pending_contribution_bindings": [
+        {
+          "claim_ref": "neurodiversity#neurodiversity-claim-2",
+          "role": "compatible",
+          "status": "pending_stronger_direct_text_evidence",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2016-kindle.contribution_bindings.neurodiversity-claim-2"
+        }
+      ]
     },
     {
       "id": "neurodiversity-source-singer-2017-revised-print",
@@ -57,8 +74,23 @@
       "full_schema_date_status": "accepted_by_d12_for_future_non_authoritative_candidate",
       "date_research_status": "owner_accepted_from_corroborated_catalogue_candidate",
       "date_decision_ref": "d12-singer-2017-date-enrichment",
-      "contribution_status": "edition_specific_evidence_required",
-      "contribution_research_status": "claim_1_and_claim_2_owner_review_candidates"
+      "contribution_status": "claim_1_and_claim_2_accepted_by_d13",
+      "contribution_research_status": "claim_1_and_claim_2_owner_review_candidates",
+      "accepted_contribution_bindings": [
+        {
+          "claim_ref": "neurodiversity#neurodiversity-claim-1",
+          "role": "compatible",
+          "decision_ref": "d13-singer-edition-specific-contribution-bindings",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2017-revised-print.contribution_bindings.neurodiversity-claim-1"
+        },
+        {
+          "claim_ref": "neurodiversity#neurodiversity-claim-2",
+          "role": "compatible",
+          "decision_ref": "d13-singer-edition-specific-contribution-bindings",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2017-revised-print.contribution_bindings.neurodiversity-claim-2"
+        }
+      ],
+      "pending_contribution_bindings": []
     }
   ],
   "boundaries": {
