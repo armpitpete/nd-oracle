@@ -1,0 +1,194 @@
+{
+  "review_version": "1.0",
+  "prepared_on": "2026-08-11",
+  "prepared_against_main": "52ef8fad6da75b8fa772a3bfabfe9d7a89c6981b",
+  "authoritative": false,
+  "authoritative_replacement": false,
+  "scope": "Bounded semantic review of the v0.1 Autism/Neurodiversity broader_than/narrower_than pair after structural-confidence research showed that confidence cannot safely be assessed before confirming what the relation means. ADHD is used only as a consistency test and is not added to the migration scope.",
+  "governing_history": [
+    "d5-autism-neurodiversity-structural-closure",
+    "d6-structural-relation-confidence",
+    "nd-structural-semantics-before-confidence research"
+  ],
+  "repository_anchors": {
+    "paired_candidate": {
+      "path": "migration-candidates/autism-neurodiversity/structural-candidate.json",
+      "blob_sha": "c4ee90bbe829b85a4022e7d8ef48caa4692bd903",
+      "current_mapping": "reciprocal broader_than/narrower_than"
+    },
+    "autism": {
+      "path": "objects/concepts/autism.json",
+      "blob_sha": "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98",
+      "legacy_relation": {
+        "type": "narrower_than",
+        "target_id": "neurodiversity",
+        "note": "Autism is commonly situated within neurodiversity discourse."
+      }
+    },
+    "neurodiversity": {
+      "path": "objects/concepts/neurodiversity.json",
+      "blob_sha": "5a38bc4250079412dd3f4da1d598dfcab984ca66",
+      "legacy_relation_to_autism": {
+        "type": "broader_than",
+        "target_id": "autism",
+        "note": "Autism is commonly discussed within the neurodiversity ecosystem."
+      },
+      "legacy_relation_to_adhd": {
+        "type": "broader_than",
+        "target_id": "adhd",
+        "note": "ADHD is commonly discussed within the neurodiversity ecosystem."
+      }
+    },
+    "adhd": {
+      "path": "objects/concepts/adhd.json",
+      "blob_sha": "719f26a9af773cd1bcf670df4d12ed5f6bcf0a23",
+      "legacy_relation": {
+        "type": "narrower_than",
+        "target_id": "neurodiversity",
+        "note": "ADHD is commonly situated within neurodiversity discourse."
+      }
+    },
+    "common_v02": {
+      "path": "schema/common-v0.2.json",
+      "blob_sha": "ce0141ee7031f21fa2bd72b2faa3371aed3e622b",
+      "available_relation_types": [
+        "broader_than",
+        "narrower_than",
+        "associated_with",
+        "experienced_as",
+        "supported_by",
+        "challenged_by",
+        "described_by",
+        "used_for",
+        "debated_by",
+        "questions"
+      ]
+    }
+  },
+  "external_evidence": [
+    {
+      "id": "nas-autism-neurodiversity",
+      "source": "National Autistic Society",
+      "url": "https://www.autism.org.uk/advice-and-guidance/identity/autism-and-neurodiversity",
+      "accessed": "2026-08-11",
+      "findings": [
+        "Neurodiversity describes the diversity of all human brains and includes all people.",
+        "Autism is described as a form of neurodivergence.",
+        "Neurodiversity and neurodivergence are explicitly distinguished."
+      ]
+    },
+    {
+      "id": "nhs-autism",
+      "source": "NHS",
+      "url": "https://www.nhs.uk/conditions/autism/what-is-autism/",
+      "accessed": "2026-08-11",
+      "findings": [
+        "Autism is described as a difference in brain development and is often called a type of neurodivergence."
+      ]
+    },
+    {
+      "id": "nhs-england-autism-neurodivergence",
+      "source": "NHS England",
+      "url": "https://www.england.nhs.uk/long-read/autism-informed-inpatient-care/",
+      "accessed": "2026-08-11",
+      "findings": [
+        "Neurodiversity is described as the diversity of all minds.",
+        "Neurodivergence is described as encompassing autism and ADHD among other differences."
+      ]
+    },
+    {
+      "id": "nhs-england-adhd-taskforce-part-2",
+      "source": "NHS England independent ADHD Taskforce",
+      "url": "https://www.england.nhs.uk/long-read/report-of-the-independent-adhd-taskforce-part-2/",
+      "accessed": "2026-08-11",
+      "findings": [
+        "Neurodiversity describes the population as a whole and recognises diversity of different brains.",
+        "ADHD is discussed as neurodivergence outside clinical settings."
+      ]
+    }
+  ],
+  "semantic_findings": {
+    "legacy_type_and_note_conflict": "The v0.1 relation type is taxonomic-looking, but its explanatory note states only discourse/ecosystem association. A lossless migration must preserve both facts rather than selecting the stronger type and treating the softer note as proof of it.",
+    "current_terminology": "Reviewed current sources consistently use neurodiversity for population-level diversity and neurodivergence for autism and ADHD. This does not support treating Autism or ADHD as literal subtypes of the Neurodiversity concept.",
+    "migration_rule": "When a legacy type and its own explanatory note pull in materially different semantic directions, migration must not silently strengthen the note to fit the type or silently weaken the type to fit the note. Preserve the legacy unit and require explicit semantic disposition.",
+    "d5_consequence": "D5 remains historical evidence that both sides of the reciprocal legacy pair must be handled together. Its assumption that preservation requires a v0.2 broader_than/narrower_than pair is now specifically reopened by later evidence; the D5 record itself should not be rewritten.",
+    "d6_consequence": "If no v0.2 taxonomy relation is migrated, the missing-confidence blocker does not need to be solved for this legacy pair. Confidence becomes relevant again only for any separately proposed new v0.2 relation."
+  },
+  "options": [
+    {
+      "id": "retain-v02-taxonomy-pair",
+      "status": "rejected_as_lossless_migration",
+      "reason": "It privileges the legacy relation label over the legacy explanatory note and converts discourse/ecosystem association into a stronger current ontology claim that reviewed terminology does not support."
+    },
+    {
+      "id": "map-to-associated-with",
+      "status": "not_preferred_as_lossless_migration",
+      "reason": "It avoids taxonomy but still changes the legacy relation type, and the generic association does not preserve that the note is specifically about discourse/ecosystem framing. It may be separately proposed as enrichment if evidence and purpose justify it."
+    },
+    {
+      "id": "add-situated-within-discourse-relation-type",
+      "status": "not_recommended_now",
+      "reason": "The wording is semantically closer to the note, but a new schema relation type should not be created solely to rescue one ambiguous legacy family before wider reuse is demonstrated."
+    },
+    {
+      "id": "legacy-retained-unmapped-no-direct-v02-edge",
+      "status": "recommended_migration_disposition",
+      "reason": "This preserves the exact reciprocal legacy relation records and notes without asserting a new ontology. It avoids deletion and avoids pretending that either the old relation label or the old note alone settles current semantics.",
+      "requirements": [
+        "Preserve both Autism->Neurodiversity and Neurodiversity->Autism legacy records together.",
+        "Preserve exact legacy type, target and note for each record.",
+        "Mark the v0.2 semantic mapping as unresolved/legacy-retained-unmapped rather than creating a validating relation by default.",
+        "Do not count this disposition as authoritative v0.2 migration until separately accepted."
+      ]
+    },
+    {
+      "id": "new-described-by-neurodiversity-paradigm",
+      "status": "plausible_separate_enrichment",
+      "reason": "A relation such as Autism described_by a Neurodiversity-Paradigm Perspective may represent the current framing more precisely than a Concept->Concept taxonomy edge, but it would be a new evidence-backed semantic act, not the migration of the legacy broader_than/narrower_than unit. Relation target, evidence and confidence require separate review."
+    },
+    {
+      "id": "split-neurodiversity-concept-before-migration",
+      "status": "not_required_for_current_disposition",
+      "reason": "The model already separates Concept and Perspective. A larger concept split may eventually be useful, but it is not necessary merely to avoid a lossy migration of this relation family."
+    }
+  ],
+  "adhd_consistency_test": {
+    "result": "same_semantic_mismatch_observed",
+    "migration_scope_expanded": false,
+    "consequence": "The same legacy type/note pattern appears for ADHD, supporting a general caution against taxonomy-by-migration. This review does not authorise changing ADHD or adding it to the Autism/Neurodiversity migration pair."
+  },
+  "recommended_direction": {
+    "id": "preserve-legacy-pair-without-v02-taxonomy",
+    "summary": "For the Autism/Neurodiversity migration candidate, preserve the reciprocal v0.1 relation records as legacy-retained-unmapped and do not emit a v0.2 broader_than/narrower_than relation from them. Consider any later graph relation to the Neurodiversity Paradigm as separately evidenced enrichment.",
+    "confidence_next_step": "Only after a new relation type/target is explicitly accepted should its confidence be assessed. Do not design a confidence workaround for a relation that is no longer proposed for migration."
+  },
+  "boundaries": {
+    "d5_record_rewritten": false,
+    "d6_record_rewritten": false,
+    "paired_candidate_mutation_authorised": false,
+    "schema_change_authorised": false,
+    "validator_change_authorised": false,
+    "relation_type_change_authorised": false,
+    "new_relation_enrichment_authorised": false,
+    "confidence_value_authorised": false,
+    "authoritative_v01_mutation_authorised": false,
+    "authoritative_v02_replacement_authorised": false,
+    "adhd_scope_expansion_authorised": false,
+    "publication_or_deployment_authorised": false
+  },
+  "decision_candidate": {
+    "id": "nd-neurodiversity-legacy-structural-disposition",
+    "status": "owner_decision_required",
+    "recommended_acceptance": "Accept the relation-semantics disposition: preserve the reciprocal Autism/Neurodiversity v0.1 broader_than/narrower_than records together as legacy-retained-unmapped for migration, and do not emit a v0.2 taxonomy edge from them. Preserve D5 and D6 as historical decisions; supersede only D5's mapping assumption, not its record or its requirement that neither side be silently dropped. Treat any future Autism-to-Neurodiversity-Paradigm relation as separately reviewed enrichment. ADHD remains a consistency test only.",
+    "does_not_authorise": [
+      "paired candidate mutation",
+      "schema or validator change",
+      "new relation type or target",
+      "relation confidence",
+      "authoritative v0.1 mutation",
+      "authoritative v0.2 replacement",
+      "ADHD migration scope expansion",
+      "publication or deployment"
+    ]
+  }
+}
