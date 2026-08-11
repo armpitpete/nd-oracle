@@ -36,11 +36,12 @@
     "claim_ref": "neurodiversity#neurodiversity-claim-2",
     "proposed_role": "compatible",
     "status": "owner_review_candidate_after_stronger_edition_specific_evidence",
-    "finding": "Singer's own July 2016 announcement explicitly identifies the announced Kindle edition as the republished thesis plus a new introduction and describes the work as operating from post-modern, social-constructionist, feminist and disability-rights perspectives while also criticizing social-constructionist fundamentalism. Dwyer (2022), a peer-reviewed Human Development article, cites Singer (2016) by Kindle location and describes Singer's approach as rejecting a simple Medical Model versus Social Model binary and taking a middle ground that can recognize individual disability, supports and limited interventions without making normalization or cure the goal.",
-    "edition_specificity": "The primary route is Singer's own announcement of the 2016 Kindle edition; the peer-reviewed route explicitly cites Singer 2016 with Kindle location numbers rather than relying on the later 2017 print edition.",
+    "finding": "Singer's July 2016 announcement identifies the announced Kindle edition as the republished thesis plus a new introduction and reproduces a publisher's blurb describing the work as operating from post-modern, social-constructionist, feminist and disability-rights perspectives while criticizing social-constructionist fundamentalism. Dwyer (2022), a peer-reviewed Human Development article, cites Singer (2016) by Kindle location and characterises Singer's position as rejecting a simple Medical Model versus Social Model binary and taking a middle ground. Dwyer's later discussion separately proposes a middle-ground neurodiversity approach that can recognize disability, supports and limited interventions without making normalization or cure the goal; those later prescriptive details are Dwyer's proposal and are not attributed here to Singer.",
+    "edition_specificity": "Singer's announcement is first-party evidence for the identity of the 2016 Kindle edition and hosts the publisher's framing description; the peer-reviewed route explicitly cites Singer 2016 with Kindle location numbers rather than relying on the later 2017 print edition.",
     "limitations": [
-      "Singer's announcement is a first-party description of the Kindle edition rather than a page-level copy of the edition itself.",
+      "Singer's announcement is first-party for the edition identity but reproduces a publisher's blurb for much of the framing description; it is not a page-level copy of the edition itself.",
       "Dwyer 2022 is a secondary scholarly interpretation, although it cites Singer 2016 with Kindle location numbers.",
+      "Dwyer's discussion of disability, supports, interventions, normalization and cure extends beyond the specific middle-ground proposition that Dwyer directly attributes to Singer 2016.",
       "Acceptance would remain a compatible Evidence Contribution binding, not proof that every contemporary neurodiversity position shares Singer's framing."
     ],
     "decision_readiness": "owner_review_ready"
@@ -49,7 +50,7 @@
     {
       "id": "nd-singer-2016-claim2-binding-followup",
       "status": "owner_decision_required",
-      "question": "Accept the 2016 Kindle -> Neurodiversity Claim 2 compatible binding now that first-party edition-specific description and peer-reviewed Kindle-location evidence independently support the framing, while keeping the 2016 full publication date unresolved?"
+      "question": "Accept the 2016 Kindle -> Neurodiversity Claim 2 compatible binding now that first-party edition evidence and a secondary scholarly interpretation grounded in Singer 2016 Kindle locations materially strengthen the compatibility case, while keeping the 2016 full publication date unresolved?"
     }
   ],
   "preserved_blockers": {
