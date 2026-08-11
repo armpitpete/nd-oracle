@@ -1,6 +1,6 @@
 # Autism + Neurodiversity paired migration candidate proof
 
-Status: **non-authoritative paired candidate prepared; D6 confidence policy accepted; enrichment and other owner decisions remain pending**.
+Status: **non-authoritative paired candidate prepared; D6 confidence policy and D7 Autism WHO Perspective framing accepted; enrichment and other owner decisions remain pending**.
 
 Prepared on 2026-08-11 against protected repository `main`:
 
@@ -9,6 +9,10 @@ Prepared on 2026-08-11 against protected repository `main`:
 D6 structural-confidence policy accepted on 2026-08-11 against protected repository `main`:
 
 `653938871190b454696df12abcc5bc0260ce19fd`
+
+D7 Autism WHO Perspective framing accepted on 2026-08-11 against protected repository `main`:
+
+`cae42eaf485f91f2920dcc1a15176bc335286719`
 
 Source anchors:
 
@@ -21,6 +25,12 @@ D5 authorises preparation of a **paired non-authoritative Autism + Neurodiversit
 
 D6 governs the missing structural confidence field: do not infer or default it, and do not use `not_applicable` merely to satisfy validation. The field stays absent until evidence-backed enrichment or a separately accepted structural-confidence schema policy supplies a non-fabricating representation.
 
+D7 accepts the three WHO-backed framing fields for the future non-authoritative Autism Perspective candidate only:
+
+- `held_by.scope`: `WHO institutional global public-health guidance on autism; not a statement representing all clinicians, autistic people, families, researchers or WHO Member States individually.`
+- `reasoning`: `WHO frames autism as diverse, with variable and evolving abilities and needs, and links health and quality of life to accessible, inclusive, person-responsive services plus community and societal support.`
+- `scope`: `Global public-health description of autism, health and care needs, inclusion and support across the life course; excludes individual diagnosis and does not purport to capture the full range of autistic lived experience or community perspectives.`
+
 These decisions do not authorise:
 
 - mutation of either authoritative v0.1 object;
@@ -29,7 +39,8 @@ These decisions do not authorise:
 - invention or defaulting of relation confidence;
 - use of `not_applicable` as a schema-completion shortcut;
 - automatic expansion of the candidate to ADHD;
-- silent acceptance of pending Perspective or other semantic choices.
+- acceptance of Neurodiversity Perspective framing or other unresolved semantics;
+- publication or deployment.
 
 ## Candidate prepared
 
@@ -43,6 +54,8 @@ It preserves the exact reciprocal legacy pair:
 - Neurodiversity `broader_than -> autism`, legacy note: `Autism is commonly discussed within the neurodiversity ecosystem.`
 
 The candidate records the v0.2 typed targets but deliberately does **not** supply a `confidence` value. Both v0.1 relations lack confidence. D6 confirms that absence must remain visible rather than being filled by inference, default, or `not_applicable`.
+
+D7 removes the Autism WHO Perspective framing owner-decision blocker from this candidate record. It does not otherwise advance the structural pair to authoritative status.
 
 Therefore the candidate proves the pairing direction and reciprocal structural shape, but it does **not** claim full v0.2 Concept validity.
 
@@ -76,7 +89,9 @@ The generated package contains:
 
 After D6, the generated structural-confidence record is a **pending enrichment/schema-policy requirement**, not a pending invitation to choose a convenient confidence value. It proposes no value and explicitly records that `not_applicable` is not authorised as a validation shortcut.
 
-The package remains `owner_decision_pending` and `authoritative_replacement: false` because other owner decisions remain unresolved.
+After D7, the three Autism WHO Perspective framing values are accepted in the owner-decision record and must be used exactly when a future non-authoritative v0.2 Autism Perspective candidate is assembled. The historical enrichment proposal records remain provenance for how those values were proposed; D7 is the acceptance act.
+
+The package remains `owner_decision_pending` and `authoritative_replacement: false` because other owner decisions and dependencies remain unresolved.
 
 ## Disconfirming finding: the D5 pair is not full structural closure
 
@@ -109,9 +124,9 @@ D3 deliberately retains Autism's list-valued `what_would_reduce_it` arrays as le
 
 The candidate does not flatten those lists merely to pass schema validation.
 
-### 3. Autism Perspective framing
+### 3. Autism WHO Perspective framing — accepted by D7
 
-The proposed `held_by.scope`, `reasoning`, and Perspective `scope` fields remain unaccepted.
+The three previously proposed WHO Perspective framing fields are now accepted exactly for the future non-authoritative v0.2 Autism Perspective candidate. This is no longer an owner-decision blocker.
 
 ### 4. Neurodiversity Evidence enrichment
 
@@ -135,7 +150,9 @@ The legacy `broader_than -> adhd` edge remains unresolved and outside this D5 ca
 
 The paired candidate has been prepared **without fabricating the missing semantics that would make it look complete**.
 
-D6 further locks that principle for structural confidence: schema validity is not evidence. A confidence enum cannot be inserted simply because the schema requires one.
+D6 locks that principle for structural confidence: schema validity is not evidence. A confidence enum cannot be inserted simply because the schema requires one.
+
+D7 resolves the Autism WHO Perspective framing decision without turning the Perspective or Autism object authoritative.
 
 The D5 structural dependency remains open because its accepted closure condition is stronger than merely writing both IDs into one candidate: an exact paired v0.2 candidate must eventually validate reciprocal structure without weakening the reciprocity rule and without fabricating required relation semantics.
 
