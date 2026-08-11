@@ -1,0 +1,92 @@
+{
+  "research_version": "1.0",
+  "prepared_on": "2026-08-11",
+  "prepared_against_main": "622da858f5803be32f409a54f7e0c6742f19e373",
+  "authoritative": false,
+  "authoritative_replacement": false,
+  "scope": "Day-level publication-date research for the already accepted non-authoritative Singer 2016 Kindle Evidence identity only.",
+  "identity": {
+    "evidence_id": "neurodiversity-source-singer-2016-kindle",
+    "title": "NeuroDiversity: The Birth of an Idea",
+    "author": "Judy Singer",
+    "format": "Kindle",
+    "asin": "B01HY0QTEE",
+    "identity_decision_ref": "d11-singer-edition-identity-preservation"
+  },
+  "candidate_date": "2016-07-03",
+  "evidence": [
+    {
+      "id": "singer-first-party-bibliography",
+      "source_class": "first_party_author",
+      "url": "https://neurodiversity2.blogspot.com/p/bibliography-how-to-cite-my-work.html",
+      "finding": "Singer identifies NeuroDiversity: The birth of an idea as a 2016 Kindle publication and links the exact Amazon Kindle identity ASIN B01HY0QTEE.",
+      "supports_exact_day": false
+    },
+    {
+      "id": "goodreads-kindle-edition",
+      "source_class": "secondary_bibliographic_metadata",
+      "url": "https://www.goodreads.com/book/show/31671068-neurodiversity",
+      "finding": "Goodreads identifies a 98-page Kindle Edition of NeuroDiversity: The Birth of an Idea by Judy Singer as published July 3, 2016.",
+      "supports_exact_day": true
+    },
+    {
+      "id": "singer-launch-post",
+      "source_class": "first_party_contemporaneous_post",
+      "url": "https://neurodiversity2.blogspot.com/2016/07/my-new-book-neurodiversity-birth-of-idea.html",
+      "finding": "Singer's post dated July 16, 2016 says she had republished the thesis on Kindle with a new introduction. This independently bounds availability to no later than July 16, 2016 but does not state the publication day.",
+      "supports_exact_day": false
+    },
+    {
+      "id": "singer-later-bibliography",
+      "source_class": "first_party_author",
+      "url": "https://neurodiversity2.blogspot.com/2023/10/a-factual-response-to-martijn-dekkers.html",
+      "finding": "Singer again cites the book as a 2016 Kindle publication and links ASIN B01HY0QTEE, corroborating edition identity but not the day-level date.",
+      "supports_exact_day": false
+    }
+  ],
+  "negative_and_limit_evidence": {
+    "conflicting_day_level_date_found": false,
+    "direct_amazon_product_metadata_retrieved": false,
+    "author_first_party_day_level_statement_found": false,
+    "library_catalogue_day_level_record_for_2016_kindle_found": false,
+    "assessment": "The exact day is supplied by one secondary bibliographic record. First-party sources strongly bind the 2016 Kindle identity and are chronologically consistent with July 3, but do not themselves state that day."
+  },
+  "dostoevsky_check": {
+    "satisfying_story": "Goodreads likely reflects Amazon-origin edition metadata, making July 3 look straightforward.",
+    "disconfirming_tests": [
+      "Look for a conflicting day-level date tied to ASIN B01HY0QTEE.",
+      "Look for first-party Singer/KDP/Amazon metadata stating a different date.",
+      "Keep the 2017 ISBN-bound print identity separate so its September 5, 2017 date cannot contaminate the Kindle identity."
+    ],
+    "result": "No conflict found, but the exact day is not independently day-level corroborated."
+  },
+  "assessment": {
+    "identity_confidence": "high",
+    "year_confidence": "high",
+    "day_level_candidate": "2016-07-03",
+    "day_level_evidence_strength": "moderate",
+    "ready_for_owner_review": true,
+    "automatic_verified_enrichment": false,
+    "reason": "The first-party identity chain plus the matching Goodreads Kindle-edition record makes 2016-07-03 a bounded, coherent owner-review candidate. The evidence does not justify silently promoting it to verified enrichment without owner acceptance."
+  },
+  "decision_candidate": {
+    "id": "nd-singer-2016-full-date-resolution",
+    "status": "owner_decision_required",
+    "recommended_acceptance": "Accept 2016-07-03 as the full publication date for the future non-authoritative neurodiversity-source-singer-2016-kindle Evidence candidate, based on Singer's first-party 2016 Kindle/ASIN identity, the matching Goodreads 98-page Kindle edition metadata giving July 3, 2016, and Singer's contemporaneous July 16 launch post as a consistent upper bound. Record the date as owner-accepted bibliographic enrichment rather than falsely claiming independent first-party day-level verification.",
+    "does_not_authorise": [
+      "authoritative v0.1 mutation",
+      "authoritative v0.2 replacement",
+      "Singer 2017 identity or date change",
+      "claim-text change",
+      "new contribution role or binding",
+      "schema or validator change",
+      "ADHD migration or semantic disposition",
+      "publication or deployment"
+    ]
+  },
+  "reopening_conditions": [
+    "ASIN-bound Amazon or KDP metadata states a different publication date.",
+    "A first-party author record states a conflicting day-level date.",
+    "A stronger contemporaneous catalogue or archival record tied to the same Kindle identity conflicts with 2016-07-03."
+  ]
+}
