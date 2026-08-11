@@ -1,0 +1,14 @@
+{
+  "migration_contract_version": "0.2",
+  "entries": [
+    {
+      "id": "dependency-autism-neurodiversity",
+      "source_object": "autism",
+      "relation": "narrower_than",
+      "dependent_object": "neurodiversity",
+      "reason": "The accepted v0.2 structural relation requires a reciprocal broader_than relation in the candidate graph.",
+      "resolution_status": "unresolved",
+      "resolution_evidence": []
+    }
+  ]
+}

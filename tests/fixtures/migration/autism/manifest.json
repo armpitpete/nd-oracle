@@ -1,0 +1,22 @@
+{
+  "migration_contract_version": "0.2",
+  "source_repository_commit": "2a25815ccd4b05a373d897470b18c46eb67bf891",
+  "sources": [
+    {
+      "path": "objects/concepts/autism.json",
+      "blob_sha": "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98",
+      "schema_version": "0.1",
+      "object_id": "autism"
+    }
+  ],
+  "candidate_object_ids": [
+    "autism",
+    "autism-source-who",
+    "autism-source-neurobiology",
+    "autism-perspective-clinical"
+  ],
+  "package_status": "enrichment_pending",
+  "created": "2026-08-11",
+  "updated": "2026-08-11",
+  "authoritative_replacement": false
+}
