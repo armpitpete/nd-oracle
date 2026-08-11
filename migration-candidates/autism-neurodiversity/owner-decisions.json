@@ -76,6 +76,39 @@
       "authoritative_v02_replacement_authorised": false,
       "schema_change_authorised": false,
       "publication_or_deployment_authorised": false
+    },
+    {
+      "id": "d11-singer-edition-identity-preservation",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "ae12681b8fb0d84348bda2347d805d8e44d2165c",
+      "scope": "Future non-authoritative v0.2 Neurodiversity Singer Evidence migration work only.",
+      "legacy_source_id": "neurodiversity-source-singer",
+      "supersedes_research_decision_candidate": {
+        "path": "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json",
+        "id": "nd-singer-edition-reconciliation"
+      },
+      "accepted_interpretation": "Treat the legacy neurodiversity-source-singer record as conflating two identifiable editions.",
+      "candidate_evidence_ids": [
+        "neurodiversity-source-singer-2016-kindle",
+        "neurodiversity-source-singer-2017-revised-print"
+      ],
+      "preserve_separate_evidence_identities": true,
+      "select_single_edition": false,
+      "combine_editions": false,
+      "preserve_authoritative_v01_source_unchanged": true,
+      "automatic_claim_support_duplication": false,
+      "edition_specific_evidence_required_for_each_contribution": true,
+      "candidate_identity_ref": "migration-candidates/autism-neurodiversity/singer-edition-candidates.json",
+      "evidence_route": [
+        "https://neurodiversity2.blogspot.com/p/bibliography-how-to-cite-my-work.html",
+        "https://wellcomecollection.org/works/ywrdd8ff"
+      ],
+      "authoritative_evidence_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "schema_change_authorised": false,
+      "publication_or_deployment_authorised": false
     }
   ]
 }

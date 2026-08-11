@@ -10,13 +10,15 @@
     "d7-autism-who-perspective-framing",
     "d8-neurodiversity-botha-citation-correction",
     "d9-neurodiversity-collective-perspective-framing",
-    "d10-neurodiversity-paradigm-perspective-framing"
+    "d10-neurodiversity-paradigm-perspective-framing",
+    "d11-singer-edition-identity-preservation"
   ],
   "owner_decision_refs": [
     "migration-candidates/autism-neurodiversity/owner-decisions.json"
   ],
   "research_refs": [
-    "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json"
+    "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json",
+    "migration-candidates/autism-neurodiversity/singer-edition-candidates.json"
   ],
   "sources": [
     {
@@ -87,8 +89,8 @@
     },
     {
       "id": "neurodiversity-evidence-enrichment",
-      "kind": "research_prepared_owner_decisions_pending",
-      "detail": "Evidence-backed Neurodiversity proposals are prepared. D8 accepts the verified Botha citation/DOI correction for the future non-authoritative v0.2 Botha Evidence candidate while preserving v0.1 unchanged. Singer title/authorship and both contribution proposals are evidence-backed, but Singer date/edition identity remains unresolved."
+      "kind": "identity_split_accepted_contributions_pending",
+      "detail": "Evidence-backed Neurodiversity proposals are prepared. D8 accepts the verified Botha citation/DOI correction. D11 resolves the legacy Singer edition-identity choice by preserving separate 2016 Kindle and revised 2017 print Evidence identity candidates. Claim-support semantics are not copied between editions; each Evidence Contribution still requires edition-specific evidential support, and full schema-valid date metadata remains an enrichment task rather than an automatic consequence of D11."
     },
     {
       "id": "neurodiversity-uncertainty-shape",
@@ -115,6 +117,10 @@
     "neurodiversity_collective_perspective_framing_accepted": true,
     "neurodiversity_paradigm_perspective_framing_accepted": true,
     "neurodiversity_all_perspective_framings_accepted": true,
+    "neurodiversity_singer_edition_identity_split_accepted": true,
+    "neurodiversity_singer_select_single_edition": false,
+    "neurodiversity_singer_combine_editions": false,
+    "neurodiversity_singer_auto_duplicate_claim_support": false,
     "neurodiversity_research_accepts_pending_owner_decisions": false,
     "neurodiversity_research_accepts_other_pending_owner_decisions": false
   }

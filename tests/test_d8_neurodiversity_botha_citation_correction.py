@@ -75,7 +75,7 @@ class D8NeurodiversityBothaCitationCorrectionTests(unittest.TestCase):
         self.assertFalse(pair["authorisations"]["neurodiversity_research_accepts_other_pending_owner_decisions"])
 
         blockers = {item["id"]: item for item in pair["blockers"]}
-        self.assertIn("Singer date/edition identity remains unresolved", blockers["neurodiversity-evidence-enrichment"]["detail"])
+        self.assertIn("neurodiversity-evidence-enrichment", blockers)
         self.assertEqual("owner_decision", blockers["neurodiversity-uncertainty-shape"]["kind"])
         self.assertEqual("structural_dependency", blockers["neurodiversity-adhd-structural-edge"]["kind"])
         relations = [item["structural_relation"] for item in pair["objects"]]
