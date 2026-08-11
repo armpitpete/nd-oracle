@@ -1,6 +1,6 @@
 {
   "migration_contract_version": "0.2",
-  "source_repository_commit": "2a25815ccd4b05a373d897470b18c46eb67bf891",
+  "source_repository_commit": "0f6042e8841149da0485fe1b279dcd1bc9e5ff1f",
   "sources": [
     {
       "path": "objects/concepts/autism.json",
@@ -15,7 +15,7 @@
     "autism-source-neurobiology",
     "autism-perspective-clinical"
   ],
-  "package_status": "enrichment_pending",
+  "package_status": "owner_decision_pending",
   "created": "2026-08-11",
   "updated": "2026-08-11",
   "authoritative_replacement": false

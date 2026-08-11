@@ -37,8 +37,47 @@ class AutismMigrationPackageTests(unittest.TestCase):
         self.assertEqual([], validate_package(self.package))
         self.assertEqual(before, git_blob_sha(SOURCE))
         manifest = self.load("manifest.json")
-        self.assertEqual("enrichment_pending", manifest["package_status"])
+        self.assertEqual("owner_decision_pending", manifest["package_status"])
         self.assertFalse(manifest["authoritative_replacement"])
+
+    def test_enrichment_pass_is_evidence_backed_but_not_owner_accepted(self) -> None:
+        ledger = self.load("enrichment-ledger.json")
+        verified = [item for item in ledger["entries"] if item["review_state"] == "verified"]
+        pending = [item for item in ledger["entries"] if item["review_state"] == "pending"]
+        self.assertEqual(19, len(verified))
+        self.assertEqual(3, len(pending))
+        self.assertTrue(all(item["evidence_route"] for item in verified))
+        self.assertTrue(all(item["value_origin"] == "owner_decision" for item in pending))
+
+    def test_neurobiology_citation_conflict_is_explicit(self) -> None:
+        ledger = self.load("enrichment-ledger.json")
+        correction = next(
+            item
+            for item in ledger["entries"]
+            if item["id"] == "enrich-autism-source-neurobiology-citation-correction"
+        )
+        self.assertEqual("verified", correction["review_state"])
+        self.assertIn("Cheung", correction["proposed_value"])
+        self.assertIn("Lau", correction["proposed_value"])
+        self.assertIn("conflicts", correction["limitations"][0].lower())
+        self.assertIn("Kawakami", SOURCE.read_text(encoding="utf-8"))
+
+    def test_evidence_roles_remain_bounded(self) -> None:
+        ledger = self.load("enrichment-ledger.json")
+        roles = {
+            item["id"]: item["proposed_value"]
+            for item in ledger["entries"]
+            if item["target_field"].endswith(".role")
+        }
+        self.assertEqual("supportive", roles["enrich-autism-source-who-autism-claim-1-role"])
+        self.assertEqual("supportive", roles["enrich-autism-source-neurobiology-autism-claim-2-role"])
+        self.assertEqual("compatible", roles["enrich-autism-source-who-autism-claim-2-role"])
+
+    def test_structural_dependency_records_existing_legacy_reciprocal(self) -> None:
+        ledger = self.load("dependency-ledger.json")
+        dependency = ledger["entries"][0]
+        self.assertEqual("unresolved", dependency["resolution_status"])
+        self.assertTrue(any("broader_than -> autism" in item for item in dependency["resolution_evidence"]))
 
     def test_source_blob_drift_fails_closed(self) -> None:
         manifest = self.load("manifest.json")
