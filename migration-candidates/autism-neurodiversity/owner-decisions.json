@@ -1,0 +1,29 @@
+{
+  "migration_contract_version": "0.2",
+  "decisions": [
+    {
+      "id": "d8-neurodiversity-botha-citation-correction",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "4b473f0130d8346c053089cbb86f9baedc549d3d",
+      "scope": "Future non-authoritative v0.2 Neurodiversity Botha Evidence candidate only; the authoritative v0.1 Neurodiversity object and its preserved legacy citation/DOI remain unchanged.",
+      "source_id": "neurodiversity-source-botha",
+      "supersedes_research_decision_candidate": {
+        "path": "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json",
+        "id": "nd-botha-citation-correction"
+      },
+      "accepted_citation": "Botha, Monique; Chapman, Robert; Giwa Onaiwu, Morénike; Kapp, Steven K; Stannard Ashley, Abs; Walker, Nick. The neurodiversity concept was developed collectively: An overdue correction on the origins of neurodiversity theory. Autism (2024). doi:10.1177/13623613241237871.",
+      "accepted_doi": "10.1177/13623613241237871",
+      "evidence_route": [
+        "https://researchportal.port.ac.uk/en/publications/the-neurodiversity-concept-was-developed-collectively-an-overdue-/",
+        "https://doi.org/10.1177/13623613241237871"
+      ],
+      "preserve_legacy_v01_citation_and_doi": true,
+      "legacy_v01_doi": "10.1080/09687599.2024.2327837",
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "schema_change_authorised": false,
+      "publication_or_deployment_authorised": false
+    }
+  ]
+}
