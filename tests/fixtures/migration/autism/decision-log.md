@@ -1,8 +1,10 @@
 # Autism migration decision log
 
-Status: **owner decision pending**. No migration mapping or authoritative replacement is accepted by this file.
+Status: **owner decision pending**. D1 is accepted. D2–D5 remain pending. No authoritative replacement is authorised by this file.
 
 Research pass: 2026-08-11, against repository `main` `0f6042e8841149da0485fe1b279dcd1bc9e5ff1f` and unchanged authoritative Autism blob `b2d3809ecfcdb1d81c793a2401f0533a4b17ea98`.
+
+Owner decision D1 was accepted on 2026-08-11 against protected repository `main` `ebb6439d265a2e53920818aec9bb001940f6511d`.
 
 ## Evidence-backed enrichment findings
 
@@ -44,7 +46,26 @@ The authoritative v0.1 source record cites:
 
 but PMID `32711809` and DOI `10.1016/bs.pmbts.2020.04.020` identify the authors as **Phoebe Pui Pui Cheung and Benson Wui Man Lau**.
 
-The v0.1 object remains unchanged. The enrichment ledger contains a verified corrected-citation proposal for a future v0.2 Evidence candidate, but adopting it requires an explicit owner decision because it changes preserved source text.
+The v0.1 object remains unchanged.
+
+## Accepted decision
+
+### D1 — Correct the neurobiology citation in the future v0.2 Evidence object — **ACCEPTED**
+
+**Accepted rule:** use the verified Cheung & Lau attribution in the future non-authoritative v0.2 Autism Evidence candidate while retaining the original v0.1 `Kawakami, S. et al.` source text unchanged in the preservation trail.
+
+Accepted citation value:
+
+`Cheung, Phoebe Pui Pui; Lau, Benson Wui Man. Neurobiology of sensory processing in autism spectrum disorder (2020).`
+
+Evidence routes:
+
+- https://pubmed.ncbi.nlm.nih.gov/32711809/
+- https://doi.org/10.1016/bs.pmbts.2020.04.020
+
+**Boundary:** this decision does not authorise mutation of `objects/concepts/autism.json`, authoritative v0.2 replacement, migration of Neurodiversity, or acceptance of D2–D5.
+
+The machine-readable record is `owner-decisions.json`.
 
 ## Perspective proposals — not accepted
 
@@ -64,21 +85,11 @@ Proposed Perspective `scope`:
 
 These remain `owner_decision` proposals because they are framing choices rather than raw source metadata.
 
-## Explicit decision candidates — none accepted
+## Pending decision candidates
 
-### D1 — Correct the neurobiology citation in the future v0.2 Evidence object
+### D2 — Legacy `related_to` mapping — **PENDING**
 
-**Candidate:** use the verified Cheung & Lau citation in the v0.2 candidate while retaining the original v0.1 source unit in the preservation trail.
-
-**Reason to accept:** PMID and DOI metadata directly contradict the legacy author attribution.
-
-**Reason to reject/defer:** migration may be kept strictly text-preserving until source correction is handled as a separate editorial repair.
-
-**Recommendation:** accept the corrected v0.2 citation only through an explicit source-correction decision; do not mutate v0.1 during this lane.
-
-### D2 — Legacy `related_to` mapping
-
-The nearest v0.2 vocabulary is `associated_with`, but this is not yet safely mechanical. A further gap was identified: every v0.2 relation also requires `confidence`, while the two v0.1 `related_to` records contain no confidence field.
+The nearest v0.2 vocabulary is `associated_with`, but this is not yet safely mechanical. Every v0.2 relation also requires `confidence`, while the two v0.1 `related_to` records contain no confidence field.
 
 Options:
 
@@ -88,7 +99,7 @@ Options:
 
 **Recommendation:** option 2 for now. Do not invent `low`, `moderate`, or `not_applicable` merely to satisfy the schema.
 
-### D3 — List-valued `what_would_reduce_it`
+### D3 — List-valued `what_would_reduce_it` — **PENDING**
 
 Options:
 
@@ -98,7 +109,7 @@ Options:
 
 **Recommendation:** option 3. Keep the original arrays in the preservation ledger until that policy is accepted.
 
-### D4 — `ecosystem_entry_points`
+### D4 — `ecosystem_entry_points` — **PENDING**
 
 Options:
 
@@ -108,7 +119,7 @@ Options:
 
 **Recommendation:** option 3.
 
-### D5 — Autism ↔ Neurodiversity structural closure
+### D5 — Autism ↔ Neurodiversity structural closure — **PENDING**
 
 The v0.1 Neurodiversity object already contains the reciprocal `broader_than -> autism` relation, so the semantic reciprocal is present in legacy data. The dependency remains unresolved because the v0.2 validator requires both sides in v0.2 relation shape.
 
