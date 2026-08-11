@@ -1,0 +1,204 @@
+{
+  "research_version": "1.0",
+  "prepared_on": "2026-08-11",
+  "prepared_against_main": "26ee009309efd624c9da661bd168522a3089932c",
+  "authoritative": false,
+  "authoritative_replacement": false,
+  "source_anchors": {
+    "neurodiversity": {
+      "path": "objects/concepts/neurodiversity.json",
+      "blob_sha": "5a38bc4250079412dd3f4da1d598dfcab984ca66"
+    }
+  },
+  "evidence_routes": {
+    "singer_wellcome": "https://wellcomecollection.org/works/ywrdd8ff",
+    "singer_bibliography": "https://neurodiversity2.blogspot.com/p/bibliography-how-to-cite-my-work.html",
+    "singer_birkbeck": "https://www.bbk.ac.uk/about-us/fellows/judy-singer",
+    "botha_portsmouth": "https://researchportal.port.ac.uk/en/publications/the-neurodiversity-concept-was-developed-collectively-an-overdue-/",
+    "botha_doi": "https://doi.org/10.1177/13623613241237871"
+  },
+  "sources": {
+    "neurodiversity-source-singer": {
+      "metadata": {
+        "title": {
+          "status": "verified",
+          "value": "NeuroDiversity: The Birth of an Idea",
+          "routes": [
+            "singer_wellcome",
+            "singer_bibliography"
+          ]
+        },
+        "authorship": {
+          "status": "verified",
+          "value": "Judy Singer",
+          "routes": [
+            "singer_wellcome",
+            "singer_bibliography"
+          ]
+        },
+        "date": {
+          "status": "pending_owner_reconciliation",
+          "value": null,
+          "routes": [
+            "singer_wellcome",
+            "singer_bibliography"
+          ],
+          "reason": "Legacy citation/Singer bibliography identify a 2016 Kindle edition, while the cited Wellcome locator describes a 2017 print edition; v0.2 requires a full YYYY-MM-DD date."
+        }
+      },
+      "contributions": {
+        "neurodiversity-claim-1": {
+          "role": "compatible",
+          "finding": "Singer's work reproduces her 1998 sociology honours thesis, includes participant-observer research on the InLv internet community of autistic people, and situates the emerging movement in late-1990s disability-rights and autistic-community activity.",
+          "population_or_context": "Late-1990s autistic self-advocacy and disability-rights context, including Singer's participant observation of the InLv internet community and autobiographical/family material.",
+          "methodology": "Sociological honours thesis combining participant observation on InLv, autobiographical self-exploration, historical discussion, and post-modern, social-constructionist, feminist and disability-rights analysis; later book editions reproduce the thesis with a new introduction.",
+          "limitations": [
+            {
+              "statement": "Singer is a participant in the history being reconstructed, and this source alone cannot determine exclusive or complete origin attribution.",
+              "why_it_matters": "The claim concerns distributed historical credit, so participant testimony and retrospective framing require comparison with dated independent records and other early participants.",
+              "reopening_or_reduction_condition": "Compare dated primary records and contextualised accounts from multiple early autistic-community participants."
+            }
+          ],
+          "routes": [
+            "singer_wellcome",
+            "singer_birkbeck"
+          ]
+        },
+        "neurodiversity-claim-2": {
+          "role": "compatible",
+          "finding": "Singer's work treats the emerging neurodiversity paradigm within disability-rights discourse, maps an emerging category of disability, critiques social-constructionist fundamentalism, and argues for balancing medical accounts with sociological or adaptive models of neurological difference.",
+          "population_or_context": "Autistic people and related neurological minorities considered within late-1990s disability-rights, autistic self-advocacy, sociological and medical-model debates.",
+          "methodology": "Qualitative sociological and participant-observer analysis combining disability-rights theory, social constructionism, feminism, autobiographical material and observation of an autistic online community.",
+          "limitations": [
+            {
+              "statement": "Accessible descriptions support coexistence of disability and social or political framing but do not directly establish every claim element about support needs and clinical care.",
+              "why_it_matters": "A broad compatibility claim should not be upgraded into person-specific clinical or support guidance without direct evidence.",
+              "reopening_or_reduction_condition": "Review the relevant thesis or book passages and additional primary evidence that addresses support needs and clinical care explicitly."
+            }
+          ],
+          "routes": [
+            "singer_wellcome",
+            "singer_birkbeck"
+          ]
+        }
+      },
+      "perspective_proposals": {
+        "neurodiversity-perspective-paradigm": {
+          "status": "owner_decision_required",
+          "held_by_scope": "Neurodiversity advocates and scholars using disability-rights, sociological and inclusion-oriented framings; not a claim that all neurodivergent people, clinicians, researchers or advocates hold one position.",
+          "reasoning": "Singer's work situates neurological variation within disability-rights, social-constructionist and feminist analysis, combines autobiographical and autistic-community observation, and argues for balancing medical accounts with sociological or adaptive understandings rather than treating diagnosis as the whole meaning of difference.",
+          "scope": "A social and political framing of neurological variation, disability, rights, environment, inclusion and movement-building; excludes individual diagnosis, person-specific support prescriptions and any claim that all neurological differences are beneficial.",
+          "routes": [
+            "singer_wellcome",
+            "singer_birkbeck"
+          ]
+        }
+      }
+    },
+    "neurodiversity-source-botha": {
+      "metadata": {
+        "title": {
+          "status": "verified",
+          "value": "The neurodiversity concept was developed collectively: An overdue correction on the origins of neurodiversity theory",
+          "routes": [
+            "botha_portsmouth",
+            "botha_doi"
+          ]
+        },
+        "date": {
+          "status": "verified",
+          "value": "2024-03-12",
+          "routes": [
+            "botha_portsmouth",
+            "botha_doi"
+          ]
+        },
+        "authorship": {
+          "status": "verified",
+          "value": "Monique Botha; Robert Chapman; Morénike Giwa Onaiwu; Steven K Kapp; Abs Stannard Ashley; Nick Walker",
+          "routes": [
+            "botha_portsmouth",
+            "botha_doi"
+          ]
+        },
+        "citation_correction": {
+          "status": "verified_proposal_owner_acceptance_required",
+          "value": "Botha, Monique; Chapman, Robert; Giwa Onaiwu, Morénike; Kapp, Steven K; Stannard Ashley, Abs; Walker, Nick. The neurodiversity concept was developed collectively: An overdue correction on the origins of neurodiversity theory. Autism (2024). doi:10.1177/13623613241237871.",
+          "routes": [
+            "botha_portsmouth",
+            "botha_doi"
+          ],
+          "reason": "Legacy DOI is 10.1080/09687599.2024.2327837; the cited Portsmouth publication record identifies 10.1177/13623613241237871. Preserve legacy v0.1 text unchanged."
+        }
+      },
+      "contributions": {
+        "neurodiversity-claim-1": {
+          "role": "supportive",
+          "finding": "Botha and colleagues identify Singer's 1998 thesis in the InLv autistic-community context, Harvey Blume's 1997 and 1998 published uses, and a reported 1996 InLv discussion, and conclude that neurodiversity's concept and theorising have multiple, collective origins rather than a single originator.",
+          "population_or_context": "Historical development of neurodiversity in autistic online-community discussion and published writing from the mid-to-late 1990s, analysed by an international group of autistic scholars of autism and neurodiversity.",
+          "methodology": "Peer-reviewed scholarly letter synthesising recent archival findings, dated published texts and attribution history to correct a single-origin account of neurodiversity.",
+          "limitations": [
+            {
+              "statement": "The letter synthesises selected archival and published evidence and may not capture every early contributor or inaccessible community record.",
+              "why_it_matters": "The claim concerns historical credit, where incomplete archives or decontextualised mailing-list material could distort attribution.",
+              "reopening_or_reduction_condition": "Extend contextualised archival comparison and obtain accounts from multiple early participants where ethically and practically possible."
+            }
+          ],
+          "routes": [
+            "botha_portsmouth",
+            "botha_doi"
+          ]
+        }
+      },
+      "perspective_proposals": {
+        "neurodiversity-perspective-collective": {
+          "status": "owner_decision_required",
+          "held_by_scope": "Botha, Chapman, Giwa Onaiwu, Kapp, Stannard Ashley and Walker as an international group of autistic scholars writing on the historical origins of neurodiversity; not a statement representing all autistic people or all neurodiversity scholarship.",
+          "reasoning": "The authors compare dated archival and published evidence from autistic online-community discussion, Singer's 1998 thesis, Blume's 1997 and 1998 writing, and a reported 1996 InLv post, and conclude that the concept and theorising of neurodiversity have multiple, collective origins.",
+          "scope": "Historical attribution of the origins and early theorising of neurodiversity; excludes ownership of later meanings, a complete history of every contributor, and representation of all contemporary neurodiversity positions.",
+          "routes": [
+            "botha_portsmouth",
+            "botha_doi"
+          ]
+        }
+      }
+    }
+  },
+  "decision_candidates": [
+    {
+      "id": "nd-singer-edition-reconciliation",
+      "status": "owner_decision_required",
+      "question": "Which edition should the future v0.2 Singer Evidence object represent: the legacy-cited 2016 Kindle edition or the Wellcome-located 2017 print edition?",
+      "recommended_action": "Do not choose or combine editions until the intended source identity and a schema-valid full date are explicitly resolved."
+    },
+    {
+      "id": "nd-botha-citation-correction",
+      "status": "owner_decision_required",
+      "question": "Should the future non-authoritative v0.2 Botha Evidence citation use the verified DOI 10.1177/13623613241237871 while preserving the legacy v0.1 DOI unchanged?",
+      "recommended_action": "Accept the verified citation correction for the future v0.2 Evidence candidate only; preserve the v0.1 source text exactly."
+    },
+    {
+      "id": "nd-paradigm-perspective-framing",
+      "status": "owner_decision_required",
+      "question": "Accept the three proposed framing fields for neurodiversity-perspective-paradigm?"
+    },
+    {
+      "id": "nd-collective-perspective-framing",
+      "status": "owner_decision_required",
+      "question": "Accept the three proposed framing fields for neurodiversity-perspective-collective?"
+    }
+  ],
+  "preserved_blockers": {
+    "uncertainty_shape": "Both Neurodiversity legacy uncertainties retain list-valued what_would_reduce_it arrays; no flattening or schema change is authorised.",
+    "autism_neurodiversity_confidence": "D6 still forbids inferred/defaulted structural confidence.",
+    "adhd_dependency": "Neurodiversity broader_than -> adhd remains an unresolved structural dependency outside the D5 pair."
+  },
+  "boundaries": {
+    "authoritative_v01_mutation_authorised": false,
+    "authoritative_v02_replacement_authorised": false,
+    "schema_change_authorised": false,
+    "structural_confidence_resolution_authorised": false,
+    "adhd_migration_authorised": false,
+    "perspective_acceptance_authorised_by_research": false
+  }
+}
