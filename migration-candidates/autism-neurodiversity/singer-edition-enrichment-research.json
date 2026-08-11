@@ -1,0 +1,148 @@
+{
+  "research_version": "1.0",
+  "prepared_on": "2026-08-11",
+  "prepared_against_main": "0c685304b185794c344eb29c1976ee7811714380",
+  "authoritative": false,
+  "authoritative_replacement": false,
+  "decision_ref": "d11-singer-edition-identity-preservation",
+  "legacy_source_anchor": {
+    "path": "objects/concepts/neurodiversity.json",
+    "source_id": "neurodiversity-source-singer",
+    "blob_sha": "5a38bc4250079412dd3f4da1d598dfcab984ca66"
+  },
+  "candidate_ref": "migration-candidates/autism-neurodiversity/singer-edition-candidates.json",
+  "evidence_routes": {
+    "singer_books_page": "https://neurodiversity2.blogspot.com/p/blog-page.html",
+    "singer_bibliography": "https://neurodiversity2.blogspot.com/p/bibliography-how-to-cite-my-work.html",
+    "singer_quotations": "https://neurodiversity2.blogspot.com/p/selected-quotations.html",
+    "wellcome_2017": "https://wellcomecollection.org/works/ywrdd8ff",
+    "google_books_2017": "https://books.google.com/books/about/NeuroDiversity.html?id=Ox_7uQEACAAJ",
+    "open_library_2017": "https://openlibrary.org/books/OL30658778M/NeuroDiversity",
+    "goodreads_2016": "https://www.goodreads.com/book/show/31671068-neurodiversity"
+  },
+  "edition_assessments": {
+    "neurodiversity-source-singer-2016-kindle": {
+      "identity_status": "accepted_by_d11",
+      "publication_date": {
+        "proposed_value": "2016-07-03",
+        "status": "secondary_catalogue_candidate_not_yet_verified_enrichment",
+        "routes": [
+          "goodreads_2016",
+          "singer_books_page",
+          "singer_bibliography"
+        ],
+        "assessment": "Singer's own material confirms the work was first published in 2016 and identifies the Kindle edition, while Goodreads supplies the day-level date. The day-level value is therefore a plausible candidate but is not promoted to verified enrichment without a stronger edition-level bibliographic or first-party date record."
+      },
+      "content_identity": {
+        "status": "evidence_backed",
+        "routes": [
+          "singer_books_page",
+          "singer_bibliography",
+          "singer_quotations"
+        ],
+        "assessment": "Singer describes the 2016 book as an introduction plus a reprint of her 1998 thesis. Her published quotations and bibliography tie the thesis to autistic-community identity, neurological diversity and InLv material."
+      },
+      "contribution_bindings": {
+        "neurodiversity-claim-1": {
+          "proposed_role": "compatible",
+          "status": "owner_review_candidate",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json#sources.neurodiversity-source-singer.contributions.neurodiversity-claim-1",
+          "edition_specific_routes": [
+            "singer_books_page",
+            "singer_quotations"
+          ],
+          "reason": "The 2016 edition is documented by Singer as reproducing the original thesis, and Singer's thesis quotations/material identify the autistic-community and neurological-diversity content underlying the existing compatible contribution proposal."
+        },
+        "neurodiversity-claim-2": {
+          "proposed_role": "compatible",
+          "status": "owner_review_candidate_with_direct_text_preferred",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json#sources.neurodiversity-source-singer.contributions.neurodiversity-claim-2",
+          "edition_specific_routes": [
+            "singer_books_page"
+          ],
+          "reason": "Singer's own description establishes that the 2016 edition contains the original thesis and an introduction about the need for a new paradigm and language, but direct edition-level text would strengthen the more specific social-constructionist/medical-model elements of the existing contribution proposal."
+        }
+      }
+    },
+    "neurodiversity-source-singer-2017-revised-print": {
+      "identity_status": "accepted_by_d11",
+      "publication_date": {
+        "proposed_value": "2017-09-05",
+        "status": "corroborated_catalogue_candidate",
+        "routes": [
+          "wellcome_2017",
+          "open_library_2017",
+          "google_books_2017"
+        ],
+        "assessment": "Wellcome and Google Books bind the 82-page 2017 print identity to ISBN 9780648154709; Open Library supplies 2017-09-05 for that same ISBN/82-page edition. This is stronger than the 2016 day-level evidence but remains a non-authoritative enrichment proposal until reviewed."
+      },
+      "content_identity": {
+        "status": "evidence_backed",
+        "routes": [
+          "wellcome_2017",
+          "google_books_2017"
+        ],
+        "assessment": "The 2017 print volume is documented as reproducing the original thesis with a new introduction. Wellcome lists the InLv participant-observation appendix and describes the disability-rights, social-constructionist and movement framing."
+      },
+      "contribution_bindings": {
+        "neurodiversity-claim-1": {
+          "proposed_role": "compatible",
+          "status": "owner_review_candidate",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json#sources.neurodiversity-source-singer.contributions.neurodiversity-claim-1",
+          "edition_specific_routes": [
+            "wellcome_2017",
+            "google_books_2017"
+          ],
+          "reason": "Edition-level catalogues document the original-thesis content, participant observation on InLv and emergence of a new disability/social movement, supporting the existing compatible Claim 1 contribution proposal."
+        },
+        "neurodiversity-claim-2": {
+          "proposed_role": "compatible",
+          "status": "owner_review_candidate",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json#sources.neurodiversity-source-singer.contributions.neurodiversity-claim-2",
+          "edition_specific_routes": [
+            "wellcome_2017",
+            "google_books_2017"
+          ],
+          "reason": "Edition-level descriptions explicitly identify disability-rights/social-constructionist framing and Singer's critique of social-constructionist fundamentalism, supporting the existing compatible Claim 2 contribution proposal without upgrading it to clinical guidance."
+        }
+      }
+    }
+  },
+  "findings": {
+    "automatic_cross_edition_copying": false,
+    "both_editions_documented_as_reproducing_1998_thesis": true,
+    "2017_day_level_date_evidence_stronger_than_2016": true,
+    "2016_day_level_date_ready_for_verified_enrichment": false,
+    "2017_day_level_date_ready_for_owner_review": true,
+    "claim_1_binding_ready_for_owner_review_both_editions": true,
+    "claim_2_binding_ready_for_owner_review_2017": true,
+    "claim_2_binding_2016_direct_text_preferred": true
+  },
+  "next_decision_candidates": [
+    {
+      "id": "nd-singer-2017-date-enrichment",
+      "status": "owner_decision_required",
+      "question": "Accept 2017-09-05 as the full date for the future non-authoritative revised-print Evidence identity candidate based on ISBN-bound catalogue corroboration?"
+    },
+    {
+      "id": "nd-singer-edition-specific-contribution-bindings",
+      "status": "owner_decision_required",
+      "question": "Accept the edition-specific compatible contribution bindings where the edition-level evidence is sufficient, while keeping the 2016 Claim 2 binding pending stronger direct-text evidence?"
+    }
+  ],
+  "preserved_blockers": {
+    "2016_full_date": "2016-07-03 remains a secondary-catalogue candidate rather than verified enrichment.",
+    "2016_claim_2_direct_text": "Direct edition-level text is preferred before accepting the more specific Claim 2 binding for the 2016 Kindle edition.",
+    "uncertainty_shape": "Neurodiversity and Autism list-valued uncertainty mapping remains unresolved/deferred.",
+    "structural_confidence": "D6 continues to forbid inferred/defaulted structural confidence.",
+    "adhd_dependency": "Neurodiversity broader_than -> adhd remains outside the D5 pair."
+  },
+  "boundaries": {
+    "authoritative_v01_mutation_authorised": false,
+    "authoritative_evidence_creation_authorised": false,
+    "authoritative_v02_replacement_authorised": false,
+    "automatic_claim_support_copying_authorised": false,
+    "schema_change_authorised": false,
+    "publication_or_deployment_authorised": false
+  }
+}

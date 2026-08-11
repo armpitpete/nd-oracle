@@ -3,6 +3,9 @@
   "migration_contract_version": "0.2",
   "decision_ref": "d11-singer-edition-identity-preservation",
   "authoritative": false,
+  "research_refs": [
+    "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json"
+  ],
   "legacy_source": {
     "object_id": "neurodiversity",
     "source_id": "neurodiversity-source-singer",
@@ -30,7 +33,9 @@
         "https://neurodiversity2.blogspot.com/p/bibliography-how-to-cite-my-work.html"
       ],
       "full_schema_date_status": "not_accepted_by_d11",
-      "contribution_status": "edition_specific_evidence_required"
+      "date_research_status": "secondary_catalogue_candidate_not_yet_verified_enrichment",
+      "contribution_status": "edition_specific_evidence_required",
+      "contribution_research_status": "claim_1_owner_review_candidate_claim_2_direct_text_preferred"
     },
     {
       "id": "neurodiversity-source-singer-2017-revised-print",
@@ -44,7 +49,9 @@
         "https://wellcomecollection.org/works/ywrdd8ff"
       ],
       "full_schema_date_status": "not_accepted_by_d11",
-      "contribution_status": "edition_specific_evidence_required"
+      "date_research_status": "corroborated_catalogue_candidate",
+      "contribution_status": "edition_specific_evidence_required",
+      "contribution_research_status": "claim_1_and_claim_2_owner_review_candidates"
     }
   ],
   "boundaries": {
