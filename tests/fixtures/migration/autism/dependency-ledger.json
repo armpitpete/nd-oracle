@@ -10,7 +10,9 @@
       "resolution_status": "unresolved",
       "resolution_evidence": [
         "objects/concepts/neurodiversity.json@blob:5a38bc4250079412dd3f4da1d598dfcab984ca66 contains v0.1 broader_than -> autism",
-        "Semantic reciprocity exists in v0.1, but current v0.2 validation requires both sides in v0.2 relation shape; no authoritative migration is authorised."
+        "Semantic reciprocity exists in v0.1, but current v0.2 validation requires both sides in v0.2 relation shape; no authoritative migration is authorised.",
+        "D5 accepted on 2026-08-11 against main e2f535ad2abdb97750d54c7c30233a3c802a8e74: Autism and Neurodiversity must be prepared as the minimum paired non-authoritative structural candidate; weakening the v0.2 reciprocity validator is not authorised.",
+        "Policy acceptance does not resolve this dependency; closure requires a prepared paired candidate that validates reciprocal narrower_than / broader_than structure without authoritative v0.1 mutation or replacement."
       ]
     }
   ]
