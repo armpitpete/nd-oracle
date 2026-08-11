@@ -24,6 +24,32 @@
       "authoritative_v02_replacement_authorised": false,
       "schema_change_authorised": false,
       "publication_or_deployment_authorised": false
+    },
+    {
+      "id": "d9-neurodiversity-collective-perspective-framing",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "3365190d8acc00c80439fa079f13de17c1346612",
+      "scope": "Future non-authoritative v0.2 Neurodiversity collective Perspective candidate only.",
+      "perspective_id": "neurodiversity-perspective-collective",
+      "supersedes_research_decision_candidate": {
+        "path": "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json",
+        "id": "nd-collective-perspective-framing"
+      },
+      "accepted_fields": {
+        "held_by.scope": "Botha, Chapman, Giwa Onaiwu, Kapp, Stannard Ashley and Walker as an international group of autistic scholars writing on the historical origins of neurodiversity; not a statement representing all autistic people or all neurodiversity scholarship.",
+        "reasoning": "The authors compare dated archival and published evidence from autistic online-community discussion, Singer's 1998 thesis, Blume's 1997 and 1998 writing, and a reported 1996 InLv post, and conclude that the concept and theorising of neurodiversity have multiple, collective origins.",
+        "scope": "Historical attribution of the origins and early theorising of neurodiversity; excludes ownership of later meanings, a complete history of every contributor, and representation of all contemporary neurodiversity positions."
+      },
+      "evidence_route": [
+        "https://researchportal.port.ac.uk/en/publications/the-neurodiversity-concept-was-developed-collectively-an-overdue-/",
+        "https://doi.org/10.1177/13623613241237871"
+      ],
+      "authoritative_perspective_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "schema_change_authorised": false,
+      "publication_or_deployment_authorised": false
     }
   ]
 }

@@ -74,7 +74,7 @@ class NeurodiversityEnrichmentResearchTests(unittest.TestCase):
                 set(limitation),
             )
 
-    def test_perspectives_and_structural_or_uncertainty_blockers_remain_pending(self) -> None:
+    def test_research_snapshot_preserves_perspective_proposals_and_structural_boundaries(self) -> None:
         research = self.load(RESEARCH)
         singer_p = research["sources"]["neurodiversity-source-singer"]["perspective_proposals"]["neurodiversity-perspective-paradigm"]
         botha_p = research["sources"]["neurodiversity-source-botha"]["perspective_proposals"]["neurodiversity-perspective-collective"]
@@ -91,7 +91,8 @@ class NeurodiversityEnrichmentResearchTests(unittest.TestCase):
         self.assertIn("migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json", pair["research_refs"])
         by_id = {item["id"]: item for item in pair["blockers"]}
         self.assertEqual("research_prepared_owner_decisions_pending", by_id["neurodiversity-evidence-enrichment"]["kind"])
-        self.assertEqual("owner_decision", by_id["neurodiversity-perspective-framing"]["kind"])
+        self.assertEqual("owner_decision", by_id["neurodiversity-uncertainty-shape"]["kind"])
+        self.assertEqual("structural_dependency", by_id["neurodiversity-adhd-structural-edge"]["kind"])
         relations = [item["structural_relation"] for item in pair["objects"]]
         self.assertTrue(all("confidence" not in relation for relation in relations))
         self.assertFalse(pair["authorisations"]["neurodiversity_research_accepts_pending_owner_decisions"])
