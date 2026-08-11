@@ -1,0 +1,106 @@
+{
+  "migration_contract_version": "0.2",
+  "candidate_kind": "partial_structural_pair",
+  "status": "owner_decision_pending",
+  "authoritative": false,
+  "source_repository_commit": "1b7e4261c70bd6a86346d34a1f08abf90c3deece",
+  "decision_ref": "d5-autism-neurodiversity-structural-closure",
+  "sources": [
+    {
+      "object_id": "autism",
+      "path": "objects/concepts/autism.json",
+      "blob_sha": "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98"
+    },
+    {
+      "object_id": "neurodiversity",
+      "path": "objects/concepts/neurodiversity.json",
+      "blob_sha": "5a38bc4250079412dd3f4da1d598dfcab984ca66"
+    }
+  ],
+  "objects": [
+    {
+      "id": "autism",
+      "type": "concept",
+      "structural_relation": {
+        "type": "narrower_than",
+        "target": {"type": "concept", "id": "neurodiversity"},
+        "reason_from_legacy_note": "Autism is commonly situated within neurodiversity discourse.",
+        "confidence_status": "owner_decision_required",
+        "legacy_relation": {
+          "type": "narrower_than",
+          "target_id": "neurodiversity",
+          "note": "Autism is commonly situated within neurodiversity discourse."
+        }
+      }
+    },
+    {
+      "id": "neurodiversity",
+      "type": "concept",
+      "structural_relation": {
+        "type": "broader_than",
+        "target": {"type": "concept", "id": "autism"},
+        "reason_from_legacy_note": "Autism is commonly discussed within the neurodiversity ecosystem.",
+        "confidence_status": "owner_decision_required",
+        "legacy_relation": {
+          "type": "broader_than",
+          "target_id": "autism",
+          "note": "Autism is commonly discussed within the neurodiversity ecosystem."
+        }
+      }
+    }
+  ],
+  "separate_structural_dependencies": [
+    {
+      "id": "dependency-neurodiversity-adhd",
+      "source_object": "neurodiversity",
+      "relation": "broader_than",
+      "dependent_object": "adhd",
+      "reason": "Neurodiversity v0.1 also contains broader_than -> adhd. That edge is outside the D5 Autism/Neurodiversity pair and must remain an explicit structural dependency rather than being silently dropped or expanding D5 authorisation."
+    }
+  ],
+  "blockers": [
+    {
+      "id": "paired-structural-relation-confidence",
+      "kind": "owner_decision",
+      "detail": "v0.2 relations require confidence, but neither reciprocal v0.1 relation contains confidence. D5 did not authorise inventing one."
+    },
+    {
+      "id": "autism-uncertainty-shape",
+      "kind": "accepted_deferral",
+      "detail": "D3 preserves Autism list-valued uncertainty reduction conditions as legacy-unmapped; the current v0.2 Claim schema still requires embedded Uncertainty records."
+    },
+    {
+      "id": "autism-perspective-framing",
+      "kind": "owner_decision",
+      "detail": "The three Autism Perspective framing proposals remain unaccepted."
+    },
+    {
+      "id": "neurodiversity-evidence-enrichment",
+      "kind": "enrichment",
+      "detail": "Neurodiversity Evidence metadata and claim-specific Evidence Contribution semantics have not yet been evidence-backed for v0.2."
+    },
+    {
+      "id": "neurodiversity-uncertainty-shape",
+      "kind": "owner_decision",
+      "detail": "Neurodiversity has list-valued legacy uncertainty reduction conditions and no accepted v0.2 mapping decision."
+    },
+    {
+      "id": "neurodiversity-perspective-framing",
+      "kind": "owner_decision",
+      "detail": "Neurodiversity v0.1 Perspectives lack required v0.2 holder scope, reasoning, and Perspective scope fields."
+    },
+    {
+      "id": "neurodiversity-adhd-structural-edge",
+      "kind": "structural_dependency",
+      "detail": "Neurodiversity also has broader_than -> adhd. D5 does not authorise expanding the paired candidate to ADHD, so the edge remains separately unresolved."
+    }
+  ],
+  "authorisations": {
+    "paired_non_authoritative_candidate_preparation": true,
+    "authoritative_autism_v01_mutation": false,
+    "authoritative_neurodiversity_v01_mutation": false,
+    "authoritative_v02_replacement": false,
+    "weaken_reciprocity_validator": false,
+    "expand_pair_to_adhd": false
+  }
+}
