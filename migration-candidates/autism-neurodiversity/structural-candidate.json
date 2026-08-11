@@ -115,6 +115,7 @@
     "use_not_applicable_as_confidence_shortcut": false,
     "autism_who_perspective_framing_accepted": true,
     "neurodiversity_botha_citation_correction_accepted": true,
+    "neurodiversity_research_accepts_pending_owner_decisions": false,
     "neurodiversity_research_accepts_other_pending_owner_decisions": false
   }
 }
