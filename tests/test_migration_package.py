@@ -208,6 +208,7 @@ class AutismMigrationPackageTests(unittest.TestCase):
             for entry in ledger["entries"]
             if entry["unit"].startswith("relation:") and '\"type\":\"related_to\"' in entry["unit"]
         )
+        item.pop("owner_decision_ref", None)
         item["candidate_destination"] = "candidate relation associated_with"
         self.save("preservation-ledger.json", ledger)
         self.assertTrue(any("related_to cannot auto-map" in item for item in validate_package(self.package)))
