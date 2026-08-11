@@ -10,95 +10,117 @@ ROOT = Path(__file__).resolve().parents[1]
 OBJECTS_DIR = ROOT / "objects" / "concepts"
 SITE_DIR = ROOT / "site"
 DEFAULT_OUTPUT_DIR = ROOT / "dist"
-OUTPUT_MARKER = "nd-oracle-site-v0.1\n"
+OUTPUT_MARKER = "nd-oracle-site-v0.2\n"
+PUBLIC_ORIGIN = "https://ndoracle.org"
 
 PRIMARY_NAV = [
     ("understand", "Understand"),
-    ("tools", "Tools"),
-    ("games", "Games"),
-    ("resources", "Resources"),
-    ("community", "Community"),
-    ("oracle", "Oracle"),
+    ("how-it-works", "How it works"),
+    ("about", "About"),
+]
+
+COMMON_QUESTIONS = [
+    ("What does neurodiversity mean?", "neurodiversity"),
+    ("What is autism?", "autism"),
+    ("What is ADHD?", "adhd"),
+    ("Why can starting or organising tasks feel hard?", "executive-function"),
+    ("Why can sound, light or touch feel intense?", "sensory-processing"),
 ]
 
 STATIC_PAGES = {
-    "tools": {
-        "title": "Tools",
-        "intro": "Practical neurodivergent-friendly tools will live here.",
+    "how-it-works": {
+        "title": "How this site works",
+        "intro": "Start with a short explanation. Open the evidence, uncertainty and provenance only when you want the deeper route.",
         "body": (
-            "<p>This route is ready for small, focused tools that solve one problem well. "
-            "Tools are not yet active in Site Shell v0.1.</p>"
-            "<p>Future tools should work without accounts where possible, minimise data collection, "
-            "and state clearly what they do and do not do.</p>"
+            "<section><h2>Useful first</h2>"
+            "<p>The public pages are written for reading, not for navigating an internal database. "
+            "Each topic starts with a plain-language summary and then separates what is claimed, what remains uncertain, and where the evidence comes from.</p></section>"
+            "<section><h2>Confidence is attached to a statement</h2>"
+            "<p>A confidence label applies to the exact statement beside it. It is not a score for a whole topic, person or source.</p></section>"
+            "<section><h2>Uncertainty stays visible</h2>"
+            "<p>If an important question is unresolved, the site keeps it unresolved. The aim is to save the next person from having to rediscover the same gap.</p></section>"
+            "<section><h2>Evidence is inspectable</h2>"
+            "<p>Evidence links sit behind the statements they support. Source details and provenance remain available lower on each topic page without dominating the first read.</p></section>"
+            "<section><h2>This is not a diagnosis service</h2>"
+            "<p>The site is for understanding and research traceability. It does not diagnose individuals or replace appropriate clinical, legal, educational or safeguarding judgement.</p></section>"
         ),
-    },
-    "games": {
-        "title": "Games",
-        "intro": "Small games and playful experiments designed with neurodivergent people in mind.",
-        "body": (
-            "<p>This route is reserved for games that are useful, interesting or simply enjoyable. "
-            "No game is active in Site Shell v0.1.</p>"
-            "<p>Games may later use JavaScript, but the rest of the site remains usable without it.</p>"
-        ),
-    },
-    "resources": {
-        "title": "Resources",
-        "intro": "A future catalogue of useful books, apps, organisations, services and communities.",
-        "body": (
-            "<p>Resource listings will be separated from endorsements. Each listing should say what "
-            "it is, who it may help, and what is known or uncertain about it.</p>"
-        ),
-    },
-    "community": {
-        "title": "Community",
-        "intro": "A route for contribution without turning the site into a social network.",
-        "body": (
-            "<p>Community features are deliberately limited at this stage. There are no accounts, "
-            "profiles, comments, direct messages or public submissions.</p>"
-            "<p>Future contribution routes may include corrections, resource suggestions, tool ideas "
-            "and lived-experience contributions after privacy and safeguarding review.</p>"
-        ),
-    },
-    "oracle": {
-        "title": "Oracle",
-        "intro": "The deeper evidence and provenance system is being built in parallel.",
-        "body": (
-            "<p>The Oracle is not an AI authority and is not active on this site yet. Its job is to "
-            "keep claims connected to evidence, uncertainty, competing perspectives and revision history.</p>"
-            "<p>When integrated, the public website will consume validated Oracle knowledge rather than "
-            "letting generated answers become the source of truth.</p>"
-        ),
+        "indexable": True,
     },
     "about": {
         "title": "About",
-        "intro": "The Neurodiverse Oracle is a practical knowledge commons for neurodivergent people.",
+        "intro": "The Neurodiverse Oracle is a provenance-first knowledge commons built to reduce repeated research and unnecessary decoding.",
         "body": (
-            "<p>The project is being built in two parallel lanes: a useful public commons and a "
-            "provenance-first knowledge system underneath it.</p>"
-            "<p>Success is measured by useful epistemic work saved, not by how much content is produced.</p>"
+            "<section><h2>What it is for</h2>"
+            "<p>The aim is to make useful knowledge easier to reach while keeping the route back to evidence, disagreement and uncertainty intact.</p></section>"
+            "<section><h2>What exists now</h2>"
+            "<p>The current public release covers five core topics: neurodiversity, autism, ADHD, executive function and sensory processing. "
+            "The site will widen when new material is useful and sufficiently traceable, rather than displaying empty sections in advance.</p></section>"
+            "<section><h2>What it is not</h2>"
+            "<p>It is not a diagnosis engine, a treatment marketplace, an AI authority or a replacement for professional judgement.</p></section>"
         ),
+        "indexable": True,
     },
     "accessibility": {
         "title": "Accessibility",
-        "intro": "The site should reduce cognitive and sensory burden rather than add to it.",
+        "intro": "The site is designed to reduce cognitive and sensory burden rather than add to it.",
         "body": (
-            "<p>Site Shell v0.1 uses semantic HTML, visible keyboard focus, restrained colours, a "
-            "reading-width content column and no required JavaScript.</p>"
-            "<p>Accessibility problems are defects. Future interactive features must preserve keyboard "
-            "access, reduced-motion preferences and clear language.</p>"
+            "<section><h2>Current approach</h2>"
+            "<p>The site uses semantic HTML, visible keyboard focus, restrained colours, a reading-width content column and no required JavaScript.</p>"
+            "<p>Evidence and provenance use native disclosure controls so readers can choose depth without losing keyboard access.</p></section>"
+            "<section><h2>Accessibility problems are defects</h2>"
+            "<p>Future interactive features must preserve keyboard access, reduced-motion preferences, readable language and a usable no-script baseline wherever practical.</p></section>"
         ),
+        "indexable": True,
     },
     "privacy": {
         "title": "Privacy",
-        "intro": "Site Shell v0.1 is designed to collect no personal data.",
+        "intro": "The current public site is designed to collect no personal data.",
         "body": (
-            "<p>There are currently no accounts, forms, analytics scripts, advertising trackers or "
-            "personalised features in the generated site.</p>"
-            "<p>Any feature that stores queries, profiles, health information or community submissions "
-            "requires a separate privacy and threat-model review before release.</p>"
+            "<section><h2>Current release</h2>"
+            "<p>There are no accounts, forms, analytics scripts, advertising trackers or personalised features in the generated site.</p></section>"
+            "<section><h2>Future features</h2>"
+            "<p>Anything that stores queries, profiles, health information or community submissions requires a separate privacy and threat-model review before release.</p></section>"
         ),
+        "indexable": True,
+    },
+    # These routes existed in Site Shell v0.1. Keep them as quiet compatibility
+    # pages so old links do not become dead ends, but do not advertise them as
+    # active parts of the current product or include them in the sitemap.
+    "tools": {
+        "title": "Tools",
+        "intro": "Tools are not part of the current public release.",
+        "body": "<p>Rather than publish an empty catalogue, this release keeps the useful knowledge pages front and centre. <a href=\"/understand/\">Browse current topics</a>.</p>",
+        "indexable": False,
+    },
+    "games": {
+        "title": "Games",
+        "intro": "Games are not part of the current public release.",
+        "body": "<p>This route is retained so older links still lead somewhere useful. <a href=\"/understand/\">Browse current topics</a>.</p>",
+        "indexable": False,
+    },
+    "resources": {
+        "title": "Resources",
+        "intro": "A resource catalogue is not part of the current public release.",
+        "body": "<p>The site will not present an empty directory as a finished feature. <a href=\"/understand/\">Browse current topics</a>.</p>",
+        "indexable": False,
+    },
+    "community": {
+        "title": "Community",
+        "intro": "Community accounts and submissions are not part of the current public release.",
+        "body": "<p>No accounts, profiles, comments or public submissions are active. <a href=\"/understand/\">Browse current topics</a>.</p>",
+        "indexable": False,
+    },
+    "oracle": {
+        "title": "Oracle",
+        "intro": "The deeper provenance system is the foundation of these pages, not a chatbot presented as an authority.",
+        "body": "<p>The current public interface exposes validated knowledge through the topic pages. Generated answers are not the source of truth. <a href=\"/how-it-works/\">See how the evidence route works</a>.</p>",
+        "indexable": False,
     },
 }
+
+INDEXED_STATIC_PAGES = tuple(
+    slug for slug, page in STATIC_PAGES.items() if page.get("indexable", True)
+)
 
 
 def esc(value: object) -> str:
@@ -134,7 +156,20 @@ def nav(current: str | None = None) -> str:
     return '<nav class="primary-nav" aria-label="Primary">' + "".join(links) + "</nav>"
 
 
-def page_shell(title: str, intro: str, body: str, current: str | None = None) -> str:
+def page_shell(
+    title: str,
+    intro: str,
+    body: str,
+    *,
+    current: str | None = None,
+    path: str | None = None,
+    indexable: bool = True,
+) -> str:
+    canonical = ""
+    if path is not None:
+        canonical_url = PUBLIC_ORIGIN + path
+        canonical = f'  <link rel="canonical" href="{esc(canonical_url)}">\n'
+    robots = "" if indexable else '  <meta name="robots" content="noindex, follow">\n'
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -142,7 +177,8 @@ def page_shell(title: str, intro: str, body: str, current: str | None = None) ->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#f5f4ef">
-  <title>{esc(title)} · The Neurodiverse Oracle</title>
+  <meta name="description" content="{esc(intro)}">
+{robots}{canonical}  <title>{esc(title)} · The Neurodiverse Oracle</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
@@ -162,9 +198,9 @@ def page_shell(title: str, intro: str, body: str, current: str | None = None) ->
 </main>
 <footer class="site-footer">
   <div class="site-shell footer-row">
-    <span>Built for usefulness, provenance and revision.</span>
+    <span>Useful first. Evidence when you want it.</span>
     <nav aria-label="Footer">
-      <a href="/about/">About</a>
+      <a href="/how-it-works/">How it works</a>
       <a href="/accessibility/">Accessibility</a>
       <a href="/privacy/">Privacy</a>
     </nav>
@@ -175,79 +211,76 @@ def page_shell(title: str, intro: str, body: str, current: str | None = None) ->
 """
 
 
-def card(title: str, summary: str, href: str, eyebrow: str | None = None) -> str:
-    label = f'<div class="eyebrow">{esc(eyebrow)}</div>' if eyebrow else ""
-    return f"""<article class="card">
-  {label}
-  <h2><a href="{esc(href)}">{esc(title)}</a></h2>
-  <p>{esc(summary)}</p>
+def topic_link(concept: dict) -> str:
+    return f"""<article class="topic-row">
+  <h2><a href="/understand/{esc(concept['id'])}/">{esc(concept['name'])}</a></h2>
+  <p>{esc(concept['summary'])}</p>
 </article>"""
 
 
 def render_index(concepts: list[dict]) -> str:
-    section_cards = [
-        card("Understand", "Clear explanations backed by visible evidence and uncertainty.", "/understand/"),
-        card("Tools", "Practical tools built to reduce friction rather than add setup.", "/tools/"),
-        card("Games", "Useful, curious and playful neurodivergent-friendly experiences.", "/games/"),
-        card("Resources", "Books, apps, services, organisations and communities.", "/resources/"),
-        card("Community", "Future contribution routes for corrections, suggestions and lived experience.", "/community/"),
-        card("Oracle", "The provenance-first knowledge system being built underneath the public site.", "/oracle/"),
-    ]
-    concept_links = "".join(
-        f'<li><a href="/understand/{esc(concept["id"])}/">{esc(concept["name"])}</a></li>'
-        for concept in concepts
-    )
+    concept_map = {concept["id"]: concept for concept in concepts}
+    question_links = []
+    for question, concept_id in COMMON_QUESTIONS:
+        if concept_id not in concept_map:
+            raise ValueError(f"Common-question target is missing: {concept_id}")
+        question_links.append(
+            f'<li><a href="/understand/{esc(concept_id)}/">{esc(question)}</a></li>'
+        )
+
+    topics = "".join(topic_link(concept) for concept in concepts)
     body = f"""
-<section class="notice" aria-label="Status">
-  <strong>Site Shell v0.1.</strong> The structure is live in the build, while tools, games, community
-  features and the Oracle remain deliberately inactive.
+<section class="start-section" aria-labelledby="start-heading">
+  <h2 id="start-heading">Start with a question</h2>
+  <ul class="question-list">{''.join(question_links)}</ul>
 </section>
-<section aria-labelledby="explore-heading">
-  <h2 id="explore-heading">Explore</h2>
-  <div class="grid">{''.join(section_cards)}</div>
+<section aria-labelledby="topics-heading">
+  <div class="section-heading-row">
+    <div><h2 id="topics-heading">Browse current topics</h2><p class="section-intro">Five core topics are available now. No empty feature catalogue is presented as finished content.</p></div>
+    <a class="quiet-link" href="/understand/">See all topics</a>
+  </div>
+  <div class="topic-list">{topics}</div>
 </section>
-<section aria-labelledby="seed-heading">
-  <h2 id="seed-heading">Current knowledge seed</h2>
-  <p>The first five knowledge objects are available now under Understand.</p>
-  <ul class="compact-list">{concept_links}</ul>
+<section class="reading-guide" aria-labelledby="guide-heading">
+  <h2 id="guide-heading">Choose how deep to go</h2>
+  <div class="guide-grid">
+    <div><strong>Read the short version</strong><p>Each topic starts with a plain-language summary and scope.</p></div>
+    <div><strong>Check the reasoning</strong><p>Open the evidence and uncertainty behind individual statements.</p></div>
+    <div><strong>Follow the source</strong><p>Source citations and provenance remain available at the bottom of every topic page.</p></div>
+  </div>
+  <p><a href="/how-it-works/">How the evidence and uncertainty system works →</a></p>
 </section>
 """
     return page_shell(
-        "A calmer place to understand neurodivergence",
-        "Useful things first, with a rigorous evidence and uncertainty system underneath.",
+        "Understand neurodivergence without doing all the digging yourself",
+        "Start with an ordinary question, get a clear explanation, and inspect the evidence or uncertainty only when you want to go deeper.",
         body,
+        path="/",
     )
 
 
 def render_understand_index(concepts: list[dict]) -> str:
-    cards = "".join(
-        card(
-            concept["name"],
-            concept["summary"],
-            f'/understand/{concept["id"]}/',
-            f'{concept["type"]} · {concept["status"]}',
-        )
-        for concept in concepts
-    )
+    topics = "".join(topic_link(concept) for concept in concepts)
     body = f"""
 <section class="notice">
-  <strong>Early seed material.</strong> These pages are for orientation and research traceability.
-  They are not diagnosis or medical advice.
+  <strong>Orientation, not diagnosis.</strong> These pages explain concepts and preserve their evidence routes. They do not diagnose individuals or replace appropriate professional judgement.
 </section>
 <section aria-labelledby="concepts-heading">
-  <h2 id="concepts-heading">Concepts</h2>
-  <div class="grid">{cards}</div>
+  <h2 id="concepts-heading">Current topics</h2>
+  <p class="section-intro">The list is deliberately small while the knowledge base grows. Every topic below has a complete reading route rather than a placeholder page.</p>
+  <div class="topic-list">{topics}</div>
 </section>
 """
     return page_shell(
         "Understand",
-        "Plain-language concept pages that keep claims connected to evidence, uncertainty and perspectives.",
+        "Plain-language topic pages with evidence, uncertainty and different perspectives available without forcing you through them first.",
         body,
         current="understand",
+        path="/understand/",
     )
 
 
-def render_concept(concept: dict) -> str:
+def render_concept(concept: dict, concept_map: dict[str, dict]) -> str:
     source_map = {source["id"]: source for source in concept["sources"]}
     uncertainty_map = {item["id"]: item for item in concept["uncertainties"]}
 
@@ -262,16 +295,20 @@ def render_concept(concept: dict) -> str:
     claims = []
     for claim in concept["claims"]:
         source_links = ", ".join(
-            f'<a href="#source-{esc(source_id)}">{esc(source_id)}</a>' for source_id in claim["source_ids"]
+            f'<a href="#source-{esc(source_id)}">{esc(source_map[source_id]["citation"])}</a>'
+            for source_id in claim["source_ids"]
         )
         uncertainty_links = ", ".join(
-            f'<a href="#uncertainty-{esc(uncertainty_id)}">{esc(uncertainty_id)}</a>'
+            f'<a href="#uncertainty-{esc(uncertainty_id)}">{esc(uncertainty_map[uncertainty_id]["question"])}</a>'
             for uncertainty_id in claim["uncertainty_ids"]
         )
         claims.append(
             f"""<article class="claim" id="claim-{esc(claim['id'])}">
   <div class="claim-head"><h3>{esc(claim['text'])}</h3><span class="confidence">{esc(claim['confidence'])} confidence</span></div>
-  <div class="route"><div><span class="route-label">Evidence:</span> {source_links}</div><div><span class="route-label">Uncertainty:</span> {uncertainty_links}</div></div>
+  <details class="evidence-detail">
+    <summary>Evidence and uncertainty behind this statement</summary>
+    <div class="route"><div><span class="route-label">Evidence:</span> {source_links}</div><div><span class="route-label">Uncertainty:</span> {uncertainty_links}</div></div>
+  </details>
 </article>"""
         )
 
@@ -280,8 +317,8 @@ def render_concept(concept: dict) -> str:
         uncertainties.append(
             f"""<article class="uncertainty" id="uncertainty-{esc(item['id'])}">
   <h3>{esc(item['question'])}</h3>
-  <p><strong>Why it matters:</strong> {esc(item['why_it_matters'])}</p>
-  <div><strong>What would reduce it:</strong>{list_items(item['what_would_reduce_it'])}</div>
+  <p>{esc(item['why_it_matters'])}</p>
+  <details><summary>What could reduce this uncertainty?</summary>{list_items(item['what_would_reduce_it'])}</details>
   <div class="status">Status: {esc(item['status'])}</div>
 </article>"""
         )
@@ -289,13 +326,13 @@ def render_concept(concept: dict) -> str:
     perspectives = []
     for item in concept["perspectives"]:
         source_links = ", ".join(
-            f'<a href="#source-{esc(source_id)}">{esc(source_id)}</a>' for source_id in item["source_ids"]
+            f'<a href="#source-{esc(source_id)}">source</a>' for source_id in item["source_ids"]
         )
         perspectives.append(
             f"""<article class="perspective">
   <h3>{esc(item['held_by'])}</h3>
   <p>{esc(item['summary'])}</p>
-  <div class="route"><span class="route-label">Sources:</span> {source_links}</div>
+  <div class="meta">Evidence route: {source_links}</div>
 </article>"""
         )
 
@@ -313,31 +350,82 @@ def render_concept(concept: dict) -> str:
 
     relations = []
     for relation in concept["relations"]:
+        target_id = relation["target_id"]
+        if target_id not in concept_map:
+            raise ValueError(f"{concept['id']}: missing related concept {target_id}")
         relations.append(
-            f'<li><a href="/understand/{esc(relation["target_id"])}/">{esc(relation["target_id"])}</a> — {esc(relation["note"])}</li>'
+            f'<li><a href="/understand/{esc(target_id)}/">{esc(concept_map[target_id]["name"])}</a> — {esc(relation["note"])}</li>'
         )
 
     body = f"""
-<p class="back-link"><a href="/understand/">← Understand</a></p>
-<div class="eyebrow">{esc(concept['type'])} · {esc(concept['status'])}</div>
-<section class="notice">
-  <strong>Early seed material.</strong> This page is not diagnosis or medical advice. Claims remain
-  linked to their recorded evidence and uncertainty.
+<p class="back-link"><a href="/understand/">← All topics</a></p>
+<section class="at-a-glance" aria-labelledby="glance-heading">
+  <h2 id="glance-heading">At a glance</h2>
+  <div class="scope-grid">
+    <div><h3>This page covers</h3>{list_items(concept['scope']['includes'])}</div>
+    <div><h3>It does not mean</h3>{list_items(concept['scope']['excludes'])}</div>
+  </div>
 </section>
-<section><h2>Scope</h2><h3>Includes</h3>{list_items(concept['scope']['includes'])}<h3>Excludes</h3>{list_items(concept['scope']['excludes'])}</section>
-<section><h2>Claims</h2>{''.join(claims)}</section>
-<section><h2>Uncertainties</h2>{''.join(uncertainties)}</section>
-<section><h2>Perspectives</h2>{''.join(perspectives)}</section>
-<section><h2>Related concepts</h2><ul>{''.join(relations)}</ul></section>
-<section><h2>Sources</h2>{''.join(sources)}</section>
-<section><h2>Provenance</h2><p>{esc(concept['provenance']['method'])}</p><div class="meta">Created {esc(concept['provenance']['created'])} · review state {esc(concept['provenance']['review_state'])}</div></section>
+<section aria-labelledby="known-heading"><h2 id="known-heading">What we can say</h2><p class="section-intro">These are bounded statements from the current evidence record. Open a statement only if you want its evidence route.</p>{''.join(claims)}</section>
+<section aria-labelledby="uncertainty-heading"><h2 id="uncertainty-heading">What remains uncertain</h2>{''.join(uncertainties)}</section>
+<section aria-labelledby="perspectives-heading"><h2 id="perspectives-heading">Different perspectives</h2>{''.join(perspectives)}</section>
+<section aria-labelledby="related-heading"><h2 id="related-heading">Related topics</h2><ul>{''.join(relations)}</ul></section>
+<section aria-labelledby="sources-heading"><h2 id="sources-heading">Sources</h2>{''.join(sources)}</section>
+<details class="provenance"><summary>Page provenance and review state</summary><p>{esc(concept['provenance']['method'])}</p><div class="meta">Created {esc(concept['provenance']['created'])} · review state {esc(concept['provenance']['review_state'])}</div></details>
 """
-    return page_shell(concept["name"], concept["summary"], body, current="understand")
+    return page_shell(
+        concept["name"],
+        concept["summary"],
+        body,
+        current="understand",
+        path=f"/understand/{concept['id']}/",
+    )
 
 
 def render_static_page(slug: str) -> str:
     page = STATIC_PAGES[slug]
-    return page_shell(page["title"], page["intro"], page["body"], current=slug if slug in dict(PRIMARY_NAV) else None)
+    return page_shell(
+        page["title"],
+        page["intro"],
+        page["body"],
+        current=slug if slug in dict(PRIMARY_NAV) else None,
+        path=f"/{slug}/",
+        indexable=page.get("indexable", True),
+    )
+
+
+def render_not_found() -> str:
+    body = """
+<section>
+  <h2>Try one of these instead</h2>
+  <ul class="question-list">
+    <li><a href="/">Go to the homepage</a></li>
+    <li><a href="/understand/">Browse current topics</a></li>
+    <li><a href="/how-it-works/">See how the site works</a></li>
+  </ul>
+</section>
+"""
+    return page_shell(
+        "Page not found",
+        "That address does not match a current page, but you can get back to the useful parts of the site here.",
+        body,
+        indexable=False,
+    )
+
+
+def sitemap_paths(concepts: list[dict]) -> list[str]:
+    paths = ["/", "/understand/"]
+    paths.extend(f"/understand/{concept['id']}/" for concept in concepts)
+    paths.extend(f"/{slug}/" for slug in INDEXED_STATIC_PAGES)
+    return paths
+
+
+def render_sitemap(concepts: list[dict]) -> str:
+    urls = "".join(
+        f"  <url><loc>{html.escape(PUBLIC_ORIGIN + path)}</loc></url>\n"
+        for path in sitemap_paths(concepts)
+    )
+    return f"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n{urls}</urlset>\n"
 
 
 def prepare_output(output_dir: Path) -> None:
@@ -362,6 +450,7 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> Path:
     concepts = load_concepts()
     if not concepts:
         raise ValueError("No concept objects found")
+    concept_map = {concept["id"]: concept for concept in concepts}
 
     prepare_output(output_dir)
     shutil.copy2(SITE_DIR / "styles.css", output_dir / "styles.css")
@@ -371,14 +460,21 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> Path:
     write_route(output_dir, "understand", render_understand_index(concepts))
 
     for concept in concepts:
-        write_route(output_dir, f"understand/{concept['id']}", render_concept(concept))
+        write_route(output_dir, f"understand/{concept['id']}", render_concept(concept, concept_map))
 
     for slug in STATIC_PAGES:
         write_route(output_dir, slug, render_static_page(slug))
+
+    (output_dir / "404.html").write_text(render_not_found(), encoding="utf-8")
+    (output_dir / "sitemap.xml").write_text(render_sitemap(concepts), encoding="utf-8")
+    (output_dir / "robots.txt").write_text(
+        f"User-agent: *\nAllow: /\nSitemap: {PUBLIC_ORIGIN}/sitemap.xml\n",
+        encoding="utf-8",
+    )
 
     return output_dir
 
 
 if __name__ == "__main__":
     destination = build()
-    print(f"Built The Neurodiverse Oracle Site Shell v0.1 at {destination}")
+    print(f"Built The Neurodiverse Oracle public site v0.2 at {destination}")

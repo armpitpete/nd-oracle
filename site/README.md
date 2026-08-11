@@ -1,26 +1,46 @@
-# The Neurodiverse Oracle — Site Shell v0.1
+# The Neurodiverse Oracle — public site v0.2
 
-This directory contains the minimal public-site foundation for The Neurodiverse Oracle.
+This directory contains the presentation layer for the public ND Oracle site.
 
-The shell is deliberately plain: semantic HTML, system fonts, restrained colours, visible keyboard focus and no required JavaScript. Its purpose is to make future tools, games, resources, community contribution routes and Oracle integration easy to add without rebuilding the site structure.
+The v0.2 completion pass changes the product stance from “site shell with future-feature placeholders” to a small but intentional reading product built around the knowledge that actually exists now.
 
 The generated Understand pages continue to come from the authoritative knowledge objects in `objects/concepts/`. The website does not maintain a second copy of claim text, sources, uncertainties or perspectives.
 
-## Structural routes
+## Current public journey
 
-The build reserves these durable top-level routes:
+A visitor can now:
+
+1. start from an ordinary-language question on the homepage;
+2. browse the five current topics under `/understand/`;
+3. read a short summary and scope before encountering technical detail;
+4. open the evidence and uncertainty behind individual statements only when wanted;
+5. inspect different perspectives, related topics, sources and provenance;
+6. recover from a bad URL through a useful `404.html` page;
+7. discover indexable routes through `sitemap.xml` and `robots.txt`.
+
+Primary navigation contains only active destinations:
 
 - `/understand/`
-- `/tools/`
-- `/games/`
-- `/resources/`
-- `/community/`
-- `/oracle/`
+- `/how-it-works/`
 - `/about/`
-- `/accessibility/`
-- `/privacy/`
 
-Tools, games, community features and the Oracle are inactive placeholders in v0.1. Reserving their routes now does not authorise their implementation or weaken their later privacy, security, evidence or governance gates.
+Accessibility and privacy remain in the footer.
+
+The old `/tools/`, `/games/`, `/resources/`, `/community/` and `/oracle/` routes remain as non-indexed compatibility pages so existing links do not become dead ends. They are deliberately absent from primary navigation and the sitemap until there is useful content to put there.
+
+## Design stance
+
+The public site remains deliberately calm and reading-first:
+
+- semantic HTML;
+- system fonts;
+- restrained colours;
+- visible keyboard focus;
+- reading-width content;
+- ordinary-language entry points;
+- native `<details>` controls for progressive disclosure;
+- no required JavaScript;
+- no empty feature catalogue presented as a finished product.
 
 ## Build
 
@@ -30,9 +50,9 @@ python scripts/build_site.py
 
 The generated site is written to `dist/` and is intentionally not committed.
 
-## Security defaults
+## Security and privacy defaults
 
-The current shell is static and deliberately narrow:
+The current site remains static and deliberately narrow:
 
 - no JavaScript;
 - no forms;
@@ -44,7 +64,13 @@ The current shell is static and deliberately narrow:
 - anti-framing, MIME-sniffing, referrer, permissions and cross-origin headers;
 - HSTS emitted with the static deployment headers.
 
-The default policy should remain restrictive. When a future game or tool genuinely needs JavaScript or network access, relax policy only for the smallest necessary route and origin rather than weakening the global site policy.
+The default policy should remain restrictive. When a future feature genuinely needs JavaScript or network access, relax policy only for the smallest necessary route and origin rather than weakening the global site policy.
+
+## Search decision
+
+A separate search runtime is not a v0.2 completion blocker while the public corpus contains only five topic pages. The homepage provides ordinary-language entry questions and `/understand/` exposes the full corpus in one scan.
+
+Search should be introduced when it saves real navigation work rather than adding a JavaScript/runtime dependency before the corpus needs it.
 
 ## Cloudflare Pages release contract
 
@@ -80,4 +106,4 @@ Direct Upload is an intentional release-control choice: Cloudflare does not allo
 
 ## Boundary
 
-Building or reviewing Site Shell v0.1 does not authorise Cloudflare Pages project creation, deployment, DNS changes, custom-domain attachment, analytics, accounts, forms, community data collection, an Oracle chatbot, AI-generated answers, or representation as clinical guidance.
+This v0.2 presentation pass does not mutate authoritative knowledge objects, create accounts, collect community data, add analytics, introduce an Oracle chatbot, or represent the site as clinical guidance.
