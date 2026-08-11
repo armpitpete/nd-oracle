@@ -7,16 +7,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DESIGN = ROOT / "migration-candidates" / "autism-neurodiversity" / "evidence-date-precision-design.json"
 PROOF = ROOT / "docs" / "migration-proofs" / "EVIDENCE_DATE_PRECISION_DESIGN.md"
-CURRENT_EVIDENCE_SCHEMA = ROOT / "schema" / "types" / "evidence-v0.2.json"
 
 
 class EvidenceDatePrecisionDesignTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.design = json.loads(DESIGN.read_text(encoding="utf-8"))
-        cls.current_schema = json.loads(CURRENT_EVIDENCE_SCHEMA.read_text(encoding="utf-8"))
 
-    def test_design_is_non_authoritative_and_does_not_change_schema(self) -> None:
+    def test_design_is_non_authoritative_and_does_not_authorise_schema_change(self) -> None:
         self.assertFalse(self.design["authoritative"])
         self.assertFalse(self.design["schema_change_authorised"])
         self.assertEqual(
@@ -29,12 +27,13 @@ class EvidenceDatePrecisionDesignTests(unittest.TestCase):
         self.assertIn("acceptance of 2016-07-03 as an exact Singer publication fact", prohibited)
         self.assertIn("merge of PR 60", prohibited)
 
-    def test_current_schema_problem_is_still_present_on_design_branch(self) -> None:
-        properties = self.current_schema["properties"]
-        self.assertIn("date", self.current_schema["required"])
-        self.assertEqual("string", properties["date"]["type"])
-        self.assertEqual("date", properties["date"]["format"])
-        self.assertNotIn("date_precision", properties)
+    def test_design_records_the_preimplementation_schema_problem(self) -> None:
+        current_contract = self.design["current_contract"]
+        self.assertTrue(current_contract["date_required"])
+        self.assertEqual("string", current_contract["date_type"])
+        self.assertEqual("date", current_contract["date_format"])
+        self.assertFalse(current_contract["date_precision_field_present"])
+        self.assertIn("cannot represent", current_contract["problem"])
 
     def test_preferred_design_keeps_date_string_and_adds_explicit_precision(self) -> None:
         alternatives = {item["id"]: item for item in self.design["alternatives"]}

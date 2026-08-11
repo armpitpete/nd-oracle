@@ -77,11 +77,11 @@ def contrib(eid, cid, x, role=None):
     }
 
 
-def evidence(eid, kind, citation, url, date, accessed, authorship, title, contributions):
+def evidence(eid, kind, citation, url, date, date_precision, accessed, authorship, title, contributions):
     return {
         "schema_version": "0.2", "id": eid, "type": "evidence", "status": "seed", "provenance": prov(),
         "title": title, "source_kind": kind, "citation": citation, "locator": {"type": "url", "value": url},
-        "date": date, "accessed": accessed, "authorship": authorship, "contributions": contributions,
+        "date": date, "date_precision": date_precision, "accessed": accessed, "authorship": authorship, "contributions": contributions,
     }
 
 
@@ -123,11 +123,11 @@ def build_objects(a, n, ds, a_enrich, n_research, singer):
         k: av(f"enrich-autism-source-who-{cid}-{k.replace('_','-')}")
         for k in ("role", "finding", "population_or_context", "methodology")
     }
-    who_obj = evidence(who["id"], who["kind"], who["citation"], who["url"], av("enrich-autism-source-who-date"),
+    who_obj = evidence(who["id"], who["kind"], who["citation"], who["url"], av("enrich-autism-source-who-date"), "day",
         who["accessed"], av("enrich-autism-source-who-authorship"), av("enrich-autism-source-who-title"),
         [contrib(who["id"], "autism-claim-1", who_fields("autism-claim-1")), contrib(who["id"], "autism-claim-2", who_fields("autism-claim-2"))])
     nf = {k: av(f"enrich-autism-source-neurobiology-autism-claim-2-{k.replace('_','-')}") for k in ("role","finding","population_or_context","methodology")}
-    neuro_obj = evidence(neuro["id"], neuro["kind"], ds[D1]["accepted_value"], neuro["url"], av("enrich-autism-source-neurobiology-date"),
+    neuro_obj = evidence(neuro["id"], neuro["kind"], ds[D1]["accepted_value"], neuro["url"], av("enrich-autism-source-neurobiology-date"), "day",
         neuro["accessed"], av("enrich-autism-source-neurobiology-authorship"), av("enrich-autism-source-neurobiology-title"),
         [contrib(neuro["id"], "autism-claim-2", nf)])
     au = {x["id"]: x for x in a["uncertainties"]}
@@ -143,7 +143,7 @@ def build_objects(a, n, ds, a_enrich, n_research, singer):
 
     nsrc = {x["id"]: x for x in n["sources"]}; npers = {x["id"]: x for x in n["perspectives"]}
     br = n_research["sources"]["neurodiversity-source-botha"]; bs = nsrc["neurodiversity-source-botha"]
-    botha = evidence(bs["id"], bs["kind"], ds[D8]["accepted_citation"], bs["url"], br["metadata"]["date"]["value"], bs["accessed"],
+    botha = evidence(bs["id"], bs["kind"], ds[D8]["accepted_citation"], bs["url"], br["metadata"]["date"]["value"], "day", bs["accessed"],
         br["metadata"]["authorship"]["value"], br["metadata"]["title"]["value"], [contrib(bs["id"], "neurodiversity-claim-1", br["contributions"]["neurodiversity-claim-1"])])
     ids = {x["id"]: x for x in singer["candidates"]}; sr = n_research["sources"]["neurodiversity-source-singer"]; ss = nsrc["neurodiversity-source-singer"]
     i17 = ids[S17]; cs = []
@@ -151,7 +151,7 @@ def build_objects(a, n, ds, a_enrich, n_research, singer):
         b = next(x for x in i17["accepted_contribution_bindings"] if x["claim_ref"].endswith("#" + cid))
         cs.append(contrib(S17, cid, sr["contributions"][cid], b["role"]))
     singer17 = evidence(S17, ss["kind"], "Singer, Judy. NeuroDiversity: The Birth of an Idea. Revised print edition (2017).", ss["url"],
-        ds[D12]["accepted_full_publication_date"], ss["accessed"], i17["authorship"], i17["title"], cs)
+        ds[D12]["accepted_full_publication_date"], "day", ss["accessed"], i17["authorship"], i17["title"], cs)
     nu = {x["id"]: x for x in n["uncertainties"]}; nmap = {"neurodiversity-claim-1": [S17, bs["id"]], "neurodiversity-claim-2": [S17]}
     nconcept = {
         "schema_version": "0.2", "id": "neurodiversity", "type": "concept", "status": n["status"], "provenance": copy.deepcopy(n["provenance"]),
