@@ -6,7 +6,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RESEARCH = ROOT / "migration-candidates" / "autism-neurodiversity" / "uncertainty-shape-research.json"
-COMMON_V02 = ROOT / "schema" / "common-v0.2.json"
 QUESTION_V02 = ROOT / "schema" / "types" / "question-v0.2.json"
 V01_SCHEMA = ROOT / "schema" / "object-v0.1.json"
 DOC = ROOT / "docs" / "migration-proofs" / "UNCERTAINTY_SHAPE_RESEARCH.md"
@@ -64,27 +63,34 @@ class UncertaintyShapeResearchTests(unittest.TestCase):
                 self.assertTrue(uncertainty["question"].strip())
         self.assertEqual(total, 10)
 
-    def test_schema_mismatch_is_recorded_from_current_schema(self) -> None:
+    def test_schema_mismatch_is_preserved_as_historical_research_evidence(self) -> None:
         v01 = load(V01_SCHEMA)["$defs"]["uncertainty"]
-        v02 = load(COMMON_V02)["$defs"]["uncertainty"]
-
         self.assertEqual(v01["properties"]["what_would_reduce_it"]["type"], "array")
         self.assertIn("status", v01["required"])
         self.assertIn("status", v01["properties"])
 
+        research = load(RESEARCH)
+        historical_v02 = research["schema_anchors"]["v02"]
         self.assertEqual(
-            v02["properties"]["reopening_or_reduction_condition"]["$ref"],
-            "#/$defs/nonBlankString",
+            historical_v02["blob_sha"],
+            "2c0fc2344fcafde88340b8a5882e0d171246ea02",
         )
-        self.assertNotIn("status", v02["properties"])
-        self.assertNotIn("status", v02["required"])
+        self.assertEqual(
+            historical_v02["uncertainty_shape"]["required"],
+            ["id", "statement", "why_it_matters", "reopening_or_reduction_condition"],
+        )
+        self.assertEqual(
+            historical_v02["uncertainty_shape"]["reopening_or_reduction_condition_type"],
+            "string",
+        )
+        self.assertFalse(historical_v02["uncertainty_shape"]["status_field_present"])
 
-        research = load(RESEARCH)["observed_mismatch"]
-        self.assertEqual(research["authoritative_uncertainty_count"], 10)
-        self.assertTrue(research["all_current_uncertainties_use_multiple_reduction_conditions"])
-        self.assertTrue(research["all_current_uncertainties_have_explicit_status"])
-        self.assertFalse(research["current_v02_embedded_uncertainty_can_preserve_list_structure_directly"])
-        self.assertFalse(research["current_v02_embedded_uncertainty_can_preserve_status_directly"])
+        mismatch = research["observed_mismatch"]
+        self.assertEqual(mismatch["authoritative_uncertainty_count"], 10)
+        self.assertTrue(mismatch["all_current_uncertainties_use_multiple_reduction_conditions"])
+        self.assertTrue(mismatch["all_current_uncertainties_have_explicit_status"])
+        self.assertFalse(mismatch["current_v02_embedded_uncertainty_can_preserve_list_structure_directly"])
+        self.assertFalse(mismatch["current_v02_embedded_uncertainty_can_preserve_status_directly"])
 
     def test_question_schema_does_not_justify_automatic_promotion(self) -> None:
         question = load(QUESTION_V02)
@@ -109,7 +115,7 @@ class UncertaintyShapeResearchTests(unittest.TestCase):
         self.assertEqual(options["u4-retain-legacy-unmapped"]["assessment"], "safe_interim_state_only")
         self.assertEqual(options["u5-native-embedded-uncertainty-repair"]["assessment"], "recommended_for_owner_review")
 
-    def test_next_gate_is_policy_only_and_does_not_authorise_mutation(self) -> None:
+    def test_next_gate_is_historical_policy_gate_and_does_not_rewrite_research(self) -> None:
         research = load(RESEARCH)
         decision = research["decision_candidate"]
         self.assertEqual(decision["id"], "nd-embedded-uncertainty-lossless-representation")
