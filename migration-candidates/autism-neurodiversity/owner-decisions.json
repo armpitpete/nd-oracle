@@ -136,6 +136,51 @@
       "authoritative_v02_replacement_authorised": false,
       "schema_change_authorised": false,
       "publication_or_deployment_authorised": false
+    },
+    {
+      "id": "d13-singer-edition-specific-contribution-bindings",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "84087c7a86f0efda4db6fc1f0ff29c468dab82e8",
+      "scope": "Future non-authoritative v0.2 Neurodiversity Singer Evidence Contribution binding candidates only.",
+      "supersedes_research_decision_candidate": {
+        "path": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json",
+        "id": "nd-singer-edition-specific-contribution-bindings"
+      },
+      "accepted_bindings": [
+        {
+          "evidence_id": "neurodiversity-source-singer-2016-kindle",
+          "claim_ref": "neurodiversity#neurodiversity-claim-1",
+          "role": "compatible",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2016-kindle.contribution_bindings.neurodiversity-claim-1"
+        },
+        {
+          "evidence_id": "neurodiversity-source-singer-2017-revised-print",
+          "claim_ref": "neurodiversity#neurodiversity-claim-1",
+          "role": "compatible",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2017-revised-print.contribution_bindings.neurodiversity-claim-1"
+        },
+        {
+          "evidence_id": "neurodiversity-source-singer-2017-revised-print",
+          "claim_ref": "neurodiversity#neurodiversity-claim-2",
+          "role": "compatible",
+          "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2017-revised-print.contribution_bindings.neurodiversity-claim-2"
+        }
+      ],
+      "pending_binding": {
+        "evidence_id": "neurodiversity-source-singer-2016-kindle",
+        "claim_ref": "neurodiversity#neurodiversity-claim-2",
+        "role": "compatible",
+        "status": "pending_stronger_direct_text_evidence",
+        "source_research_ref": "migration-candidates/autism-neurodiversity/singer-edition-enrichment-research.json#edition_assessments.neurodiversity-source-singer-2016-kindle.contribution_bindings.neurodiversity-claim-2"
+      },
+      "automatic_claim_support_copying": false,
+      "preserve_authoritative_v01_source_unchanged": true,
+      "authoritative_evidence_contribution_creation_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "schema_change_authorised": false,
+      "publication_or_deployment_authorised": false
     }
   ]
 }
