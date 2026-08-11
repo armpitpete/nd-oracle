@@ -1,6 +1,6 @@
 # Autism migration decision log
 
-Status: **owner decision pending**. D1–D3 are accepted. D4–D5 remain pending. No authoritative replacement is authorised by this file.
+Status: **owner decision pending**. D1–D4 are accepted. D5 remains pending. No authoritative replacement is authorised by this file.
 
 Research pass: 2026-08-11, against repository `main` `0f6042e8841149da0485fe1b279dcd1bc9e5ff1f` and unchanged authoritative Autism blob `b2d3809ecfcdb1d81c793a2401f0533a4b17ea98`.
 
@@ -9,6 +9,8 @@ Owner decision D1 was accepted on 2026-08-11 against protected repository `main`
 Owner decision D2 was accepted on 2026-08-11 against protected repository `main` `274b27e66a6c548575bf7774fdd204c78fe4624e`.
 
 Owner decision D3 was accepted on 2026-08-11 against protected repository `main` `2979996e82f7461a4431476c8c297d67bdb1b236`.
+
+Owner decision D4 was accepted on 2026-08-11 against protected repository `main` `0cb73f1642f6a857049e41767bf69c677dccf0ac`.
 
 ## Evidence-backed enrichment findings
 
@@ -97,9 +99,28 @@ The retained reduction-condition arrays are:
 
 **Reopening condition:** revisit through an explicit schema-policy decision that supports one-or-many reduction conditions directly, or another explicitly accepted reversible representation that preserves item boundaries.
 
-**Boundary:** D3 authorises no schema change now, no flattening, no canonical-string encoding, no mutation of the authoritative v0.1 Autism object, no authoritative v0.2 replacement, and no acceptance of D4 or D5.
+**Boundary:** D3 authorises no schema change now, no flattening, no canonical-string encoding, no mutation of the authoritative v0.1 Autism object, no authoritative v0.2 replacement, and no acceptance of later decisions.
 
-The machine-readable decision records are in `owner-decisions.json`; exact legacy relation and uncertainty payloads remain recoverable in `preservation-ledger.json`.
+### D4 — `ecosystem_entry_points` — **ACCEPTED AS ECOSYSTEM-MODEL DEFERRAL**
+
+**Accepted rule:** retain all four Autism v0.1 `ecosystem_entry_points` exactly as `legacy_retained_unmapped`. Do not auto-promote their embedded questions and do not force the structures into any existing v0.2 object type.
+
+The retained categories are:
+
+- `accommodations`;
+- `communities`;
+- `services`;
+- `tools`.
+
+Each category's original embedded questions remain part of its exact retained legacy payload.
+
+**Reason:** no exact v0.2 semantic home has been demonstrated. Treating embedded prompts as standalone Question objects would add semantics not present in the legacy object, while forcing the whole structure into an existing type would misrepresent its navigation/ecosystem role.
+
+**Reopening condition:** revisit when a first-class ecosystem or navigation model is explicitly designed. An embedded question may be considered independently only through a separate review of whether it is independently reusable as a standalone Question.
+
+**Boundary:** D4 authorises no auto-promotion, no forced mapping, no new schema or object type, no mutation of the authoritative v0.1 Autism object, no authoritative v0.2 replacement, and no acceptance of D5.
+
+The machine-readable decision records are in `owner-decisions.json`; exact retained relation, uncertainty and ecosystem payloads remain recoverable in `preservation-ledger.json`.
 
 ## Perspective proposals — not accepted
 
@@ -120,16 +141,6 @@ Proposed Perspective `scope`:
 These remain `owner_decision` proposals because they are framing choices rather than raw source metadata.
 
 ## Pending decision candidates
-
-### D4 — `ecosystem_entry_points` — **PENDING**
-
-Options:
-
-1. auto-promote embedded questions to standalone Question objects — rejected by the accepted migration contract;
-2. map the whole structure into an existing v0.2 object type — no exact semantic home has been demonstrated;
-3. retain as `legacy_retained_unmapped` pending a first-class navigation/ecosystem-entry model, with individual questions eligible for later independent-reusability review.
-
-**Recommendation:** option 3.
 
 ### D5 — Autism ↔ Neurodiversity structural closure — **PENDING**
 

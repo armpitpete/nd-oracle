@@ -77,10 +77,7 @@ class AutismMigrationPackageTests(unittest.TestCase):
         self.assertIn("Kawakami, S. et al.", SOURCE.read_text(encoding="utf-8"))
         pending = {item["id"] for item in decisions if item["status"] == "pending"}
         self.assertEqual(
-            {
-                "d4-ecosystem-entry-points-home",
-                "d5-autism-neurodiversity-structural-closure",
-            },
+            {"d5-autism-neurodiversity-structural-closure"},
             pending,
         )
 
@@ -154,6 +151,53 @@ class AutismMigrationPackageTests(unittest.TestCase):
         )
         self.assertTrue(
             all(isinstance(item["legacy_value"]["what_would_reduce_it"], list) for item in uncertainties)
+        )
+        self.assertEqual(AUTISM_V01_BLOB, git_blob_sha(SOURCE))
+
+    def test_d4_preserves_ecosystem_entries_without_promotion_or_forced_mapping(self) -> None:
+        decisions = self.load("owner-decisions.json")["decisions"]
+        by_id = {item["id"]: item for item in decisions}
+        d4 = by_id["d4-ecosystem-entry-points-home"]
+        self.assertEqual("accepted", d4["status"])
+        self.assertEqual("legacy_retained_unmapped", d4["accepted_disposition"])
+        self.assertFalse(d4["auto_promote_embedded_questions_authorised"])
+        self.assertFalse(d4["force_into_existing_v02_type_authorised"])
+        self.assertFalse(d4["schema_change_authorised"])
+        self.assertTrue(d4["individual_question_review_allowed"])
+        self.assertFalse(d4["authoritative_v01_mutation_authorised"])
+        self.assertFalse(d4["authoritative_v02_replacement_authorised"])
+
+        ledger = self.load("preservation-ledger.json")
+        entries = [
+            item
+            for item in ledger["entries"]
+            if item["unit"].startswith("ecosystem-entry:")
+        ]
+        self.assertEqual(4, len(entries))
+        self.assertTrue(all(item["disposition"] == "legacy_retained_unmapped" for item in entries))
+        self.assertTrue(all(item["owner_decision_ref"] == "d4-ecosystem-entry-points-home" for item in entries))
+        self.assertTrue(all("candidate_destination" not in item for item in entries))
+        by_category = {item["legacy_value"]["category"]: item["legacy_value"]["questions"] for item in entries}
+        self.assertEqual(
+            {
+                "accommodations": [
+                    "What barrier is being changed?",
+                    "Does the autistic person control and evaluate the accommodation?",
+                ],
+                "communities": [
+                    "Are non-speaking people and people with high support needs represented?",
+                    "What communication modes are supported?",
+                ],
+                "services": [
+                    "Are goals person-defined and non-coercive?",
+                    "Are communication access and safeguarding explicit?",
+                ],
+                "tools": [
+                    "What outcome and context support the claim?",
+                    "Can the tool increase distress, surveillance, or dependency?",
+                ],
+            },
+            by_category,
         )
         self.assertEqual(AUTISM_V01_BLOB, git_blob_sha(SOURCE))
 

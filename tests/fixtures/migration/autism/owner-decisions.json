@@ -45,7 +45,18 @@
     },
     {
       "id": "d4-ecosystem-entry-points-home",
-      "status": "pending"
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "0cb73f1642f6a857049e41767bf69c677dccf0ac",
+      "scope": "All four Autism v0.1 ecosystem_entry_points remain exactly recoverable as legacy-retained-unmapped migration data until a first-class ecosystem or navigation model is explicitly designed.",
+      "accepted_disposition": "legacy_retained_unmapped",
+      "auto_promote_embedded_questions_authorised": false,
+      "force_into_existing_v02_type_authorised": false,
+      "schema_change_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "individual_question_review_allowed": true,
+      "reopening_condition": "Reopen when a first-class ecosystem or navigation model is explicitly designed; embedded questions may be considered individually only through separate review of their independent reusability."
     },
     {
       "id": "d5-autism-neurodiversity-structural-closure",
