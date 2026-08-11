@@ -274,6 +274,38 @@
       "status_remapping_authorised": false,
       "new_uncertainty_status_semantics_authorised": false,
       "publication_or_deployment_authorised": false
+    },
+    {
+      "id": "d17-neurodiversity-legacy-structural-disposition",
+      "status": "accepted",
+      "accepted_on": "2026-08-11",
+      "accepted_against_main": "586f9589c4c14a0bcb7a84bc0c579bfef94f6d7c",
+      "scope": "Migration disposition for the reciprocal Autism/Neurodiversity v0.1 structural relation records only; paired-candidate implementation and all authoritative migration remain separately protected.",
+      "supersedes_research_decision_candidate": {
+        "path": "migration-candidates/autism-neurodiversity/relation-semantics-review.json",
+        "id": "nd-neurodiversity-legacy-structural-disposition"
+      },
+      "accepted_disposition": {
+        "preserve_reciprocal_legacy_records_together": true,
+        "migration_status": "legacy_retained_unmapped",
+        "preserve_exact_legacy_type_target_and_note": true,
+        "emit_v02_taxonomy_edge": false,
+        "preserve_d5_record_historically": true,
+        "preserve_d6_record_historically": true,
+        "supersede_d5_mapping_assumption_only": true,
+        "future_semantic_graph_link_is_separate_enrichment": true,
+        "adhd_consistency_test_only": true
+      },
+      "paired_candidate_mutation_authorised": false,
+      "schema_change_authorised": false,
+      "validator_change_authorised": false,
+      "replacement_relation_authorised": false,
+      "relation_confidence_authorised": false,
+      "new_relation_enrichment_authorised": false,
+      "authoritative_v01_mutation_authorised": false,
+      "authoritative_v02_replacement_authorised": false,
+      "adhd_scope_expansion_authorised": false,
+      "publication_or_deployment_authorised": false
     }
   ]
 }
