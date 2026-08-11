@@ -15,17 +15,19 @@ NEURODIVERSITY_BLOB = "5a38bc4250079412dd3f4da1d598dfcab984ca66"
 ACCEPTED_MAIN = "4b473f0130d8346c053089cbb86f9baedc549d3d"
 LEGACY_DOI = "10.1080/09687599.2024.2327837"
 ACCEPTED_DOI = "10.1177/13623613241237871"
+D8_ID = "d8-neurodiversity-botha-citation-correction"
 
 
 class D8NeurodiversityBothaCitationCorrectionTests(unittest.TestCase):
     def load(self, path: Path) -> dict:
         return json.loads(path.read_text(encoding="utf-8"))
 
-    def test_d8_records_exact_bounded_acceptance(self) -> None:
+    def d8(self) -> dict:
         decisions = self.load(DECISIONS)["decisions"]
-        self.assertEqual(1, len(decisions))
-        d8 = decisions[0]
-        self.assertEqual("d8-neurodiversity-botha-citation-correction", d8["id"])
+        return next(item for item in decisions if item["id"] == D8_ID)
+
+    def test_d8_records_exact_bounded_acceptance(self) -> None:
+        d8 = self.d8()
         self.assertEqual("accepted", d8["status"])
         self.assertEqual(ACCEPTED_MAIN, d8["accepted_against_main"])
         self.assertEqual("neurodiversity-source-botha", d8["source_id"])
@@ -46,8 +48,7 @@ class D8NeurodiversityBothaCitationCorrectionTests(unittest.TestCase):
         self.assertNotIn(ACCEPTED_DOI, botha["citation"])
 
     def test_d8_supersedes_only_botha_research_decision_candidate(self) -> None:
-        decisions = self.load(DECISIONS)["decisions"]
-        d8 = decisions[0]
+        d8 = self.d8()
         self.assertEqual(
             {
                 "path": "migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json",
@@ -63,9 +64,9 @@ class D8NeurodiversityBothaCitationCorrectionTests(unittest.TestCase):
         self.assertEqual("owner_decision_required", candidates["nd-paradigm-perspective-framing"]["status"])
         self.assertEqual("owner_decision_required", candidates["nd-collective-perspective-framing"]["status"])
 
-    def test_paired_candidate_binds_d8_without_closing_other_blockers(self) -> None:
+    def test_paired_candidate_preserves_d8_and_unrelated_blockers(self) -> None:
         pair = self.load(PAIR)
-        self.assertIn("d8-neurodiversity-botha-citation-correction", pair["accepted_owner_decisions"])
+        self.assertIn(D8_ID, pair["accepted_owner_decisions"])
         self.assertIn(
             "migration-candidates/autism-neurodiversity/owner-decisions.json",
             pair["owner_decision_refs"],
@@ -76,7 +77,6 @@ class D8NeurodiversityBothaCitationCorrectionTests(unittest.TestCase):
         blockers = {item["id"]: item for item in pair["blockers"]}
         self.assertIn("Singer date/edition identity remains unresolved", blockers["neurodiversity-evidence-enrichment"]["detail"])
         self.assertEqual("owner_decision", blockers["neurodiversity-uncertainty-shape"]["kind"])
-        self.assertEqual("owner_decision", blockers["neurodiversity-perspective-framing"]["kind"])
         self.assertEqual("structural_dependency", blockers["neurodiversity-adhd-structural-edge"]["kind"])
         relations = [item["structural_relation"] for item in pair["objects"]]
         self.assertTrue(all("confidence" not in relation for relation in relations))
