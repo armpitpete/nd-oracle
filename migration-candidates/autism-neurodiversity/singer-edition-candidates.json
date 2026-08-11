@@ -1,0 +1,58 @@
+{
+  "candidate_kind": "non_authoritative_evidence_identity_split",
+  "migration_contract_version": "0.2",
+  "decision_ref": "d11-singer-edition-identity-preservation",
+  "authoritative": false,
+  "legacy_source": {
+    "object_id": "neurodiversity",
+    "source_id": "neurodiversity-source-singer",
+    "path": "objects/concepts/neurodiversity.json",
+    "blob_sha": "5a38bc4250079412dd3f4da1d598dfcab984ca66"
+  },
+  "accepted_identity_rule": {
+    "legacy_record_conflates_two_identifiable_editions": true,
+    "preserve_as_separate_evidence_identities": true,
+    "select_single_edition": false,
+    "combine_editions": false,
+    "automatic_claim_support_duplication": false,
+    "edition_specific_evidence_required_for_each_contribution": true
+  },
+  "candidates": [
+    {
+      "id": "neurodiversity-source-singer-2016-kindle",
+      "type": "evidence_identity_candidate",
+      "title": "NeuroDiversity: The Birth of an Idea",
+      "authorship": "Judy Singer",
+      "edition_identity": "2016 Kindle edition",
+      "publication_year": 2016,
+      "format": "Kindle",
+      "evidence_routes": [
+        "https://neurodiversity2.blogspot.com/p/bibliography-how-to-cite-my-work.html"
+      ],
+      "full_schema_date_status": "not_accepted_by_d11",
+      "contribution_status": "edition_specific_evidence_required"
+    },
+    {
+      "id": "neurodiversity-source-singer-2017-revised-print",
+      "type": "evidence_identity_candidate",
+      "title": "NeuroDiversity: The Birth of an Idea",
+      "authorship": "Judy Singer",
+      "edition_identity": "revised 2017 print edition",
+      "publication_year": 2017,
+      "format": "print",
+      "evidence_routes": [
+        "https://wellcomecollection.org/works/ywrdd8ff"
+      ],
+      "full_schema_date_status": "not_accepted_by_d11",
+      "contribution_status": "edition_specific_evidence_required"
+    }
+  ],
+  "boundaries": {
+    "authoritative_v01_mutation_authorised": false,
+    "authoritative_evidence_creation_authorised": false,
+    "authoritative_v02_replacement_authorised": false,
+    "claim_support_copying_authorised": false,
+    "schema_change_authorised": false,
+    "publication_or_deployment_authorised": false
+  }
+}
