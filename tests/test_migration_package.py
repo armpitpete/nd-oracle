@@ -78,7 +78,6 @@ class AutismMigrationPackageTests(unittest.TestCase):
         pending = {item["id"] for item in decisions if item["status"] == "pending"}
         self.assertEqual(
             {
-                "d3-uncertainty-reduction-shape",
                 "d4-ecosystem-entry-points-home",
                 "d5-autism-neurodiversity-structural-closure",
             },
@@ -112,6 +111,50 @@ class AutismMigrationPackageTests(unittest.TestCase):
             {item["legacy_value"]["target_id"] for item in related},
         )
         self.assertTrue(all("candidate_destination" not in item for item in related))
+        self.assertEqual(AUTISM_V01_BLOB, git_blob_sha(SOURCE))
+
+    def test_d3_preserves_uncertainty_arrays_without_string_mapping(self) -> None:
+        decisions = self.load("owner-decisions.json")["decisions"]
+        by_id = {item["id"]: item for item in decisions}
+        d3 = by_id["d3-uncertainty-reduction-shape"]
+        self.assertEqual("accepted", d3["status"])
+        self.assertEqual("legacy_retained_unmapped", d3["accepted_disposition"])
+        self.assertFalse(d3["flatten_to_prose_authorised"])
+        self.assertFalse(d3["canonical_string_encoding_authorised"])
+        self.assertFalse(d3["schema_change_authorised"])
+        self.assertFalse(d3["authoritative_v01_mutation_authorised"])
+        self.assertFalse(d3["authoritative_v02_replacement_authorised"])
+
+        ledger = self.load("preservation-ledger.json")
+        uncertainties = [
+            item
+            for item in ledger["entries"]
+            if item["unit"].startswith("uncertainty:")
+        ]
+        self.assertEqual(2, len(uncertainties))
+        self.assertTrue(all(item["disposition"] == "legacy_retained_unmapped" for item in uncertainties))
+        self.assertTrue(all(item["owner_decision_ref"] == "d3-uncertainty-reduction-shape" for item in uncertainties))
+        self.assertTrue(all("candidate_destination" not in item for item in uncertainties))
+        by_uncertainty_id = {item["legacy_value"]["id"]: item["legacy_value"] for item in uncertainties}
+        self.assertEqual(
+            [
+                "longitudinal community-led studies",
+                "multidimensional support descriptions",
+                "validation across ages, cultures, communication modes, and intellectual abilities",
+            ],
+            by_uncertainty_id["autism-uncertainty-measurement"]["what_would_reduce_it"],
+        )
+        self.assertEqual(
+            [
+                "participatory trials of accommodations",
+                "ecologically valid measures",
+                "reporting of benefit, burden, and adverse effects",
+            ],
+            by_uncertainty_id["autism-uncertainty-sensory"]["what_would_reduce_it"],
+        )
+        self.assertTrue(
+            all(isinstance(item["legacy_value"]["what_would_reduce_it"], list) for item in uncertainties)
+        )
         self.assertEqual(AUTISM_V01_BLOB, git_blob_sha(SOURCE))
 
     def test_evidence_roles_remain_bounded(self) -> None:
