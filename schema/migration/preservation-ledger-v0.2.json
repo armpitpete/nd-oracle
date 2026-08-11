@@ -15,6 +15,7 @@
         "additionalProperties": false,
         "required": ["unit", "disposition"],
         "properties": {
+          "source_object_id": {"type": ["string", "null"], "pattern": "^[a-z][a-z0-9-]*$"},
           "unit": {"type": "string", "minLength": 1},
           "disposition": {"enum": ["represented_exactly", "represented_with_verified_enrichment", "owner_decision_required", "structural_dependency", "legacy_retained_unmapped", "rejected_with_reason"]},
           "candidate_destination": {"type": ["string", "null"]},

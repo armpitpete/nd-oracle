@@ -79,6 +79,19 @@ def _candidate_json(package_dir: Path) -> list[dict]:
     return values
 
 
+def _entry_source_object_id(entry: dict, manifest: dict, errors: list[str]) -> str | None:
+    source_id = entry.get("source_object_id")
+    if source_id:
+        return source_id
+    sources = manifest["sources"]
+    if len(sources) == 1:
+        return sources[0]["object_id"]
+    errors.append(
+        f"preservation unit {entry.get('unit', '<missing>')}: multi-source package requires source_object_id"
+    )
+    return None
+
+
 def validate_package(package_dir: Path, root: Path = ROOT) -> list[str]:
     package_dir = Path(package_dir)
     errors: list[str] = []
@@ -101,8 +114,12 @@ def validate_package(package_dir: Path, root: Path = ROOT) -> list[str]:
     enrichment = docs["enrichment-ledger.json"]
     dependencies = docs["dependency-ledger.json"]
 
-    expected_units: set[str] = set()
+    expected_units: set[tuple[str, str]] = set()
     ecosystem_questions: set[str] = set()
+    source_ids = {source["object_id"] for source in manifest["sources"]}
+    if len(source_ids) != len(manifest["sources"]):
+        errors.append("manifest.json: source object ids must be unique")
+
     for source in manifest["sources"]:
         source_path = root / source["path"]
         try:
@@ -119,19 +136,27 @@ def validate_package(package_dir: Path, root: Path = ROOT) -> list[str]:
             errors.append(f"source {source['path']}: schema version anchor does not match")
         if source_obj.get("id") != source["object_id"]:
             errors.append(f"source {source['path']}: object id anchor does not match")
-        source_units = v01_preservation_inventory(source_obj)
-        overlap = expected_units & source_units
-        if overlap:
-            errors.append(f"preservation inventory collision across source objects: {sorted(overlap)!r}")
-        expected_units |= source_units
+        expected_units.update(
+            (source["object_id"], unit) for unit in v01_preservation_inventory(source_obj)
+        )
         for entry in source_obj.get("ecosystem_entry_points", []):
             ecosystem_questions.update(entry.get("questions", []))
 
     entries = preservation["entries"]
-    units = [entry["unit"] for entry in entries]
-    if len(units) != len(set(units)):
-        errors.append("preservation-ledger.json: every preservation unit must appear exactly once")
-    actual_units = set(units)
+    entry_keys: list[tuple[str, str]] = []
+    for entry in entries:
+        source_id = _entry_source_object_id(entry, manifest, errors)
+        if source_id is None:
+            continue
+        if source_id not in source_ids:
+            errors.append(
+                f"preservation unit {entry['unit']}: source_object_id {source_id} is not a manifest source"
+            )
+        entry_keys.append((source_id, entry["unit"]))
+
+    if len(entry_keys) != len(set(entry_keys)):
+        errors.append("preservation-ledger.json: every source-scoped preservation unit must appear exactly once")
+    actual_units = set(entry_keys)
     missing = sorted(expected_units - actual_units)
     unknown = sorted(actual_units - expected_units)
     if missing:
