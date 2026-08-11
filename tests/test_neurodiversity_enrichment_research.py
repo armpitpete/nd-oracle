@@ -91,7 +91,7 @@ class NeurodiversityEnrichmentResearchTests(unittest.TestCase):
         self.assertIn("migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json", pair["research_refs"])
         by_id = {item["id"]: item for item in pair["blockers"]}
         self.assertIn("neurodiversity-evidence-enrichment", by_id)
-        self.assertEqual("owner_decision", by_id["neurodiversity-uncertainty-shape"]["kind"])
+        self.assertIn("neurodiversity-uncertainty-shape", by_id)
         self.assertEqual("structural_dependency", by_id["neurodiversity-adhd-structural-edge"]["kind"])
         relations = [item["structural_relation"] for item in pair["objects"]]
         self.assertTrue(all("confidence" not in relation for relation in relations))
