@@ -46,8 +46,9 @@ class Singer2016FollowupResearchTests(unittest.TestCase):
         self.assertNotIn("publication_date", kindle)
         self.assertFalse(self.load(PAIR)["authorisations"]["neurodiversity_singer_2016_full_date_accepted"])
 
-    def test_claim_2_becomes_owner_review_candidate_but_not_accepted(self) -> None:
-        assessment = self.load(RESEARCH)["claim_2_binding_assessment"]
+    def test_claim_2_research_snapshot_remains_owner_review_ready(self) -> None:
+        research = self.load(RESEARCH)
+        assessment = research["claim_2_binding_assessment"]
         self.assertEqual(KINDLE_ID, assessment["evidence_id"])
         self.assertEqual(CLAIM_2, assessment["claim_ref"])
         self.assertEqual("compatible", assessment["proposed_role"])
@@ -56,33 +57,15 @@ class Singer2016FollowupResearchTests(unittest.TestCase):
             assessment["status"],
         )
         self.assertEqual("owner_review_ready", assessment["decision_readiness"])
+        self.assertFalse(research["boundaries"]["owner_decision_made"])
+        self.assertFalse(research["boundaries"]["2016_claim_2_binding_accepted"])
 
-        editions = self.load(EDITIONS)
-        kindle = next(item for item in editions["candidates"] if item["id"] == KINDLE_ID)
-        pending = kindle["pending_contribution_bindings"]
-        self.assertEqual(1, len(pending))
-        self.assertEqual(CLAIM_2, pending[0]["claim_ref"])
-        self.assertEqual(
-            "owner_review_candidate_after_stronger_edition_specific_evidence",
-            pending[0]["status"],
-        )
-        self.assertTrue(pending[0]["followup_research_ref"])
-        self.assertFalse(self.load(PAIR)["authorisations"]["neurodiversity_singer_2016_claim_2_contribution_binding_accepted"])
-
-    def test_followup_preserves_d13_acceptances_and_other_blockers(self) -> None:
-        editions = self.load(EDITIONS)
-        kindle = next(item for item in editions["candidates"] if item["id"] == KINDLE_ID)
-        self.assertEqual(1, len(kindle["accepted_contribution_bindings"]))
-        self.assertEqual(
-            "neurodiversity#neurodiversity-claim-1",
-            kindle["accepted_contribution_bindings"][0]["claim_ref"],
-        )
-
+    def test_followup_snapshot_and_other_blockers_remain_preserved(self) -> None:
         pair = self.load(PAIR)
         self.assertTrue(pair["authorisations"]["neurodiversity_singer_2016_followup_research_prepared"])
         blockers = {item["id"]: item for item in pair["blockers"]}
         evidence = blockers["neurodiversity-evidence-enrichment"]
-        self.assertIn("owner_review_candidate", evidence["kind"])
+        self.assertIn("2016", evidence["kind"])
         self.assertIn("2016 day-level publication date remains deliberately unaccepted", evidence["detail"])
         self.assertIn("paired-structural-relation-confidence", blockers)
         self.assertIn("autism-uncertainty-shape", blockers)
@@ -90,7 +73,7 @@ class Singer2016FollowupResearchTests(unittest.TestCase):
         self.assertIn("neurodiversity-adhd-structural-edge", blockers)
         self.assertFalse(pair["authorisations"]["authoritative_v02_replacement"])
 
-    def test_next_gate_is_owner_decision_not_automatic_acceptance(self) -> None:
+    def test_research_next_gate_remains_historical_owner_decision_candidate(self) -> None:
         research = self.load(RESEARCH)
         candidates = {item["id"]: item for item in research["next_decision_candidates"]}
         self.assertEqual(

@@ -60,7 +60,7 @@ class D13SingerEditionSpecificContributionBindingsTests(unittest.TestCase):
         self.assertFalse(decision["authoritative_v01_mutation_authorised"])
         self.assertFalse(decision["authoritative_v02_replacement_authorised"])
 
-    def test_candidate_state_binds_only_the_accepted_edition_claim_pairs(self) -> None:
+    def test_candidate_state_preserves_d13_bindings_after_later_decisions(self) -> None:
         record = self.load(EDITIONS)
         self.assertFalse(record["authoritative"])
         self.assertIn(D13_ID, record["accepted_enrichment_decision_refs"])
@@ -72,13 +72,8 @@ class D13SingerEditionSpecificContributionBindingsTests(unittest.TestCase):
             (item["claim_ref"], item["role"], item["decision_ref"])
             for item in kindle["accepted_contribution_bindings"]
         }
-        self.assertEqual({(CLAIM_1, "compatible", D13_ID)}, kindle_accepted)
-        self.assertEqual(1, len(kindle["pending_contribution_bindings"]))
-        self.assertEqual(CLAIM_2, kindle["pending_contribution_bindings"][0]["claim_ref"])
-        self.assertNotEqual(
-            "accepted",
-            kindle["pending_contribution_bindings"][0]["status"],
-        )
+        self.assertIn((CLAIM_1, "compatible", D13_ID), kindle_accepted)
+        self.assertNotIn((CLAIM_2, "compatible", D13_ID), kindle_accepted)
 
         printed_accepted = {
             (item["claim_ref"], item["role"], item["decision_ref"])
@@ -113,16 +108,13 @@ class D13SingerEditionSpecificContributionBindingsTests(unittest.TestCase):
         self.assertEqual("owner_review_candidate", printed["neurodiversity-claim-1"]["status"])
         self.assertEqual("owner_review_candidate", printed["neurodiversity-claim-2"]["status"])
 
-    def test_pair_binds_d13_but_keeps_partial_singer_and_other_blockers_open(self) -> None:
+    def test_pair_preserves_d13_and_other_blockers_after_later_decisions(self) -> None:
         pair = self.load(PAIR)
         self.assertIn(D13_ID, pair["accepted_owner_decisions"])
         self.assertTrue(pair["authorisations"]["neurodiversity_singer_selected_contribution_bindings_accepted"])
-        self.assertFalse(pair["authorisations"]["neurodiversity_singer_contribution_bindings_accepted"])
-        self.assertFalse(pair["authorisations"]["neurodiversity_singer_2016_claim_2_contribution_binding_accepted"])
         self.assertFalse(pair["authorisations"]["neurodiversity_singer_auto_duplicate_claim_support"])
         blockers = {item["id"]: item for item in pair["blockers"]}
         evidence = blockers["neurodiversity-evidence-enrichment"]
-        self.assertIn("pending", evidence["kind"])
         self.assertIn("D13 accepts three edition-specific compatible bindings", evidence["detail"])
         self.assertIn("2016", evidence["detail"])
         self.assertIn("paired-structural-relation-confidence", blockers)
