@@ -1,6 +1,6 @@
 # Autism + Neurodiversity paired migration candidate proof
 
-Status: **non-authoritative paired candidate prepared; D6 confidence policy and D7 Autism WHO Perspective framing accepted; enrichment and other owner decisions remain pending**.
+Status: **non-authoritative paired candidate prepared; D6 confidence policy and D7 Autism WHO Perspective framing accepted; Neurodiversity enrichment research prepared; remaining owner decisions and dependencies unresolved**.
 
 Prepared on 2026-08-11 against protected repository `main`:
 
@@ -14,6 +14,10 @@ D7 Autism WHO Perspective framing accepted on 2026-08-11 against protected repos
 
 `cae42eaf485f91f2920dcc1a15176bc335286719`
 
+Neurodiversity enrichment research prepared on 2026-08-11 against protected repository `main`:
+
+`26ee009309efd624c9da661bd168522a3089932c`
+
 Source anchors:
 
 - `objects/concepts/autism.json` — blob `b2d3809ecfcdb1d81c793a2401f0533a4b17ea98`;
@@ -25,13 +29,11 @@ D5 authorises preparation of a **paired non-authoritative Autism + Neurodiversit
 
 D6 governs the missing structural confidence field: do not infer or default it, and do not use `not_applicable` merely to satisfy validation. The field stays absent until evidence-backed enrichment or a separately accepted structural-confidence schema policy supplies a non-fabricating representation.
 
-D7 accepts the three WHO-backed framing fields for the future non-authoritative Autism Perspective candidate only:
+D7 accepts the three WHO-backed framing fields for the future non-authoritative Autism Perspective candidate only.
 
-- `held_by.scope`: `WHO institutional global public-health guidance on autism; not a statement representing all clinicians, autistic people, families, researchers or WHO Member States individually.`
-- `reasoning`: `WHO frames autism as diverse, with variable and evolving abilities and needs, and links health and quality of life to accessible, inclusive, person-responsive services plus community and societal support.`
-- `scope`: `Global public-health description of autism, health and care needs, inclusion and support across the life course; excludes individual diagnosis and does not purport to capture the full range of autistic lived experience or community perspectives.`
+The Neurodiversity enrichment pass is research/proposal construction only. It does not accept the new source-reconciliation or Perspective decisions it identifies.
 
-These decisions do not authorise:
+These decisions and research steps do not authorise:
 
 - mutation of either authoritative v0.1 object;
 - authoritative v0.2 replacement;
@@ -39,7 +41,7 @@ These decisions do not authorise:
 - invention or defaulting of relation confidence;
 - use of `not_applicable` as a schema-completion shortcut;
 - automatic expansion of the candidate to ADHD;
-- acceptance of Neurodiversity Perspective framing or other unresolved semantics;
+- acceptance of Neurodiversity Perspective framing or source-reconciliation choices;
 - publication or deployment.
 
 ## Candidate prepared
@@ -55,7 +57,9 @@ It preserves the exact reciprocal legacy pair:
 
 The candidate records the v0.2 typed targets but deliberately does **not** supply a `confidence` value. Both v0.1 relations lack confidence. D6 confirms that absence must remain visible rather than being filled by inference, default, or `not_applicable`.
 
-D7 removes the Autism WHO Perspective framing owner-decision blocker from this candidate record. It does not otherwise advance the structural pair to authoritative status.
+D7 removes the Autism WHO Perspective framing owner-decision blocker from this candidate record. The Neurodiversity enrichment research is linked through:
+
+`migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json`
 
 Therefore the candidate proves the pairing direction and reciprocal structural shape, but it does **not** claim full v0.2 Concept validity.
 
@@ -63,35 +67,17 @@ Therefore the candidate proves the pairing direction and reciprocal structural s
 
 The migration manifest schema already permits more than one source object, but `scripts/validate_migration.py` previously flattened every source inventory into a single `set[str]`.
 
-That is unsafe for a real paired package because two source objects can legitimately contain identical preservation-unit strings, especially shared provenance values. Such units were falsely classified as inventory collisions.
+That was unsafe for a real paired package because two source objects can legitimately contain identical preservation-unit strings. The migration-only repair is backward-compatible: multi-source preservation entries are scoped by source object, while existing single-source packages remain valid.
 
-The repair is migration-only and backward-compatible:
-
-- `preservation-ledger-v0.2.json` permits optional `source_object_id`;
-- single-source packages may continue omitting it;
-- multi-source packages must identify the source object for every preservation entry;
-- uniqueness and coverage are checked on `(source_object_id, unit)` rather than `unit` alone.
-
-No authoritative knowledge schema or authoritative graph validator is changed.
+No authoritative knowledge schema or authoritative graph validator was changed.
 
 ## Reproducible package builder
 
-`scripts/build_paired_migration_candidate.py` generates a full contract package from the two exact source blobs and the accepted Autism migration records.
+`scripts/build_paired_migration_candidate.py` still generates the formal migration-contract package from the exact source blobs, existing accepted Autism decisions, and explicit unresolved Neurodiversity requirements.
 
-The generated package contains:
+The new Neurodiversity research record is intentionally separate from the formal generated enrichment ledger because its source-reconciliation and Perspective choices have not yet been accepted. This prevents research proposals from masquerading as completed migration state.
 
-- a two-source manifest;
-- source-scoped preservation ledger entries for every deterministic v0.1 preservation unit;
-- the existing Autism enrichment record plus explicit pending Neurodiversity enrichment requirements;
-- structural dependency records;
-- the committed structural candidate;
-- the accepted Autism owner-decision record and an appended paired-candidate decision log.
-
-After D6, the generated structural-confidence record is a **pending enrichment/schema-policy requirement**, not a pending invitation to choose a convenient confidence value. It proposes no value and explicitly records that `not_applicable` is not authorised as a validation shortcut.
-
-After D7, the three Autism WHO Perspective framing values are accepted in the owner-decision record and must be used exactly when a future non-authoritative v0.2 Autism Perspective candidate is assembled. The historical enrichment proposal records remain provenance for how those values were proposed; D7 is the acceptance act.
-
-The package remains `owner_decision_pending` and `authoritative_replacement: false` because other owner decisions and dependencies remain unresolved.
+The package remains `owner_decision_pending` and `authoritative_replacement: false`.
 
 ## Disconfirming finding: the D5 pair is not full structural closure
 
@@ -101,59 +87,67 @@ Neurodiversity v0.1 also contains:
 
 That does **not** invalidate D5's rule that Autism and Neurodiversity must be paired to preserve their reciprocal relationship. It does mean the pair is not the complete structural closure of a future authoritative Neurodiversity v0.2 object.
 
-The ADHD edge is therefore retained as a separate unresolved structural dependency rather than being silently dropped or used to expand D5 authorisation.
+The ADHD edge remains a separate unresolved structural dependency.
+
+## Neurodiversity enrichment research result
+
+Detailed proof:
+
+`docs/migration-proofs/NEURODIVERSITY_ENRICHMENT_RESEARCH.md`
+
+Machine-readable record:
+
+`migration-candidates/autism-neurodiversity/neurodiversity-enrichment-research.json`
+
+Key findings:
+
+- Singer title and authorship are verified, but source date/edition identity is unresolved because the legacy citation points to a 2016 Kindle edition while the Wellcome locator describes a 2017 print edition.
+- Singer is `compatible` support for both Neurodiversity claims, with explicit limitations; the source is not promoted to stronger support merely because its narrative is historically central.
+- Botha title, 2024-03-12 date and six-author authorship are verified.
+- The legacy Botha DOI conflicts with the cited publication record. The verified paper DOI is `10.1177/13623613241237871`; correction is proposed for a future non-authoritative v0.2 Evidence object only.
+- Botha is `supportive` for the collective-origins claim, but its letter format and selected archival scope remain explicit limitations.
+- Both Neurodiversity Perspective framing sets now have evidence-backed proposals, but neither is accepted by the research pass.
 
 ## Remaining blockers
 
 ### 1. Reciprocal structural relation confidence — policy resolved, representation unresolved
 
-The current v0.2 relation schema requires `confidence`. Neither v0.1 reciprocal relation supplies it.
-
-D6 resolves the migration policy:
-
-- do not infer confidence;
-- do not default confidence;
-- do not use `not_applicable` merely to make the candidate validate;
-- keep the field absent until an evidence-backed confidence value or a separately accepted structural-confidence schema policy is reviewed.
-
-So this is no longer an unresolved default-selection decision. It remains an explicit enrichment/schema-policy requirement.
+D6 forbids inferred/defaulted confidence. No confidence value is present.
 
 ### 2. Autism uncertainty shape
 
-D3 deliberately retains Autism's list-valued `what_would_reduce_it` arrays as legacy-unmapped. The current v0.2 Claim schema still requires embedded Uncertainty records with a single `reopening_or_reduction_condition` string.
-
-The candidate does not flatten those lists merely to pass schema validation.
+D3 preserves Autism's list-valued uncertainty reduction conditions as legacy-unmapped. No flattening is authorised.
 
 ### 3. Autism WHO Perspective framing — accepted by D7
 
-The three previously proposed WHO Perspective framing fields are now accepted exactly for the future non-authoritative v0.2 Autism Perspective candidate. This is no longer an owner-decision blocker.
+No longer an owner-decision blocker.
 
-### 4. Neurodiversity Evidence enrichment
+### 4. Neurodiversity Singer edition/date reconciliation
 
-The Neurodiversity sources have not yet had the evidence-backed v0.2 enrichment pass required for title/date/authorship and claim-specific Evidence Contributions.
+The future v0.2 Evidence record cannot safely combine 2016 Kindle and 2017 print metadata. An owner decision is required before a schema-valid full date is supplied.
 
-The builder records those requirements as pending instead of guessing them.
+### 5. Neurodiversity Botha citation correction
 
-### 5. Neurodiversity uncertainty mapping
+The DOI correction is evidence-backed but still requires explicit owner acceptance before it becomes the future v0.2 citation value.
 
-Neurodiversity also uses list-valued legacy reduction conditions. No object-specific owner decision has yet authorised their v0.2 representation.
+### 6. Neurodiversity uncertainty mapping
 
-### 6. Neurodiversity Perspective framing
+Both legacy Neurodiversity uncertainties retain list-valued `what_would_reduce_it` arrays. No flattening or schema change is authorised.
 
-Both legacy Neurodiversity Perspectives lack v0.2 holder scope, reasoning, and Perspective scope.
+### 7. Neurodiversity Perspective framing
 
-### 7. Neurodiversity ↔ ADHD structural dependency
+Evidence-backed `held_by.scope`, `reasoning`, and `scope` proposals are prepared for both legacy Perspectives. Both remain owner decisions.
 
-The legacy `broader_than -> adhd` edge remains unresolved and outside this D5 candidate.
+### 8. Neurodiversity ↔ ADHD structural dependency
+
+The legacy `broader_than -> adhd` edge remains unresolved and outside the D5 candidate.
 
 ## Result
 
-The paired candidate has been prepared **without fabricating the missing semantics that would make it look complete**.
+The knowledge state has advanced from “Neurodiversity enrichment unknown” to **explicit evidence-backed proposals plus named unresolved decisions**.
 
-D6 locks that principle for structural confidence: schema validity is not evidence. A confidence enum cannot be inserted simply because the schema requires one.
+No source conflict has been hidden, no Perspective framing has been silently accepted, no uncertainty array has been flattened, and no missing structural confidence has been invented.
 
-D7 resolves the Autism WHO Perspective framing decision without turning the Perspective or Autism object authoritative.
-
-The D5 structural dependency remains open because its accepted closure condition is stronger than merely writing both IDs into one candidate: an exact paired v0.2 candidate must eventually validate reciprocal structure without weakening the reciprocity rule and without fabricating required relation semantics.
+The D5 structural dependency remains open because an exact paired v0.2 candidate must eventually validate reciprocal structure without weakening the reciprocity rule and without fabricating required relation semantics.
 
 No authoritative object, site, deployment, DNS, analytics configuration, or production state is changed by this proof.
