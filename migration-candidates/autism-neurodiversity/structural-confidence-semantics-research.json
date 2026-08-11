@@ -1,0 +1,177 @@
+{
+  "research_version": "1.0",
+  "prepared_on": "2026-08-11",
+  "prepared_against_main": "31c244ecff0a52c53c38f60cc57815587e9b0856",
+  "authoritative": false,
+  "authoritative_replacement": false,
+  "scope": "Bounded review of the remaining structural-relation confidence blocker after D16. This research tests whether the current Autism/Neurodiversity and ADHD/Neurodiversity structural edges can receive evidence-backed confidence, whether a structural-confidence schema policy is justified, or whether relation semantics must be reviewed first.",
+  "governing_decisions": [
+    "d5-autism-neurodiversity-structural-closure",
+    "d6-structural-relation-confidence",
+    "d16-embedded-uncertainty-schema-implementation"
+  ],
+  "repository_anchors": {
+    "common_v02": {
+      "path": "schema/common-v0.2.json",
+      "blob_sha": "ce0141ee7031f21fa2bd72b2faa3371aed3e622b",
+      "relation_requires_confidence": true,
+      "confidence_vocabulary": ["high", "moderate", "low", "contested", "not_applicable"]
+    },
+    "autism": {
+      "path": "objects/concepts/autism.json",
+      "blob_sha": "b2d3809ecfcdb1d81c793a2401f0533a4b17ea98",
+      "legacy_relation": {
+        "type": "narrower_than",
+        "target_id": "neurodiversity",
+        "note": "Autism is commonly situated within neurodiversity discourse."
+      }
+    },
+    "neurodiversity": {
+      "path": "objects/concepts/neurodiversity.json",
+      "blob_sha": "5a38bc4250079412dd3f4da1d598dfcab984ca66",
+      "legacy_relations": [
+        {
+          "type": "broader_than",
+          "target_id": "autism",
+          "note": "Autism is commonly discussed within the neurodiversity ecosystem."
+        },
+        {
+          "type": "broader_than",
+          "target_id": "adhd",
+          "note": "ADHD is commonly discussed within the neurodiversity ecosystem."
+        }
+      ]
+    },
+    "adhd": {
+      "path": "objects/concepts/adhd.json",
+      "blob_sha": "719f26a9af773cd1bcf670df4d12ed5f6bcf0a23",
+      "legacy_relation": {
+        "type": "narrower_than",
+        "target_id": "neurodiversity",
+        "note": "ADHD is commonly situated within neurodiversity discourse."
+      }
+    },
+    "d6_fixture": {
+      "path": "tests/fixtures/migration/autism/owner-decisions.json",
+      "blob_sha": "595f221e2f8d622dc94fc63bfdc8b34c1ebe3f56",
+      "policy": {
+        "infer_or_default_confidence_authorised": false,
+        "use_not_applicable_as_validation_shortcut_authorised": false,
+        "evidence_backed_confidence_enrichment_allowed": true,
+        "separate_structural_confidence_schema_policy_allowed": true,
+        "current_candidate_confidence_must_remain_absent": true
+      }
+    }
+  },
+  "external_evidence": [
+    {
+      "id": "nas-autism-neurodiversity",
+      "source": "National Autistic Society",
+      "url": "https://www.autism.org.uk/advice-and-guidance/identity/autism-and-neurodiversity",
+      "accessed": "2026-08-11",
+      "relevant_findings": [
+        "Neurodiversity describes the diversity of all human brains and includes every human being.",
+        "Autism is described as a form of neurodivergence.",
+        "The page explicitly distinguishes neurodiversity from neurodivergence and notes that calling an autistic person neurodiverse is a common misuse when neurodivergent is intended."
+      ]
+    },
+    {
+      "id": "nhs-autism-definition",
+      "source": "NHS",
+      "url": "https://www.nhs.uk/conditions/autism/what-is-autism/",
+      "accessed": "2026-08-11",
+      "relevant_findings": [
+        "Autism is described as a difference in brain development and is often called a type of neurodivergence."
+      ]
+    },
+    {
+      "id": "nhs-england-adhd-taskforce-neurodiversity",
+      "source": "NHS England independent ADHD Taskforce",
+      "url": "https://www.england.nhs.uk/long-read/report-of-the-independent-adhd-taskforce-part-2/",
+      "accessed": "2026-08-11",
+      "relevant_findings": [
+        "Neurodiversity is defined as describing the population as a whole and the diversity of different brains.",
+        "ADHD is discussed as neurodivergence rather than as a subtype of neurodiversity."
+      ]
+    }
+  ],
+  "analysis": {
+    "legacy_note_strength": "The v0.1 notes state discourse/ecosystem association. They do not themselves assert a taxonomic is-a relation or class-subclass inclusion.",
+    "current_v02_strength": "The paired migration candidate converts those notes into reciprocal narrower_than/broader_than structural relations, which is semantically stronger than the legacy wording.",
+    "terminology_finding": "Current external sources consistently distinguish neurodiversity from neurodivergence: autism and ADHD are described as forms/types of neurodivergence, while neurodiversity describes population-level variation or diversity across brains.",
+    "confidence_consequence": "Assigning high, moderate, low, or contested confidence to autism narrower_than neurodiversity would assess a stronger taxonomy proposition that is not directly stated by the legacy note and is not cleanly supported by the reviewed terminology evidence.",
+    "not_applicable_consequence": "Using not_applicable would satisfy schema syntax without resolving whether the structural proposition itself is correct and is already forbidden as a validation shortcut by D6.",
+    "schema_exception_consequence": "A generic missing-confidence representation could preserve an unassessed relation without fabrication, but introducing it solely to carry the present edge risks stabilising a relation whose semantics require separate review first."
+  },
+  "options": [
+    {
+      "id": "evidence-backed-confidence-on-current-edge",
+      "status": "not_ready",
+      "reason": "The reviewed evidence supports autism/ADHD as neurodivergence and supports their association with neurodiversity discourse, but does not cleanly establish the exact current broader_than/narrower_than relation to the Neurodiversity concept as modelled."
+    },
+    {
+      "id": "use-not-applicable",
+      "status": "rejected",
+      "reason": "D6 explicitly forbids not_applicable as a validation shortcut, and it would not test the relation semantics."
+    },
+    {
+      "id": "default-or-infer-confidence",
+      "status": "rejected",
+      "reason": "D6 explicitly forbids defaulting or inferring confidence from the presence of a legacy relation."
+    },
+    {
+      "id": "add-unassessed-to-confidence-enum",
+      "status": "not_recommended_before_semantic_review",
+      "reason": "A sentinel would mix assessment state with epistemic confidence and could make the questionable taxonomy edge easier to carry without resolving it."
+    },
+    {
+      "id": "make-confidence-optional-without-explicit-state",
+      "status": "rejected",
+      "reason": "Silent omission would weaken fail-closed validation and would not distinguish deliberate legacy preservation from accidental missing data."
+    },
+    {
+      "id": "explicit-relation-confidence-assessment-state",
+      "status": "plausible_future_schema_policy",
+      "candidate_shape": {
+        "confidence_assessment_state": ["assessed", "legacy_not_recorded"],
+        "rule": "confidence is required only for assessed relations and prohibited for legacy_not_recorded relations"
+      },
+      "reason": "This could explicitly preserve absence without fabricating an epistemic value, but should be designed only after the relation mapping itself is confirmed."
+    },
+    {
+      "id": "review-relation-semantics-before-confidence",
+      "status": "recommended",
+      "reason": "The current taxonomy edge is stronger than its source note and may conflate neurodiversity with neurodivergence. Review the relation type/target first; only then decide whether evidence-backed confidence or a generic confidence-assessment schema policy is still needed."
+    }
+  ],
+  "recommended_direction": {
+    "id": "structural-semantics-before-confidence",
+    "actions": [
+      "Do not assign a confidence value to the current Autism/Neurodiversity or ADHD/Neurodiversity taxonomy edges.",
+      "Do not use not_applicable or a default confidence.",
+      "Do not mutate the v0.2 relation schema yet.",
+      "Preserve D5 and D6 as historical accepted decisions rather than rewriting them.",
+      "Explicitly reopen the migration mapping semantics for the neurodiversity structural family because the current broader_than/narrower_than representation is stronger than the legacy discourse notes.",
+      "After relation semantics are accepted, reassess whether any retained structural relation still needs a generic legacy_not_recorded confidence representation."
+    ]
+  },
+  "boundaries": {
+    "d5_rewritten": false,
+    "d6_rewritten": false,
+    "schema_change_authorised": false,
+    "validator_change_authorised": false,
+    "confidence_enrichment_authorised": false,
+    "relation_type_change_authorised": false,
+    "relation_target_change_authorised": false,
+    "authoritative_v01_mutation_authorised": false,
+    "authoritative_v02_replacement_authorised": false,
+    "expand_pair_to_adhd_authorised": false,
+    "publication_or_deployment_authorised": false
+  },
+  "decision_candidate": {
+    "id": "nd-structural-semantics-before-confidence",
+    "status": "owner_decision_required",
+    "question": "Accept the research conclusion that the current neurodiversity structural family should receive neither confidence enrichment nor a schema shortcut until the relation semantics are separately reviewed, because the legacy notes establish discourse/ecosystem association while reviewed evidence describes autism and ADHD as neurodivergence rather than literal subtypes of neurodiversity?",
+    "recommended_action": "Accept only the semantic-review priority. Preserve D5 and D6 historically; do not yet choose a replacement relation type, target, confidence value, schema representation, authoritative migration, or ADHD expansion."
+  }
+}
