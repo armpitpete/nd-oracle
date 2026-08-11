@@ -2,9 +2,9 @@
 """Build the non-authoritative Autism + Neurodiversity paired migration candidate.
 
 The builder is deliberately conservative. It preserves all v0.1 inventory units,
-reuses accepted Autism migration decisions, records Neurodiversity gaps without
-inventing semantics, and emits only a partial structural-pair candidate rather
-than pretending that the current blockers form valid authoritative v0.2 objects.
+reuses accepted migration decisions, records unresolved Neurodiversity gaps without
+inventing semantics, and emits only a partial candidate rather than pretending that
+the remaining blockers form valid authoritative v0.2 objects.
 """
 
 from __future__ import annotations
@@ -29,6 +29,8 @@ AUTISM_SOURCE = ROOT / "objects" / "concepts" / "autism.json"
 NEURODIVERSITY_SOURCE = ROOT / "objects" / "concepts" / "neurodiversity.json"
 AUTISM_FIXTURE = ROOT / "tests" / "fixtures" / "migration" / "autism"
 PAIR_SPEC = ROOT / "migration-candidates" / "autism-neurodiversity" / "structural-candidate.json"
+CANONICAL_OWNER_DECISIONS = ROOT / "migration-candidates" / "autism-neurodiversity" / "owner-decisions.json"
+D17 = "d17-neurodiversity-legacy-structural-disposition"
 
 
 def _load(path: Path) -> Any:
@@ -55,10 +57,6 @@ def _perspective_unit(perspective: dict) -> str:
     return "perspective:" + json.dumps(perspective, sort_keys=True, separators=(",", ":"))
 
 
-def _relation_unit(relation: dict) -> str:
-    return "relation:" + json.dumps(relation, sort_keys=True, separators=(",", ":"))
-
-
 def _pending_enrichment(entry_id: str, target_field: str, trigger_unit: str, *, owner_decision: bool = False) -> dict:
     return {
         "id": entry_id,
@@ -75,12 +73,33 @@ def _pending_enrichment(entry_id: str, target_field: str, trigger_unit: str, *, 
     }
 
 
+def _retain_relation_unmapped(entry: dict, relation: dict) -> dict:
+    retained = copy.deepcopy(entry)
+    for field in ("dependency_ref", "candidate_destination", "enrichment_ref", "rejection_reason", "reopening_condition"):
+        retained.pop(field, None)
+    retained.update(
+        disposition="legacy_retained_unmapped",
+        owner_decision_ref=D17,
+        legacy_value=relation,
+        unresolved_reason=(
+            "D17 accepts preservation of the exact legacy relation record without emitting a v0.2 taxonomy edge. "
+            "Any future semantic graph relation requires separate enrichment review."
+        ),
+    )
+    return retained
+
+
 def _scoped_autism_preservation() -> list[dict]:
     ledger = _load(AUTISM_FIXTURE / "preservation-ledger.json")
     entries: list[dict] = []
     for item in ledger["entries"]:
         scoped = copy.deepcopy(item)
         scoped["source_object_id"] = "autism"
+        if scoped["unit"].startswith("relation:"):
+            relation = _legacy_payload(scoped["unit"])
+            if relation.get("type") == "narrower_than" and relation.get("target_id") == "neurodiversity":
+                scoped = _retain_relation_unmapped(scoped, relation)
+                scoped["source_object_id"] = "autism"
         entries.append(scoped)
     return entries
 
@@ -119,8 +138,7 @@ def _neurodiversity_preservation(source: dict) -> list[dict]:
             item.update(
                 disposition="owner_decision_required",
                 unresolved_reason=(
-                    "Neurodiversity uses list-valued what_would_reduce_it data; no owner decision has authorised a current "
-                    "v0.2 single-string representation or a schema-policy extension for this source object."
+                    "Neurodiversity uses list-valued what_would_reduce_it data; accepted D15/D16 policy must be applied in a future object candidate rather than flattened here."
                 ),
                 legacy_value=_legacy_payload(unit),
             )
@@ -128,7 +146,7 @@ def _neurodiversity_preservation(source: dict) -> list[dict]:
             item.update(
                 disposition="owner_decision_required",
                 unresolved_reason=(
-                    "v0.2 Perspective requires holder scope, reasoning and Perspective scope not deterministically present in v0.1."
+                    "v0.2 Perspective requires holder scope, reasoning and Perspective scope; accepted framing decisions remain non-authoritative until applied to an object candidate."
                 ),
             )
         elif unit.startswith("ecosystem-entry:"):
@@ -144,19 +162,15 @@ def _neurodiversity_preservation(source: dict) -> list[dict]:
             relation = _legacy_payload(unit)
             target = relation.get("target_id")
             if relation.get("type") == "broader_than" and target == "autism":
-                item.update(
-                    disposition="structural_dependency",
-                    dependency_ref="dependency-autism-neurodiversity",
-                    unresolved_reason=(
-                        "D5 requires the reciprocal Autism/Neurodiversity pair. D6 requires missing structural confidence to remain absent until evidence-backed enrichment or a separately accepted schema policy resolves it."
-                    ),
-                )
+                item = _retain_relation_unmapped(item, relation)
+                item["source_object_id"] = "neurodiversity"
+                item["unit"] = unit
             elif relation.get("type") == "broader_than" and target == "adhd":
                 item.update(
                     disposition="structural_dependency",
                     dependency_ref="dependency-neurodiversity-adhd",
                     unresolved_reason=(
-                        "Neurodiversity also has a structural edge to ADHD. D5 did not authorise expanding this paired candidate to ADHD."
+                        "Neurodiversity also has a structural edge to ADHD. D17 does not expand the paired candidate to ADHD."
                     ),
                 )
             else:
@@ -215,28 +229,10 @@ def _neurodiversity_enrichment(source: dict) -> list[dict]:
                 )
             )
 
-    autism_relation = next(
-        item for item in _load(AUTISM_SOURCE)["relations"]
-        if item["type"] == "narrower_than" and item["target_id"] == "neurodiversity"
-    )
-    neuro_relation = next(
-        item for item in source["relations"]
-        if item["type"] == "broader_than" and item["target_id"] == "autism"
-    )
-    confidence = _pending_enrichment(
-        "resolve-autism-neurodiversity-structural-confidence",
-        "paired-structural-relation:autism<->neurodiversity.confidence",
-        _relation_unit(autism_relation) + " | " + _relation_unit(neuro_relation),
-    )
-    confidence["supplied_by"] = (
-        "D6 structural-confidence policy accepted 2026-08-11; actual confidence value still requires evidence-backed enrichment or a separately accepted schema policy."
-    )
-    confidence["limitations"] = [
-        "D6 forbids inferring or defaulting confidence from legacy structural relations.",
-        "The value not_applicable must not be inserted merely to satisfy the current v0.2 schema.",
-        "No confidence value is proposed by this record."
-    ]
-    entries.append(confidence)
+    # D17 emits no v0.2 Autism<->Neurodiversity taxonomy edge, so there is no
+    # migrated structural relation whose confidence needs to be manufactured.
+    # D6 remains historical policy and applies again only if a new relation is
+    # separately proposed as enrichment.
     return entries
 
 
@@ -288,8 +284,9 @@ def build_candidate(destination: Path) -> Path:
 
     autism_dependencies = _load(AUTISM_FIXTURE / "dependency-ledger.json")
     pair_dependency = copy.deepcopy(autism_dependencies["entries"][0])
+    pair_dependency["resolution_status"] = "resolved"
     pair_dependency.setdefault("resolution_evidence", []).append(
-        "D5 paired structural candidate prepared from exact Autism and Neurodiversity v0.1 blobs. D6 forbids inferred/defaulted confidence, so the dependency remains unresolved until confidence is evidence-backed or a separate structural-confidence schema policy is accepted."
+        "D17 accepts legacy_retained_unmapped for the reciprocal Autism/Neurodiversity records and emits no v0.2 taxonomy edge. The paired structural dependency is therefore resolved without inventing confidence or a replacement relation."
     )
     dependencies = {
         "migration_contract_version": "0.2",
@@ -301,12 +298,12 @@ def build_candidate(destination: Path) -> Path:
                 "relation": "broader_than",
                 "dependent_object": "adhd",
                 "reason": (
-                    "Neurodiversity v0.1 contains broader_than -> adhd. Full structural closure of a future Neurodiversity v0.2 object requires the reciprocal ADHD side, but D5 authorises only the Autism/Neurodiversity pair."
+                    "Neurodiversity v0.1 contains broader_than -> adhd. Full structural closure of a future Neurodiversity v0.2 object requires separate semantic disposition, but D17 keeps ADHD outside this paired migration scope."
                 ),
                 "resolution_status": "unresolved",
                 "resolution_evidence": [
                     "objects/concepts/neurodiversity.json@blob:5a38bc4250079412dd3f4da1d598dfcab984ca66 contains v0.1 broader_than -> adhd.",
-                    "ADHD is intentionally outside this D5 paired candidate and has not been migrated or mutated."
+                    "ADHD remains a consistency test only and has not been migrated or mutated."
                 ],
             },
         ],
@@ -317,22 +314,21 @@ def build_candidate(destination: Path) -> Path:
     candidate_dir.mkdir(parents=True, exist_ok=True)
     _write_json(candidate_dir / "structural-pair.json", pair_spec)
 
-    owner_decisions = AUTISM_FIXTURE / "owner-decisions.json"
-    if owner_decisions.exists():
-        shutil.copyfile(owner_decisions, destination / "owner-decisions.json")
+    if CANONICAL_OWNER_DECISIONS.exists():
+        shutil.copyfile(CANONICAL_OWNER_DECISIONS, destination / "owner-decisions.json")
 
     decision_log = (AUTISM_FIXTURE / "decision-log.md").read_text(encoding="utf-8")
     decision_log += """
 
 ## Paired candidate preparation — 2026-08-11
 
-D5 authorises preparation of a non-authoritative Autism + Neurodiversity paired structural candidate only. The exact source anchors are Autism blob `b2d3809ecfcdb1d81c793a2401f0533a4b17ea98` and Neurodiversity blob `5a38bc4250079412dd3f4da1d598dfcab984ca66`, against repository main `1b7e4261c70bd6a86346d34a1f08abf90c3deece`.
+D5 authorised preparation of a non-authoritative Autism + Neurodiversity paired candidate. D6 then prohibited inferred/defaulted structural confidence. D17 later accepted the semantic disposition that the exact reciprocal v0.1 relation records must be preserved together as `legacy_retained_unmapped` and must not be emitted as a v0.2 `broader_than`/`narrower_than` taxonomy edge.
 
-The reciprocal legacy relation is preserved in `candidate/structural-pair.json`. D6 now governs the missing confidence field: no confidence is inferred or defaulted, and `not_applicable` is not used merely to satisfy validation. The field remains absent until evidence-backed enrichment or a separately accepted structural-confidence schema policy supplies a non-fabricating representation. The D5 Autism/Neurodiversity dependency therefore remains unresolved.
+`candidate/structural-pair.json` therefore retains each legacy type, target and note but sets `emit_v02_semantic_edge` to false. The Autism/Neurodiversity paired dependency is resolved by this accepted unmapped disposition. No structural-confidence enrichment is generated because no migrated edge exists to score. D6 remains preserved historically and applies again only if a new semantic graph relation is separately proposed.
 
-Neurodiversity also contains `broader_than -> adhd`. That edge is recorded as a separate structural dependency and is not silently dropped, but ADHD is not added to this candidate because D5 did not authorise expanding the migration unit beyond the accepted pair.
+Neurodiversity also contains `broader_than -> adhd`. That record remains a separate unresolved structural dependency and is not silently dropped, but ADHD is not added to this candidate because D17 explicitly keeps it as a consistency test only.
 
-The package also preserves the existing Autism blockers and inventories Neurodiversity-specific Evidence, uncertainty and Perspective gaps without fabricating missing semantics. No authoritative v0.1 object is changed and no authoritative v0.2 replacement is authorised.
+The package still inventories Neurodiversity-specific Evidence, uncertainty and Perspective work without fabricating missing semantics. No authoritative v0.1 object is changed, no replacement relation is invented, and no authoritative v0.2 replacement is authorised.
 """
     (destination / "decision-log.md").write_text(decision_log, encoding="utf-8")
     return destination
