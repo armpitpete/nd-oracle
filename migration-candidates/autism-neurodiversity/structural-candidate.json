@@ -13,7 +13,8 @@
     "d10-neurodiversity-paradigm-perspective-framing",
     "d11-singer-edition-identity-preservation",
     "d12-singer-2017-date-enrichment",
-    "d13-singer-edition-specific-contribution-bindings"
+    "d13-singer-edition-specific-contribution-bindings",
+    "d14-singer-2016-claim2-binding-followup"
   ],
   "owner_decision_refs": [
     "migration-candidates/autism-neurodiversity/owner-decisions.json"
@@ -93,8 +94,8 @@
     },
     {
       "id": "neurodiversity-evidence-enrichment",
-      "kind": "three_singer_bindings_accepted_2016_claim2_owner_review_candidate_date_pending",
-      "detail": "D8 accepts the Botha correction, D11 preserves separate Singer edition identities, D12 accepts 2017-09-05 for the future non-authoritative revised-print Evidence identity, and D13 accepts three edition-specific compatible bindings. Follow-up research now strengthens the 2016 Kindle Claim 2 route with Singer's own July 2016 edition announcement plus Dwyer 2022's peer-reviewed, Kindle-location-specific discussion, making that binding an owner-review candidate. The 2016 day-level publication date remains deliberately unaccepted because 2016-07-03 is still supported only by secondary catalogue data. No Claim support is copied automatically between editions."
+      "kind": "four_singer_bindings_accepted_2016_date_pending",
+      "detail": "D8 accepts the Botha correction, D11 preserves separate Singer edition identities, D12 accepts 2017-09-05 for the future non-authoritative revised-print Evidence identity, D13 accepts three edition-specific compatible bindings, and D14 accepts the remaining 2016 Kindle -> Claim 2 compatible binding on the strengthened follow-up evidence. The follow-up provenance distinction remains explicit: Singer's July 2016 announcement identifies the Kindle edition and hosts the publisher's framing description, while Dwyer 2022 cites Singer 2016 by Kindle location and characterises Singer as taking a middle ground; Dwyer's later intervention framework remains Dwyer's. The 2016 day-level publication date remains deliberately unaccepted because 2016-07-03 is still supported only by secondary catalogue data. No Claim support is copied automatically between editions."
     },
     {
       "id": "neurodiversity-uncertainty-shape",
@@ -129,9 +130,9 @@
     "neurodiversity_singer_2016_followup_research_prepared": true,
     "neurodiversity_singer_2017_full_date_accepted": true,
     "neurodiversity_singer_2016_full_date_accepted": false,
-    "neurodiversity_singer_contribution_bindings_accepted": false,
+    "neurodiversity_singer_contribution_bindings_accepted": true,
     "neurodiversity_singer_selected_contribution_bindings_accepted": true,
-    "neurodiversity_singer_2016_claim_2_contribution_binding_accepted": false,
+    "neurodiversity_singer_2016_claim_2_contribution_binding_accepted": true,
     "neurodiversity_research_accepts_pending_owner_decisions": false,
     "neurodiversity_research_accepts_other_pending_owner_decisions": false
   }
