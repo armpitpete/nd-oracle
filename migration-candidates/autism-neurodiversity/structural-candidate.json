@@ -7,6 +7,21 @@
   "decision_ref": "d5-autism-neurodiversity-structural-closure",
   "confidence_policy_ref": "d6-structural-relation-confidence",
   "structural_disposition_decision_ref": "d17-neurodiversity-legacy-structural-disposition",
+  "implementation_authority": {
+    "kind": "owner_directed_non_authoritative_candidate_implementation",
+    "authorised_against_main": "266362fe083fb278fc1dcc8f0a90619906194f07",
+    "governing_decision": "d17-neurodiversity-legacy-structural-disposition",
+    "scope": "Apply D17 to the non-authoritative paired candidate only by retaining the exact reciprocal legacy records as legacy_retained_unmapped and removing the proposed v0.2 taxonomy emission.",
+    "does_not_authorise": [
+      "authoritative v0.1 mutation",
+      "authoritative v0.2 replacement",
+      "replacement semantic relation",
+      "relation confidence",
+      "schema or validator change",
+      "ADHD migration scope expansion",
+      "publication or deployment"
+    ]
+  },
   "accepted_owner_decisions": [
     "d7-autism-who-perspective-framing",
     "d8-neurodiversity-botha-citation-correction",
@@ -98,6 +113,13 @@
     }
   ],
   "blockers": [
+    {
+      "id": "paired-structural-relation-confidence",
+      "kind": "resolved_by_d17_no_v02_edge",
+      "decision_ref": "d17-neurodiversity-legacy-structural-disposition",
+      "policy_ref": "d6-structural-relation-confidence",
+      "detail": "Historical blocker retained for traceability. D17 emits no migrated Autism/Neurodiversity taxonomy edge, so there is no legacy-pair confidence value to supply. D6 remains preserved and applies again only to a separately proposed new semantic relation."
+    },
     {
       "id": "autism-uncertainty-shape",
       "kind": "accepted_schema_implementation",
