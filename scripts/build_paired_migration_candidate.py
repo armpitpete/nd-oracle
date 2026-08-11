@@ -12,7 +12,6 @@ from __future__ import annotations
 import argparse
 import copy
 import json
-import shutil
 from pathlib import Path
 from typing import Any
 
@@ -71,6 +70,21 @@ def _pending_enrichment(entry_id: str, target_field: str, trigger_unit: str, *, 
             "Required v0.2 semantics are absent from the anchored v0.1 source and have not been fabricated for this candidate."
         ],
     }
+
+
+def _merged_owner_decisions() -> dict:
+    fixture = _load(AUTISM_FIXTURE / "owner-decisions.json")
+    canonical = _load(CANONICAL_OWNER_DECISIONS)
+    merged = {
+        "migration_contract_version": "0.2",
+        "decisions": copy.deepcopy(fixture["decisions"]),
+    }
+    seen = {item["id"] for item in merged["decisions"]}
+    for decision in canonical["decisions"]:
+        if decision["id"] not in seen:
+            merged["decisions"].append(copy.deepcopy(decision))
+            seen.add(decision["id"])
+    return merged
 
 
 def _retain_relation_unmapped(entry: dict, relation: dict) -> dict:
@@ -313,9 +327,7 @@ def build_candidate(destination: Path) -> Path:
     candidate_dir = destination / "candidate"
     candidate_dir.mkdir(parents=True, exist_ok=True)
     _write_json(candidate_dir / "structural-pair.json", pair_spec)
-
-    if CANONICAL_OWNER_DECISIONS.exists():
-        shutil.copyfile(CANONICAL_OWNER_DECISIONS, destination / "owner-decisions.json")
+    _write_json(destination / "owner-decisions.json", _merged_owner_decisions())
 
     decision_log = (AUTISM_FIXTURE / "decision-log.md").read_text(encoding="utf-8")
     decision_log += """
