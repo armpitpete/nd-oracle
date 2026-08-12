@@ -28,6 +28,7 @@ class BatchACandidateTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.candidate_paths = sorted(CANDIDATE_DIR.glob("*.json"))
         cls.candidates = {path: load_json(path) for path in cls.candidate_paths}
+        cls.by_id = {obj["id"]: obj for obj in cls.candidates.values()}
         cls.authoritative_objects = [
             load_json(path)
             for path in sorted(AUTHORITATIVE_DIR.rglob("*.json"))
@@ -35,9 +36,7 @@ class BatchACandidateTests(unittest.TestCase):
         cls.authoritative_ids = {
             obj["id"] for obj in cls.authoritative_objects if obj.get("id")
         }
-        cls.all_ids = cls.authoritative_ids | {
-            obj["id"] for obj in cls.candidates.values()
-        }
+        cls.all_ids = cls.authoritative_ids | set(cls.by_id)
 
         validators, errors = nd_validate.load_schema_validators(ROOT)
         if errors:
@@ -45,10 +44,7 @@ class BatchACandidateTests(unittest.TestCase):
         cls.v01_schema_validator = validators["0.1"]
 
     def test_exact_batch_is_present(self) -> None:
-        self.assertEqual(
-            {obj["id"] for obj in self.candidates.values()},
-            EXPECTED_IDS,
-        )
+        self.assertEqual(set(self.by_id), EXPECTED_IDS)
         self.assertEqual(len(self.candidate_paths), 5)
 
     def test_candidates_are_not_authoritative(self) -> None:
@@ -70,12 +66,7 @@ class BatchACandidateTests(unittest.TestCase):
                 location = ".".join(str(item) for item in error.absolute_path) or "<root>"
                 errors.append(f"{path.name}:{location}: {error.message}")
             errors.extend(
-                nd_validate.validate_v01_object(
-                    path,
-                    obj,
-                    self.all_ids,
-                    ROOT,
-                )
+                nd_validate.validate_v01_object(path, obj, self.all_ids, ROOT)
             )
         self.assertEqual(errors, [], "\n".join(errors))
 
@@ -98,6 +89,19 @@ class BatchACandidateTests(unittest.TestCase):
                 [],
                 f"{path.name} reintroduced rejected neurodiversity taxonomy: {forbidden}",
             )
+
+    def test_ambiguous_near_synonyms_are_explained_not_encoded_as_aliases(self) -> None:
+        dcd_aliases = {item.casefold() for item in self.by_id["developmental-coordination-disorder"]["aliases"]}
+        self.assertNotIn("dyspraxia", dcd_aliases)
+
+        learning_disability_aliases = {
+            item.casefold() for item in self.by_id["learning-disability"]["aliases"]
+        }
+        self.assertNotIn("intellectual disability", learning_disability_aliases)
+        self.assertNotIn("disorder of intellectual development", learning_disability_aliases)
+
+        dyslexia_summary = self.by_id["dyslexia"]["summary"].casefold()
+        self.assertNotIn("learning disability", dyslexia_summary)
 
 
 if __name__ == "__main__":
