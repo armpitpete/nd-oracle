@@ -94,23 +94,29 @@ class CloudflareDeployWorkflowTests(unittest.TestCase):
         self.assertIn('--commit-hash="$RELEASE_SHA"', self.text)
         self.assertIn("--commit-dirty=false", self.text)
 
-    def test_accepted_production_domain_is_required_without_mutation(self):
-        self.assertIn('if "ndoracle.org" not in domains:', self.text)
+    def test_exact_accepted_custom_domain_set_is_required_without_mutation(self):
+        self.assertGreaterEqual(
+            self.text.count('expected_domains = {"ndoracle.org"}'),
+            2,
+        )
+        self.assertGreaterEqual(
+            self.text.count("if domains != expected_domains:"),
+            2,
+        )
         self.assertIn(
-            "Expected accepted production domain ndoracle.org to remain attached",
+            "Cloudflare Pages custom-domain set mismatch",
             self.text,
         )
         self.assertIn(
-            "Accepted production domain ndoracle.org became detached before deployment",
+            "Cloudflare Pages custom-domain set changed before deployment",
             self.text,
         )
         self.assertIn(
-            'item.endswith(".ndoracle.org") and item != "ndoracle.org"',
+            "missing = sorted(expected_domains - domains)",
             self.text,
         )
-        self.assertIn("Refusing unexpected attached ndoracle.org subdomains", self.text)
         self.assertIn(
-            "Unexpected ndoracle.org subdomain attachment appeared before deployment",
+            "unexpected = sorted(domains - expected_domains)",
             self.text,
         )
         self.assertIn(
