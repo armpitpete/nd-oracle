@@ -11,6 +11,7 @@ on:
 permissions:
   contents: read
 
+# Read-only production observation: this workflow has no secrets and performs no writes.
 jobs:
   verify-live-production:
     name: Verify canonical production routes
