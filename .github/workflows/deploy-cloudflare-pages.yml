@@ -298,18 +298,25 @@ jobs:
               raise SystemExit("Cloudflare Pages production_branch must be main")
           if project.get("source"):
               raise SystemExit("Refusing Git-integrated Pages project; Direct Upload project required")
+          subdomain = str(project.get("subdomain") or "").lower().rstrip(".")
+          expected_subdomain = "nd-oracle.pages.dev"
+          if subdomain != expected_subdomain:
+              raise SystemExit(
+                  f"Cloudflare Pages subdomain mismatch: expected {expected_subdomain}; got {subdomain or '<missing>'}"
+              )
           domains = {str(item).lower().rstrip(".") for item in (project.get("domains") or [])}
-          expected_domains = {"ndoracle.org"}
-          if domains != expected_domains:
-              missing = sorted(expected_domains - domains)
-              unexpected = sorted(domains - expected_domains)
+          custom_domains = domains - {subdomain}
+          expected_custom_domains = {"ndoracle.org"}
+          if custom_domains != expected_custom_domains:
+              missing = sorted(expected_custom_domains - custom_domains)
+              unexpected = sorted(custom_domains - expected_custom_domains)
               raise SystemExit(
                   "Cloudflare Pages custom-domain set mismatch: "
                   f"missing={missing}; unexpected={unexpected}"
               )
           print(
-              "Verified existing Direct Upload project with production branch main "
-              "and exact accepted custom-domain set: ndoracle.org."
+              "Verified existing Direct Upload project with production branch main, "
+              "Cloudflare subdomain nd-oracle.pages.dev, and exact custom-domain set: ndoracle.org."
           )
           PY
 
@@ -358,11 +365,18 @@ jobs:
               raise SystemExit("Cloudflare project identity changed or lookup failed")
           if project.get("production_branch") != "main" or project.get("source"):
               raise SystemExit("Cloudflare project is no longer the expected Direct Upload/main configuration")
+          subdomain = str(project.get("subdomain") or "").lower().rstrip(".")
+          expected_subdomain = "nd-oracle.pages.dev"
+          if subdomain != expected_subdomain:
+              raise SystemExit(
+                  f"Cloudflare Pages subdomain changed before deployment: expected {expected_subdomain}; got {subdomain or '<missing>'}"
+              )
           domains = {str(item).lower().rstrip(".") for item in (project.get("domains") or [])}
-          expected_domains = {"ndoracle.org"}
-          if domains != expected_domains:
-              missing = sorted(expected_domains - domains)
-              unexpected = sorted(domains - expected_domains)
+          custom_domains = domains - {subdomain}
+          expected_custom_domains = {"ndoracle.org"}
+          if custom_domains != expected_custom_domains:
+              missing = sorted(expected_custom_domains - custom_domains)
+              unexpected = sorted(custom_domains - expected_custom_domains)
               raise SystemExit(
                   "Cloudflare Pages custom-domain set changed before deployment: "
                   f"missing={missing}; unexpected={unexpected}"
@@ -380,5 +394,5 @@ jobs:
 
           {
             echo "- Cloudflare Pages Direct Upload command completed for \`$RELEASE_SHA\`."
-            echo "- Existing ndoracle.org attachment was verified and preserved; no custom-domain or DNS mutation was requested."
+            echo "- Existing ndoracle.org attachment and nd-oracle.pages.dev project subdomain were verified and preserved; no custom-domain or DNS mutation was requested."
           } >> "$GITHUB_STEP_SUMMARY"
