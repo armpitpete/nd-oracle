@@ -299,21 +299,17 @@ jobs:
           if project.get("source"):
               raise SystemExit("Refusing Git-integrated Pages project; Direct Upload project required")
           domains = {str(item).lower().rstrip(".") for item in (project.get("domains") or [])}
-          if "ndoracle.org" not in domains:
-              raise SystemExit("Expected accepted production domain ndoracle.org to remain attached")
-          unexpected = sorted(
-              item
-              for item in domains
-              if item.endswith(".ndoracle.org") and item != "ndoracle.org"
-          )
-          if unexpected:
+          expected_domains = {"ndoracle.org"}
+          if domains != expected_domains:
+              missing = sorted(expected_domains - domains)
+              unexpected = sorted(domains - expected_domains)
               raise SystemExit(
-                  "Refusing unexpected attached ndoracle.org subdomains: "
-                  + ", ".join(unexpected)
+                  "Cloudflare Pages custom-domain set mismatch: "
+                  f"missing={missing}; unexpected={unexpected}"
               )
           print(
               "Verified existing Direct Upload project with production branch main "
-              "and accepted ndoracle.org production domain attached."
+              "and exact accepted custom-domain set: ndoracle.org."
           )
           PY
 
@@ -363,17 +359,13 @@ jobs:
           if project.get("production_branch") != "main" or project.get("source"):
               raise SystemExit("Cloudflare project is no longer the expected Direct Upload/main configuration")
           domains = {str(item).lower().rstrip(".") for item in (project.get("domains") or [])}
-          if "ndoracle.org" not in domains:
-              raise SystemExit("Accepted production domain ndoracle.org became detached before deployment")
-          unexpected = sorted(
-              item
-              for item in domains
-              if item.endswith(".ndoracle.org") and item != "ndoracle.org"
-          )
-          if unexpected:
+          expected_domains = {"ndoracle.org"}
+          if domains != expected_domains:
+              missing = sorted(expected_domains - domains)
+              unexpected = sorted(domains - expected_domains)
               raise SystemExit(
-                  "Unexpected ndoracle.org subdomain attachment appeared before deployment: "
-                  + ", ".join(unexpected)
+                  "Cloudflare Pages custom-domain set changed before deployment: "
+                  f"missing={missing}; unexpected={unexpected}"
               )
           PY
 
