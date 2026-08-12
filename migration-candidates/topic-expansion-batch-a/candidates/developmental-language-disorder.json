@@ -1,0 +1,168 @@
+{
+  "schema_version": "0.1",
+  "id": "developmental-language-disorder",
+  "type": "concept",
+  "name": "Developmental language disorder",
+  "aliases": ["DLD"],
+  "status": "seed",
+  "summary": "Developmental language disorder (DLD) describes persistent developmental difficulty understanding and/or using language that has meaningful everyday impact; the influential CATALISE framework uses the term when there is no known biomedical cause, while terminology is not completely uniform internationally.",
+  "scope": {
+    "includes": [
+      "Persistent developmental difficulties understanding and/or using language with functional impact on communication, learning or everyday life.",
+      "The CATALISE terminology framework and evidence that terminology varies across professional and national systems.",
+      "Co-occurrence with compatible developmental conditions and risk factors, multilingual assessment, lifespan impact and communication support."
+    ],
+    "excludes": [
+      "Treating bilingualism or multilingualism as a cause of DLD.",
+      "Treating speech-sound difficulty as synonymous with language disorder.",
+      "Acquired language disorder after neurological injury as if it were developmental DLD.",
+      "Silently relabelling language disorder associated with a known biomedical condition as DLD under the CATALISE framework.",
+      "Individual diagnosis or a universal speech-and-language intervention."
+    ]
+  },
+  "claims": [
+    {
+      "id": "dld-claim-core",
+      "text": "In the CATALISE framework widely used in English-speaking research and services, DLD is a persistent developmental language disorder with meaningful everyday impact that is not associated with a known biomedical cause.",
+      "confidence": "high",
+      "source_ids": ["dld-source-catalise", "dld-source-nhs"],
+      "uncertainty_ids": ["dld-uncertainty-terminology", "dld-uncertainty-boundary"]
+    },
+    {
+      "id": "dld-claim-multilingual",
+      "text": "Learning or using more than one language does not cause DLD; assessment needs to distinguish multilingual language difference from persistent language disorder.",
+      "confidence": "high",
+      "source_ids": ["dld-source-nhs", "dld-source-speech-language-uk"],
+      "uncertainty_ids": ["dld-uncertainty-multilingual"]
+    },
+    {
+      "id": "dld-claim-cooccurrence",
+      "text": "Under CATALISE, risk factors do not by themselves rule out DLD and DLD can co-occur with some other neurodevelopmental disorders such as ADHD; this does not mean every language difficulty occurring with another diagnosis is DLD.",
+      "confidence": "high",
+      "source_ids": ["dld-source-catalise"],
+      "uncertainty_ids": ["dld-uncertainty-boundary", "dld-uncertainty-terminology"]
+    },
+    {
+      "id": "dld-claim-international-variation",
+      "text": "DLD terminology is not completely uniform internationally: some current clinical guidance uses the term more broadly than CATALISE, so ND Oracle should state which framework a definition follows rather than presenting one usage as universal.",
+      "confidence": "high",
+      "source_ids": ["dld-source-catalise", "dld-source-german-guideline"],
+      "uncertainty_ids": ["dld-uncertainty-terminology"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "dld-source-catalise",
+      "kind": "peer_reviewed",
+      "citation": "Bishop DVM, Snowling MJ, Thompson PA, Greenhalgh T; CATALISE-2 consortium. Phase 2 of CATALISE: a multinational and multidisciplinary Delphi consensus study of problems with language development: Terminology. Journal of Child Psychology and Psychiatry. 2017;58(10):1068-1080.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28369935/",
+      "doi": "10.1111/jcpp.12721",
+      "accessed": "2026-08-12",
+      "supports": ["dld-claim-core", "dld-claim-cooccurrence", "dld-claim-international-variation"]
+    },
+    {
+      "id": "dld-source-german-guideline",
+      "kind": "peer_reviewed",
+      "citation": "Neumann K et al. Clinical practice guideline: Interventions for Developmental Language Delay and Disorders. Deutsches Ärzteblatt International. 2024;121(5):155-162.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38377329/",
+      "doi": "10.3238/arztebl.m2024.0004",
+      "accessed": "2026-08-12",
+      "supports": ["dld-claim-international-variation"]
+    },
+    {
+      "id": "dld-source-nhs",
+      "kind": "authoritative_guidance",
+      "citation": "Bedfordshire and Luton Children's Health / NHS. Developmental Language Disorder (DLD). Last reviewed 24 November 2025.",
+      "url": "https://bedslutonchildrenshealth.nhs.uk/services/bedfordshire-and-luton-childrens-speech-and-language-therapy-service/developmental-language-disorder-dld/",
+      "accessed": "2026-08-12",
+      "supports": ["dld-claim-core", "dld-claim-multilingual"]
+    },
+    {
+      "id": "dld-source-speech-language-uk",
+      "kind": "community",
+      "citation": "Speech and Language UK. Developmental Language Disorder (DLD) awareness; resource developed with lived-experience participation.",
+      "url": "https://speechandlanguage.org.uk/help-for-families/developmental-language-disorder-awareness/",
+      "accessed": "2026-08-12",
+      "supports": ["dld-claim-multilingual"]
+    },
+    {
+      "id": "dld-source-lived",
+      "kind": "lived_experience",
+      "citation": "Speech and Language UK. You can't see DLD: lived-experience awareness material. 17 October 2025.",
+      "url": "https://speechandlanguage.org.uk/about-us/news-and-blogs/dld-day-2025/",
+      "accessed": "2026-08-12",
+      "supports": ["dld-claim-core"]
+    }
+  ],
+  "uncertainties": [
+    {
+      "id": "dld-uncertainty-terminology",
+      "question": "How should ND Oracle handle international systems that use DLD more broadly or differently from the CATALISE framework?",
+      "why_it_matters": "A label that looks identical can have different inclusion boundaries across countries and services, affecting research comparisons and public understanding.",
+      "what_would_reduce_it": ["A current international terminology comparison covering CATALISE implementation, major clinical guidelines and classification systems."],
+      "status": "open"
+    },
+    {
+      "id": "dld-uncertainty-multilingual",
+      "question": "Which multilingual assessment approaches best distinguish DLD from expected differences in language exposure and proficiency?",
+      "why_it_matters": "Monolingual norms can misclassify multilingual children in either direction.",
+      "what_would_reduce_it": ["Validated multilingual assessment studies and consensus guidance across varied language combinations and cultural contexts."],
+      "status": "open"
+    },
+    {
+      "id": "dld-uncertainty-boundary",
+      "question": "Where should the public-facing boundary be drawn between DLD, speech-sound disorder, dyslexia and language disorder associated with conditions such as autism or hearing loss?",
+      "why_it_matters": "Overlapping communication and literacy difficulties can be real without the diagnostic labels being interchangeable.",
+      "what_would_reduce_it": ["Updated multidisciplinary differential-terminology guidance and longitudinal evidence on overlapping developmental profiles."],
+      "status": "open"
+    },
+    {
+      "id": "dld-uncertainty-adult",
+      "question": "What is the strongest evidence on adult DLD outcomes, recognition and service access?",
+      "why_it_matters": "DLD is described as lifelong, but much service and research infrastructure remains child-centred.",
+      "what_would_reduce_it": ["Representative adult longitudinal studies and adult service guidance."],
+      "status": "open"
+    }
+  ],
+  "perspectives": [
+    {
+      "id": "dld-perspective-hidden",
+      "held_by": "People with DLD, families and communication-disability advocates",
+      "summary": "DLD can be hidden or misread as low ability, inattention, shyness or difficult behaviour; lived-experience accounts therefore emphasise being understood and receiving communication support rather than judging a person from how easily they can express themselves in the moment.",
+      "source_ids": ["dld-source-lived", "dld-source-speech-language-uk"]
+    }
+  ],
+  "relations": [
+    {
+      "type": "related_to",
+      "target_id": "dyslexia",
+      "note": "DLD and dyslexia can overlap in developmental language and literacy pathways while remaining distinct concepts."
+    },
+    {
+      "type": "related_to",
+      "target_id": "adhd",
+      "note": "CATALISE explicitly allows DLD to co-occur with other neurodevelopmental disorders such as ADHD; this is not diagnostic equivalence."
+    }
+  ],
+  "ecosystem_entry_points": [
+    {
+      "category": "services",
+      "questions": ["What does speech and language therapy assessment look for when DLD is suspected?", "How should multilingual children be assessed without treating language difference as disorder?"]
+    },
+    {
+      "category": "accommodations",
+      "questions": ["Which changes to spoken instructions, processing time, visual support and communication demands improve access at school, work and in services?"]
+    },
+    {
+      "category": "communities",
+      "questions": ["Where can people with DLD and families find lived-experience-led information and peer support?"]
+    }
+  ],
+  "provenance": {
+    "created": "2026-08-12",
+    "created_by": "ND Oracle Batch A candidate research",
+    "method": "Candidate-only synthesis of CATALISE consensus, newer international terminology evidence, current NHS service guidance and bounded lived-experience/community material; not promoted to the authoritative corpus.",
+    "review_state": "unreviewed_seed",
+    "last_reviewed": null
+  }
+}
