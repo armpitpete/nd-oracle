@@ -108,9 +108,23 @@ Before any deployment:
 4. build `dist/` from that exact commit;
 5. inspect the generated site and security headers;
 6. verify the pinned Wrangler version and deployment flags;
-7. publish only through the guarded manual production workflow.
+7. stop for explicit owner authorisation before publishing any deployment.
 
-The deployment CLI is version-pinned. Updating the Wrangler version is a release-tooling change and must be reviewed rather than silently inherited from `npx` latest.
+After explicit owner authorisation, the guarded release path uses the exact Git identity and pinned CLI:
+
+```sh
+npx --yes wrangler@4.114.0 pages deploy dist \
+  --project-name=nd-oracle \
+  --branch=main \
+  --commit-hash=<EXACT_MAIN_SHA> \
+  --commit-dirty=false
+```
+
+Do not substitute a remembered SHA for `<EXACT_MAIN_SHA>`; resolve and verify it immediately before deployment. The production workflow rechecks protected `main` and Cloudflare project/domain state immediately before upload.
+
+Custom-domain attachment and DNS changes are later protected actions and are not implied by a Pages deployment.
+
+Direct Upload remains an intentional release-control choice. Updating the Wrangler version or moving to a different deployment integration is a release-tooling change and must be reviewed rather than silently inherited.
 
 ## Boundary
 
