@@ -53,8 +53,8 @@ STATIC_PAGES = {
             "<section><h2>What it is for</h2>"
             "<p>The aim is to make useful knowledge easier to reach while keeping the route back to evidence, disagreement and uncertainty intact.</p></section>"
             "<section><h2>What exists now</h2>"
-            "<p>The current public release covers five core topics: neurodiversity, autism, ADHD, executive function and sensory processing. "
-            "The site will widen when new material is useful and sufficiently traceable, rather than displaying empty sections in advance.</p></section>"
+            "<p>The current public release covers the evidence-linked topics listed under Understand. "
+            "The site widens when new material is useful and sufficiently traceable, rather than displaying empty sections in advance.</p></section>"
             "<section><h2>What it is not</h2>"
             "<p>It is not a diagnosis engine, a treatment marketplace, an AI authority or a replacement for professional judgement.</p></section>"
         ),
@@ -236,7 +236,7 @@ def render_index(concepts: list[dict]) -> str:
 </section>
 <section aria-labelledby="topics-heading">
   <div class="section-heading-row">
-    <div><h2 id="topics-heading">Browse current topics</h2><p class="section-intro">Five core topics are available now. No empty feature catalogue is presented as finished content.</p></div>
+    <div><h2 id="topics-heading">Browse current topics</h2><p class="section-intro">{len(concepts)} evidence-linked topics are available now. No empty feature catalogue is presented as finished content.</p></div>
     <a class="quiet-link" href="/understand/">See all topics</a>
   </div>
   <div class="topic-list">{topics}</div>
