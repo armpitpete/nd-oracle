@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import importlib.util
 from pathlib import Path
 import sys
@@ -69,7 +70,7 @@ class VerifyLiveSiteTests(unittest.TestCase):
                 )
             elif path in verify_live_site.TOPIC_FIRST_READ_MARKERS:
                 body = (
-                    verify_live_site.TOPIC_FIRST_READ_MARKERS[path]
+                    html.escape(verify_live_site.TOPIC_FIRST_READ_MARKERS[path], quote=True)
                     + '<p class="review-meta">Last reviewed: <strong>12 August 2026</strong></p>'
                     + '<details class="technical-summary"><summary>More precise description</summary>'
                     + '<a href="/how-it-works/#confidence">confidence</a>'
@@ -108,7 +109,7 @@ class VerifyLiveSiteTests(unittest.TestCase):
                 )
             elif path in verify_live_site.TOPIC_FIRST_READ_MARKERS:
                 body = (
-                    verify_live_site.TOPIC_FIRST_READ_MARKERS[path]
+                    html.escape(verify_live_site.TOPIC_FIRST_READ_MARKERS[path], quote=True)
                     + '<p class="review-meta">Last reviewed: now</p>'
                     + '<details class="technical-summary"><summary>More precise description</summary>'
                     + '<a href="/how-it-works/#confidence">confidence</a>'
