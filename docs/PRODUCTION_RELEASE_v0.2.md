@@ -10,7 +10,9 @@ Site Shell v0.1 has already been accepted in production at `https://ndoracle.org
 
 The original guarded deployment workflow was deliberately written for the first deployment. It therefore refused to upload whenever `ndoracle.org` was already attached. That was safe before first activation, but after production acceptance it made every later production update fail closed for the wrong reason.
 
-Whole-site v0.2 is now integrated on protected `main`, so the release path must distinguish accepted production state from an unexpected custom-domain change.
+Whole-site v0.2 is now integrated on protected `main`, so the release path must distinguish accepted production state from an unexpected domain change.
+
+A first repeat-release repair correctly allowed the accepted apex domain, but its live preflight exposed a Cloudflare API representation detail: the production project payload reports the built-in `nd-oracle.pages.dev` project subdomain both through the dedicated `subdomain` field and in the project `domains` collection. Treating every `domains` entry as a user-added custom domain therefore produced a false mismatch before upload.
 
 ## Repeat-release invariant
 
@@ -23,7 +25,8 @@ A production upload is permitted only when all of the following remain true at d
 - the deployment artifact remains static and contains no Pages Functions, Worker, symlink, or Wrangler configuration broadening;
 - the Cloudflare Pages project is exactly `nd-oracle`;
 - the project remains a Direct Upload project with production branch `main`;
-- the Pages project custom-domain set is exactly `ndoracle.org`;
+- the dedicated Cloudflare project subdomain remains exactly `nd-oracle.pages.dev`;
+- after normalizing that built-in project subdomain out of the project `domains` collection, the remaining custom-domain set is exactly `ndoracle.org`;
 - Wrangler remains pinned to the repository-reviewed version;
 - the workflow performs no custom-domain, DNS, redirect, or zone mutation.
 
@@ -37,15 +40,19 @@ The obsolete first-release condition was:
 
 > refuse deployment if `ndoracle.org` is attached.
 
-The repeat-release condition is:
+The first repeat-release repair changed that to an exact project `domains` set containing only `ndoracle.org`. Live preflight proved that assumption was too strict because the Cloudflare API also returned the built-in `nd-oracle.pages.dev` hostname in that collection.
 
-> require the already accepted Pages custom-domain set to remain exactly `ndoracle.org`, reject missing or additional Pages custom domains, and leave all domain/DNS state untouched.
+The corrected repeat-release condition is:
 
-This makes the release workflow reusable without turning deployment into an automatic merge side effect.
+> require the project `subdomain` field to remain exactly `nd-oracle.pages.dev`; normalize that provider-owned hostname out of the project `domains` collection; then require the remaining custom-domain set to remain exactly `ndoracle.org`.
+
+This preserves fail-closed checking for missing or additional custom domains while accepting Cloudflare's observed project representation. It does not broaden accepted production state.
 
 ## Cloudflare model checked
 
-Current Cloudflare Pages documentation describes Direct Upload as supporting first and subsequent deployments to the same project with `wrangler pages deploy`. The current Pages Project API describes `domains` as the associated custom domains for the project, separately from the project's `*.pages.dev` subdomain. The workflow therefore treats the exact custom-domain set as production state to verify, not state to create or remove.
+Current Cloudflare Pages documentation identifies `subdomain` as the Cloudflare subdomain associated with the project and documents custom domains separately. Cloudflare also documents that each Pages project receives a `*.pages.dev` hostname. The live production preflight on 2026-08-12 established that the project payload for `nd-oracle` includes `nd-oracle.pages.dev` in `domains` as well as in `subdomain`, so the workflow normalizes the provider-owned hostname before comparing custom-domain state.
+
+Current Cloudflare Pages documentation also describes Direct Upload as supporting subsequent deployments to the same project with `wrangler pages deploy`.
 
 ## Publication sequence for whole-site v0.2
 
