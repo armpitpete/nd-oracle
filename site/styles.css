@@ -4,6 +4,7 @@
   --surface: #fbfaf7;
   --surface-soft: #ebe8df;
   --surface-wash: #f0eee7;
+  --uncertainty: #edf1ed;
   --text: #252a27;
   --text-soft: #5c645f;
   --border: #d7d4ca;
@@ -26,6 +27,7 @@
 html {
   background: var(--background);
   text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -84,7 +86,7 @@ summary:focus-visible {
 
 .site-header {
   border-bottom: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface) 92%, var(--background));
+  background: var(--surface);
 }
 
 .header-row,
@@ -312,16 +314,10 @@ ul {
   border-radius: 0;
 }
 
-.claim:last-of-type,
-.perspective:last-of-type,
-.source:last-of-type {
-  border-bottom: 1px solid var(--border);
-}
-
 .uncertainty {
   margin: 1.1rem 0;
   padding: 1rem 1rem 1rem 1.15rem;
-  background: color-mix(in srgb, var(--accent-soft) 42%, var(--background));
+  background: var(--uncertainty);
   border: 0;
   border-left: 2px solid var(--accent);
   border-radius: 0.2rem;
@@ -449,7 +445,7 @@ li + li {
 .site-footer {
   border-top: 1px solid var(--border);
   color: var(--text-soft);
-  background: color-mix(in srgb, var(--surface) 88%, var(--background));
+  background: var(--surface);
   padding-block: 1.4rem 2.5rem;
   font-size: 0.88rem;
 }
