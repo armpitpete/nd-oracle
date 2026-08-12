@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import importlib.util
 from pathlib import Path
 import sys
@@ -52,9 +53,79 @@ class VerifyLiveSiteTests(unittest.TestCase):
                 "/how-it-works/",
                 "/about/",
                 "/accessibility/",
+                "/feedback/",
                 "/privacy/",
             ),
         )
+
+    def test_v05_reading_contract_requires_home_topics_confidence_and_feedback(self):
+        origin = "https://ndoracle.org"
+
+        def fetcher(url):
+            path = url.removeprefix(origin)
+            if path == "/":
+                body = "".join(
+                    f'<a href="{target}">{question}</a>'
+                    for question, target in verify_live_site.HOMEPAGE_QUESTIONS
+                )
+            elif path in verify_live_site.TOPIC_FIRST_READ_MARKERS:
+                body = (
+                    html.escape(verify_live_site.TOPIC_FIRST_READ_MARKERS[path], quote=True)
+                    + '<p class="review-meta">Last reviewed: <strong>12 August 2026</strong></p>'
+                    + '<details class="technical-summary"><summary>More precise description</summary>'
+                    + '<a href="/how-it-works/#confidence">confidence</a>'
+                )
+            elif path == "/how-it-works/":
+                body = (
+                    '<h2>What the confidence labels mean</h2>'
+                    '<dt>High</dt><dt>Moderate</dt><dt>Low</dt>'
+                    '<dt>Contested</dt><dt>Not applicable</dt>'
+                )
+            elif path == "/feedback/":
+                body = (
+                    '<h2>Report a problem</h2>'
+                    '<a href="https://github.com/armpitpete/nd-oracle/issues/new">issues</a>'
+                    'Please do not include private health information'
+                    '<h2>Current limitation</h2>'
+                )
+            else:
+                raise AssertionError(url)
+            return self.response(final_url=url, body=body)
+
+        self.assertEqual(
+            verify_live_site.verify_v05_reading_contract(origin, fetcher=fetcher),
+            [],
+        )
+
+    def test_v05_reading_contract_rejects_missing_reader_marker(self):
+        origin = "https://ndoracle.org"
+
+        def fetcher(url):
+            path = url.removeprefix(origin)
+            if path == "/":
+                body = "".join(
+                    f'<a href="{target}">{question}</a>'
+                    for question, target in verify_live_site.HOMEPAGE_QUESTIONS
+                )
+            elif path in verify_live_site.TOPIC_FIRST_READ_MARKERS:
+                body = (
+                    html.escape(verify_live_site.TOPIC_FIRST_READ_MARKERS[path], quote=True)
+                    + '<p class="review-meta">Last reviewed: now</p>'
+                    + '<details class="technical-summary"><summary>More precise description</summary>'
+                    + '<a href="/how-it-works/#confidence">confidence</a>'
+                )
+                if path == "/understand/autism/":
+                    body = body.replace('class="review-meta">Last reviewed:', 'class="review-meta">Reviewed:')
+            elif path == "/how-it-works/":
+                body = '<h2>What the confidence labels mean</h2><dt>High</dt><dt>Moderate</dt><dt>Low</dt><dt>Contested</dt><dt>Not applicable</dt>'
+            elif path == "/feedback/":
+                body = '<h2>Report a problem</h2><a href="https://github.com/armpitpete/nd-oracle/issues/new">issues</a>Please do not include private health information<h2>Current limitation</h2>'
+            else:
+                raise AssertionError(url)
+            return self.response(final_url=url, body=body)
+
+        failures = verify_live_site.verify_v05_reading_contract(origin, fetcher=fetcher)
+        self.assertTrue(any("/understand/autism/" in failure and "Last reviewed" in failure for failure in failures))
 
     def test_expected_legacy_route_set_is_complete(self):
         self.assertEqual(
