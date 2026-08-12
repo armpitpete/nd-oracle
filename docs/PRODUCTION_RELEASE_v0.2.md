@@ -10,7 +10,7 @@ Site Shell v0.1 has already been accepted in production at `https://ndoracle.org
 
 The original guarded deployment workflow was deliberately written for the first deployment. It therefore refused to upload whenever `ndoracle.org` was already attached. That was safe before first activation, but after production acceptance it made every later production update fail closed for the wrong reason.
 
-Whole-site v0.2 is now integrated on protected `main`, so the release path must distinguish an accepted existing production domain from an unexpected domain mutation.
+Whole-site v0.2 is now integrated on protected `main`, so the release path must distinguish accepted production state from an unexpected custom-domain change.
 
 ## Repeat-release invariant
 
@@ -23,12 +23,13 @@ A production upload is permitted only when all of the following remain true at d
 - the deployment artifact remains static and contains no Pages Functions, Worker, symlink, or Wrangler configuration broadening;
 - the Cloudflare Pages project is exactly `nd-oracle`;
 - the project remains a Direct Upload project with production branch `main`;
-- the accepted production domain `ndoracle.org` remains attached;
-- no unexpected `*.ndoracle.org` Pages custom-domain attachment has appeared;
+- the Pages project custom-domain set is exactly `ndoracle.org`;
 - Wrangler remains pinned to the repository-reviewed version;
 - the workflow performs no custom-domain, DNS, redirect, or zone mutation.
 
 If any of those invariants fails, the workflow refuses the upload.
+
+The `www.ndoracle.org` redirect remains separate Cloudflare redirect/DNS state and must not silently become a second Pages custom-domain attachment.
 
 ## What changed from the first-release guard
 
@@ -38,13 +39,13 @@ The obsolete first-release condition was:
 
 The repeat-release condition is:
 
-> require the already accepted `ndoracle.org` attachment to remain present, reject unexpected ND Oracle subdomain attachments, and leave all domain/DNS state untouched.
+> require the already accepted Pages custom-domain set to remain exactly `ndoracle.org`, reject missing or additional Pages custom domains, and leave all domain/DNS state untouched.
 
 This makes the release workflow reusable without turning deployment into an automatic merge side effect.
 
 ## Cloudflare model checked
 
-Current Cloudflare Pages documentation describes Direct Upload as supporting first and subsequent deployments to the same project with `wrangler pages deploy`. Custom-domain association is managed separately from the asset upload. The workflow therefore treats the existing domain attachment as production state to verify, not state to create or remove.
+Current Cloudflare Pages documentation describes Direct Upload as supporting first and subsequent deployments to the same project with `wrangler pages deploy`. The current Pages Project API describes `domains` as the associated custom domains for the project, separately from the project's `*.pages.dev` subdomain. The workflow therefore treats the exact custom-domain set as production state to verify, not state to create or remove.
 
 ## Publication sequence for whole-site v0.2
 
