@@ -14,7 +14,7 @@ permissions:
 # Read-only production observation: this workflow has no secrets and performs no writes.
 jobs:
   verify-live-production:
-    name: Verify canonical production routes
+    name: Verify production HTTP contract
     runs-on: ubuntu-24.04
     timeout-minutes: 10
 
@@ -43,5 +43,5 @@ jobs:
       - name: Run full regression suite
         run: python -m unittest discover -s tests
 
-      - name: Verify live canonical routes
+      - name: Verify live production contract
         run: python scripts/verify_live_site.py --origin https://ndoracle.org
