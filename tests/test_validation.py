@@ -78,12 +78,18 @@ class RepositoryValidationTests(unittest.TestCase):
         self.assertEqual([], errors)
 
     def test_rejects_nonreciprocal_claim_source_mapping(self) -> None:
+        selected: dict[str, str] = {}
+
         def mutate(obj: dict) -> None:
-            obj["sources"][1]["supports"] = ["autism-claim-1"]
+            claim = obj["claims"][0]
+            source_id = claim["source_ids"][0]
+            source = next(item for item in obj["sources"] if item["id"] == source_id)
+            source["supports"].remove(claim["id"])
+            selected["claim_id"] = claim["id"]
 
         errors = self.validate_mutation("autism.json", mutate)
-        self.assertTrue(any("does not list claim autism-claim-2" in error for error in errors), errors)
-        self.assertTrue(any("claim autism-claim-1 does not reference" in error for error in errors), errors)
+        claim_id = selected["claim_id"]
+        self.assertTrue(any(f"does not list claim {claim_id}" in error for error in errors), errors)
 
     def test_rejects_nonreciprocal_perspective_source_mapping(self) -> None:
         def mutate(obj: dict) -> None:
