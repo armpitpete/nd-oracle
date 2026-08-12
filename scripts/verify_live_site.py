@@ -30,6 +30,9 @@ LEGACY_ROUTES = ("/tools/", "/games/", "/resources/", "/community/", "/oracle/")
 NOINDEX_MARKER = '<meta name="robots" content="noindex, follow">'
 NOT_FOUND_PATH = "/__nd_oracle_live_verifier_missing_page__/"
 NOT_FOUND_MARKER = "<h1>Page not found</h1>"
+CLOUDFLARE_MANAGED_BEGIN = "# BEGIN Cloudflare Managed content"
+CLOUDFLARE_MANAGED_END = "# END Cloudflare Managed Content"
+CLOUDFLARE_CONTENT_SIGNAL = "Content-Signal: search=yes,ai-train=no,use=reference"
 
 SECURITY_HEADERS = {
     "content-security-policy": "default-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; script-src 'none'; connect-src 'none'; media-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests",
@@ -70,7 +73,6 @@ class SurfaceParser(HTMLParser):
             self.scripts += 1
         if lowered == "iframe":
             self.iframes += 1
-
         if lowered in {"img", "script", "iframe", "audio", "video", "source"}:
             source = values.get("src", "").strip()
             if source:
@@ -91,10 +93,7 @@ def normalize_header_value(value: str) -> str:
 
 
 def fetch_url(url: str, timeout: float = 20.0) -> Response:
-    request = urllib.request.Request(
-        url,
-        headers={"User-Agent": USER_AGENT, "Accept": "*/*"},
-    )
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "*/*"})
     try:
         with urllib.request.urlopen(request, timeout=timeout) as response:
             payload = response.read().decode("utf-8", errors="replace")
@@ -133,8 +132,7 @@ def verify_security_headers(path: str, response: Response) -> list[str]:
         actual = response.headers.get(name)
         if actual is None:
             failures.append(f"{path}: missing security header {name}")
-            continue
-        if normalize_header_value(actual) != normalize_header_value(expected):
+        elif normalize_header_value(actual) != normalize_header_value(expected):
             failures.append(
                 f"{path}: security header {name} mismatch: got {actual!r}; expected {expected!r}"
             )
@@ -156,24 +154,16 @@ def verify_passive_surface(origin: str, path: str, response: Response) -> list[s
     for resource in parser.loaded_resources:
         if resource.startswith("data:"):
             continue
-        absolute = urljoin(origin + "/", resource)
-        parsed = urlsplit(absolute)
+        parsed = urlsplit(urljoin(origin + "/", resource))
         if parsed.scheme not in {"http", "https"} or parsed.netloc.lower() != origin_host:
             failures.append(f"{path}: unexpected externally loaded resource {resource!r}")
     return failures
 
 
-def verify_route(
-    origin: str,
-    path: str,
-    marker: str,
-    *,
-    fetcher=fetch_url,
-) -> list[str]:
+def verify_route(origin: str, path: str, marker: str, *, fetcher=fetch_url) -> list[str]:
     url = expected_url(origin, path)
     response = fetcher(url)
     failures: list[str] = []
-
     if response.status != 200:
         failures.append(f"{path}: expected HTTP 200, got {response.status}")
     if response.final_url != url:
@@ -185,7 +175,6 @@ def verify_route(
     canonical = canonical_marker(url)
     if canonical not in response.body:
         failures.append(f"{path}: expected canonical link not found: {canonical!r}")
-
     failures.extend(verify_security_headers(path, response))
     failures.extend(verify_passive_surface(origin, path, response))
     return failures
@@ -250,27 +239,46 @@ def expected_sitemap_urls(origin: str) -> set[str]:
     return {expected_url(origin, path) for path, _ in ROUTES}
 
 
+def expected_origin_robots(origin: str) -> str:
+    return "User-agent: *\nAllow: /\n" f"Sitemap: {origin}/sitemap.xml\n"
+
+
+def verify_robots_content(origin: str, body: str) -> list[str]:
+    actual = body.replace("\r\n", "\n")
+    expected_tail = expected_origin_robots(origin)
+    failures: list[str] = []
+    if not actual.endswith(expected_tail):
+        failures.append(
+            "robots.txt: origin indexing/sitemap block is missing or changed: "
+            f"expected trailing block={expected_tail!r}"
+        )
+
+    managed_present = CLOUDFLARE_MANAGED_BEGIN in actual or CLOUDFLARE_MANAGED_END in actual
+    if managed_present:
+        if CLOUDFLARE_MANAGED_BEGIN not in actual or CLOUDFLARE_MANAGED_END not in actual:
+            failures.append("robots.txt: incomplete Cloudflare managed-content block")
+        compact = "".join(actual.lower().split())
+        expected_signal = "".join(CLOUDFLARE_CONTENT_SIGNAL.lower().split())
+        if expected_signal not in compact:
+            failures.append(
+                "robots.txt: Cloudflare managed content signal changed; expected search=yes, ai-train=no, use=reference"
+            )
+    return failures
+
+
 def verify_metadata_files(origin: str, *, fetcher=fetch_url) -> list[str]:
     failures: list[str] = []
-
     robots_url = expected_url(origin, "/robots.txt")
     robots = fetcher(robots_url)
-    expected_robots = (
-        "User-agent: *\n"
-        "Allow: /\n"
-        f"Sitemap: {origin}/sitemap.xml\n"
-    )
-    actual_robots = robots.body.replace("\r\n", "\n")
+    robots_failures: list[str] = []
     if robots.status != 200:
-        failures.append(f"robots.txt: expected HTTP 200, got {robots.status}")
+        robots_failures.append(f"robots.txt: expected HTTP 200, got {robots.status}")
     if robots.final_url != robots_url:
-        failures.append(f"robots.txt: unexpected final URL {robots.final_url!r}")
-    if actual_robots != expected_robots:
-        failures.append(
-            "robots.txt: content does not match the accepted production contract: "
-            f"actual={actual_robots!r}; expected={expected_robots!r}"
-        )
-    if not failures:
+        robots_failures.append(f"robots.txt: unexpected final URL {robots.final_url!r}")
+    robots_failures.extend(verify_robots_content(origin, robots.body))
+    if robots_failures:
+        failures.extend(robots_failures)
+    else:
         print("PASS robots.txt")
 
     sitemap_url = expected_url(origin, "/sitemap.xml")
@@ -284,7 +292,9 @@ def verify_metadata_files(origin: str, *, fetcher=fetch_url) -> list[str]:
         root = ET.fromstring(sitemap.body)
         actual_urls = {
             (element.text or "").strip()
-            for element in root.findall("{http://www.sitemaps.org/schemas/sitemap/0.9}url/{http://www.sitemaps.org/schemas/sitemap/0.9}loc")
+            for element in root.findall(
+                "{http://www.sitemaps.org/schemas/sitemap/0.9}url/{http://www.sitemaps.org/schemas/sitemap/0.9}loc"
+            )
         }
     except ET.ParseError as exc:
         sitemap_failures.append(f"sitemap.xml: invalid XML: {exc}")
@@ -299,7 +309,6 @@ def verify_metadata_files(origin: str, *, fetcher=fetch_url) -> list[str]:
         failures.extend(sitemap_failures)
     else:
         print("PASS sitemap.xml")
-
     return failures
 
 
@@ -347,19 +356,16 @@ def main(argv: list[str] | None = None) -> int:
     if not origin.startswith("https://"):
         print("Refusing non-HTTPS production origin.", file=sys.stderr)
         return 2
-
     try:
         failures = verify_production(origin)
     except (OSError, urllib.error.URLError) as exc:
         print(f"LIVE VERIFICATION ERROR: {exc}", file=sys.stderr)
         return 1
-
     if failures:
         print("LIVE VERIFICATION FAIL", file=sys.stderr)
         for failure in failures:
             print(f"- {failure}", file=sys.stderr)
         return 1
-
     print(
         f"Verified {len(ROUTES)} canonical routes plus production HTTP/public-surface contract at {origin}."
     )
