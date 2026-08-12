@@ -10,7 +10,7 @@ from html.parser import HTMLParser
 from urllib.parse import urljoin, urlsplit
 
 DEFAULT_ORIGIN = "https://ndoracle.org"
-USER_AGENT = "nd-oracle-live-verifier/0.2"
+USER_AGENT = "nd-oracle-live-verifier/0.4"
 
 ROUTES = (
     ("/", "Understand neurodivergence without doing all the digging yourself"),
@@ -20,6 +20,11 @@ ROUTES = (
     ("/understand/adhd/", "<h1>ADHD</h1>"),
     ("/understand/executive-function/", "<h1>Executive function</h1>"),
     ("/understand/sensory-processing/", "<h1>Sensory processing</h1>"),
+    ("/understand/dyslexia/", "<h1>Dyslexia</h1>"),
+    ("/understand/developmental-coordination-disorder/", "<h1>Developmental co-ordination disorder</h1>"),
+    ("/understand/tourette-syndrome/", "<h1>Tourette syndrome</h1>"),
+    ("/understand/learning-disability/", "<h1>Learning disability</h1>"),
+    ("/understand/developmental-language-disorder/", "<h1>Developmental language disorder</h1>"),
     ("/how-it-works/", "<h1>How this site works</h1>"),
     ("/about/", "<h1>About</h1>"),
     ("/accessibility/", "<h1>Accessibility</h1>"),
