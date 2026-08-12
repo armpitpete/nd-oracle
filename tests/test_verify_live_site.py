@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 from pathlib import Path
+import sys
 import unittest
 
 
@@ -10,6 +11,7 @@ MODULE_PATH = ROOT / "scripts" / "verify_live_site.py"
 SPEC = importlib.util.spec_from_file_location("verify_live_site", MODULE_PATH)
 assert SPEC is not None and SPEC.loader is not None
 verify_live_site = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = verify_live_site
 SPEC.loader.exec_module(verify_live_site)
 
 
