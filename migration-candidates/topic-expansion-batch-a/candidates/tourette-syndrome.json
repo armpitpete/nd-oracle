@@ -1,0 +1,155 @@
+{
+  "schema_version": "0.1",
+  "id": "tourette-syndrome",
+  "type": "concept",
+  "name": "Tourette syndrome",
+  "aliases": ["Tourette's syndrome", "TS"],
+  "status": "seed",
+  "summary": "Tourette syndrome is a developmental tic disorder involving both motor and vocal tics; tics and their impact vary over time, and public stereotypes such as swearing being required are inaccurate.",
+  "scope": {
+    "includes": [
+      "Motor and vocal tics, developmental onset and persistence over time.",
+      "Variation in tic expression, functional impact and co-occurring conditions such as ADHD and OCD.",
+      "Assessment boundaries, stigma, support and treatment only where evidence and person-defined needs justify it."
+    ],
+    "excludes": [
+      "Treating swearing or coprolalia as a defining requirement.",
+      "Treating every repetitive movement or sound as a tic or as Tourette syndrome.",
+      "Using tic counts alone as a complete measure of wellbeing or support need.",
+      "Presenting tic suppression or treatment as automatically desirable for every person.",
+      "Individual diagnosis or medication advice."
+    ]
+  },
+  "claims": [
+    {
+      "id": "tourette-claim-core",
+      "text": "Tourette syndrome is a tic disorder involving both motor and vocal tics, with onset during development and persistence over time; exact diagnostic wording differs between classification systems.",
+      "confidence": "high",
+      "source_ids": ["tourette-source-nhs", "tourette-source-essts-assessment"],
+      "uncertainty_ids": ["tourette-uncertainty-classification", "tourette-uncertainty-differential"]
+    },
+    {
+      "id": "tourette-claim-coprolalia",
+      "text": "Swearing or coprolalia is not required for Tourette syndrome and occurs in only a minority of people with it.",
+      "confidence": "high",
+      "source_ids": ["tourette-source-nhs", "tourette-source-community"],
+      "uncertainty_ids": ["tourette-uncertainty-prevalence"]
+    },
+    {
+      "id": "tourette-claim-cooccurrence-support",
+      "text": "ADHD and OCD commonly co-occur with Tourette syndrome, and support or treatment decisions should take account of the difficulties and priorities that matter to the person rather than assuming every tic requires treatment.",
+      "confidence": "moderate",
+      "source_ids": ["tourette-source-nhs", "tourette-source-essts-psych", "tourette-source-community"],
+      "uncertainty_ids": ["tourette-uncertainty-outcomes", "tourette-uncertainty-adult"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "tourette-source-nhs",
+      "kind": "authoritative_guidance",
+      "citation": "NHS. Tourette syndrome. Last reviewed 20 May 2025.",
+      "url": "https://www.nhs.uk/conditions/tourette-syndrome/",
+      "accessed": "2026-08-12",
+      "supports": ["tourette-claim-core", "tourette-claim-coprolalia", "tourette-claim-cooccurrence-support"]
+    },
+    {
+      "id": "tourette-source-essts-assessment",
+      "kind": "peer_reviewed",
+      "citation": "Szejko N et al. European clinical guidelines for Tourette syndrome and other tic disorders—version 2.0. Part I: assessment. European Child & Adolescent Psychiatry. 2022;31(3):383-402.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34661764/",
+      "doi": "10.1007/s00787-021-01842-2",
+      "accessed": "2026-08-12",
+      "supports": ["tourette-claim-core"]
+    },
+    {
+      "id": "tourette-source-essts-psych",
+      "kind": "peer_reviewed",
+      "citation": "Andrén P et al. European clinical guidelines for Tourette syndrome and other tic disorders—version 2.0. Part II: psychological interventions. European Child & Adolescent Psychiatry. 2022;31(3):403-423.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34313861/",
+      "doi": "10.1007/s00787-021-01845-z",
+      "accessed": "2026-08-12",
+      "supports": ["tourette-claim-cooccurrence-support"]
+    },
+    {
+      "id": "tourette-source-community",
+      "kind": "community",
+      "citation": "Tourettes Action. Tourette's Awareness Month 2026 — No Choice.",
+      "url": "https://www.tourettes-action.org.uk/206-tourettes-awareness-month-2026.html",
+      "accessed": "2026-08-12",
+      "supports": ["tourette-claim-coprolalia", "tourette-claim-cooccurrence-support", "tourette-perspective-stigma"]
+    }
+  ],
+  "uncertainties": [
+    {
+      "id": "tourette-uncertainty-classification",
+      "question": "How should ND Oracle describe differences between current diagnostic classification systems without turning the page into a self-diagnosis checklist?",
+      "why_it_matters": "Public-health summaries and formal diagnostic manuals can differ in exact wording even where they describe substantially overlapping constructs.",
+      "what_would_reduce_it": ["A side-by-side review of current ICD-11 and UK clinical diagnostic wording focused on meaningful differences rather than checklist reproduction."],
+      "status": "open"
+    },
+    {
+      "id": "tourette-uncertainty-differential",
+      "question": "How should functional tic-like behaviours and other movement/sound presentations be explained without encouraging self-differential diagnosis?",
+      "why_it_matters": "Not every repetitive movement or sound has the same mechanism, course or clinical meaning.",
+      "what_would_reduce_it": ["Current differential-diagnosis guidance and evidence on functional tic-like behaviours in children and adults."],
+      "status": "open"
+    },
+    {
+      "id": "tourette-uncertainty-prevalence",
+      "question": "What prevalence estimate for coprolalia is reliable enough to publish if ND Oracle later wants a number rather than the bounded word minority?",
+      "why_it_matters": "A memorable but weak percentage could replace one stereotype with another unsupported claim.",
+      "what_would_reduce_it": ["Representative epidemiological studies or systematic reviews of coprolalia prevalence using clear definitions."],
+      "status": "open"
+    },
+    {
+      "id": "tourette-uncertainty-outcomes",
+      "question": "Which outcomes best represent quality of life and support need beyond tic frequency or severity?",
+      "why_it_matters": "Pain, concentration, stigma, participation and co-occurring conditions may matter more to an individual than tic counts.",
+      "what_would_reduce_it": ["Patient-prioritised outcome research and longitudinal quality-of-life studies."],
+      "status": "open"
+    },
+    {
+      "id": "tourette-uncertainty-adult",
+      "question": "What is the best current evidence on adult tic course, late recognition and adult service access?",
+      "why_it_matters": "Tourette syndrome is developmentally defined but can remain relevant well beyond childhood.",
+      "what_would_reduce_it": ["Representative adult longitudinal and service-access research."],
+      "status": "open"
+    }
+  ],
+  "perspectives": [
+    {
+      "id": "tourette-perspective-stigma",
+      "held_by": "People with Tourette syndrome and Tourette advocacy organisations",
+      "summary": "A major burden can come from other people's reactions, assumptions and stigma rather than from the visible tic alone; respectful support should therefore consider social response and autonomy as well as symptom reduction.",
+      "source_ids": ["tourette-source-community"]
+    }
+  ],
+  "relations": [
+    {
+      "type": "commonly_co_occurs_with",
+      "target_id": "adhd",
+      "note": "Current NHS guidance identifies ADHD as a common co-occurring condition; this is not diagnostic equivalence or a causal claim."
+    }
+  ],
+  "ecosystem_entry_points": [
+    {
+      "category": "services",
+      "questions": ["When do tics warrant specialist assessment, and what should an assessment distinguish?", "Which evidence-based behavioural and medical options exist when tics are causing problems?"]
+    },
+    {
+      "category": "accommodations",
+      "questions": ["What changes at school, work or in public settings reduce avoidable pressure, punishment or stigma around tics?"]
+    },
+    {
+      "category": "communities",
+      "questions": ["Where can people with Tourette syndrome find peer support and lived-experience information without stereotypes?"]
+    }
+  ],
+  "provenance": {
+    "created": "2026-08-12",
+    "created_by": "ND Oracle Batch A candidate research",
+    "method": "Candidate-only synthesis of current NHS guidance, European tic-disorder guidelines and bounded community/lived-experience evidence; not promoted to the authoritative corpus.",
+    "review_state": "unreviewed_seed",
+    "last_reviewed": null
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "schema_version": "0.1",
+  "id": "learning-disability",
+  "type": "concept",
+  "name": "Learning disability",
+  "aliases": ["intellectual disability", "disorder of intellectual development"],
+  "status": "seed",
+  "summary": "In UK health and social care, learning disability refers to developmental limitations in learning or understanding together with adaptive functioning; it is distinct from specific learning difficulties such as dyslexia, and international terminology varies.",
+  "scope": {
+    "includes": [
+      "UK NHS usage of learning disability as a developmental condition affecting learning or understanding and adaptive independence.",
+      "Variation in communication, daily living, participation and support needs across people and across the lifespan.",
+      "Terminology bridges to international intellectual-disability and disorders-of-intellectual-development language.",
+      "Healthcare access, reasonable adjustments and rights-relevant perspectives."
+    ],
+    "excludes": [
+      "Using learning disability as a synonym for dyslexia or another specific learning difficulty.",
+      "Reducing a person's identity, competence or support needs to an IQ score or severity label.",
+      "Assuming autism automatically implies learning disability or vice versa.",
+      "Inferring a person's mental capacity, communication ability or independence from diagnosis alone.",
+      "Individual diagnosis or capacity assessment."
+    ]
+  },
+  "claims": [
+    {
+      "id": "learning-disability-claim-uk-definition",
+      "text": "In current NHS England usage, learning disability involves developmental difficulty understanding or learning new information and skills together with reduced adaptive independence, and it is distinct from a specific learning difficulty such as dyslexia.",
+      "confidence": "high",
+      "source_ids": ["learning-disability-source-nhs-england"],
+      "uncertainty_ids": ["learning-disability-uncertainty-terminology", "learning-disability-uncertainty-assessment"]
+    },
+    {
+      "id": "learning-disability-claim-international-terms",
+      "text": "International clinical and research sources use related terminology including intellectual disability, while WHO ICD-11 uses the diagnostic-group wording disorders of intellectual development; the labels substantially overlap but are not assumed to be legally or operationally identical in every system.",
+      "confidence": "moderate",
+      "source_ids": ["learning-disability-source-who", "learning-disability-source-nhs-england"],
+      "uncertainty_ids": ["learning-disability-uncertainty-terminology"]
+    },
+    {
+      "id": "learning-disability-claim-heterogeneity",
+      "text": "People with a learning disability have widely varying abilities and support needs: some work, have relationships or live independently, while others need substantial support throughout life.",
+      "confidence": "high",
+      "source_ids": ["learning-disability-source-nhs-overview", "learning-disability-source-mencap-rights"],
+      "uncertainty_ids": ["learning-disability-uncertainty-representation"]
+    },
+    {
+      "id": "learning-disability-claim-adjustments",
+      "text": "A learning-disability diagnosis can be relevant to healthcare access and reasonable adjustments, but the diagnosis alone does not specify an individual person's communication or support needs.",
+      "confidence": "moderate",
+      "source_ids": ["learning-disability-source-nhs-england", "learning-disability-source-mencap-rights"],
+      "uncertainty_ids": ["learning-disability-uncertainty-assessment", "learning-disability-uncertainty-representation"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "learning-disability-source-nhs-england",
+      "kind": "authoritative_guidance",
+      "citation": "NHS England. Find out about the Learning Disability Register. Updated 12 August 2025.",
+      "url": "https://www.england.nhs.uk/long-read/find-out-about-the-learning-disability-register/",
+      "accessed": "2026-08-12",
+      "supports": ["learning-disability-claim-uk-definition", "learning-disability-claim-international-terms", "learning-disability-claim-adjustments"]
+    },
+    {
+      "id": "learning-disability-source-nhs-overview",
+      "kind": "authoritative_guidance",
+      "citation": "NHS. Learning disabilities — overview.",
+      "url": "https://www.nhs.uk/conditions/learning-disabilities/",
+      "accessed": "2026-08-12",
+      "supports": ["learning-disability-claim-heterogeneity"]
+    },
+    {
+      "id": "learning-disability-source-who",
+      "kind": "authoritative_guidance",
+      "citation": "World Health Organization. Mental disorders fact sheet. 30 September 2025; ICD-11 terminology for disorders of intellectual development.",
+      "url": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders",
+      "accessed": "2026-08-12",
+      "supports": ["learning-disability-claim-international-terms"]
+    },
+    {
+      "id": "learning-disability-source-mencap-rights",
+      "kind": "community",
+      "citation": "Mencap. Learning Disability Rights.",
+      "url": "https://www.mencap.org.uk/learning-disability-explained/learning-disability-rights",
+      "accessed": "2026-08-12",
+      "supports": ["learning-disability-claim-heterogeneity", "learning-disability-claim-adjustments", "learning-disability-perspective-rights"]
+    }
+  ],
+  "uncertainties": [
+    {
+      "id": "learning-disability-uncertainty-terminology",
+      "question": "How should UK learning disability, international intellectual disability and WHO disorders-of-intellectual-development terminology be bridged without claiming they are identical in every legal, clinical and service context?",
+      "why_it_matters": "Terminology affects access, identity, records and whether readers confuse this concept with dyslexia and other specific learning difficulties.",
+      "what_would_reduce_it": ["A current cross-jurisdiction terminology review comparing ICD-11, UK NHS/social-care usage and major international clinical definitions."],
+      "status": "open"
+    },
+    {
+      "id": "learning-disability-uncertainty-assessment",
+      "question": "How should intellectual and adaptive-functioning assessment be explained without turning scores into a complete account of a person?",
+      "why_it_matters": "Assessment is relevant to diagnostic definitions, but support needs and abilities are contextual and cannot be read directly from one score.",
+      "what_would_reduce_it": ["Current multidisciplinary guidance on adaptive-functioning and intellectual assessment, including limitations and cultural validity."],
+      "status": "open"
+    },
+    {
+      "id": "learning-disability-uncertainty-representation",
+      "question": "How can ND Oracle represent people with profound and multiple learning disabilities, non-speaking people and people needing substantial support without building the concept only around the most independently communicating voices?",
+      "why_it_matters": "A narrow lived-experience sample can erase the people for whom communication access and support dependence are most consequential.",
+      "what_would_reduce_it": ["Accessible co-production evidence including self-advocates, supported communicators, families and independent advocates across a wide range of support needs."],
+      "status": "open"
+    }
+  ],
+  "perspectives": [
+    {
+      "id": "learning-disability-perspective-rights",
+      "held_by": "Learning-disability self-advocates and rights organisations",
+      "summary": "Clinical classification can be useful for access to services, but people with a learning disability have the same human rights as everyone else; support should promote dignity, participation, communication and choice rather than treating diagnosis as a measure of human worth.",
+      "source_ids": ["learning-disability-source-mencap-rights"]
+    }
+  ],
+  "relations": [
+    {
+      "type": "related_to",
+      "target_id": "autism",
+      "note": "Autism and learning disability can co-occur, but neither diagnosis implies the other; NHS usage explicitly distinguishes autistic people with and without learning disability."
+    },
+    {
+      "type": "related_to",
+      "target_id": "dyslexia",
+      "note": "This relation exists to make the terminology distinction visible: in UK NHS usage dyslexia is a specific learning difficulty and is not itself a learning disability."
+    }
+  ],
+  "ecosystem_entry_points": [
+    {
+      "category": "accommodations",
+      "questions": ["Which reasonable adjustments make healthcare, public services and information genuinely accessible to the individual person?", "When are Easy Read, communication support, extra time or a quieter environment useful?"]
+    },
+    {
+      "category": "services",
+      "questions": ["What does the GP Learning Disability Register provide, and who may be eligible?", "How are individual health and support needs assessed across childhood and adulthood?"]
+    },
+    {
+      "category": "organisations",
+      "questions": ["Which organisations provide self-advocacy, accessible rights information and support led by or accountable to people with learning disabilities?"]
+    }
+  ],
+  "provenance": {
+    "created": "2026-08-12",
+    "created_by": "ND Oracle Batch A candidate research",
+    "method": "Candidate-only UK-first synthesis of current NHS/NHS England terminology, WHO international classification context and bounded rights/community evidence; not promoted to the authoritative corpus.",
+    "review_state": "unreviewed_seed",
+    "last_reviewed": null
+  }
+}
