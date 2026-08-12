@@ -10,7 +10,7 @@ from html.parser import HTMLParser
 from urllib.parse import urljoin, urlsplit
 
 DEFAULT_ORIGIN = "https://ndoracle.org"
-USER_AGENT = "nd-oracle-live-verifier/0.4"
+USER_AGENT = "nd-oracle-live-verifier/0.5"
 
 ROUTES = (
     ("/", "Understand neurodivergence without doing all the digging yourself"),
@@ -28,7 +28,34 @@ ROUTES = (
     ("/how-it-works/", "<h1>How this site works</h1>"),
     ("/about/", "<h1>About</h1>"),
     ("/accessibility/", "<h1>Accessibility</h1>"),
+    ("/feedback/", "<h1>Feedback</h1>"),
     ("/privacy/", "<h1>Privacy</h1>"),
+)
+
+TOPIC_FIRST_READ_MARKERS = {
+    "/understand/neurodiversity/": "People's brains and nervous systems vary.",
+    "/understand/autism/": "Autistic people can experience communication, social situations, routines, interests and sensory input differently.",
+    "/understand/adhd/": "ADHD can affect attention, activity, impulsivity and managing everyday tasks.",
+    "/understand/executive-function/": "Executive functions help us hold things in mind, switch attention, pause responses and organise actions towards a goal.",
+    "/understand/sensory-processing/": "People differ in how strongly they notice and respond to sound, light, touch, movement and other sensory input.",
+    "/understand/dyslexia/": "Dyslexia mainly affects learning and using word reading and spelling.",
+    "/understand/developmental-coordination-disorder/": "Developmental co-ordination disorder (DCD) affects how easily someone learns and carries out coordinated movements.",
+    "/understand/tourette-syndrome/": "Tourette syndrome involves motor and vocal tics that change over time.",
+    "/understand/learning-disability/": "In the UK, a learning disability means lifelong difficulty learning or understanding new information together with difficulty managing everyday life independently.",
+    "/understand/developmental-language-disorder/": "Developmental language disorder (DLD) is a persistent difficulty understanding and/or using language that affects everyday life.",
+}
+
+HOMEPAGE_QUESTIONS = (
+    ("What does neurodiversity mean?", "/understand/neurodiversity/"),
+    ("What is autism?", "/understand/autism/"),
+    ("What is ADHD?", "/understand/adhd/"),
+    ("Why can starting or organising tasks feel hard?", "/understand/executive-function/"),
+    ("Why can sound, light or touch feel intense?", "/understand/sensory-processing/"),
+    ("Why can reading or spelling stay difficult?", "/understand/dyslexia/"),
+    ("Why can coordination and everyday movement be hard?", "/understand/developmental-coordination-disorder/"),
+    ("What are tics and Tourette syndrome?", "/understand/tourette-syndrome/"),
+    ("What does learning disability mean in the UK?", "/understand/learning-disability/"),
+    ("Why can understanding or using language be difficult?", "/understand/developmental-language-disorder/"),
 )
 
 LEGACY_ROUTES = ("/tools/", "/games/", "/resources/", "/community/", "/oracle/")
@@ -196,6 +223,54 @@ def verify_routes(origin: str, *, fetcher=fetch_url) -> list[str]:
     return failures
 
 
+def verify_v05_reading_contract(origin: str, *, fetcher=fetch_url) -> list[str]:
+    failures: list[str] = []
+
+    homepage = fetcher(expected_url(origin, "/"))
+    for question, target in HOMEPAGE_QUESTIONS:
+        if question not in homepage.body:
+            failures.append(f"/: missing v0.5 homepage question {question!r}")
+        if f'href="{target}"' not in homepage.body:
+            failures.append(f"/: missing v0.5 homepage route to {target}")
+
+    for path, first_read in TOPIC_FIRST_READ_MARKERS.items():
+        response = fetcher(expected_url(origin, path))
+        if first_read not in response.body:
+            failures.append(f"{path}: simple first-read explanation is missing")
+        if 'class="review-meta">Last reviewed:' not in response.body:
+            failures.append(f"{path}: visible Last reviewed metadata is missing")
+        if '<details class="technical-summary"><summary>More precise description</summary>' not in response.body:
+            failures.append(f"{path}: precise-description disclosure is missing")
+        if 'href="/how-it-works/#confidence"' not in response.body:
+            failures.append(f"{path}: confidence explanation link is missing")
+
+    how = fetcher(expected_url(origin, "/how-it-works/"))
+    for marker in (
+        '<h2>What the confidence labels mean</h2>',
+        '<dt>High</dt>',
+        '<dt>Moderate</dt>',
+        '<dt>Low</dt>',
+        '<dt>Contested</dt>',
+        '<dt>Not applicable</dt>',
+    ):
+        if marker not in how.body:
+            failures.append(f"/how-it-works/: confidence marker missing: {marker!r}")
+
+    feedback = fetcher(expected_url(origin, "/feedback/"))
+    for marker in (
+        '<h2>Report a problem</h2>',
+        'href="https://github.com/armpitpete/nd-oracle/issues/new"',
+        'Please do not include private health information',
+        '<h2>Current limitation</h2>',
+    ):
+        if marker not in feedback.body:
+            failures.append(f"/feedback/: feedback boundary marker missing: {marker!r}")
+
+    if not failures:
+        print("PASS v0.5 public-reading contract")
+    return failures
+
+
 def verify_not_found(origin: str, *, fetcher=fetch_url) -> list[str]:
     url = expected_url(origin, NOT_FOUND_PATH)
     response = fetcher(url)
@@ -340,6 +415,7 @@ def verify_www_redirect(origin: str, *, fetcher=fetch_url) -> list[str]:
 def verify_production(origin: str, *, fetcher=fetch_url) -> list[str]:
     failures: list[str] = []
     failures.extend(verify_routes(origin, fetcher=fetcher))
+    failures.extend(verify_v05_reading_contract(origin, fetcher=fetcher))
     failures.extend(verify_not_found(origin, fetcher=fetcher))
     failures.extend(verify_metadata_files(origin, fetcher=fetcher))
     failures.extend(verify_legacy_routes(origin, fetcher=fetcher))
@@ -349,7 +425,7 @@ def verify_production(origin: str, *, fetcher=fetch_url) -> list[str]:
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Verify the ND Oracle production HTTP and public-surface contract over HTTPS."
+        description="Verify the ND Oracle production HTTP, public-surface and v0.5 reading contract over HTTPS."
     )
     parser.add_argument("--origin", default=DEFAULT_ORIGIN)
     return parser.parse_args(argv)
@@ -372,7 +448,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"- {failure}", file=sys.stderr)
         return 1
     print(
-        f"Verified {len(ROUTES)} canonical routes plus production HTTP/public-surface contract at {origin}."
+        f"Verified {len(ROUTES)} canonical routes plus v0.5 reading and production HTTP/public-surface contracts at {origin}."
     )
     return 0
 
