@@ -160,11 +160,7 @@ class VerifyLiveSiteTests(unittest.TestCase):
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
             f"{sitemap_urls}</urlset>"
         )
-        robots = (
-            "User-agent: *\n"
-            "Allow: /\n"
-            f"Sitemap: {origin}/sitemap.xml\n"
-        )
+        robots = verify_live_site.expected_origin_robots(origin)
 
         def fetcher(url):
             if url.endswith("/robots.txt"):
@@ -188,6 +184,28 @@ class VerifyLiveSiteTests(unittest.TestCase):
         for legacy in verify_live_site.LEGACY_ROUTES:
             self.assertNotIn(origin + legacy, verify_live_site.expected_sitemap_urls(origin))
 
+    def test_managed_robots_prefix_preserves_origin_contract(self):
+        origin = "https://ndoracle.org"
+        managed = (
+            f"{verify_live_site.CLOUDFLARE_MANAGED_BEGIN}\n"
+            f"{verify_live_site.CLOUDFLARE_CONTENT_SIGNAL}\n"
+            "User-agent: GPTBot\nDisallow: /\n"
+            f"{verify_live_site.CLOUDFLARE_MANAGED_END}\n\n"
+            f"{verify_live_site.expected_origin_robots(origin)}"
+        )
+        self.assertEqual(verify_live_site.verify_robots_content(origin, managed), [])
+
+    def test_managed_robots_rejects_changed_content_signal(self):
+        origin = "https://ndoracle.org"
+        managed = (
+            f"{verify_live_site.CLOUDFLARE_MANAGED_BEGIN}\n"
+            "Content-Signal: search=no,ai-train=yes,use=full\n"
+            f"{verify_live_site.CLOUDFLARE_MANAGED_END}\n\n"
+            f"{verify_live_site.expected_origin_robots(origin)}"
+        )
+        failures = verify_live_site.verify_robots_content(origin, managed)
+        self.assertTrue(any("content signal changed" in failure for failure in failures))
+
     def test_sitemap_rejects_unexpected_legacy_route(self):
         origin = "https://ndoracle.org"
         sitemap = (
@@ -195,11 +213,7 @@ class VerifyLiveSiteTests(unittest.TestCase):
             f'<url><loc>{origin}/tools/</loc></url>'
             "</urlset>"
         )
-        robots = (
-            "User-agent: *\n"
-            "Allow: /\n"
-            f"Sitemap: {origin}/sitemap.xml\n"
-        )
+        robots = verify_live_site.expected_origin_robots(origin)
 
         def fetcher(url):
             if url.endswith("robots.txt"):
