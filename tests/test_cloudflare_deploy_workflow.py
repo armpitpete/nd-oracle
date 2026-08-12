@@ -94,14 +94,30 @@ class CloudflareDeployWorkflowTests(unittest.TestCase):
         self.assertIn('--commit-hash="$RELEASE_SHA"', self.text)
         self.assertIn("--commit-dirty=false", self.text)
 
-    def test_exact_accepted_custom_domain_set_is_required_without_mutation(self):
+    def test_accepted_pages_subdomain_and_custom_domain_set_are_required_without_mutation(self):
         self.assertGreaterEqual(
-            self.text.count('expected_domains = {"ndoracle.org"}'),
+            self.text.count('expected_subdomain = "nd-oracle.pages.dev"'),
             2,
         )
         self.assertGreaterEqual(
-            self.text.count("if domains != expected_domains:"),
+            self.text.count('expected_custom_domains = {"ndoracle.org"}'),
             2,
+        )
+        self.assertGreaterEqual(
+            self.text.count("custom_domains = domains - {subdomain}"),
+            2,
+        )
+        self.assertGreaterEqual(
+            self.text.count("if custom_domains != expected_custom_domains:"),
+            2,
+        )
+        self.assertIn(
+            "Cloudflare Pages subdomain mismatch",
+            self.text,
+        )
+        self.assertIn(
+            "Cloudflare Pages subdomain changed before deployment",
+            self.text,
         )
         self.assertIn(
             "Cloudflare Pages custom-domain set mismatch",
@@ -112,11 +128,11 @@ class CloudflareDeployWorkflowTests(unittest.TestCase):
             self.text,
         )
         self.assertIn(
-            "missing = sorted(expected_domains - domains)",
+            "missing = sorted(expected_custom_domains - custom_domains)",
             self.text,
         )
         self.assertIn(
-            "unexpected = sorted(domains - expected_domains)",
+            "unexpected = sorted(custom_domains - expected_custom_domains)",
             self.text,
         )
         self.assertIn(
