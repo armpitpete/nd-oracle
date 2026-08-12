@@ -94,9 +94,31 @@ class CloudflareDeployWorkflowTests(unittest.TestCase):
         self.assertIn('--commit-hash="$RELEASE_SHA"', self.text)
         self.assertIn("--commit-dirty=false", self.text)
 
-    def test_domain_and_dns_boundary_is_explicit(self):
-        self.assertIn("ndoracle.org became attached before deployment; refusing upload", self.text)
-        self.assertIn("Custom-domain and DNS mutation: not requested by this workflow", self.text)
+    def test_accepted_production_domain_is_required_without_mutation(self):
+        self.assertIn('if "ndoracle.org" not in domains:', self.text)
+        self.assertIn(
+            "Expected accepted production domain ndoracle.org to remain attached",
+            self.text,
+        )
+        self.assertIn(
+            "Accepted production domain ndoracle.org became detached before deployment",
+            self.text,
+        )
+        self.assertIn(
+            'item.endswith(".ndoracle.org") and item != "ndoracle.org"',
+            self.text,
+        )
+        self.assertIn("Refusing unexpected attached ndoracle.org subdomains", self.text)
+        self.assertIn(
+            "Unexpected ndoracle.org subdomain attachment appeared before deployment",
+            self.text,
+        )
+        self.assertIn(
+            "no custom-domain or DNS mutation was requested",
+            self.text,
+        )
+        self.assertNotIn("Refusing deployment while ndoracle.org is attached", self.text)
+        self.assertNotIn("ndoracle.org became attached before deployment", self.text)
         self.assertNotIn("pages domain", self.text)
         self.assertNotIn("dns record", self.text.lower())
 
