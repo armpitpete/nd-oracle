@@ -37,7 +37,7 @@ class V02ValidationTests(unittest.TestCase):
 
     def test_fixture_graph_passes_without_changing_authoritative_count(self) -> None:
         count, errors = validate_repository(ROOT, FIXTURES)
-        self.assertEqual(5, count)
+        self.assertEqual(10, count)
         self.assertEqual([], errors)
 
     def test_dispatcher_accepts_all_six_v02_types(self) -> None:
