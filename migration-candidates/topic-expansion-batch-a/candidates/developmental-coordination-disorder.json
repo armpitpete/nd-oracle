@@ -3,7 +3,7 @@
   "id": "developmental-coordination-disorder",
   "type": "concept",
   "name": "Developmental co-ordination disorder",
-  "aliases": ["DCD", "developmental coordination disorder", "dyspraxia"],
+  "aliases": ["DCD", "developmental coordination disorder"],
   "status": "seed",
   "summary": "Developmental co-ordination disorder (DCD) is a developmental motor-coordination condition that can make everyday activities and participation harder; the common UK term dyspraxia is broader and can also be used for acquired movement difficulties.",
   "scope": {
