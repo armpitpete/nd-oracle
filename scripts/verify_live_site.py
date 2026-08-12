@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import html
 import sys
 import urllib.error
 import urllib.request
@@ -235,7 +236,7 @@ def verify_v05_reading_contract(origin: str, *, fetcher=fetch_url) -> list[str]:
 
     for path, first_read in TOPIC_FIRST_READ_MARKERS.items():
         response = fetcher(expected_url(origin, path))
-        if first_read not in response.body:
+        if html.escape(first_read, quote=True) not in response.body:
             failures.append(f"{path}: simple first-read explanation is missing")
         if 'class="review-meta">Last reviewed:' not in response.body:
             failures.append(f"{path}: visible Last reviewed metadata is missing")
