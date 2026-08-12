@@ -1,0 +1,119 @@
+{
+  "research_version": "1.1",
+  "prepared_on": "2026-08-11",
+  "prepared_against_main": "622da858f5803be32f409a54f7e0c6742f19e373",
+  "authoritative": false,
+  "authoritative_replacement": false,
+  "scope": "Day-level publication-date research and representation analysis for the already accepted non-authoritative Singer 2016 Kindle Evidence identity only.",
+  "identity": {
+    "evidence_id": "neurodiversity-source-singer-2016-kindle",
+    "title": "NeuroDiversity: The Birth of an Idea",
+    "author": "Judy Singer",
+    "format": "Kindle",
+    "asin": "B01HY0QTEE",
+    "identity_decision_ref": "d11-singer-edition-identity-preservation"
+  },
+  "candidate_date": "2016-07-03",
+  "evidence": [
+    {
+      "id": "singer-first-party-bibliography",
+      "source_class": "first_party_author",
+      "url": "https://neurodiversity2.blogspot.com/p/bibliography-how-to-cite-my-work.html",
+      "finding": "Singer identifies NeuroDiversity: The birth of an idea as a 2016 Kindle publication and links the exact Amazon Kindle identity ASIN B01HY0QTEE.",
+      "supports_exact_day": false
+    },
+    {
+      "id": "goodreads-kindle-edition",
+      "source_class": "secondary_bibliographic_metadata",
+      "url": "https://www.goodreads.com/book/show/31671068-neurodiversity",
+      "finding": "Goodreads identifies a 98-page Kindle Edition of NeuroDiversity: The Birth of an Idea by Judy Singer as published July 3, 2016.",
+      "supports_exact_day": true
+    },
+    {
+      "id": "singer-launch-post",
+      "source_class": "first_party_contemporaneous_post",
+      "url": "https://neurodiversity2.blogspot.com/2016/07/my-new-book-neurodiversity-birth-of-idea.html",
+      "finding": "Singer's post dated July 16, 2016 says she had republished the thesis on Kindle with a new introduction. This independently bounds availability to no later than July 16, 2016 but does not state the publication day.",
+      "supports_exact_day": false
+    },
+    {
+      "id": "singer-later-bibliography",
+      "source_class": "first_party_author",
+      "url": "https://neurodiversity2.blogspot.com/2023/10/a-factual-response-to-martijn-dekkers.html",
+      "finding": "Singer again cites the book as a 2016 Kindle publication and links ASIN B01HY0QTEE, corroborating edition identity but not the day-level date.",
+      "supports_exact_day": false
+    }
+  ],
+  "negative_and_limit_evidence": {
+    "conflicting_day_level_date_found": false,
+    "direct_amazon_product_metadata_retrieved": false,
+    "author_first_party_day_level_statement_found": false,
+    "library_catalogue_day_level_record_for_2016_kindle_found": false,
+    "assessment": "The exact day is supplied by one secondary bibliographic record. First-party sources strongly bind the 2016 Kindle identity and are chronologically consistent with July 3, but do not themselves state that day."
+  },
+  "dostoevsky_check": {
+    "satisfying_story": "Goodreads likely reflects Amazon-origin edition metadata, making July 3 look straightforward.",
+    "disconfirming_tests": [
+      "Look for a conflicting day-level date tied to ASIN B01HY0QTEE.",
+      "Look for first-party Singer/KDP/Amazon metadata stating a different date.",
+      "Keep the 2017 ISBN-bound print identity separate so its September 5, 2017 date cannot contaminate the Kindle identity."
+    ],
+    "result": "No conflict found, but the exact day is not independently day-level corroborated."
+  },
+  "assessment": {
+    "identity_confidence": "high",
+    "year_confidence": "high",
+    "day_level_candidate": "2016-07-03",
+    "day_level_evidence_strength": "moderate",
+    "day_level_candidate_usable_unqualified_in_v0_2_date": false,
+    "ready_for_exact_date_acceptance": false,
+    "automatic_verified_enrichment": false,
+    "representation_problem_exposed": true,
+    "reason": "2016-07-03 remains the best day-level candidate, but current evidence is insufficient to place it unqualified in the v0.2 date field. Owner acceptance cannot increase the evidential certainty of the underlying metadata."
+  },
+  "representation_analysis": {
+    "current_v0_2_constraint": "Evidence requires an exact ISO date and provides no date-precision or confidence mechanism.",
+    "known_fact": "The Singer Kindle edition is a 2016 publication tied to ASIN B01HY0QTEE.",
+    "unresolved_fact": "The exact publication day is not independently verified strongly enough for unqualified use.",
+    "routes": [
+      {
+        "id": "stronger-asin-bound-evidence",
+        "description": "Obtain stronger first-party or strong catalogue/archive day-level evidence tied specifically to ASIN B01HY0QTEE."
+      },
+      {
+        "id": "precision-aware-date-model",
+        "description": "Design a separately reviewed partial or precision-aware date representation that can preserve the known year without asserting unsupported month/day precision."
+      },
+      {
+        "id": "retain-unmapped",
+        "description": "Retain the Singer 2016 edition unmapped until its date can be represented faithfully."
+      }
+    ],
+    "preferred_research_direction": "precision-aware-date-model",
+    "preference_reason": "Incomplete bibliographic dates are likely to recur, so the inability to represent known-but-inexact dates is a general modelling weakness rather than a Singer-only exception.",
+    "authorises_schema_change": false
+  },
+  "decision_candidate": {
+    "id": "nd-singer-2016-date-representation-resolution",
+    "status": "representation_decision_required",
+    "recommended_conclusion": "2016-07-03 remains the best day-level candidate, but current evidence is insufficient to place it unqualified in the v0.2 date field.",
+    "next_protected_question": "How should ND Oracle represent a bibliographic date when the publication year is known but exact day-level precision is unresolved?",
+    "does_not_authorise": [
+      "authoritative v0.1 mutation",
+      "authoritative v0.2 replacement",
+      "acceptance of 2016-07-03 as an exact publication fact",
+      "Singer 2017 identity or date change",
+      "claim-text change",
+      "new contribution role or binding",
+      "schema or validator change",
+      "ADHD migration or semantic disposition",
+      "publication or deployment"
+    ]
+  },
+  "reopening_conditions": [
+    "ASIN-bound Amazon or KDP metadata establishes or conflicts with 2016-07-03.",
+    "A first-party author record establishes or conflicts with the day-level date.",
+    "A stronger contemporaneous catalogue or archival record tied to the same Kindle identity establishes or conflicts with the day-level date.",
+    "A separately reviewed precision-aware date design provides a faithful representation of the known year without unsupported day-level precision."
+  ]
+}
