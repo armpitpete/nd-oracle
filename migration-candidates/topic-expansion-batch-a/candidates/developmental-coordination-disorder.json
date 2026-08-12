@@ -74,7 +74,7 @@
       "url": "https://pubmed.ncbi.nlm.nih.gov/30671947/",
       "doi": "10.1111/dmcn.14132",
       "accessed": "2026-08-12",
-      "supports": ["dcd-claim-core", "dcd-claim-lifespan"]
+      "supports": ["dcd-claim-core", "dcd-claim-lifespan", "dcd-perspective-participation"]
     }
   ],
   "uncertainties": [
