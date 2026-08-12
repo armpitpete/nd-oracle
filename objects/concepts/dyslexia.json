@@ -1,0 +1,41 @@
+{
+  "schema_version": "0.1",
+  "id": "dyslexia",
+  "type": "concept",
+  "name": "Dyslexia",
+  "aliases": [],
+  "status": "reviewed",
+  "summary": "Dyslexia is characterised primarily by persistent difficulties with word reading and/or spelling, with presentation and impact varying across people, writing systems, tasks and support contexts.",
+  "scope": {
+    "includes": ["Persistent difficulties with word reading and spelling, including accuracy, speed or both.", "Variation across writing systems, age, task demands and support contexts.", "Assessment boundaries, co-occurrence and practical access needs across childhood and adulthood."],
+    "excludes": ["Using low reading attainment alone as proof of dyslexia.", "Using general intelligence or an IQ discrepancy as a simple eligibility test for dyslexia.", "Treating every difficulty with memory, planning, attention, writing or mathematics as a core feature of dyslexia.", "Individual diagnosis or universal intervention recommendations."]
+  },
+  "claims": [
+    {"id": "dyslexia-claim-core", "text": "Dyslexia is characterised primarily by persistent difficulty with word reading and/or spelling, involving accuracy, speed or both, and its presentation can vary with the writing system.", "confidence": "high", "source_ids": ["dyslexia-source-ida-2025", "dyslexia-source-catts-2026"], "uncertainty_ids": ["dyslexia-uncertainty-boundary", "dyslexia-uncertainty-cross-language"]},
+    {"id": "dyslexia-claim-intelligence", "text": "Dyslexic word-level literacy difficulties occur across a range of cognitive profiles, so general intelligence should not be used as a simple test of whether someone can be dyslexic.", "confidence": "high", "source_ids": ["dyslexia-source-ida-2025", "dyslexia-source-catts-2026", "dyslexia-source-nhs-children"], "uncertainty_ids": ["dyslexia-uncertainty-assessment"]},
+    {"id": "dyslexia-claim-lifespan", "text": "Dyslexic difficulties can continue into adulthood, while their practical impact varies with the person, task, environment, expectations and available support.", "confidence": "moderate", "source_ids": ["dyslexia-source-nhs-adults", "dyslexia-source-bda-lived"], "uncertainty_ids": ["dyslexia-uncertainty-boundary"]}
+  ],
+  "sources": [
+    {"id": "dyslexia-source-ida-2025", "kind": "authoritative_guidance", "citation": "International Dyslexia Association. 2025 Dyslexia Definition Project; definition adopted 22 October 2025.", "url": "https://dyslexiaida.org/2025-dyslexia-definition-project/", "accessed": "2026-08-12", "supports": ["dyslexia-claim-core", "dyslexia-claim-intelligence"]},
+    {"id": "dyslexia-source-catts-2026", "kind": "peer_reviewed", "citation": "Catts HW, Haynes CW, Joshi RM. Defining dyslexia: 2025 revision. Annals of Dyslexia. 2026.", "url": "https://pubmed.ncbi.nlm.nih.gov/42053753/", "doi": "10.1007/s11881-026-00363-4", "accessed": "2026-08-12", "supports": ["dyslexia-claim-core", "dyslexia-claim-intelligence"]},
+    {"id": "dyslexia-source-nhs-children", "kind": "authoritative_guidance", "citation": "NHS. Dyslexia in children.", "url": "https://www.nhs.uk/conditions/dyslexia-in-children/", "accessed": "2026-08-12", "supports": ["dyslexia-claim-intelligence"]},
+    {"id": "dyslexia-source-nhs-adults", "kind": "authoritative_guidance", "citation": "NHS. Dyslexia in adults.", "url": "https://www.nhs.uk/conditions/dyslexia-in-adults/", "accessed": "2026-08-12", "supports": ["dyslexia-claim-lifespan"]},
+    {"id": "dyslexia-source-bda-lived", "kind": "lived_experience", "citation": "British Dyslexia Association. My Dyslexia Story: Rebecca Harrison-Ruddock. 26 May 2026.", "url": "https://www.bdadyslexia.org.uk/stories/my-dyslexia-story-rebecca-harrison-ruddock", "accessed": "2026-08-12", "supports": ["dyslexia-claim-lifespan", "dyslexia-perspective-identity"]}
+  ],
+  "uncertainties": [
+    {"id": "dyslexia-uncertainty-cross-language", "question": "How should dyslexia be described and assessed across different languages and writing systems?", "why_it_matters": "The most visible English-language features are not equally prominent in every orthography, so an English-centred description can become falsely universal.", "what_would_reduce_it": ["Cross-linguistic consensus reviews and assessment guidance covering multiple orthographies and multilingual learners."], "status": "open"},
+    {"id": "dyslexia-uncertainty-assessment", "question": "Which assessment approaches most reliably distinguish dyslexia from other causes of reading difficulty without relying on unsupported IQ-discrepancy rules?", "why_it_matters": "Assessment practice remains diverse, and a public definition should not silently become a diagnostic algorithm.", "what_would_reduce_it": ["Current multidisciplinary assessment consensus with evidence on diagnostic validity across ages and settings."], "status": "open"},
+    {"id": "dyslexia-uncertainty-boundary", "question": "Which commonly reported non-reading difficulties should be treated as core dyslexia features rather than co-occurring or secondary experiences?", "why_it_matters": "Over-broad descriptions can make dyslexia an explanation for unrelated difficulties and erase useful distinctions between conditions.", "what_would_reduce_it": ["High-quality factor, longitudinal and co-occurrence evidence separating core, associated and secondary features."], "status": "open"}
+  ],
+  "perspectives": [{"id": "dyslexia-perspective-identity", "held_by": "Some dyslexic people and dyslexia advocates", "summary": "Dyslexia may be experienced as both a source of real literacy barriers and part of a valued neurodivergent identity; individual strengths should not be universalised into a claim that every dyslexic person has the same compensating gifts.", "source_ids": ["dyslexia-source-bda-lived"]}],
+  "relations": [
+    {"type": "commonly_co_occurs_with", "target_id": "adhd", "note": "Current dyslexia definition work recognises ADHD as a distinct condition that can co-occur with dyslexia; this does not imply shared diagnosis or cause."},
+    {"type": "related_to", "target_id": "developmental-language-disorder", "note": "DLD and dyslexia can overlap in developmental language and literacy profiles, but they remain distinct concepts."}
+  ],
+  "ecosystem_entry_points": [
+    {"category": "accommodations", "questions": ["Which adjustments reduce avoidable reading and writing barriers at school, university and work?", "When are assistive technologies useful, and what task are they solving?"]},
+    {"category": "services", "questions": ["Who performs a dyslexia assessment in the UK, and what can an assessment establish or not establish?"]},
+    {"category": "organisations", "questions": ["Which organisations provide evidence-based information, rights guidance and lived-experience support?"]}
+  ],
+  "provenance": {"created": "2026-08-12", "created_by": "ND Oracle Batch A candidate research", "method": "Evidence synthesis accepted by the owner on 2026-08-12 and promoted from frozen Batch A candidate blob 6609a1a100919003b541e22559f51031ca202031; candidate history remains preserved.", "review_state": "editor_reviewed", "last_reviewed": "2026-08-12"}
+}
