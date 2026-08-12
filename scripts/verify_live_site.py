@@ -116,7 +116,6 @@ def fetch_url(url: str, timeout: float = 20.0) -> Response:
         )
 
 
-# Backwards-compatible name for callers/tests introduced with verifier v0.1.
 fetch_html = fetch_url
 
 
@@ -261,12 +260,16 @@ def verify_metadata_files(origin: str, *, fetcher=fetch_url) -> list[str]:
         "Allow: /\n"
         f"Sitemap: {origin}/sitemap.xml\n"
     )
+    actual_robots = robots.body.replace("\r\n", "\n")
     if robots.status != 200:
         failures.append(f"robots.txt: expected HTTP 200, got {robots.status}")
     if robots.final_url != robots_url:
         failures.append(f"robots.txt: unexpected final URL {robots.final_url!r}")
-    if robots.body.replace("\r\n", "\n") != expected_robots:
-        failures.append("robots.txt: content does not match the accepted production contract")
+    if actual_robots != expected_robots:
+        failures.append(
+            "robots.txt: content does not match the accepted production contract: "
+            f"actual={actual_robots!r}; expected={expected_robots!r}"
+        )
     if not failures:
         print("PASS robots.txt")
 
