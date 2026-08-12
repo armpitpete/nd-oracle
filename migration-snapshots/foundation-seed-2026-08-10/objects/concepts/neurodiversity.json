@@ -1,0 +1,78 @@
+{
+  "schema_version": "0.1",
+  "id": "neurodiversity",
+  "type": "concept",
+  "name": "Neurodiversity",
+  "aliases": ["neurological diversity"],
+  "status": "seed",
+  "summary": "Neurodiversity describes variation in human minds and nervous systems and also names a family of social and political framings about that variation.",
+  "scope": {
+    "includes": ["variation across all people", "community and political uses of the concept", "relationships between difference, disability, environment, and support"],
+    "excludes": ["a diagnosis", "a claim that every difference is beneficial", "a fixed or universally agreed list of neurodivergent groups"]
+  },
+  "claims": [
+    {
+      "id": "neurodiversity-claim-1",
+      "text": "The concept emerged through autistic community discussion and late-1990s writing, so accounts that credit a single originator are incomplete.",
+      "confidence": "moderate",
+      "source_ids": ["neurodiversity-source-singer", "neurodiversity-source-botha"],
+      "uncertainty_ids": ["neurodiversity-uncertainty-origins"]
+    },
+    {
+      "id": "neurodiversity-claim-2",
+      "text": "Neurodiversity can coexist with disability, support needs, and clinical care; the framing does not by itself settle how any individual difference should be understood or supported.",
+      "confidence": "contested",
+      "source_ids": ["neurodiversity-source-singer"],
+      "uncertainty_ids": ["neurodiversity-uncertainty-boundaries"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "neurodiversity-source-singer",
+      "kind": "historical",
+      "citation": "Singer, J. NeuroDiversity: The Birth of an Idea (2016), based on the 1998 thesis Odd People In.",
+      "url": "https://wellcomecollection.org/works/ywrdd8ff",
+      "accessed": "2026-08-10",
+      "supports": ["neurodiversity-claim-1", "neurodiversity-claim-2", "neurodiversity-perspective-paradigm"]
+    },
+    {
+      "id": "neurodiversity-source-botha",
+      "kind": "peer_reviewed",
+      "citation": "Botha, M. et al. The neurodiversity concept was developed collectively: An overdue correction on the origins of neurodiversity theory (2024).",
+      "url": "https://researchportal.port.ac.uk/en/publications/the-neurodiversity-concept-was-developed-collectively-an-overdue-/",
+      "doi": "10.1080/09687599.2024.2327837",
+      "accessed": "2026-08-10",
+      "supports": ["neurodiversity-claim-1", "neurodiversity-perspective-collective"]
+    }
+  ],
+  "uncertainties": [
+    {
+      "id": "neurodiversity-uncertainty-origins",
+      "question": "How should credit be distributed among autistic online communities, activists, Judy Singer, and Harvey Blume?",
+      "why_it_matters": "Origin stories allocate authority and can erase collective community work.",
+      "what_would_reduce_it": ["archival study of early mailing lists with consent and context", "comparison of dated primary texts", "accounts from multiple early participants"],
+      "status": "open"
+    },
+    {
+      "id": "neurodiversity-uncertainty-boundaries",
+      "question": "Which uses of neurodivergent are useful in which clinical, legal, community, and political contexts?",
+      "why_it_matters": "A universal boundary may exclude people or make the term too imprecise for a task.",
+      "what_would_reduce_it": ["community-led comparative work across contexts", "explicit purpose-specific definitions", "documentation of harms and benefits of inclusion rules"],
+      "status": "open"
+    }
+  ],
+  "perspectives": [
+    {"id": "neurodiversity-perspective-paradigm", "held_by": "neurodiversity advocates and scholars", "summary": "Neurological variation should be understood partly as human diversity, with attention to rights, environment, and inclusion as well as impairment.", "source_ids": ["neurodiversity-source-singer"]},
+    {"id": "neurodiversity-perspective-collective", "held_by": "historical revision scholars", "summary": "The concept was developed collectively and should not be attributed solely to one named individual.", "source_ids": ["neurodiversity-source-botha"]}
+  ],
+  "relations": [
+    {"type": "broader_than", "target_id": "autism", "note": "Autism is commonly discussed within the neurodiversity ecosystem."},
+    {"type": "broader_than", "target_id": "adhd", "note": "ADHD is commonly discussed within the neurodiversity ecosystem."}
+  ],
+  "ecosystem_entry_points": [
+    {"category": "communities", "questions": ["Who defines membership and language?", "Whose access and support needs are underrepresented?"]},
+    {"category": "organisations", "questions": ["Is governance meaningfully led by neurodivergent people?", "Are funding and conflicts transparent?"]},
+    {"category": "books_media", "questions": ["Does the work distinguish diversity, disability, diagnosis, and identity?", "Whose perspective is missing?"]}
+  ],
+  "provenance": {"created": "2026-08-10", "created_by": "Codex from user-authorised seed scope", "method": "Structured synthesis of cited public sources; no community review yet", "review_state": "unreviewed_seed", "last_reviewed": null}
+}

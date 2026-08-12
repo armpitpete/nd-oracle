@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1", "id": "sensory-processing", "type": "concept", "name": "Sensory processing", "aliases": ["sensory integration", "sensory modulation"], "status": "seed",
+  "summary": "Sensory processing covers how nervous systems register, discriminate, combine, and respond to information within and across sensory modalities, shaped by both person and environment.",
+  "scope": {"includes": ["hyperreactivity, hyporeactivity, seeking, discrimination, and multisensory integration", "interoceptive, proprioceptive, vestibular, and familiar external senses", "person-environment fit and practical access"], "excludes": ["a single universally accepted disorder category", "an assumption that observed behaviour reveals a unique sensory cause", "a universal intervention recommendation"]},
+  "claims": [
+    {"id": "sensory-processing-claim-1", "text": "Sensory processing is multidimensional, and patterns vary between people and across modalities and contexts.", "confidence": "moderate", "source_ids": ["sensory-processing-source-dunn", "sensory-processing-source-autism"], "uncertainty_ids": ["sensory-processing-uncertainty-construct"]},
+    {"id": "sensory-processing-claim-2", "text": "Evidence about a group-level sensory difference does not by itself establish which accommodation or intervention will benefit an individual.", "confidence": "moderate", "source_ids": ["sensory-processing-source-autism"], "uncertainty_ids": ["sensory-processing-uncertainty-intervention"]}
+  ],
+  "sources": [
+    {"id": "sensory-processing-source-dunn", "kind": "peer_reviewed", "citation": "Dunn, W. The impact of sensory processing abilities on the daily lives of young children and their families: A conceptual model (1997).", "url": "https://pubmed.ncbi.nlm.nih.gov/9311421/", "doi": "10.5014/ajot.51.1.23", "accessed": "2026-08-10", "supports": ["sensory-processing-claim-1", "sensory-processing-perspective-person-environment"]},
+    {"id": "sensory-processing-source-autism", "kind": "peer_reviewed", "citation": "Kawakami, S. et al. Neurobiology of sensory processing in autism spectrum disorder (2020).", "url": "https://pubmed.ncbi.nlm.nih.gov/32711809/", "accessed": "2026-08-10", "supports": ["sensory-processing-claim-1", "sensory-processing-claim-2"]}
+  ],
+  "uncertainties": [
+    {"id": "sensory-processing-uncertainty-construct", "question": "Which sensory constructs and measures are comparable across disciplines, neurotypes, ages, and contexts?", "why_it_matters": "Shared labels may hide different mechanisms or experiences.", "what_would_reduce_it": ["cross-disciplinary construct mapping", "measurement-invariance studies", "co-designed measures incorporating non-speaking participants"], "status": "open"},
+    {"id": "sensory-processing-uncertainty-intervention", "question": "Which environmental changes and sensory supports help which people, for which outcomes, with what burdens or harms?", "why_it_matters": "Generic recommendations can waste resources or increase distress.", "what_would_reduce_it": ["person-defined outcome trials", "adverse-effect and burden reporting", "N-of-1 and context-sensitive designs alongside group studies"], "status": "open"}
+  ],
+  "perspectives": [
+    {"id": "sensory-processing-perspective-person-environment", "held_by": "occupational-therapy conceptual models", "summary": "Observable responses arise from interaction between neurological thresholds and response strategies in daily environments.", "source_ids": ["sensory-processing-source-dunn"]}
+  ],
+  "relations": [
+    {"type": "related_to", "target_id": "autism", "note": "Sensory differences can be part of autistic experience but are not exclusive to autism."},
+    {"type": "related_to", "target_id": "executive-function", "note": "Sensory load may change the demands under which executive performance is observed."}
+  ],
+  "ecosystem_entry_points": [
+    {"category": "tools", "questions": ["What modality, environment, and goal does the tool address?", "Can it restrict autonomy or cause discomfort?"]},
+    {"category": "accommodations", "questions": ["Can the environment be changed before requiring the person to tolerate it?", "Is control available to the person affected?"]},
+    {"category": "services", "questions": ["Are assessment findings tied to person-defined daily outcomes?", "Are burden and adverse effects monitored?"]},
+    {"category": "games", "questions": ["Is the activity regulation, enjoyment, assessment, or treatment?", "Are claims limited to evidence for that purpose?"]}
+  ],
+  "provenance": {"created": "2026-08-10", "created_by": "Codex from user-authorised seed scope", "method": "Structured synthesis of cited public sources; no community review yet", "review_state": "unreviewed_seed", "last_reviewed": null}
+}
