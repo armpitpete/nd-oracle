@@ -259,7 +259,7 @@ jobs:
             exit 1
           fi
 
-      - name: Verify Cloudflare credentials and existing Direct Upload project
+      - name: Verify Cloudflare credentials and accepted production project
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -298,14 +298,22 @@ jobs:
               raise SystemExit("Cloudflare Pages production_branch must be main")
           if project.get("source"):
               raise SystemExit("Refusing Git-integrated Pages project; Direct Upload project required")
-          domains = [str(item).lower().rstrip(".") for item in (project.get("domains") or [])]
-          blocked = [item for item in domains if item == "ndoracle.org" or item.endswith(".ndoracle.org")]
-          if blocked:
-              raise SystemExit("Refusing deployment while ndoracle.org is attached: " + ", ".join(blocked))
-          print("Verified existing Direct Upload project with production branch main and no ndoracle.org custom domain.")
+          domains = {str(item).lower().rstrip(".") for item in (project.get("domains") or [])}
+          expected_domains = {"ndoracle.org"}
+          if domains != expected_domains:
+              missing = sorted(expected_domains - domains)
+              unexpected = sorted(domains - expected_domains)
+              raise SystemExit(
+                  "Cloudflare Pages custom-domain set mismatch: "
+                  f"missing={missing}; unexpected={unexpected}"
+              )
+          print(
+              "Verified existing Direct Upload project with production branch main "
+              "and exact accepted custom-domain set: ndoracle.org."
+          )
           PY
 
-      - name: Recheck release and deploy to pages.dev only
+      - name: Recheck release and deploy exact main
         env:
           GH_TOKEN: ${{ github.token }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -350,9 +358,15 @@ jobs:
               raise SystemExit("Cloudflare project identity changed or lookup failed")
           if project.get("production_branch") != "main" or project.get("source"):
               raise SystemExit("Cloudflare project is no longer the expected Direct Upload/main configuration")
-          domains = [str(item).lower().rstrip(".") for item in (project.get("domains") or [])]
-          if any(item == "ndoracle.org" or item.endswith(".ndoracle.org") for item in domains):
-              raise SystemExit("ndoracle.org became attached before deployment; refusing upload")
+          domains = {str(item).lower().rstrip(".") for item in (project.get("domains") or [])}
+          expected_domains = {"ndoracle.org"}
+          if domains != expected_domains:
+              missing = sorted(expected_domains - domains)
+              unexpected = sorted(domains - expected_domains)
+              raise SystemExit(
+                  "Cloudflare Pages custom-domain set changed before deployment: "
+                  f"missing={missing}; unexpected={unexpected}"
+              )
           PY
 
           npx --yes wrangler@4.114.0 pages deploy dist \
@@ -366,5 +380,5 @@ jobs:
 
           {
             echo "- Cloudflare Pages Direct Upload command completed for \`$RELEASE_SHA\`."
-            echo "- Custom-domain and DNS mutation: not requested by this workflow."
+            echo "- Existing ndoracle.org attachment was verified and preserved; no custom-domain or DNS mutation was requested."
           } >> "$GITHUB_STEP_SUMMARY"
