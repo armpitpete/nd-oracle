@@ -165,9 +165,15 @@ ul {
 
 .meta,
 .status,
-.route-label {
+.route-label,
+.review-meta {
   color: var(--text-soft);
   font-size: 0.86rem;
+}
+
+.review-meta {
+  margin-top: -0.4rem;
+  margin-bottom: 1rem;
 }
 
 .notice,
@@ -282,8 +288,32 @@ ul {
   white-space: nowrap;
 }
 
+.confidence-key {
+  margin: 1rem 0 0;
+}
+
+.confidence-key dt {
+  margin-top: 0.8rem;
+  font-weight: 700;
+}
+
+.confidence-key dd {
+  margin: 0.2rem 0 0 1.2rem;
+  color: var(--text-soft);
+}
+
 details {
   margin-top: 0.75rem;
+}
+
+.technical-summary {
+  margin: 0 0 1.2rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.technical-summary p {
+  color: var(--text-soft);
 }
 
 summary {
