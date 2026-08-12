@@ -74,7 +74,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_complete_repository_passes(self) -> None:
         count, errors = validate_repository(ROOT)
-        self.assertEqual(5, count)
+        self.assertEqual(10, count)
         self.assertEqual([], errors)
 
     def test_rejects_nonreciprocal_claim_source_mapping(self) -> None:
