@@ -1,0 +1,46 @@
+name: ND Oracle Batch A live production verification
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/live-production-verify-batch-a.yml"
+      - "scripts/verify_live_batch_a.py"
+      - "tests/test_verify_live_batch_a.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-batch-a-live-production:
+    name: Verify Batch A production routes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install validation dependency
+        run: python -m pip install --requirement requirements-dev.txt
+
+      - name: Compile Python sources
+        run: python -m compileall -q scripts tests
+
+      - name: Validate knowledge objects
+        run: python scripts/validate.py
+
+      - name: Run full regression suite
+        run: python -m unittest discover -s tests
+
+      - name: Verify five new Batch A production routes
+        run: python scripts/verify_live_batch_a.py --origin https://ndoracle.org
