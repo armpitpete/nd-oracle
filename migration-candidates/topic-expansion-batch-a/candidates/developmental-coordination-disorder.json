@@ -1,0 +1,149 @@
+{
+  "schema_version": "0.1",
+  "id": "developmental-coordination-disorder",
+  "type": "concept",
+  "name": "Developmental co-ordination disorder",
+  "aliases": ["DCD", "developmental coordination disorder", "dyspraxia"],
+  "status": "seed",
+  "summary": "Developmental co-ordination disorder (DCD) is a developmental motor-coordination condition that can make everyday activities and participation harder; the common UK term dyspraxia is broader and can also be used for acquired movement difficulties.",
+  "scope": {
+    "includes": [
+      "Developmental fine- and gross-motor coordination difficulties with meaningful effects on daily activity or participation.",
+      "Assessment boundaries, co-occurrence and functional impact in children, adolescents and adults.",
+      "The UK terminology distinction between DCD and broader uses of dyspraxia."
+    ],
+    "excludes": [
+      "Treating generic clumsiness as a diagnosis.",
+      "Acquired movement-planning problems after stroke, head injury or other neurological damage as if they were developmental DCD.",
+      "Assuming all memory, planning, emotional or social difficulties reported by people with dyspraxia are defining DCD features.",
+      "Individual diagnosis or a universal therapy recommendation."
+    ]
+  },
+  "claims": [
+    {
+      "id": "dcd-claim-core",
+      "text": "DCD is a developmental condition in which motor coordination is substantially below expectation and persistently affects everyday activities or participation, with assessment also considering other explanations for the motor difficulties.",
+      "confidence": "high",
+      "source_ids": ["dcd-source-nhs-diagnosis", "dcd-source-blank-2019"],
+      "uncertainty_ids": ["dcd-uncertainty-assessment", "dcd-uncertainty-core-associated"]
+    },
+    {
+      "id": "dcd-claim-lifespan",
+      "text": "DCD often continues to affect people in adolescence and adulthood, although the activities that create difficulty and the support needed can change over time and with context.",
+      "confidence": "moderate",
+      "source_ids": ["dcd-source-nhs-overview", "dcd-source-nhs-adults", "dcd-source-blank-2019"],
+      "uncertainty_ids": ["dcd-uncertainty-adult"]
+    },
+    {
+      "id": "dcd-claim-terminology",
+      "text": "In UK public use, dyspraxia is often used for DCD, but healthcare guidance prefers DCD for the developmental condition because dyspraxia can also refer to movement difficulties acquired after brain injury or stroke.",
+      "confidence": "high",
+      "source_ids": ["dcd-source-nhs-overview", "dcd-source-nhs-adults"],
+      "uncertainty_ids": ["dcd-uncertainty-core-associated"]
+    }
+  ],
+  "sources": [
+    {
+      "id": "dcd-source-nhs-overview",
+      "kind": "authoritative_guidance",
+      "citation": "NHS. Developmental co-ordination disorder (dyspraxia) in children — overview.",
+      "url": "https://www.nhs.uk/conditions/developmental-coordination-disorder-dyspraxia/",
+      "accessed": "2026-08-12",
+      "supports": ["dcd-claim-lifespan", "dcd-claim-terminology"]
+    },
+    {
+      "id": "dcd-source-nhs-diagnosis",
+      "kind": "authoritative_guidance",
+      "citation": "NHS. Developmental co-ordination disorder (dyspraxia) in children — diagnosis.",
+      "url": "https://www.nhs.uk/conditions/developmental-coordination-disorder-dyspraxia/diagnosis/",
+      "accessed": "2026-08-12",
+      "supports": ["dcd-claim-core"]
+    },
+    {
+      "id": "dcd-source-nhs-adults",
+      "kind": "authoritative_guidance",
+      "citation": "NHS. Dyspraxia in adults (developmental co-ordination disorder).",
+      "url": "https://www.nhs.uk/conditions/developmental-coordination-disorder-dyspraxia-in-adults/",
+      "accessed": "2026-08-12",
+      "supports": ["dcd-claim-lifespan", "dcd-claim-terminology"]
+    },
+    {
+      "id": "dcd-source-blank-2019",
+      "kind": "peer_reviewed",
+      "citation": "Blank R et al. International clinical practice recommendations on the definition, diagnosis, assessment, intervention, and psychosocial aspects of developmental coordination disorder. Developmental Medicine & Child Neurology. 2019;61(3):242-285.",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30671947/",
+      "doi": "10.1111/dmcn.14132",
+      "accessed": "2026-08-12",
+      "supports": ["dcd-claim-core", "dcd-claim-lifespan"]
+    }
+  ],
+  "uncertainties": [
+    {
+      "id": "dcd-uncertainty-adult",
+      "question": "How strong and representative is the evidence for adult DCD assessment, long-term outcomes and adult service pathways?",
+      "why_it_matters": "Much diagnostic infrastructure developed around childhood, while adults may have changing tasks, compensatory strategies and service access.",
+      "what_would_reduce_it": ["Large longitudinal studies and adult-specific assessment/service guidance with functional outcomes."],
+      "status": "open"
+    },
+    {
+      "id": "dcd-uncertainty-assessment",
+      "question": "Which assessments best capture meaningful real-world motor participation rather than test performance alone?",
+      "why_it_matters": "A motor test score can miss the interaction between skill, environment, task design and participation.",
+      "what_would_reduce_it": ["Validated assessment studies linking motor measures to activity and participation across settings."],
+      "status": "open"
+    },
+    {
+      "id": "dcd-uncertainty-core-associated",
+      "question": "Which non-motor difficulties commonly described under the word dyspraxia are core DCD features, co-occurring conditions or consequences of environmental demands?",
+      "why_it_matters": "The broad public term can bundle distinct experiences and encourage unsupported causal explanations.",
+      "what_would_reduce_it": ["Multidisciplinary factor, longitudinal and co-occurrence evidence using precise DCD definitions."],
+      "status": "open"
+    }
+  ],
+  "perspectives": [
+    {
+      "id": "dcd-perspective-participation",
+      "held_by": "Participation-oriented clinical and occupational-therapy approaches",
+      "summary": "The significance of DCD is not captured by a motor score alone; everyday participation, task demands, psychosocial effects and practical adaptation are legitimate outcomes alongside motor performance.",
+      "source_ids": ["dcd-source-blank-2019"]
+    }
+  ],
+  "relations": [
+    {
+      "type": "related_to",
+      "target_id": "adhd",
+      "note": "DCD and ADHD can co-occur; the relation is not diagnostic equivalence and does not imply one causes the other."
+    },
+    {
+      "type": "related_to",
+      "target_id": "autism",
+      "note": "DCD and autism can co-occur and may create overlapping practical support questions while remaining distinct concepts."
+    },
+    {
+      "type": "related_to",
+      "target_id": "executive-function",
+      "note": "Planning and task-management demands may affect everyday participation in DCD, but executive-function difficulty is not used here as a defining DCD criterion."
+    }
+  ],
+  "ecosystem_entry_points": [
+    {
+      "category": "services",
+      "questions": ["Which professionals assess DCD in children and adults in the UK?", "What can an occupational-therapy or motor assessment establish and what are its limits?"]
+    },
+    {
+      "category": "accommodations",
+      "questions": ["Which changes to tools, task layout, time, handwriting or physical environments reduce avoidable coordination barriers?"]
+    },
+    {
+      "category": "practical_resources",
+      "questions": ["Which strategies help with specific daily activities without assuming the same difficulty profile for everyone?"]
+    }
+  ],
+  "provenance": {
+    "created": "2026-08-12",
+    "created_by": "ND Oracle Batch A candidate research",
+    "method": "Candidate-only synthesis of current NHS DCD guidance and international evidence-based/expert-consensus clinical recommendations; not promoted to the authoritative corpus.",
+    "review_state": "unreviewed_seed",
+    "last_reviewed": null
+  }
+}
