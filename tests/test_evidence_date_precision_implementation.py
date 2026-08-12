@@ -33,7 +33,7 @@ class EvidenceDatePrecisionImplementationTests(unittest.TestCase):
         self.assertEqual("2026-08-11", evidence["date"])
         self.assertEqual("day", evidence["date_precision"])
         count, errors = validate_repository(ROOT, FIXTURES)
-        self.assertEqual(5, count)
+        self.assertEqual(10, count)
         self.assertEqual([], errors)
 
     def test_year_month_and_day_precision_validate(self) -> None:
