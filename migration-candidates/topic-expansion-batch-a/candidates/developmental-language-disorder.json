@@ -83,7 +83,7 @@
       "citation": "Speech and Language UK. Developmental Language Disorder (DLD) awareness; resource developed with lived-experience participation.",
       "url": "https://speechandlanguage.org.uk/help-for-families/developmental-language-disorder-awareness/",
       "accessed": "2026-08-12",
-      "supports": ["dld-claim-multilingual"]
+      "supports": ["dld-claim-multilingual", "dld-perspective-hidden"]
     },
     {
       "id": "dld-source-lived",
@@ -91,7 +91,7 @@
       "citation": "Speech and Language UK. You can't see DLD: lived-experience awareness material. 17 October 2025.",
       "url": "https://speechandlanguage.org.uk/about-us/news-and-blogs/dld-day-2025/",
       "accessed": "2026-08-12",
-      "supports": ["dld-claim-core"]
+      "supports": ["dld-perspective-hidden"]
     }
   ],
   "uncertainties": [
