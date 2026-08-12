@@ -1,32 +1,56 @@
-# The Neurodiverse Oracle — public site v0.2
+# The Neurodiverse Oracle — public site v0.5
 
 This directory contains the presentation layer for the public ND Oracle site.
 
-The v0.2 completion pass changes the product stance from “site shell with future-feature placeholders” to a small but intentional reading product built around the knowledge that actually exists now.
-
-The generated Understand pages continue to come from the authoritative knowledge objects in `objects/concepts/`. The website does not maintain a second copy of claim text, sources, uncertainties or perspectives.
+The v0.5 pass keeps the evidence model unchanged while making the ten-topic public corpus easier to enter and read. The generated Understand pages still come from the authoritative knowledge objects in `objects/concepts/`; the website does not maintain a second copy of claim text, sources, uncertainties or perspectives.
 
 ## Current public journey
 
-A visitor can now:
+A visitor can:
 
-1. start from an ordinary-language question on the homepage;
-2. browse the five current topics under `/understand/`;
-3. read a short summary and scope before encountering technical detail;
-4. open the evidence and uncertainty behind individual statements only when wanted;
-5. inspect different perspectives, related topics, sources and provenance;
-6. recover from a bad URL through a useful `404.html` page;
-7. discover indexable routes through `sitemap.xml` and `robots.txt`.
+1. start from one ordinary-language homepage question for each of the ten current topics;
+2. browse all ten reviewed topics under `/understand/`;
+3. read a deliberately simple first explanation before the more precise evidence summary;
+4. see when each topic was last reviewed;
+5. understand what the confidence labels mean;
+6. open the evidence and uncertainty behind individual statements only when wanted;
+7. inspect different perspectives, related topics, sources and provenance;
+8. report accessibility, wording, evidence or broken-page problems through `/feedback/` without a form or tracking on this site;
+9. recover from a bad URL through a useful `404.html` page;
+10. discover indexable routes through `sitemap.xml` and `robots.txt`.
 
-Primary navigation contains only active destinations:
+Primary navigation contains only the core reading destinations:
 
 - `/understand/`
 - `/how-it-works/`
 - `/about/`
 
-Accessibility and privacy remain in the footer.
+Accessibility, feedback and privacy are available in the footer.
 
 The old `/tools/`, `/games/`, `/resources/`, `/community/` and `/oracle/` routes remain as non-indexed compatibility pages so existing links do not become dead ends. They are deliberately absent from primary navigation and the sitemap until there is useful content to put there.
+
+## Reading-layer contract
+
+The authoritative evidence record and the public first-read layer have different jobs.
+
+- Authoritative concept summaries stay precise and traceable.
+- `SIMPLE_EXPLANATIONS` in `scripts/build_site.py` supplies the first-read wording.
+- `COMMON_QUESTIONS` supplies the homepage entry route.
+- The build fails unless both sets exactly cover the authoritative concept corpus, with one homepage question per topic.
+
+This means future topic expansion cannot silently create a technically valid page with no human-oriented entry route.
+
+## Confidence labels
+
+`/how-it-works/` explains all confidence values supported by the v0.1 concept schema: high, moderate, low, contested and not applicable. A confidence value applies to the exact statement beside it rather than to a person, topic or source. High confidence is not presented as certainty, and `not_applicable` is not presented as an escape from evidence assessment.
+
+## Review dates
+
+Each topic page exposes `provenance.last_reviewed` in ordinary language near the top of the page. The full provenance block remains available lower down. A review date describes the freshness of ND Oracle's review; it is not a claim that no newer evidence exists.
+
+## Feedback boundary
+
+`/feedback/` does not add a local form, account or tracking endpoint. It links to the repository's public GitHub issue tracker and warns readers not to include private health information or personal details. The lack of a private feedback channel is explicitly disclosed as a current limitation.
 
 ## Design stance
 
@@ -58,19 +82,19 @@ The current site remains static and deliberately narrow:
 - no forms;
 - no accounts;
 - no analytics or advertising trackers;
-- no personal-data collection;
+- no personal-data collection by the generated site;
 - no Pages Functions or other server-side runtime;
 - restrictive Content Security Policy;
 - anti-framing, MIME-sniffing, referrer, permissions and cross-origin headers;
 - HSTS emitted with the static deployment headers.
 
-The default policy should remain restrictive. When a future feature genuinely needs JavaScript or network access, relax policy only for the smallest necessary route and origin rather than weakening the global site policy.
+The feedback link leaves the site for GitHub. Any future private feedback channel or feature that stores user data requires a separate privacy and threat-model review.
 
 ## Search decision
 
-A separate search runtime is not a v0.2 completion blocker while the public corpus contains only five topic pages. The homepage provides ordinary-language entry questions and `/understand/` exposes the full corpus in one scan.
+A separate search runtime is still not justified while the public corpus contains ten topic pages. The homepage now provides a natural-language route to every topic, and `/understand/` exposes the complete corpus in one scan.
 
-Search should be introduced when it saves real navigation work rather than adding a JavaScript/runtime dependency before the corpus needs it.
+Search should be introduced when the corpus becomes large enough that question-led navigation and browsing stop being efficient, rather than adding a JavaScript or runtime dependency in advance of that need.
 
 ## Cloudflare Pages release contract
 
@@ -83,27 +107,11 @@ Before any deployment:
 3. run the repository validator and complete test suite;
 4. build `dist/` from that exact commit;
 5. inspect the generated site and security headers;
-6. verify the pinned Wrangler version and deployment flags against current Cloudflare documentation;
-7. stop for explicit owner authorisation before creating a Pages project or publishing any deployment.
+6. verify the pinned Wrangler version and deployment flags;
+7. publish only through the guarded manual production workflow.
 
-The deployment CLI is deliberately version-pinned. Updating the Wrangler version is a release-tooling change and must be reviewed rather than silently inherited from `npx` latest.
-
-After authorisation, the release command should attach the exact Git identity explicitly:
-
-```sh
-npx --yes wrangler@4.114.0 pages deploy dist \
-  --project-name=nd-oracle \
-  --branch=main \
-  --commit-hash=<EXACT_MAIN_SHA> \
-  --commit-dirty=false
-```
-
-Do not substitute a remembered SHA for `<EXACT_MAIN_SHA>`; resolve and verify it immediately before deployment.
-
-Custom-domain attachment and DNS changes are later protected actions and are not implied by a Pages deployment.
-
-Direct Upload is an intentional release-control choice: Cloudflare does not allow an existing Direct Upload Pages project to be converted to Git integration later. Moving to Git integration would require a new Pages project and a separately reviewed migration.
+The deployment CLI is version-pinned. Updating the Wrangler version is a release-tooling change and must be reviewed rather than silently inherited from `npx` latest.
 
 ## Boundary
 
-This v0.2 presentation pass does not mutate authoritative knowledge objects, create accounts, collect community data, add analytics, introduce an Oracle chatbot, or represent the site as clinical guidance.
+This v0.5 presentation pass does not change authoritative knowledge claims, create accounts, collect community data, add analytics, introduce an Oracle chatbot, or represent the site as clinical guidance.
