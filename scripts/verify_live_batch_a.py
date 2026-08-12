@@ -4,7 +4,10 @@ import argparse
 import sys
 import xml.etree.ElementTree as ET
 
-from scripts import verify_live_site
+try:
+    from scripts import verify_live_site
+except ModuleNotFoundError:
+    import verify_live_site
 
 
 BATCH_A_ROUTES = (
