@@ -1,0 +1,35 @@
+name: ND Oracle live production verification
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/live-production-verify.yml"
+      - "scripts/verify_live_site.py"
+      - "tests/test_verify_live_site.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-live-production:
+    name: Verify canonical production routes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+
+      - name: Run verifier unit tests
+        run: python -m unittest tests.test_verify_live_site
+
+      - name: Verify live canonical routes
+        run: python scripts/verify_live_site.py --origin https://ndoracle.org
