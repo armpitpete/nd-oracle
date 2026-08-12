@@ -42,6 +42,7 @@ class WebsiteBuildTests(unittest.TestCase):
             "how-it-works",
             "about",
             "accessibility",
+            "feedback",
             "privacy",
             # Compatibility routes retained from Site Shell v0.1.
             "tools",
@@ -73,21 +74,68 @@ class WebsiteBuildTests(unittest.TestCase):
         for inactive in ["tools", "games", "resources", "community", "oracle"]:
             self.assertNotIn(f'<a href="/{inactive}/"', page)
 
-    def test_home_starts_from_ordinary_language_questions(self):
+    def test_home_has_exactly_one_ordinary_language_question_for_every_topic(self):
         page = (self.output / "index.html").read_text(encoding="utf-8")
         self.assertIn("Start with a question", page)
+        concept_ids = {concept["id"] for concept in self.concepts}
+        target_ids = [target_id for _, target_id in build_site.COMMON_QUESTIONS]
+        self.assertEqual(set(target_ids), concept_ids)
+        self.assertEqual(len(target_ids), len(concept_ids))
         for question, target_id in build_site.COMMON_QUESTIONS:
             self.assertIn(html.escape(question, quote=True), page)
             self.assertIn(f'href="/understand/{target_id}/"', page)
         self.assertNotIn("Site Shell v0.1", page)
 
+    def test_reading_layer_exactly_covers_authoritative_corpus(self):
+        concept_ids = {concept["id"] for concept in self.concepts}
+        self.assertEqual(set(build_site.SIMPLE_EXPLANATIONS), concept_ids)
+        build_site.validate_reading_layer(self.concepts)
+
     def test_understand_is_reading_first_and_non_clinical(self):
         page = (self.output / "understand" / "index.html").read_text(encoding="utf-8")
         self.assertIn("Orientation, not diagnosis", page)
+        self.assertIn(f"There are {len(self.concepts)} reviewed topic pages", page)
         for concept in self.concepts:
             self.assertIn(html.escape(concept["name"]), page)
-            self.assertIn(html.escape(concept["summary"]), page)
+            self.assertIn(html.escape(build_site.reader_intro(concept), quote=True), page)
             self.assertIn(f'/understand/{concept["id"]}/', page)
+
+    def test_every_topic_starts_simple_then_preserves_precise_summary(self):
+        for concept in self.concepts:
+            page = (self.output / "understand" / concept["id"] / "index.html").read_text(encoding="utf-8")
+            simple = html.escape(build_site.reader_intro(concept), quote=True)
+            precise = html.escape(concept["summary"], quote=True)
+            self.assertIn(simple, page)
+            self.assertIn("More precise description", page)
+            self.assertIn(precise, page)
+            self.assertLess(page.index(simple), page.index(precise))
+
+    def test_every_topic_exposes_last_reviewed(self):
+        for concept in self.concepts:
+            page = (self.output / "understand" / concept["id"] / "index.html").read_text(encoding="utf-8")
+            reviewed = build_site.human_date(concept["provenance"]["last_reviewed"])
+            self.assertIn(f"Last reviewed: <strong>{reviewed}</strong>", page)
+
+    def test_confidence_scale_is_explained_and_linked_from_claims(self):
+        how = (self.output / "how-it-works" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="confidence"', how)
+        for label in ["High", "Moderate", "Low", "Contested", "Not applicable"]:
+            self.assertIn(f"<dt>{label}</dt>", how)
+        self.assertIn("high confidence does not mean certainty", how)
+        for concept in self.concepts:
+            page = (self.output / "understand" / concept["id"] / "index.html").read_text(encoding="utf-8")
+            self.assertIn('href="/how-it-works/#confidence"', page)
+
+    def test_feedback_route_is_public_safe_and_reachable(self):
+        feedback = (self.output / "feedback" / "index.html").read_text(encoding="utf-8")
+        self.assertIn("Report a problem", feedback)
+        self.assertIn("https://github.com/armpitpete/nd-oracle/issues/new", feedback)
+        self.assertIn("Please do not include private health information", feedback)
+        self.assertIn("does not yet offer a private feedback channel", feedback)
+        accessibility = (self.output / "accessibility" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('href="/feedback/"', accessibility)
+        home = (self.output / "index.html").read_text(encoding="utf-8")
+        self.assertIn('href="/feedback/"', home)
 
     def test_claims_keep_evidence_routes_but_disclose_them_progressively(self):
         for concept in self.concepts:
@@ -138,6 +186,7 @@ class WebsiteBuildTests(unittest.TestCase):
         sitemap = (self.output / "sitemap.xml").read_text(encoding="utf-8")
         for path in build_site.sitemap_paths(self.concepts):
             self.assertIn(f"<loc>{build_site.PUBLIC_ORIGIN}{path}</loc>", sitemap)
+        self.assertIn(f"<loc>{build_site.PUBLIC_ORIGIN}/feedback/</loc>", sitemap)
         for slug in ["tools", "games", "resources", "community", "oracle"]:
             self.assertNotIn(f"<loc>{build_site.PUBLIC_ORIGIN}/{slug}/</loc>", sitemap)
 
@@ -151,6 +200,7 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn('name="robots" content="noindex, follow"', page)
         self.assertIn('href="/understand/"', page)
         self.assertIn('href="/how-it-works/"', page)
+        self.assertIn('href="/feedback/"', page)
 
     def test_internal_navigation_targets_exist(self):
         for page in self.html_pages():
