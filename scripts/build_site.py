@@ -3,6 +3,7 @@ from __future__ import annotations
 import html
 import json
 import shutil
+from datetime import date
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -19,12 +20,63 @@ PRIMARY_NAV = [
     ("about", "About"),
 ]
 
+# The reading layer is deliberately separate from the authoritative evidence
+# objects. Evidence summaries can stay precise while the first public sentence
+# is written for someone who simply needs to understand the topic.
+SIMPLE_EXPLANATIONS = {
+    "neurodiversity": (
+        "People's brains and nervous systems vary. Neurodiversity is a word for that variation, "
+        "and it is also used when people talk about rights, disability, support and how neurological differences should be understood."
+    ),
+    "autism": (
+        "Autistic people can experience communication, social situations, routines, interests and sensory input differently. "
+        "Autism looks different from person to person, and support needs can vary."
+    ),
+    "adhd": (
+        "ADHD can affect attention, activity, impulsivity and managing everyday tasks. "
+        "It can look different between people and situations, and diagnosis needs more than a checklist or a single test."
+    ),
+    "executive-function": (
+        "Executive functions help us hold things in mind, switch attention, pause responses and organise actions towards a goal. "
+        "Difficulties with them can make starting, planning or finishing tasks hard, but they are not a diagnosis by themselves."
+    ),
+    "sensory-processing": (
+        "People differ in how strongly they notice and respond to sound, light, touch, movement and other sensory input. "
+        "These differences can affect comfort and everyday life, and they are not unique to one diagnosis."
+    ),
+    "dyslexia": (
+        "Dyslexia mainly affects learning and using word reading and spelling. "
+        "It can continue into adulthood, and it does not mean that someone has low intelligence."
+    ),
+    "developmental-coordination-disorder": (
+        "Developmental co-ordination disorder (DCD) affects how easily someone learns and carries out coordinated movements. "
+        "Everyday activities can take more effort, and the difficulties can continue into adulthood."
+    ),
+    "tourette-syndrome": (
+        "Tourette syndrome involves motor and vocal tics that change over time. "
+        "Swearing is not what defines Tourette syndrome, and support or treatment should depend on what is actually difficult for the person."
+    ),
+    "learning-disability": (
+        "In the UK, a learning disability means lifelong difficulty learning or understanding new information together with difficulty managing everyday life independently. "
+        "It is not the same thing as a specific learning difficulty such as dyslexia."
+    ),
+    "developmental-language-disorder": (
+        "Developmental language disorder (DLD) is a persistent difficulty understanding and/or using language that affects everyday life. "
+        "Bilingualism does not cause DLD, and DLD can occur alongside other developmental conditions."
+    ),
+}
+
 COMMON_QUESTIONS = [
     ("What does neurodiversity mean?", "neurodiversity"),
     ("What is autism?", "autism"),
     ("What is ADHD?", "adhd"),
     ("Why can starting or organising tasks feel hard?", "executive-function"),
     ("Why can sound, light or touch feel intense?", "sensory-processing"),
+    ("Why can reading or spelling stay difficult?", "dyslexia"),
+    ("Why can coordination and everyday movement be hard?", "developmental-coordination-disorder"),
+    ("What are tics and Tourette syndrome?", "tourette-syndrome"),
+    ("What does learning disability mean in the UK?", "learning-disability"),
+    ("Why can understanding or using language be difficult?", "developmental-language-disorder"),
 ]
 
 STATIC_PAGES = {
@@ -34,13 +86,22 @@ STATIC_PAGES = {
         "body": (
             "<section><h2>Useful first</h2>"
             "<p>The public pages are written for reading, not for navigating an internal database. "
-            "Each topic starts with a plain-language summary and then separates what is claimed, what remains uncertain, and where the evidence comes from.</p></section>"
-            "<section><h2>Confidence is attached to a statement</h2>"
-            "<p>A confidence label applies to the exact statement beside it. It is not a score for a whole topic, person or source.</p></section>"
+            "Each topic starts with a deliberately simple explanation. A more precise evidence summary is still available when you want it.</p></section>"
+            "<section id=\"confidence\"><h2>What the confidence labels mean</h2>"
+            "<p>A confidence label applies only to the exact statement beside it. It is not a score for a whole topic, person or source, and high confidence does not mean certainty.</p>"
+            "<dl class=\"confidence-key\">"
+            "<dt>High</dt><dd>The bounded statement has strong, consistent support from the evidence used for it, with no known disagreement large enough to change the statement substantially.</dd>"
+            "<dt>Moderate</dt><dd>The statement is supported, but important limits, narrower evidence, transfer problems or remaining uncertainty mean it should be read with more caution.</dd>"
+            "<dt>Low</dt><dd>The statement has some support but the evidence is limited, indirect or fragile. Treat it as provisional.</dd>"
+            "<dt>Contested</dt><dd>Credible evidence or perspectives materially disagree. The label preserves that disagreement rather than forcing a false consensus.</dd>"
+            "<dt>Not applicable</dt><dd>An epistemic confidence score is not the right description for that statement; this must not be used merely to avoid assessing evidence.</dd>"
+            "</dl></section>"
             "<section><h2>Uncertainty stays visible</h2>"
             "<p>If an important question is unresolved, the site keeps it unresolved. The aim is to save the next person from having to rediscover the same gap.</p></section>"
             "<section><h2>Evidence is inspectable</h2>"
             "<p>Evidence links sit behind the statements they support. Source details and provenance remain available lower on each topic page without dominating the first read.</p></section>"
+            "<section><h2>Review dates are visible</h2>"
+            "<p>Each topic shows when its current evidence record was last reviewed. A review date is not a promise that nothing newer exists; it tells you how fresh this site's review is.</p></section>"
             "<section><h2>This is not a diagnosis service</h2>"
             "<p>The site is for understanding and research traceability. It does not diagnose individuals or replace appropriate clinical, legal, educational or safeguarding judgement.</p></section>"
         ),
@@ -68,7 +129,8 @@ STATIC_PAGES = {
             "<p>The site uses semantic HTML, visible keyboard focus, restrained colours, a reading-width content column and no required JavaScript.</p>"
             "<p>Evidence and provenance use native disclosure controls so readers can choose depth without losing keyboard access.</p></section>"
             "<section><h2>Accessibility problems are defects</h2>"
-            "<p>Future interactive features must preserve keyboard access, reduced-motion preferences, readable language and a usable no-script baseline wherever practical.</p></section>"
+            "<p>Future interactive features must preserve keyboard access, reduced-motion preferences, readable language and a usable no-script baseline wherever practical.</p>"
+            "<p>If something here is difficult to use, <a href=\"/feedback/\">report the accessibility problem</a>.</p></section>"
         ),
         "indexable": True,
     },
@@ -77,9 +139,25 @@ STATIC_PAGES = {
         "intro": "The current public site is designed to collect no personal data.",
         "body": (
             "<section><h2>Current release</h2>"
-            "<p>There are no accounts, forms, analytics scripts, advertising trackers or personalised features in the generated site.</p></section>"
+            "<p>There are no accounts, forms, analytics scripts, advertising trackers or personalised features in the generated site.</p>"
+            "<p>The feedback page links to the public GitHub issue tracker; following that link leaves this site and uses GitHub's service.</p></section>"
             "<section><h2>Future features</h2>"
             "<p>Anything that stores queries, profiles, health information or community submissions requires a separate privacy and threat-model review before release.</p></section>"
+        ),
+        "indexable": True,
+    },
+    "feedback": {
+        "title": "Feedback",
+        "intro": "Found something inaccessible, unclear, outdated or broken? You can report it without adding tracking or a form to this site.",
+        "body": (
+            "<section><h2>Report a problem</h2>"
+            "<p>Use the public ND Oracle issue tracker for accessibility problems, factual concerns, confusing wording, broken links or other defects. "
+            "Please do not include private health information, contact details or anything else you would not want published.</p>"
+            "<p><a href=\"https://github.com/armpitpete/nd-oracle/issues/new\" rel=\"noopener noreferrer\">Open the public issue tracker</a></p></section>"
+            "<section><h2>What helps</h2>"
+            "<ul><li>The page address.</li><li>What you expected to happen.</li><li>What actually happened or what was difficult to understand.</li><li>For an evidence concern, the exact statement you think needs checking.</li></ul></section>"
+            "<section class=\"notice\"><h2>Current limitation</h2>"
+            "<p>This release does not yet offer a private feedback channel. If the public GitHub route is itself inaccessible to you, that is a known limitation rather than a reason to treat the problem as resolved.</p></section>"
         ),
         "indexable": True,
     },
@@ -136,12 +214,39 @@ def safe_http_url(value: object) -> str | None:
     return value
 
 
+def human_date(value: str | None) -> str:
+    if value is None:
+        return "Not yet reviewed"
+    parsed = date.fromisoformat(value)
+    return parsed.strftime("%d %B %Y").lstrip("0")
+
+
 def load_concepts() -> list[dict]:
     concepts = []
     for path in sorted(OBJECTS_DIR.glob("*.json")):
         with path.open("r", encoding="utf-8") as handle:
             concepts.append(json.load(handle))
     return sorted(concepts, key=lambda item: item["name"].casefold())
+
+
+def validate_reading_layer(concepts: list[dict]) -> None:
+    concept_ids = {concept["id"] for concept in concepts}
+    explanation_ids = set(SIMPLE_EXPLANATIONS)
+    question_ids = {concept_id for _, concept_id in COMMON_QUESTIONS}
+    if explanation_ids != concept_ids:
+        raise ValueError(
+            "Public-reading explanation set must exactly match authoritative concepts: "
+            f"missing={sorted(concept_ids - explanation_ids)}; unexpected={sorted(explanation_ids - concept_ids)}"
+        )
+    if question_ids != concept_ids or len(COMMON_QUESTIONS) != len(concept_ids):
+        raise ValueError(
+            "Homepage question set must provide exactly one route for every authoritative concept: "
+            f"missing={sorted(concept_ids - question_ids)}; unexpected={sorted(question_ids - concept_ids)}"
+        )
+
+
+def reader_intro(concept: dict) -> str:
+    return SIMPLE_EXPLANATIONS[concept["id"]]
 
 
 def list_items(values: list[str]) -> str:
@@ -202,6 +307,7 @@ def page_shell(
     <nav aria-label="Footer">
       <a href="/how-it-works/">How it works</a>
       <a href="/accessibility/">Accessibility</a>
+      <a href="/feedback/">Feedback</a>
       <a href="/privacy/">Privacy</a>
     </nav>
   </div>
@@ -214,7 +320,7 @@ def page_shell(
 def topic_link(concept: dict) -> str:
     return f"""<article class="topic-row">
   <h2><a href="/understand/{esc(concept['id'])}/">{esc(concept['name'])}</a></h2>
-  <p>{esc(concept['summary'])}</p>
+  <p>{esc(reader_intro(concept))}</p>
 </article>"""
 
 
@@ -232,6 +338,7 @@ def render_index(concepts: list[dict]) -> str:
     body = f"""
 <section class="start-section" aria-labelledby="start-heading">
   <h2 id="start-heading">Start with a question</h2>
+  <p class="section-intro">Choose the question closest to what you are trying to understand. Every current topic has a route from here.</p>
   <ul class="question-list">{''.join(question_links)}</ul>
 </section>
 <section aria-labelledby="topics-heading">
@@ -244,11 +351,11 @@ def render_index(concepts: list[dict]) -> str:
 <section class="reading-guide" aria-labelledby="guide-heading">
   <h2 id="guide-heading">Choose how deep to go</h2>
   <div class="guide-grid">
-    <div><strong>Read the short version</strong><p>Each topic starts with a plain-language summary and scope.</p></div>
-    <div><strong>Check the reasoning</strong><p>Open the evidence and uncertainty behind individual statements.</p></div>
-    <div><strong>Follow the source</strong><p>Source citations and provenance remain available at the bottom of every topic page.</p></div>
+    <div><strong>Read the simple version</strong><p>Each topic starts with a short explanation written for a first read.</p></div>
+    <div><strong>Check the reasoning</strong><p>Open the evidence and uncertainty behind individual statements when you need it.</p></div>
+    <div><strong>Follow the source</strong><p>Source citations, review dates and provenance remain available without dominating the page.</p></div>
   </div>
-  <p><a href="/how-it-works/">How the evidence and uncertainty system works →</a></p>
+  <p><a href="/how-it-works/">How the evidence, confidence and uncertainty system works →</a></p>
 </section>
 """
     return page_shell(
@@ -267,7 +374,7 @@ def render_understand_index(concepts: list[dict]) -> str:
 </section>
 <section aria-labelledby="concepts-heading">
   <h2 id="concepts-heading">Current topics</h2>
-  <p class="section-intro">The list is deliberately small while the knowledge base grows. Every topic below has a complete reading route rather than a placeholder page.</p>
+  <p class="section-intro">There are {len(concepts)} reviewed topic pages. Each starts simply and keeps the deeper evidence route available when you want it.</p>
   <div class="topic-list">{topics}</div>
 </section>
 """
@@ -357,8 +464,11 @@ def render_concept(concept: dict, concept_map: dict[str, dict]) -> str:
             f'<li><a href="/understand/{esc(target_id)}/">{esc(concept_map[target_id]["name"])}</a> — {esc(relation["note"])}</li>'
         )
 
+    reviewed = human_date(concept["provenance"].get("last_reviewed"))
     body = f"""
 <p class="back-link"><a href="/understand/">← All topics</a></p>
+<p class="review-meta">Last reviewed: <strong>{esc(reviewed)}</strong></p>
+<details class="technical-summary"><summary>More precise description</summary><p>{esc(concept['summary'])}</p></details>
 <section class="at-a-glance" aria-labelledby="glance-heading">
   <h2 id="glance-heading">At a glance</h2>
   <div class="scope-grid">
@@ -366,16 +476,16 @@ def render_concept(concept: dict, concept_map: dict[str, dict]) -> str:
     <div><h3>It does not mean</h3>{list_items(concept['scope']['excludes'])}</div>
   </div>
 </section>
-<section aria-labelledby="known-heading"><h2 id="known-heading">What we can say</h2><p class="section-intro">These are bounded statements from the current evidence record. Open a statement only if you want its evidence route.</p>{''.join(claims)}</section>
+<section aria-labelledby="known-heading"><h2 id="known-heading">What we can say</h2><p class="section-intro">These are bounded statements from the current evidence record. <a href="/how-it-works/#confidence">See what the confidence labels mean</a>. Open a statement only if you want its evidence route.</p>{''.join(claims)}</section>
 <section aria-labelledby="uncertainty-heading"><h2 id="uncertainty-heading">What remains uncertain</h2>{''.join(uncertainties)}</section>
 <section aria-labelledby="perspectives-heading"><h2 id="perspectives-heading">Different perspectives</h2>{''.join(perspectives)}</section>
 <section aria-labelledby="related-heading"><h2 id="related-heading">Related topics</h2><ul>{''.join(relations)}</ul></section>
 <section aria-labelledby="sources-heading"><h2 id="sources-heading">Sources</h2>{''.join(sources)}</section>
-<details class="provenance"><summary>Page provenance and review state</summary><p>{esc(concept['provenance']['method'])}</p><div class="meta">Created {esc(concept['provenance']['created'])} · review state {esc(concept['provenance']['review_state'])}</div></details>
+<details class="provenance"><summary>Page provenance and review state</summary><p>{esc(concept['provenance']['method'])}</p><div class="meta">Created {esc(concept['provenance']['created'])} · last reviewed {esc(reviewed)} · review state {esc(concept['provenance']['review_state'])}</div></details>
 """
     return page_shell(
         concept["name"],
-        concept["summary"],
+        reader_intro(concept),
         body,
         current="understand",
         path=f"/understand/{concept['id']}/",
@@ -402,6 +512,7 @@ def render_not_found() -> str:
     <li><a href="/">Go to the homepage</a></li>
     <li><a href="/understand/">Browse current topics</a></li>
     <li><a href="/how-it-works/">See how the site works</a></li>
+    <li><a href="/feedback/">Report a broken or confusing page</a></li>
   </ul>
 </section>
 """
@@ -450,6 +561,7 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> Path:
     concepts = load_concepts()
     if not concepts:
         raise ValueError("No concept objects found")
+    validate_reading_layer(concepts)
     concept_map = {concept["id"]: concept for concept in concepts}
 
     prepare_output(output_dir)
@@ -477,4 +589,4 @@ def build(output_dir: Path = DEFAULT_OUTPUT_DIR) -> Path:
 
 if __name__ == "__main__":
     destination = build()
-    print(f"Built The Neurodiverse Oracle public site v0.2 at {destination}")
+    print(f"Built The Neurodiverse Oracle public site v0.5 at {destination}")
