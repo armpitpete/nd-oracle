@@ -95,6 +95,18 @@ class ContentNavigationV09Tests(unittest.TestCase):
         self.assertEqual(30, len(set(grouped)))
         self.assertEqual({item["id"] for item in self.questions}, set(grouped))
 
+    def test_homepage_preserves_frozen_v07_question_routes(self) -> None:
+        page = self._page("/")
+        question_map = {item["id"]: item for item in self.questions}
+        self.assertEqual(
+            set(verify_live_site.V07_QUESTION_IDS),
+            set(build_site.V07_HOMEPAGE_COMPAT_QUESTION_IDS),
+        )
+        for question_id in build_site.V07_HOMEPAGE_COMPAT_QUESTION_IDS:
+            question = question_map[question_id]
+            self.assertIn(f'href="/questions/{question_id}/"', page)
+            self.assertIn(build_site.esc(question["question"]), page)
+
     def test_candidate_contract_is_exactly_125_routes(self) -> None:
         paths = build_site.sitemap_paths(self.concepts, self.resources, self.questions)
         self.assertEqual(125, len(paths))
