@@ -15,6 +15,7 @@ from scripts.validate import (
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / "tests" / "fixtures" / "v0.2"
+AUTHORITATIVE_COUNT = len(list((ROOT / "objects").rglob("*.json")))
 
 
 class V02ValidationTests(unittest.TestCase):
@@ -37,7 +38,7 @@ class V02ValidationTests(unittest.TestCase):
 
     def test_fixture_graph_passes_without_changing_authoritative_count(self) -> None:
         count, errors = validate_repository(ROOT, FIXTURES)
-        self.assertEqual(25, count)
+        self.assertEqual(AUTHORITATIVE_COUNT, count)
         self.assertEqual([], errors)
 
     def test_dispatcher_accepts_all_six_v02_types(self) -> None:

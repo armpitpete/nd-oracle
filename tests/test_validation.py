@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = json.loads((ROOT / "schema" / "object-v0.1.json").read_text(encoding="utf-8"))
 VALIDATOR = Draft202012Validator(SCHEMA, format_checker=FormatChecker())
 SEED = json.loads((ROOT / "objects" / "concepts" / "autism.json").read_text(encoding="utf-8"))
+AUTHORITATIVE_COUNT = len(list((ROOT / "objects").rglob("*.json")))
 
 
 class SchemaValidationTests(unittest.TestCase):
@@ -74,7 +75,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_complete_repository_passes(self) -> None:
         count, errors = validate_repository(ROOT)
-        self.assertEqual(25, count)
+        self.assertEqual(AUTHORITATIVE_COUNT, count)
         self.assertEqual([], errors)
 
     def test_rejects_nonreciprocal_claim_source_mapping(self) -> None:
