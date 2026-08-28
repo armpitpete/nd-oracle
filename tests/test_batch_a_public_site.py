@@ -17,11 +17,11 @@ BATCH_A_IDS = {
 
 
 class BatchAPublicSiteTests(unittest.TestCase):
-    def test_ten_topic_release_candidate_builds_all_batch_a_routes(self) -> None:
+    def test_batch_a_routes_remain_present_as_topic_corpus_grows(self) -> None:
         concepts = build_site.load_concepts()
-        self.assertEqual(len(concepts), 10)
         ids = {concept["id"] for concept in concepts}
         self.assertTrue(BATCH_A_IDS.issubset(ids))
+        self.assertGreaterEqual(len(concepts), 10)
 
         with tempfile.TemporaryDirectory() as tmp:
             output = build_site.build(Path(tmp) / "site")
@@ -34,7 +34,7 @@ class BatchAPublicSiteTests(unittest.TestCase):
                 self.assertIn("Sources", text, object_id)
 
             homepage = (output / "index.html").read_text(encoding="utf-8")
-            self.assertIn("10 evidence-linked topics are available now", homepage)
+            self.assertIn(f"{len(concepts)} evidence-linked topics are available now", homepage)
             self.assertNotIn("Five core topics", homepage)
 
             about = (output / "about" / "index.html").read_text(encoding="utf-8")
