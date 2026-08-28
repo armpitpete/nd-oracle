@@ -78,12 +78,15 @@ class ContentNavigationV08Tests(unittest.TestCase):
         self.assertIn('href="/questions/">Questions</a>', page)
         self.assertIn('href="/understand/">Topics</a>', page)
         self.assertIn('href="/resources/">Resources</a>', page)
+        self.assertIn("Tools &amp; practical help", page)
         self.assertNotIn('>Explore</a>', page)
 
     def test_resource_navigation_includes_books_media(self) -> None:
         resources = (self.output / "resources" / "index.html").read_text(encoding="utf-8")
+        tools = (self.output / "tools" / "index.html").read_text(encoding="utf-8")
         books = (self.output / "books-media" / "index.html").read_text(encoding="utf-8")
         self.assertIn("<h1>Resources</h1>", resources)
+        self.assertIn("<h1>Tools &amp; practical help</h1>", tools)
         for href in ("/resources/", "/tools/", "/games/", "/books-media/", "/community/"):
             self.assertIn(f'href="{href}"', resources)
         self.assertIn("<h1>Books &amp; media</h1>", books)
@@ -128,6 +131,28 @@ class ContentNavigationV08Tests(unittest.TestCase):
             self.assertIn(f"/resources/{resource_id}/", verify_live_site.RESOURCE_MARKERS_V08)
         for question_id in NEW_QUESTION_IDS:
             self.assertIn(f"/questions/{question_id}/", verify_live_site.QUESTION_MARKERS)
+
+    def test_v08_contracts_accept_the_actual_built_site(self) -> None:
+        origin = "https://ndoracle.org"
+
+        def fetcher(url: str):
+            path = url.removeprefix(origin)
+            if path == "/":
+                target = self.output / "index.html"
+            else:
+                target = self.output / path.strip("/") / "index.html"
+            self.assertTrue(target.is_file(), target)
+            return verify_live_site.Response(
+                status=200,
+                final_url=url,
+                content_type="text/html; charset=utf-8",
+                body=target.read_text(encoding="utf-8"),
+                headers=dict(verify_live_site.SECURITY_HEADERS),
+            )
+
+        self.assertEqual([], verify_live_site.verify_v08_question_contract(origin, fetcher=fetcher))
+        self.assertEqual([], verify_live_site.verify_v08_resource_contract(origin, fetcher=fetcher))
+        self.assertEqual([], verify_live_site.verify_v08_navigation_contract(origin, fetcher=fetcher))
 
 
 if __name__ == "__main__":
