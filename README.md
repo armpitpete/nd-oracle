@@ -25,13 +25,13 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-The v0.8 content/navigation candidate makes this larger corpus findable through grouped practical Questions, clearer `Topics` and `Resources` navigation, a `Books & media` browse route, and bidirectional Topic ↔ Question ↔ Resource links. The public v0.8 route contract is 62 canonical routes. This repository state does **not** redefine production until a separately authorised v0.8 deployment and live verification succeed.
+The v0.8 content/navigation release makes this larger corpus findable through grouped practical Questions, clearer `Topics` and `Resources` navigation, a `Books & media` browse route, and bidirectional Topic ↔ Question ↔ Resource links. The accepted public v0.8 contract is 62 canonical routes.
 
 ## Production state
 
-Production remains the accepted v0.7 question-led discovery release at `https://ndoracle.org`, deployed from exact main SHA `a074b6da26f95f58f15f38e44ae2b7a43fe6383c` by deployment workflow run `33174604415` (run #11). The generated artifact SHA-256 is `f987e707af2df3551a3a8657d03c8b67be91209b09d948206d2c0963557e923b` and the Cloudflare deployment identity is `https://b7b9549a.nd-oracle.pages.dev`.
+Production is the accepted v0.8 content/navigation release at `https://ndoracle.org`, deployed from exact main SHA `e4a93bbbd579b8a033954300e540a11dafc65f5d` by deployment workflow run `33178697469` (run #12). The generated artifact SHA-256 is `75594181876f422d62fde519ec3db29574bfdd48e6b797df15b940d223597479` and the Cloudflare deployment identity is `https://9b09ce0c.nd-oracle.pages.dev`.
 
-The post-deployment v0.7 verifier passed all 42 canonical routes, all 15 Resource routes, all 5 Question routes, the inherited v0.6 reading/resource contracts, the v0.7 question-led discovery contract, 404, robots, sitemap, Oracle compatibility noindex route, and www redirect behaviour. See `docs/PRODUCTION_STATE_v0.7.md` for the frozen deployment and verification evidence.
+The post-deployment v0.8 verifier passed all 62 canonical routes, all 25 Resource routes, all 14 Question routes, cross-content navigation, the inherited v0.6 reading/resource contracts, the frozen v0.7 five-question compatibility contract, 404, robots, sitemap, Oracle compatibility noindex route, and www redirect behaviour. See `docs/PRODUCTION_STATE_v0.8.md` for the frozen deployment and verification evidence.
 
 ## Repository map
 
@@ -50,6 +50,7 @@ docs/ECOSYSTEM_PUBLICATION_v0.6.md Ecosystem publication contract
 docs/PUBLIC_QUESTION_DISCOVERY_v0.7.md Question-led discovery contract
 docs/CONTENT_NAVIGATION_v0.8.md    Content-scale and findability contract
 docs/PRODUCTION_STATE_v0.7.md      Accepted v0.7 deployment evidence
+docs/PRODUCTION_STATE_v0.8.md      Accepted v0.8 deployment evidence
 GOVERNANCE.md                      Decision rights and protected changes
 CONTRIBUTING.md                    Contribution and provenance rules
 ```
