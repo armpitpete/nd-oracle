@@ -14,6 +14,17 @@ from scripts.build_site_v08 import *
 _v06 = _v08._v06
 QUESTIONS_DIR = _v08.QUESTIONS_DIR
 FEATURED_QUESTION_IDS = list(_v08.FEATURED_QUESTION_IDS)
+V07_HOMEPAGE_COMPAT_QUESTION_IDS = (
+    "task-starting-and-organisation",
+    "low-time-pressure-games",
+    "workplace-support-great-britain",
+    "autism-information-and-support",
+    "autism-anxiety-tools",
+)
+for _question_id in V07_HOMEPAGE_COMPAT_QUESTION_IDS:
+    if _question_id not in FEATURED_QUESTION_IDS:
+        FEATURED_QUESTION_IDS.append(_question_id)
+_v08.FEATURED_QUESTION_IDS = FEATURED_QUESTION_IDS
 BOOK_MEDIA_CATEGORIES = set(_v08.BOOK_MEDIA_CATEGORIES)
 
 V09_SIMPLE_EXPLANATIONS = {
