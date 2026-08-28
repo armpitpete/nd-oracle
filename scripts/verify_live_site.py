@@ -19,6 +19,15 @@ QUESTION_DIR = ROOT / "objects" / "questions"
 USER_AGENT = "nd-oracle-live-verifier/0.8"
 _v06.USER_AGENT = USER_AGENT
 
+# Preserve the immutable v0.6 route contract even when this module is loaded or
+# reloaded more than once in one interpreter. The live v0.8 verifier extends
+# the shared compatibility module, but legacy contract tests still need the
+# exact original 36-route baseline.
+if not hasattr(_v06, "_V08_ORIGINAL_ROUTES"):
+    _v06._V08_ORIGINAL_ROUTES = tuple(_v06.ROUTES)
+V06_ROUTES = tuple(_v06._V08_ORIGINAL_ROUTES)
+ROUTES = V06_ROUTES
+
 
 def _load_records(directory: Path) -> list[dict]:
     records = []
@@ -30,6 +39,23 @@ def _load_records(directory: Path) -> list[dict]:
 
 RESOURCE_RECORDS = _load_records(RESOURCE_DIR)
 QUESTION_RECORDS = _load_records(QUESTION_DIR)
+QUESTION_RECORD_MAP = {question["id"]: question for question in QUESTION_RECORDS}
+
+V07_QUESTION_IDS = (
+    "task-starting-and-organisation",
+    "low-time-pressure-games",
+    "workplace-support-great-britain",
+    "autism-information-and-support",
+    "autism-anxiety-tools",
+)
+V07_QUESTION_MARKERS = {
+    f"/questions/{question_id}/": QUESTION_RECORD_MAP[question_id]["question"]
+    for question_id in V07_QUESTION_IDS
+}
+V07_ROUTES = V06_ROUTES + (
+    ("/questions/", "<h1>Questions</h1>"),
+    *((path, f"<h1>{html.escape(question, quote=True)}</h1>") for path, question in V07_QUESTION_MARKERS.items()),
+)
 
 RESOURCE_MARKERS_V08 = {
     f"/resources/{resource['id']}/": (
@@ -48,10 +74,18 @@ QUESTION_MARKERS = {
 }
 
 # Start from the proven v0.6 route set, but replace its fixed resource-detail
-# routes with the complete current Resource corpus. The collection route stays.
+# routes with the complete current Resource corpus. Collection route labels can
+# evolve while their canonical paths remain stable.
 BASE_ROUTES = tuple(
-    (path, "<h1>Resources</h1>" if path == "/resources/" else marker)
-    for path, marker in _v06.ROUTES
+    (
+        path,
+        "<h1>Resources</h1>"
+        if path == "/resources/"
+        else "<h1>Tools &amp; practical help</h1>"
+        if path == "/tools/"
+        else marker,
+    )
+    for path, marker in V06_ROUTES
     if not (path.startswith("/resources/") and path != "/resources/")
 )
 
@@ -62,6 +96,53 @@ V08_ROUTES = BASE_ROUTES + (
     *((path, f"<h1>{html.escape(question, quote=True)}</h1>") for path, question in QUESTION_MARKERS.items()),
 )
 _v06.ROUTES = V08_ROUTES
+
+
+def verify_v07_question_contract(origin: str, *, fetcher=fetch_url) -> list[str]:
+    """Retain the accepted v0.7 five-question contract as a compatibility layer."""
+    failures: list[str] = []
+
+    homepage = fetcher(expected_url(origin, "/"))
+    question_index = fetcher(expected_url(origin, "/questions/"))
+    for path, question in V07_QUESTION_MARKERS.items():
+        escaped_question = html.escape(question, quote=True)
+        if escaped_question not in homepage.body:
+            failures.append(f"/: missing v0.7 practical question {question!r}")
+        if f'href="{path}"' not in homepage.body:
+            failures.append(f"/: missing v0.7 practical question route {path}")
+        if escaped_question not in question_index.body:
+            failures.append(f"/questions/: missing governed question {question!r}")
+        if f'href="{path}"' not in question_index.body:
+            failures.append(f"/questions/: missing route to governed question {path}")
+
+        response = fetcher(expected_url(origin, path))
+        for marker in (
+            "Relevant to inspect, not recommended.",
+            '<h2 id="current-understanding-heading">Current understanding</h2>',
+            '<h2 id="related-things-heading">Related things to inspect</h2>',
+            '<h2 id="evidence-needed-heading">What evidence is still needed</h2>',
+            '<h2 id="dissent-heading">Where people may disagree</h2>',
+            '<h2 id="reopen-heading">When this answer should be revisited</h2>',
+            'class="review-meta">Last reviewed:',
+            "<summary>Question provenance and review state</summary>",
+        ):
+            if marker not in response.body:
+                failures.append(f"{path}: v0.7 question contract marker missing: {marker!r}")
+
+    for marker in (
+        "Relevant to inspect, not recommended.",
+        "governed practical questions",
+    ):
+        if marker not in question_index.body:
+            failures.append(f"/questions/: question-index boundary marker missing: {marker!r}")
+
+    how = fetcher(expected_url(origin, "/how-it-works/"))
+    if "<h2>Question-led discovery</h2>" not in how.body:
+        failures.append("/how-it-works/: question-led discovery explanation is missing")
+
+    if not failures:
+        print(f"PASS v0.7 question-led discovery contract ({len(V07_QUESTION_MARKERS)} questions)")
+    return failures
 
 
 def verify_v08_question_contract(origin: str, *, fetcher=fetch_url) -> list[str]:
@@ -132,6 +213,7 @@ def verify_v08_resource_contract(origin: str, *, fetcher=fetch_url) -> list[str]
     for marker in (
         "<h1>Resources</h1>",
         "All resources",
+        "Tools &amp; practical help",
         'href="/tools/"',
         'href="/games/"',
         'href="/books-media/"',
@@ -156,6 +238,7 @@ def verify_v08_navigation_contract(origin: str, *, fetcher=fetch_url) -> list[st
         ">Questions</a>",
         ">Topics</a>",
         ">Resources</a>",
+        "Tools &amp; practical help",
         "Browse all",
         'href="/books-media/"',
     ):
