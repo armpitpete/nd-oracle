@@ -49,57 +49,85 @@ for _question, _target_id in V09_COMMON_QUESTIONS:
 SIMPLE_EXPLANATIONS = _v06.SIMPLE_EXPLANATIONS
 COMMON_QUESTIONS = _v06.COMMON_QUESTIONS
 
-QUESTION_GROUP_ORDER = [
-    "Daily life & technology",
-    "Sensory & environment",
-    "Communication",
-    "Work",
-    "Education & study",
-    "Assessment & diagnosis",
-    "Health & wellbeing",
-    "Relationships & family",
-    "Information & support",
-    "Games & downtime",
-]
-
-QUESTION_GROUP_RULES = [
+QUESTION_GROUPS = [
     (
-        "Assessment & diagnosis",
-        ("assessment", "diagnos", "referral", "waiting list", "getting assessed"),
-    ),
-    (
-        "Work",
-        ("workplace", "work ", "job", "employer", "interview", "access to work", "employment"),
-    ),
-    (
-        "Education & study",
-        ("student", "study", "school", "education", "university", "college", "dsa", "send "),
-    ),
-    (
-        "Communication",
-        ("communication", "phone", "speaking", "processing time", "aac", "non-speaking", "non speaking", "conversation"),
+        "Daily life & technology",
+        [
+            "task-starting-and-organisation",
+            "make-device-easier-to-use",
+            "meal-planning-and-everyday-food-tasks",
+        ],
     ),
     (
         "Sensory & environment",
-        ("sensory", "noise", "noisy", "light", "bright", "busy place", "overload", "environment"),
+        [
+            "make-noisy-bright-place-easier",
+            "sensory-overload-what-can-i-change",
+        ],
     ),
     (
-        "Relationships & family",
-        ("parent", "parenting", "family", "relationship", "partner", "child"),
+        "Communication",
+        [
+            "aac-and-nonspeaking-communication",
+            "phone-calls-are-difficult",
+            "processing-time-in-conversations-meetings",
+        ],
+    ),
+    (
+        "Work",
+        [
+            "workplace-support-great-britain",
+            "reasonable-adjustments-at-work-great-britain",
+            "disabled-person-looking-for-work-uk",
+            "disclosing-disability-neurodivergence-at-work",
+            "job-interview-adjustments-great-britain",
+        ],
+    ),
+    (
+        "Education & study",
+        [
+            "disabled-student-support-england",
+            "organising-study-and-assignments",
+            "send-support-school-college-england",
+        ],
+    ),
+    (
+        "Assessment & diagnosis",
+        [
+            "adult-adhd-assessment-england",
+            "adult-autism-assessment-england",
+        ],
     ),
     (
         "Health & wellbeing",
-        ("anxiety", "sleep", "food", "meal", "burnout", "wellbeing", "mental health", "overwhelmed", "overwhelm"),
+        [
+            "autism-anxiety-tools",
+            "masking-exhaustion-and-autistic-burnout",
+            "sleep-and-winding-down-routines",
+        ],
     ),
     (
-        "Games & downtime",
-        ("game", "gaming", "downtime", "play"),
+        "Relationships & family",
+        ["autistic-parent-support-uk"],
     ),
     (
         "Information & support",
-        ("information", "support", "organisation", "organization", "autism", "dyslexia", "tourette", "dld", "dyspraxia", "learning disability", "dyscalculia"),
+        [
+            "autism-information-and-support",
+            "dyslexia-information-and-support-uk",
+            "tourette-information-and-support-uk",
+            "learning-disability-information-and-support-uk",
+            "dld-information-and-support",
+            "adult-dyspraxia-information-uk",
+            "dyscalculia-information-and-support-uk",
+        ],
+    ),
+    (
+        "Games & downtime",
+        ["low-time-pressure-games"],
     ),
 ]
+_v08.QUESTION_GROUPS = QUESTION_GROUPS
 
 HUB_DEFINITIONS = [
     (
@@ -169,40 +197,8 @@ NAVIGATION_ROUTES = (
 V09_ROUTE_COUNT = 125
 
 
-def _question_search_text(question: dict) -> str:
-    return " ".join(
-        str(question.get(field, ""))
-        for field in ("question", "why_it_matters", "current_understanding")
-    ).casefold()
-
-
-def classify_question_group(question: dict) -> str:
-    text = _question_search_text(question)
-    for group, needles in QUESTION_GROUP_RULES:
-        if any(needle in text for needle in needles):
-            return group
-    return "Daily life & technology"
-
-
-def build_question_groups(questions: list[dict]) -> list[tuple[str, list[str]]]:
-    grouped: dict[str, list[str]] = {name: [] for name in QUESTION_GROUP_ORDER}
-    for question in sorted(questions, key=lambda item: item["question"].casefold()):
-        grouped[classify_question_group(question)].append(question["id"])
-    return [(name, grouped[name]) for name in QUESTION_GROUP_ORDER if grouped[name]]
-
-
-def _sync_question_groups(questions: list[dict]) -> None:
-    global QUESTION_GROUPS
-    QUESTION_GROUPS = build_question_groups(questions)
-    _v08.QUESTION_GROUPS = QUESTION_GROUPS
-
-
-QUESTION_GROUPS = build_question_groups(load_questions())
-_v08.QUESTION_GROUPS = QUESTION_GROUPS
-
-
 def validate_question_navigation(questions: list[dict]) -> None:
-    _sync_question_groups(questions)
+    _v08.QUESTION_GROUPS = QUESTION_GROUPS
     _v08.validate_question_navigation(questions)
 
 
@@ -220,7 +216,7 @@ def render_index(
 ) -> str:
     if questions is None:
         questions = load_questions()
-    _sync_question_groups(questions)
+    validate_question_navigation(questions)
     page = _v08.render_index(concepts, resources, questions)
     browse = """
 <section class="start-section" aria-labelledby="browse-whole-heading">
@@ -238,7 +234,7 @@ def render_index(
 
 
 def render_questions_index(questions: list[dict]) -> str:
-    _sync_question_groups(questions)
+    validate_question_navigation(questions)
     page = _v08.render_questions_index(questions)
     browse = """
 <section aria-labelledby="question-browse-heading">
@@ -424,7 +420,7 @@ def render_need_hub(
 
 
 def render_needs_index(questions: list[dict]) -> str:
-    _sync_question_groups(questions)
+    validate_question_navigation(questions)
     question_map = _question_map(questions)
     hub_by_group = {
         group: (route, title)
@@ -561,7 +557,7 @@ def sitemap_paths(
         resources = load_resources()
     if questions is None:
         questions = load_questions()
-    _sync_question_groups(questions)
+    validate_question_navigation(questions)
     paths = list(_v08.sitemap_paths(concepts, resources, questions))
     paths.extend(NAVIGATION_ROUTES)
     if len(paths) != len(set(paths)):
@@ -589,7 +585,6 @@ def render_sitemap(
 
 def build(output_dir=DEFAULT_OUTPUT_DIR):
     questions = load_questions()
-    _sync_question_groups(questions)
     validate_question_navigation(questions)
 
     destination = _v08.build(output_dir)
