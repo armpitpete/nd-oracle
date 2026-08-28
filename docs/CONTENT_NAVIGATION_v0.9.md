@@ -63,7 +63,7 @@ That produces 113 routes before new navigation. v0.9 adds 12 navigation routes:
 
 **Candidate total: 125 canonical routes.**
 
-The builder refuses a route count other than 125 and refuses duplicate sitemap routes.
+The builder refuses a route count other than 125 and refuses duplicate sitemap routes. The verifier derives its independent 125-route marker set from the current Concept, Resource and Question corpus and refuses any disagreement with the builder sitemap.
 
 ## Compatibility
 
@@ -73,7 +73,20 @@ The first five v0.7 Question routes retain their separate compatibility verifica
 
 ## Question grouping
 
-Question grouping is deterministic and derived from the governed Question text/current understanding using ordered navigation rules. Every Question must appear exactly once in the primary need index. Grouping is a findability device; it is not a diagnosis, ontology assertion or recommendation score.
+Question grouping is an **explicit editorial assignment**, not a keyword classifier. The v0.9 builder records every current Question ID once under one of ten primary findability groups:
+
+- Daily life & technology
+- Sensory & environment
+- Communication
+- Work
+- Education & study
+- Assessment & diagnosis
+- Health & wellbeing
+- Relationships & family
+- Information & support
+- Games & downtime
+
+The inherited navigation validator requires those assignments to cover the governed Question corpus exactly, with no duplicate or missing Question IDs. Adding a new Question therefore fails the build until a reviewer deliberately assigns it. Grouping is a findability device; it is not a diagnosis, ontology assertion or recommendation score.
 
 ## Geographic grouping
 
