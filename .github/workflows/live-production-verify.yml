@@ -1,17 +1,15 @@
 name: ND Oracle live production verification
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/live-production-verify.yml"
-      - "scripts/verify_live_site.py"
-      - "tests/test_verify_live_site.py"
   workflow_dispatch:
 
 permissions:
   contents: read
 
-# Read-only production observation: this workflow has no secrets and performs no writes.
+# Read-only production observation. Candidate verifier behaviour is covered by
+# the normal regression suite; the real production probe is intentionally
+# manual/post-deployment so a pre-deploy PR is not required to match its own
+# not-yet-published contract.
 jobs:
   verify-live-production:
     name: Verify production HTTP contract

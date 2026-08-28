@@ -11,30 +11,35 @@ This repository is the system of record. The public site at `https://ndoracle.or
 3. No conclusion without its route back to evidence and uncertainty.
 4. Measure success by epistemic work saved, not text produced.
 
-## Current state
+## Current repository state
 
-Version `0.1.0` contains schema v0.1 and five root concept objects:
+The authoritative corpus currently contains:
 
-- Neurodiversity
-- Autism
-- ADHD
-- Executive function
-- Sensory processing
+- 10 reviewed v0.1 Concept objects covering Neurodiversity, Autism, ADHD, Executive function, Sensory processing, Dyslexia, Developmental co-ordination disorder, Tourette syndrome, Learning disability and Developmental language disorder;
+- 15 reviewed v0.2 Resource objects spanning tools/apps, games, workplace support, organisations and books.
 
-The seed objects are orientation material, not diagnosis or medical advice. They deliberately retain disagreements, scope limits, and open questions.
+Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Any efficacy, safety or other serious testable proposition requires its own governed Claim and Evidence route.
 
-Site Shell v0.1 is accepted in production at `https://ndoracle.org`. The accepted release was deployed from exact commit `5fa502bf717adb0e4c900eda7594bcbc4f74a6f0`; repository and production identities must still be re-resolved independently before any later deployment claim. See `docs/PRODUCTION_STATE_v0.1.md` for the recorded release, artifact, route, security-header, DNS, and redirect evidence.
+Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
+
+## Production state
+
+Production remains the accepted v0.5 reading release until a later exact-main deployment is separately authorised and verified. v0.5 publishes the reviewed ten-topic reading layer at `https://ndoracle.org`; see `docs/PRODUCTION_STATE_v0.5.md` for the frozen deployment identity and evidence.
+
+The ecosystem v0.6 work is a candidate until its protected schema/publication and deployment gates are passed. It activates reviewed Resources rather than exposing empty Tools/Games/Community placeholders.
 
 ## Repository map
 
 ```text
-objects/concepts/                  Root knowledge objects
-schema/object-v0.1.json            Machine-readable contract
-schema/schema-v0.1.md              Human-readable model and decisions
+objects/concepts/                  Reviewed concept objects
+objects/resources/                 Reviewed resource objects
+schema/object-v0.1.json            v0.1 concept contract
+schema/object-v0.2.json            v0.2 six-object dispatcher
+schema/types/                      v0.2 object-type contracts
 site/                              Static public site source
 scripts/validate.py                Schema, governance-route, and graph checks
-docs/SITE_SHELL_v0.1.md            Public shell contract
-docs/PRODUCTION_STATE_v0.1.md      Accepted production identity and evidence
+scripts/build_site.py              Reading-first static site generator
+docs/ECOSYSTEM_PUBLICATION_v0.6.md Ecosystem publication contract
 GOVERNANCE.md                      Decision rights and protected changes
 CONTRIBUTING.md                    Contribution and provenance rules
 ```
@@ -47,9 +52,11 @@ python scripts/validate.py
 python -m unittest discover -s tests
 ```
 
-## Public shell and future interface work
+## Public interface boundary
 
-Site Shell v0.1 is intentionally small, semantic, reading-first, and functional without JavaScript. Search, graph exploration, AI answers, accounts, comments, analytics, and other application features remain separate later lanes and are not implied by the existence of the public shell.
+The site remains intentionally semantic, reading-first, privacy-first, and functional without JavaScript. The ecosystem layer adds static discovery routes and resource pages without accounts, profiling, recommendation scoring, personalised ranking, analytics or an AI answer surface.
+
+A later Oracle query/discovery layer may route ordinary questions across the knowledge graph, but generated answers must never become the source of truth or bypass governed evidence and uncertainty.
 
 ## Licensing status
 

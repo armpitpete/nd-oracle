@@ -20,8 +20,8 @@ class SchemaValidationTests(unittest.TestCase):
     def assert_invalid(self, obj: object) -> None:
         self.assertTrue(list(VALIDATOR.iter_errors(obj)))
 
-    def test_all_seed_objects_match_schema(self) -> None:
-        for path in (ROOT / "objects").rglob("*.json"):
+    def test_all_v01_concept_objects_match_v01_schema(self) -> None:
+        for path in (ROOT / "objects" / "concepts").glob("*.json"):
             with self.subTest(path=path.name):
                 obj = json.loads(path.read_text(encoding="utf-8"))
                 self.assertEqual([], list(VALIDATOR.iter_errors(obj)))
@@ -31,7 +31,7 @@ class SchemaValidationTests(unittest.TestCase):
         obj["untracked_claim"] = "must not pass silently"
         self.assert_invalid(obj)
 
-    def test_rejects_unimplemented_object_type(self) -> None:
+    def test_rejects_unimplemented_object_type_under_v01(self) -> None:
         obj = copy.deepcopy(SEED)
         obj["type"] = "resource"
         self.assert_invalid(obj)
@@ -74,7 +74,7 @@ class RepositoryValidationTests(unittest.TestCase):
 
     def test_complete_repository_passes(self) -> None:
         count, errors = validate_repository(ROOT)
-        self.assertEqual(10, count)
+        self.assertEqual(25, count)
         self.assertEqual([], errors)
 
     def test_rejects_nonreciprocal_claim_source_mapping(self) -> None:

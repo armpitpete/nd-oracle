@@ -11,27 +11,7 @@ from html.parser import HTMLParser
 from urllib.parse import urljoin, urlsplit
 
 DEFAULT_ORIGIN = "https://ndoracle.org"
-USER_AGENT = "nd-oracle-live-verifier/0.5"
-
-ROUTES = (
-    ("/", "Understand neurodivergence without doing all the digging yourself"),
-    ("/understand/", "<h1>Understand</h1>"),
-    ("/understand/neurodiversity/", "<h1>Neurodiversity</h1>"),
-    ("/understand/autism/", "<h1>Autism</h1>"),
-    ("/understand/adhd/", "<h1>ADHD</h1>"),
-    ("/understand/executive-function/", "<h1>Executive function</h1>"),
-    ("/understand/sensory-processing/", "<h1>Sensory processing</h1>"),
-    ("/understand/dyslexia/", "<h1>Dyslexia</h1>"),
-    ("/understand/developmental-coordination-disorder/", "<h1>Developmental co-ordination disorder</h1>"),
-    ("/understand/tourette-syndrome/", "<h1>Tourette syndrome</h1>"),
-    ("/understand/learning-disability/", "<h1>Learning disability</h1>"),
-    ("/understand/developmental-language-disorder/", "<h1>Developmental language disorder</h1>"),
-    ("/how-it-works/", "<h1>How this site works</h1>"),
-    ("/about/", "<h1>About</h1>"),
-    ("/accessibility/", "<h1>Accessibility</h1>"),
-    ("/feedback/", "<h1>Feedback</h1>"),
-    ("/privacy/", "<h1>Privacy</h1>"),
-)
+USER_AGENT = "nd-oracle-live-verifier/0.6"
 
 TOPIC_FIRST_READ_MARKERS = {
     "/understand/neurodiversity/": "People's brains and nervous systems vary.",
@@ -44,6 +24,24 @@ TOPIC_FIRST_READ_MARKERS = {
     "/understand/tourette-syndrome/": "Tourette syndrome involves motor and vocal tics that change over time.",
     "/understand/learning-disability/": "In the UK, a learning disability means lifelong difficulty learning or understanding new information together with difficulty managing everyday life independently.",
     "/understand/developmental-language-disorder/": "Developmental language disorder (DLD) is a persistent difficulty understanding and/or using language that affects everyday life.",
+}
+
+RESOURCE_MARKERS = {
+    "/resources/access-to-work/": ("Access to Work", "https://www.gov.uk/access-to-work/eligibility"),
+    "/resources/adhd-uk/": ("ADHD UK", "https://adhduk.co.uk/"),
+    "/resources/autistic-self-advocacy-network/": ("Autistic Self Advocacy Network", "https://autisticadvocacy.org/"),
+    "/resources/autistica/": ("Autistica", "https://www.autistica.org.uk/"),
+    "/resources/autistica-tips-hub/": ("Autistica Tips Hub", "https://www.autistica.org.uk/get-involved/autistica-tips-hub"),
+    "/resources/goblin-tools/": ("Goblin Tools", "https://goblin.tools/"),
+    "/resources/habitica/": ("Habitica", "https://habitica.com/static/home"),
+    "/resources/minecraft/": ("Minecraft", "https://www.minecraft.net/en-us/accessibility"),
+    "/resources/molehill-mountain/": ("Molehill Mountain", "https://www.autistica.org.uk/our-research/research-projects/anxiety-tools-for-autistic-people"),
+    "/resources/national-autistic-society/": ("National Autistic Society", "https://www.autism.org.uk/"),
+    "/resources/stardew-valley/": ("Stardew Valley", "https://www.stardewvalley.net/"),
+    "/resources/tiimo/": ("Tiimo", "https://www.tiimoapp.com/"),
+    "/resources/time-timer/": ("Time Timer", "https://www.timetimer.com/"),
+    "/resources/unmasking-autism/": ("Unmasking Autism", "https://www.penguinrandomhouse.com/books/688819/unmasking-autism-by-devon-price-phd/"),
+    "/resources/unpacking/": ("Unpacking", "https://www.unpackinggame.com/"),
 }
 
 HOMEPAGE_QUESTIONS = (
@@ -59,7 +57,34 @@ HOMEPAGE_QUESTIONS = (
     ("Why can understanding or using language be difficult?", "/understand/developmental-language-disorder/"),
 )
 
-LEGACY_ROUTES = ("/tools/", "/games/", "/resources/", "/community/", "/oracle/")
+ROUTES = (
+    ("/", "Understand neurodivergence without doing all the digging yourself"),
+    ("/understand/", "<h1>Understand</h1>"),
+    *((path, f"<h1>{name}</h1>") for path, name in (
+        ("/understand/neurodiversity/", "Neurodiversity"),
+        ("/understand/autism/", "Autism"),
+        ("/understand/adhd/", "ADHD"),
+        ("/understand/executive-function/", "Executive function"),
+        ("/understand/sensory-processing/", "Sensory processing"),
+        ("/understand/dyslexia/", "Dyslexia"),
+        ("/understand/developmental-coordination-disorder/", "Developmental co-ordination disorder"),
+        ("/understand/tourette-syndrome/", "Tourette syndrome"),
+        ("/understand/learning-disability/", "Learning disability"),
+        ("/understand/developmental-language-disorder/", "Developmental language disorder"),
+    )),
+    ("/resources/", "<h1>Explore</h1>"),
+    ("/tools/", "<h1>Tools &amp; apps</h1>"),
+    ("/games/", "<h1>Games</h1>"),
+    ("/community/", "<h1>Support &amp; organisations</h1>"),
+    *((path, f"<h1>{html.escape(name)}</h1>") for path, (name, _url) in RESOURCE_MARKERS.items()),
+    ("/how-it-works/", "<h1>How this site works</h1>"),
+    ("/about/", "<h1>About</h1>"),
+    ("/accessibility/", "<h1>Accessibility</h1>"),
+    ("/feedback/", "<h1>Feedback</h1>"),
+    ("/privacy/", "<h1>Privacy</h1>"),
+)
+
+COMPATIBILITY_NOINDEX_ROUTES = ("/oracle/",)
 NOINDEX_MARKER = '<meta name="robots" content="noindex, follow">'
 NOT_FOUND_PATH = "/__nd_oracle_live_verifier_missing_page__/"
 NOT_FOUND_MARKER = "<h1>Page not found</h1>"
@@ -208,6 +233,8 @@ def verify_route(origin: str, path: str, marker: str, *, fetcher=fetch_url) -> l
     canonical = canonical_marker(url)
     if canonical not in response.body:
         failures.append(f"{path}: expected canonical link not found: {canonical!r}")
+    if NOINDEX_MARKER in response.body:
+        failures.append(f"{path}: canonical public route unexpectedly carries noindex")
     failures.extend(verify_security_headers(path, response))
     failures.extend(verify_passive_surface(origin, path, response))
     return failures
@@ -224,15 +251,25 @@ def verify_routes(origin: str, *, fetcher=fetch_url) -> list[str]:
     return failures
 
 
-def verify_v05_reading_contract(origin: str, *, fetcher=fetch_url) -> list[str]:
+def verify_v06_reading_contract(origin: str, *, fetcher=fetch_url) -> list[str]:
     failures: list[str] = []
 
     homepage = fetcher(expected_url(origin, "/"))
     for question, target in HOMEPAGE_QUESTIONS:
         if question not in homepage.body:
-            failures.append(f"/: missing v0.5 homepage question {question!r}")
+            failures.append(f"/: missing v0.6 homepage question {question!r}")
         if f'href="{target}"' not in homepage.body:
-            failures.append(f"/: missing v0.5 homepage route to {target}")
+            failures.append(f"/: missing v0.6 homepage route to {target}")
+    for marker in (
+        "Explore useful things",
+        'href="/resources/"',
+        'href="/tools/"',
+        'href="/games/"',
+        'href="/community/"',
+        "A listing is not an endorsement",
+    ):
+        if marker not in homepage.body:
+            failures.append(f"/: ecosystem marker missing: {marker!r}")
 
     for path, first_read in TOPIC_FIRST_READ_MARKERS.items():
         response = fetcher(expected_url(origin, path))
@@ -253,9 +290,10 @@ def verify_v05_reading_contract(origin: str, *, fetcher=fetch_url) -> list[str]:
         '<dt>Low</dt>',
         '<dt>Contested</dt>',
         '<dt>Not applicable</dt>',
+        '<h2>Being listed is not being endorsed</h2>',
     ):
         if marker not in how.body:
-            failures.append(f"/how-it-works/: confidence marker missing: {marker!r}")
+            failures.append(f"/how-it-works/: contract marker missing: {marker!r}")
 
     feedback = fetcher(expected_url(origin, "/feedback/"))
     for marker in (
@@ -268,7 +306,31 @@ def verify_v05_reading_contract(origin: str, *, fetcher=fetch_url) -> list[str]:
             failures.append(f"/feedback/: feedback boundary marker missing: {marker!r}")
 
     if not failures:
-        print("PASS v0.5 public-reading contract")
+        print("PASS v0.6 public-reading contract")
+    return failures
+
+
+def verify_v06_resource_contract(origin: str, *, fetcher=fetch_url) -> list[str]:
+    failures: list[str] = []
+    for path, (name, official_url) in RESOURCE_MARKERS.items():
+        response = fetcher(expected_url(origin, path))
+        required = (
+            "Listed, not endorsed",
+            "Last reviewed:",
+            '<h2 id="use-heading">What it is for</h2>',
+            '<h2 id="access-heading">Access</h2>',
+            '<h2 id="limits-heading">Limitations and possible poor fit</h2>',
+            '<h2 id="cost-heading">Cost and access notes</h2>',
+            '<h2 id="conflict-heading">Ownership and conflicts</h2>',
+            '<h2 id="evidence-status-heading">Evidence status</h2>',
+            "This listing makes no efficacy or safety claim",
+            f'href="{html.escape(official_url, quote=True)}"',
+        )
+        for marker in required:
+            if marker not in response.body:
+                failures.append(f"{path}: resource contract marker missing for {name}: {marker!r}")
+    if not failures:
+        print(f"PASS v0.6 resource contract ({len(RESOURCE_MARKERS)} resources)")
     return failures
 
 
@@ -293,9 +355,9 @@ def verify_not_found(origin: str, *, fetcher=fetch_url) -> list[str]:
     return failures
 
 
-def verify_legacy_routes(origin: str, *, fetcher=fetch_url) -> list[str]:
+def verify_compatibility_noindex_routes(origin: str, *, fetcher=fetch_url) -> list[str]:
     failures: list[str] = []
-    for path in LEGACY_ROUTES:
+    for path in COMPATIBILITY_NOINDEX_ROUTES:
         url = expected_url(origin, path)
         response = fetcher(url)
         route_failures: list[str] = []
@@ -312,7 +374,7 @@ def verify_legacy_routes(origin: str, *, fetcher=fetch_url) -> list[str]:
         if route_failures:
             failures.extend(route_failures)
         else:
-            print(f"PASS legacy-noindex {path}")
+            print(f"PASS compatibility-noindex {path}")
     return failures
 
 
@@ -416,17 +478,18 @@ def verify_www_redirect(origin: str, *, fetcher=fetch_url) -> list[str]:
 def verify_production(origin: str, *, fetcher=fetch_url) -> list[str]:
     failures: list[str] = []
     failures.extend(verify_routes(origin, fetcher=fetcher))
-    failures.extend(verify_v05_reading_contract(origin, fetcher=fetcher))
+    failures.extend(verify_v06_reading_contract(origin, fetcher=fetcher))
+    failures.extend(verify_v06_resource_contract(origin, fetcher=fetcher))
     failures.extend(verify_not_found(origin, fetcher=fetcher))
     failures.extend(verify_metadata_files(origin, fetcher=fetcher))
-    failures.extend(verify_legacy_routes(origin, fetcher=fetcher))
+    failures.extend(verify_compatibility_noindex_routes(origin, fetcher=fetcher))
     failures.extend(verify_www_redirect(origin, fetcher=fetcher))
     return failures
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Verify the ND Oracle production HTTP, public-surface and v0.5 reading contract over HTTPS."
+        description="Verify the ND Oracle production HTTP, public-surface and v0.6 ecosystem contract over HTTPS."
     )
     parser.add_argument("--origin", default=DEFAULT_ORIGIN)
     return parser.parse_args(argv)
@@ -449,7 +512,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"- {failure}", file=sys.stderr)
         return 1
     print(
-        f"Verified {len(ROUTES)} canonical routes plus v0.5 reading and production HTTP/public-surface contracts at {origin}."
+        f"Verified {len(ROUTES)} canonical routes plus v0.6 reading, resource and production HTTP/public-surface contracts at {origin}."
     )
     return 0
 

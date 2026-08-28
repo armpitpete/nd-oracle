@@ -1,0 +1,3 @@
+This file is intentionally not a frozen release identity.
+
+The exact candidate head is resolved from Git immediately before CI/protected review. Do not copy a mutable branch SHA into this file as if it were a release record.

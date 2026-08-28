@@ -34,31 +34,31 @@ class VerifyLiveSiteTests(unittest.TestCase):
             headers=dict(verify_live_site.SECURITY_HEADERS if headers is None else headers),
         )
 
-    def test_expected_canonical_route_set_is_complete(self):
-        self.assertEqual(
-            tuple(path for path, _ in verify_live_site.ROUTES),
-            (
-                "/",
-                "/understand/",
-                "/understand/neurodiversity/",
-                "/understand/autism/",
-                "/understand/adhd/",
-                "/understand/executive-function/",
-                "/understand/sensory-processing/",
-                "/understand/dyslexia/",
-                "/understand/developmental-coordination-disorder/",
-                "/understand/tourette-syndrome/",
-                "/understand/learning-disability/",
-                "/understand/developmental-language-disorder/",
-                "/how-it-works/",
-                "/about/",
-                "/accessibility/",
-                "/feedback/",
-                "/privacy/",
-            ),
-        )
+    def test_expected_canonical_route_set_covers_ecosystem(self):
+        paths = tuple(path for path, _ in verify_live_site.ROUTES)
+        self.assertEqual(36, len(paths))
+        self.assertEqual(36, len(set(paths)))
+        for path in (
+            "/",
+            "/understand/",
+            "/resources/",
+            "/tools/",
+            "/games/",
+            "/community/",
+            "/how-it-works/",
+            "/about/",
+            "/accessibility/",
+            "/feedback/",
+            "/privacy/",
+        ):
+            self.assertIn(path, paths)
+        for path in verify_live_site.TOPIC_FIRST_READ_MARKERS:
+            self.assertIn(path, paths)
+        for path in verify_live_site.RESOURCE_MARKERS:
+            self.assertIn(path, paths)
+        self.assertNotIn("/oracle/", paths)
 
-    def test_v05_reading_contract_requires_home_topics_confidence_and_feedback(self):
+    def test_v06_reading_contract_requires_topics_ecosystem_confidence_and_feedback(self):
         origin = "https://ndoracle.org"
 
         def fetcher(url):
@@ -67,6 +67,14 @@ class VerifyLiveSiteTests(unittest.TestCase):
                 body = "".join(
                     f'<a href="{target}">{question}</a>'
                     for question, target in verify_live_site.HOMEPAGE_QUESTIONS
+                )
+                body += (
+                    "Explore useful things"
+                    '<a href="/resources/">Everything</a>'
+                    '<a href="/tools/">Tools</a>'
+                    '<a href="/games/">Games</a>'
+                    '<a href="/community/">Support</a>'
+                    "A listing is not an endorsement"
                 )
             elif path in verify_live_site.TOPIC_FIRST_READ_MARKERS:
                 body = (
@@ -80,6 +88,7 @@ class VerifyLiveSiteTests(unittest.TestCase):
                     '<h2>What the confidence labels mean</h2>'
                     '<dt>High</dt><dt>Moderate</dt><dt>Low</dt>'
                     '<dt>Contested</dt><dt>Not applicable</dt>'
+                    '<h2>Being listed is not being endorsed</h2>'
                 )
             elif path == "/feedback/":
                 body = (
@@ -93,11 +102,11 @@ class VerifyLiveSiteTests(unittest.TestCase):
             return self.response(final_url=url, body=body)
 
         self.assertEqual(
-            verify_live_site.verify_v05_reading_contract(origin, fetcher=fetcher),
+            verify_live_site.verify_v06_reading_contract(origin, fetcher=fetcher),
             [],
         )
 
-    def test_v05_reading_contract_rejects_missing_reader_marker(self):
+    def test_v06_reading_contract_rejects_missing_reader_marker(self):
         origin = "https://ndoracle.org"
 
         def fetcher(url):
@@ -107,6 +116,7 @@ class VerifyLiveSiteTests(unittest.TestCase):
                     f'<a href="{target}">{question}</a>'
                     for question, target in verify_live_site.HOMEPAGE_QUESTIONS
                 )
+                body += 'Explore useful things<a href="/resources/"></a><a href="/tools/"></a><a href="/games/"></a><a href="/community/"></a>A listing is not an endorsement'
             elif path in verify_live_site.TOPIC_FIRST_READ_MARKERS:
                 body = (
                     html.escape(verify_live_site.TOPIC_FIRST_READ_MARKERS[path], quote=True)
@@ -117,20 +127,77 @@ class VerifyLiveSiteTests(unittest.TestCase):
                 if path == "/understand/autism/":
                     body = body.replace('class="review-meta">Last reviewed:', 'class="review-meta">Reviewed:')
             elif path == "/how-it-works/":
-                body = '<h2>What the confidence labels mean</h2><dt>High</dt><dt>Moderate</dt><dt>Low</dt><dt>Contested</dt><dt>Not applicable</dt>'
+                body = '<h2>What the confidence labels mean</h2><dt>High</dt><dt>Moderate</dt><dt>Low</dt><dt>Contested</dt><dt>Not applicable</dt><h2>Being listed is not being endorsed</h2>'
             elif path == "/feedback/":
                 body = '<h2>Report a problem</h2><a href="https://github.com/armpitpete/nd-oracle/issues/new">issues</a>Please do not include private health information<h2>Current limitation</h2>'
             else:
                 raise AssertionError(url)
             return self.response(final_url=url, body=body)
 
-        failures = verify_live_site.verify_v05_reading_contract(origin, fetcher=fetcher)
+        failures = verify_live_site.verify_v06_reading_contract(origin, fetcher=fetcher)
         self.assertTrue(any("/understand/autism/" in failure and "Last reviewed" in failure for failure in failures))
 
-    def test_expected_legacy_route_set_is_complete(self):
+    def test_v06_resource_contract_requires_inspection_boundaries_and_official_access(self):
+        origin = "https://ndoracle.org"
+
+        def fetcher(url):
+            path = url.removeprefix(origin)
+            name, official_url = verify_live_site.RESOURCE_MARKERS[path]
+            body = (
+                f"<h1>{html.escape(name)}</h1>"
+                "Listed, not endorsed"
+                "Last reviewed:"
+                '<h2 id="use-heading">What it is for</h2>'
+                '<h2 id="access-heading">Access</h2>'
+                f'<a href="{html.escape(official_url, quote=True)}">Visit official resource</a>'
+                '<h2 id="limits-heading">Limitations and possible poor fit</h2>'
+                '<h2 id="cost-heading">Cost and access notes</h2>'
+                '<h2 id="conflict-heading">Ownership and conflicts</h2>'
+                '<h2 id="evidence-status-heading">Evidence status</h2>'
+                "This listing makes no efficacy or safety claim"
+            )
+            return self.response(final_url=url, body=body)
+
         self.assertEqual(
-            verify_live_site.LEGACY_ROUTES,
-            ("/tools/", "/games/", "/resources/", "/community/", "/oracle/"),
+            verify_live_site.verify_v06_resource_contract(origin, fetcher=fetcher),
+            [],
+        )
+
+    def test_v06_resource_contract_rejects_hidden_endorsement_boundary(self):
+        origin = "https://ndoracle.org"
+
+        def fetcher(url):
+            path = url.removeprefix(origin)
+            _name, official_url = verify_live_site.RESOURCE_MARKERS[path]
+            return self.response(
+                final_url=url,
+                body=(
+                    "Last reviewed:"
+                    '<h2 id="use-heading">What it is for</h2>'
+                    '<h2 id="access-heading">Access</h2>'
+                    f'<a href="{html.escape(official_url, quote=True)}">Visit official resource</a>'
+                    '<h2 id="limits-heading">Limitations and possible poor fit</h2>'
+                    '<h2 id="cost-heading">Cost and access notes</h2>'
+                    '<h2 id="conflict-heading">Ownership and conflicts</h2>'
+                    '<h2 id="evidence-status-heading">Evidence status</h2>'
+                    "This listing makes no efficacy or safety claim"
+                ),
+            )
+
+        failures = verify_live_site.verify_v06_resource_contract(origin, fetcher=fetcher)
+        self.assertEqual(len(verify_live_site.RESOURCE_MARKERS), len(failures))
+        self.assertTrue(all("Listed, not endorsed" in failure for failure in failures))
+
+    def test_only_unrealised_oracle_route_remains_compatibility_noindex(self):
+        self.assertEqual(verify_live_site.COMPATIBILITY_NOINDEX_ROUTES, ("/oracle/",))
+        origin = "https://ndoracle.org"
+
+        def fetcher(url):
+            return self.response(final_url=url, body=verify_live_site.NOINDEX_MARKER)
+
+        self.assertEqual(
+            verify_live_site.verify_compatibility_noindex_routes(origin, fetcher=fetcher),
+            [],
         )
 
     def test_route_passes_with_exact_identity_security_and_passive_surface(self):
@@ -152,13 +219,13 @@ class VerifyLiveSiteTests(unittest.TestCase):
             [],
         )
 
-    def test_route_rejects_identity_and_security_failures(self):
+    def test_route_rejects_identity_security_and_noindex_failures(self):
         def fetcher(_requested_url):
             return self.response(
                 status=302,
                 final_url="https://example.invalid/",
                 content_type="text/plain",
-                body="not the expected page",
+                body=verify_live_site.NOINDEX_MARKER,
                 headers={},
             )
 
@@ -173,6 +240,7 @@ class VerifyLiveSiteTests(unittest.TestCase):
         self.assertTrue(any("text/html" in failure for failure in failures))
         self.assertTrue(any("page marker" in failure for failure in failures))
         self.assertTrue(any("canonical link" in failure for failure in failures))
+        self.assertTrue(any("unexpectedly carries noindex" in failure for failure in failures))
         self.assertTrue(any("missing security header" in failure for failure in failures))
 
     def test_security_headers_ignore_whitespace_only_differences(self):
@@ -214,17 +282,6 @@ class VerifyLiveSiteTests(unittest.TestCase):
         )
         self.assertEqual(url, origin + verify_live_site.NOT_FOUND_PATH)
 
-    def test_legacy_routes_require_noindex(self):
-        origin = "https://ndoracle.org"
-
-        def fetcher(url):
-            return self.response(final_url=url, body=verify_live_site.NOINDEX_MARKER)
-
-        self.assertEqual(
-            verify_live_site.verify_legacy_routes(origin, fetcher=fetcher),
-            [],
-        )
-
     def test_metadata_files_require_exact_public_index_set(self):
         origin = "https://ndoracle.org"
         sitemap_urls = "".join(
@@ -257,8 +314,10 @@ class VerifyLiveSiteTests(unittest.TestCase):
             verify_live_site.verify_metadata_files(origin, fetcher=fetcher),
             [],
         )
-        for legacy in verify_live_site.LEGACY_ROUTES:
-            self.assertNotIn(origin + legacy, verify_live_site.expected_sitemap_urls(origin))
+        for compatibility in verify_live_site.COMPATIBILITY_NOINDEX_ROUTES:
+            self.assertNotIn(origin + compatibility, verify_live_site.expected_sitemap_urls(origin))
+        for active in ("/tools/", "/games/", "/resources/", "/community/"):
+            self.assertIn(origin + active, verify_live_site.expected_sitemap_urls(origin))
 
     def test_managed_robots_prefix_preserves_origin_contract(self):
         origin = "https://ndoracle.org"
@@ -282,11 +341,11 @@ class VerifyLiveSiteTests(unittest.TestCase):
         failures = verify_live_site.verify_robots_content(origin, managed)
         self.assertTrue(any("content signal changed" in failure for failure in failures))
 
-    def test_sitemap_rejects_unexpected_legacy_route(self):
+    def test_sitemap_rejects_unexpected_noindex_compatibility_route(self):
         origin = "https://ndoracle.org"
         sitemap = (
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-            f'<url><loc>{origin}/tools/</loc></url>'
+            f'<url><loc>{origin}/oracle/</loc></url>'
             "</urlset>"
         )
         robots = verify_live_site.expected_origin_robots(origin)
