@@ -42,7 +42,7 @@ class VerifyQuestionDiscoveryV07Tests(unittest.TestCase):
         self.assertEqual(42, len(set(new_paths)))
         self.assertTrue(set(old_paths).issubset(new_paths))
         self.assertIn("/questions/", new_paths)
-        for path in verify_live_site.QUESTION_MARKERS:
+        for path in verify_live_site.V07_QUESTION_MARKERS:
             self.assertIn(path, new_paths)
 
     def test_v07_question_contract_accepts_governed_static_surface(self):
@@ -53,7 +53,7 @@ class VerifyQuestionDiscoveryV07Tests(unittest.TestCase):
             if path == "/":
                 body = "".join(
                     f'<a href="{question_path}">{html.escape(question, quote=True)}</a>'
-                    for question_path, question in verify_live_site.QUESTION_MARKERS.items()
+                    for question_path, question in verify_live_site.V07_QUESTION_MARKERS.items()
                 )
             elif path == "/questions/":
                 body = (
@@ -61,10 +61,10 @@ class VerifyQuestionDiscoveryV07Tests(unittest.TestCase):
                     "5 governed practical questions"
                     + "".join(
                         f'<a href="{question_path}">{html.escape(question, quote=True)}</a>'
-                        for question_path, question in verify_live_site.QUESTION_MARKERS.items()
+                        for question_path, question in verify_live_site.V07_QUESTION_MARKERS.items()
                     )
                 )
-            elif path in verify_live_site.QUESTION_MARKERS:
+            elif path in verify_live_site.V07_QUESTION_MARKERS:
                 body = (
                     "Relevant to inspect, not recommended."
                     '<h2 id="current-understanding-heading">Current understanding</h2>'
@@ -94,7 +94,7 @@ class VerifyQuestionDiscoveryV07Tests(unittest.TestCase):
             if path == "/":
                 body = "".join(
                     f'<a href="{question_path}">{html.escape(question, quote=True)}</a>'
-                    for question_path, question in verify_live_site.QUESTION_MARKERS.items()
+                    for question_path, question in verify_live_site.V07_QUESTION_MARKERS.items()
                 )
             elif path == "/questions/":
                 body = (
@@ -102,10 +102,10 @@ class VerifyQuestionDiscoveryV07Tests(unittest.TestCase):
                     "5 governed practical questions"
                     + "".join(
                         f'<a href="{question_path}">{html.escape(question, quote=True)}</a>'
-                        for question_path, question in verify_live_site.QUESTION_MARKERS.items()
+                        for question_path, question in verify_live_site.V07_QUESTION_MARKERS.items()
                     )
                 )
-            elif path in verify_live_site.QUESTION_MARKERS:
+            elif path in verify_live_site.V07_QUESTION_MARKERS:
                 boundary = (
                     ""
                     if path == "/questions/task-starting-and-organisation/"
@@ -136,12 +136,12 @@ class VerifyQuestionDiscoveryV07Tests(unittest.TestCase):
             )
         )
 
-    def test_expected_sitemap_urls_now_include_question_routes(self):
+    def test_v07_expected_sitemap_set_remains_frozen_at_42_routes(self):
         origin = "https://ndoracle.org"
-        expected = verify_live_site.expected_sitemap_urls(origin)
+        expected = {origin + path for path, _marker in verify_live_site.V07_ROUTES}
         self.assertEqual(42, len(expected))
         self.assertIn(origin + "/questions/", expected)
-        for path in verify_live_site.QUESTION_MARKERS:
+        for path in verify_live_site.V07_QUESTION_MARKERS:
             self.assertIn(origin + path, expected)
 
 
