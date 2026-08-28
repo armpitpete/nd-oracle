@@ -53,6 +53,10 @@ QUESTION_MARKERS_V09 = {
     f"/questions/{question['id']}/": question["question"]
     for question in QUESTION_RECORDS
 }
+CONCEPT_MARKERS_V09 = {
+    f"/understand/{concept['id']}/": concept["name"]
+    for concept in CONCEPT_RECORDS
+}
 
 NAVIGATION_MARKERS = (
     ("/needs/", "<h1>Browse by need</h1>"),
@@ -69,13 +73,47 @@ NAVIGATION_MARKERS = (
     ("/a-z/", "<h1>A–Z</h1>"),
 )
 
-V09_ROUTES = tuple(_v08.V08_ROUTES) + NAVIGATION_MARKERS
+STABLE_BASE_MARKERS = (
+    ("/", "Understand neurodivergence without doing all the digging yourself"),
+    ("/understand/", "<h1>Understand</h1>"),
+    ("/resources/", "<h1>Resources</h1>"),
+    ("/tools/", "<h1>Tools &amp; practical help</h1>"),
+    ("/games/", "<h1>Games</h1>"),
+    ("/community/", "<h1>Support &amp; organisations</h1>"),
+    ("/books-media/", "<h1>Books &amp; media</h1>"),
+    ("/questions/", "<h1>Questions</h1>"),
+    ("/how-it-works/", "<h1>How this site works</h1>"),
+    ("/about/", "<h1>About</h1>"),
+    ("/accessibility/", "<h1>Accessibility</h1>"),
+    ("/feedback/", "<h1>Feedback</h1>"),
+    ("/privacy/", "<h1>Privacy</h1>"),
+)
+
+V09_ROUTES = (
+    *STABLE_BASE_MARKERS[:2],
+    *((path, f"<h1>{html.escape(name, quote=True)}</h1>") for path, name in CONCEPT_MARKERS_V09.items()),
+    *STABLE_BASE_MARKERS[2:7],
+    *((path, f"<h1>{html.escape(name, quote=True)}</h1>") for path, (name, _url) in RESOURCE_MARKERS_V09.items()),
+    *STABLE_BASE_MARKERS[7:8],
+    *((path, f"<h1>{html.escape(question, quote=True)}</h1>") for path, question in QUESTION_MARKERS_V09.items()),
+    *STABLE_BASE_MARKERS[8:],
+    *NAVIGATION_MARKERS,
+)
+
 if len(V09_ROUTES) != _builder.V09_ROUTE_COUNT:
     raise RuntimeError(
         f"v0.9 verifier route count mismatch: expected {_builder.V09_ROUTE_COUNT}, got {len(V09_ROUTES)}"
     )
 if len({path for path, _marker in V09_ROUTES}) != len(V09_ROUTES):
     raise RuntimeError("v0.9 verifier contains duplicate routes")
+_builder_paths = set(_builder.sitemap_paths(CONCEPT_RECORDS, RESOURCE_RECORDS, QUESTION_RECORDS))
+_verifier_paths = {path for path, _marker in V09_ROUTES}
+if _builder_paths != _verifier_paths:
+    raise RuntimeError(
+        "v0.9 builder/verifier route mismatch: "
+        f"missing_from_verifier={sorted(_builder_paths - _verifier_paths)}; "
+        f"unexpected_in_verifier={sorted(_verifier_paths - _builder_paths)}"
+    )
 
 # Keep the historical public constant frozen for legacy contract tests. The
 # shared production verifier itself is extended to the full current route set.
@@ -95,6 +133,33 @@ def verify_v08_subset_preserved() -> list[str]:
         failures.append(f"v0.8 compatibility: missing accepted Questions {missing_questions}")
     if not failures:
         print("PASS v0.8 accepted object-set compatibility (25 Resources, 14 Questions)")
+    return failures
+
+
+def verify_v09_concept_contract(origin: str, *, fetcher=fetch_url) -> list[str]:
+    failures: list[str] = []
+    understand = fetcher(expected_url(origin, "/understand/"))
+    if f"There are {len(CONCEPT_RECORDS)} reviewed topic pages" not in understand.body:
+        failures.append("/understand/: current Concept count is missing")
+    for concept in CONCEPT_RECORDS:
+        path = f"/understand/{concept['id']}/"
+        if f'href="{path}"' not in understand.body:
+            failures.append(f"/understand/: missing Concept route {path}")
+        response = fetcher(expected_url(origin, path))
+        first_read = html.escape(_builder.reader_intro(concept), quote=True)
+        precise = html.escape(concept["summary"], quote=True)
+        for marker in (
+            first_read,
+            precise,
+            'class="review-meta">Last reviewed:',
+            '<details class="technical-summary"><summary>More precise description</summary>',
+            '<h2 id="next-routes-heading">Useful next routes</h2>',
+            'href="/how-it-works/#confidence"',
+        ):
+            if marker not in response.body:
+                failures.append(f"{path}: v0.9 Concept marker missing: {marker!r}")
+    if not failures:
+        print(f"PASS v0.9 Concept reading/navigation contract ({len(CONCEPT_RECORDS)} Concepts)")
     return failures
 
 
@@ -225,6 +290,7 @@ def verify_production(origin: str, *, fetcher=fetch_url) -> list[str]:
     failures = verify_v08_subset_preserved()
     failures.extend(_v08._v06.verify_production(origin, fetcher=fetcher))
     failures.extend(_v08.verify_v07_question_contract(origin, fetcher=fetcher))
+    failures.extend(verify_v09_concept_contract(origin, fetcher=fetcher))
     failures.extend(verify_v09_question_contract(origin, fetcher=fetcher))
     failures.extend(verify_v09_resource_contract(origin, fetcher=fetcher))
     failures.extend(verify_v09_navigation_contract(origin, fetcher=fetcher))
