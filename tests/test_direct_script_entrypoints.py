@@ -27,9 +27,10 @@ class DirectScriptEntrypointTests(unittest.TestCase):
             )
 
             self.assertEqual(0, result.returncode, result.stderr)
-            self.assertIn("public site v0.7", result.stdout)
+            self.assertIn("public site v0.8", result.stdout)
             self.assertTrue((sandbox / "dist" / "index.html").is_file())
             self.assertTrue((sandbox / "dist" / "questions" / "index.html").is_file())
+            self.assertTrue((sandbox / "dist" / "books-media" / "index.html").is_file())
             self.assertTrue(
                 (
                     sandbox
