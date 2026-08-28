@@ -16,6 +16,39 @@ QUESTIONS_DIR = _v08.QUESTIONS_DIR
 FEATURED_QUESTION_IDS = list(_v08.FEATURED_QUESTION_IDS)
 BOOK_MEDIA_CATEGORIES = set(_v08.BOOK_MEDIA_CATEGORIES)
 
+V09_SIMPLE_EXPLANATIONS = {
+    "dyscalculia": "Dyscalculia is a persistent difficulty learning and using number and arithmetic skills; it is not the same as simply being bad at maths.",
+    "masking": "Masking or camouflaging is when someone changes or hides parts of how they naturally communicate or behave to meet social expectations.",
+    "autistic-burnout": "Autistic burnout is a community and research term for severe, long-lasting exhaustion and reduced capacity reported by some autistic people.",
+    "monotropism": "Monotropism is a theory that describes attention as tending to concentrate deeply on a smaller number of interests or demands at once.",
+    "interoception": "Interoception is how the nervous system senses and interprets signals from inside the body, such as hunger, heartbeat or temperature.",
+    "alexithymia": "Alexithymia describes difficulty identifying or describing emotions; it is not the same thing as autism and can occur across groups.",
+    "stimming": "Stimming means repetitive movements, sounds or sensory actions that can serve many functions, including enjoyment or regulation.",
+    "communication-differences": "Communication differences include variation in speaking, understanding, timing, non-verbal communication and use of AAC.",
+    "task-initiation": "Task initiation is the step between intending to do something and actually starting it; difficulty here can have many causes.",
+    "sensory-overload": "Sensory overload is when sensory input becomes overwhelming or difficult to manage; what causes it varies by person and context.",
+}
+V09_COMMON_QUESTIONS = [
+    ("What does dyscalculia mean, and how is it different from ordinary maths difficulty?", "dyscalculia"),
+    ("What do people mean by masking or camouflaging?", "masking"),
+    ("What is autistic burnout, and how certain is the evidence?", "autistic-burnout"),
+    ("What is monotropism?", "monotropism"),
+    ("What is interoception?", "interoception"),
+    ("What is alexithymia?", "alexithymia"),
+    ("Why do people stim?", "stimming"),
+    ("What kinds of communication differences can matter?", "communication-differences"),
+    ("Why can starting a task be difficult?", "task-initiation"),
+    ("What do people mean by sensory overload?", "sensory-overload"),
+]
+_v06.SIMPLE_EXPLANATIONS.update(V09_SIMPLE_EXPLANATIONS)
+_existing_common_targets = {target_id for _question, target_id in _v06.COMMON_QUESTIONS}
+for _question, _target_id in V09_COMMON_QUESTIONS:
+    if _target_id not in _existing_common_targets:
+        _v06.COMMON_QUESTIONS.append((_question, _target_id))
+        _existing_common_targets.add(_target_id)
+SIMPLE_EXPLANATIONS = _v06.SIMPLE_EXPLANATIONS
+COMMON_QUESTIONS = _v06.COMMON_QUESTIONS
+
 QUESTION_GROUP_ORDER = [
     "Daily life & technology",
     "Sensory & environment",
