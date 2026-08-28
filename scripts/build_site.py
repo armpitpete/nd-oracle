@@ -1,62 +1,117 @@
 from __future__ import annotations
 
 import html
-import json
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from scripts import build_site_v06 as _v06
-from scripts.build_site_v06 import *
+from scripts import build_site_v08 as _v08
+from scripts.build_site_v08 import *
 
-QUESTIONS_DIR = ROOT / "objects" / "questions"
+_v06 = _v08._v06
+QUESTIONS_DIR = _v08.QUESTIONS_DIR
+FEATURED_QUESTION_IDS = list(_v08.FEATURED_QUESTION_IDS)
+BOOK_MEDIA_CATEGORIES = set(_v08.BOOK_MEDIA_CATEGORIES)
 
-PRIMARY_NAV = [
-    ("questions", "Questions"),
-    ("understand", "Topics"),
-    ("resources", "Resources"),
-    ("how-it-works", "How it works"),
-    ("about", "About"),
+V09_SIMPLE_EXPLANATIONS = {
+    "dyscalculia": "Dyscalculia is a persistent difficulty learning and using number and arithmetic skills; it is not the same as simply being bad at maths.",
+    "masking": "Masking or camouflaging is when someone changes or hides parts of how they naturally communicate or behave to meet social expectations.",
+    "autistic-burnout": "Autistic burnout is a community and research term for severe, long-lasting exhaustion and reduced capacity reported by some autistic people.",
+    "monotropism": "Monotropism is a theory that describes attention as tending to concentrate deeply on a smaller number of interests or demands at once.",
+    "interoception": "Interoception is how the nervous system senses and interprets signals from inside the body, such as hunger, heartbeat or temperature.",
+    "alexithymia": "Alexithymia describes difficulty identifying or describing emotions; it is not the same thing as autism and can occur across groups.",
+    "stimming": "Stimming means repetitive movements, sounds or sensory actions that can serve many functions, including enjoyment or regulation.",
+    "communication-differences": "Communication differences include variation in speaking, understanding, timing, non-verbal communication and use of AAC.",
+    "task-initiation": "Task initiation is the step between intending to do something and actually starting it; difficulty here can have many causes.",
+    "sensory-overload": "Sensory overload is when sensory input becomes overwhelming or difficult to manage; what causes it varies by person and context.",
+}
+V09_COMMON_QUESTIONS = [
+    ("What does dyscalculia mean, and how is it different from ordinary maths difficulty?", "dyscalculia"),
+    ("What do people mean by masking or camouflaging?", "masking"),
+    ("What is autistic burnout, and how certain is the evidence?", "autistic-burnout"),
+    ("What is monotropism?", "monotropism"),
+    ("What is interoception?", "interoception"),
+    ("What is alexithymia?", "alexithymia"),
+    ("Why do people stim?", "stimming"),
+    ("What kinds of communication differences can matter?", "communication-differences"),
+    ("Why can starting a task be difficult?", "task-initiation"),
+    ("What do people mean by sensory overload?", "sensory-overload"),
 ]
-_v06.PRIMARY_NAV = PRIMARY_NAV
-
-# Keep one immutable handle to the proven v0.6 page shell. Tests reload this
-# module repeatedly, so a v0.8 wrapper must never wrap an earlier v0.8 wrapper.
-if not hasattr(_v06, "_V08_ORIGINAL_PAGE_SHELL"):
-    _v06._V08_ORIGINAL_PAGE_SHELL = _v06.page_shell
-_page_shell_v06 = _v06._V08_ORIGINAL_PAGE_SHELL
-
-
-def page_shell(*args, **kwargs) -> str:
-    page = _page_shell_v06(*args, **kwargs)
-    return page.replace('<a href="/resources/">Explore</a>', '<a href="/resources/">Resources</a>')
-
-
-_v06.page_shell = page_shell
-
-BOOK_MEDIA_CATEGORIES = {"book", "media"}
+_v06.SIMPLE_EXPLANATIONS.update(V09_SIMPLE_EXPLANATIONS)
+_existing_common_targets = {target_id for _question, target_id in _v06.COMMON_QUESTIONS}
+for _question, _target_id in V09_COMMON_QUESTIONS:
+    if _target_id not in _existing_common_targets:
+        _v06.COMMON_QUESTIONS.append((_question, _target_id))
+        _existing_common_targets.add(_target_id)
+SIMPLE_EXPLANATIONS = _v06.SIMPLE_EXPLANATIONS
+COMMON_QUESTIONS = _v06.COMMON_QUESTIONS
 
 QUESTION_GROUPS = [
     (
-        "Everyday life & technology",
+        "Daily life & technology",
         [
             "task-starting-and-organisation",
             "make-device-easier-to-use",
+            "meal-planning-and-everyday-food-tasks",
         ],
     ),
     (
-        "Work & study",
+        "Sensory & environment",
+        [
+            "make-noisy-bright-place-easier",
+            "sensory-overload-what-can-i-change",
+        ],
+    ),
+    (
+        "Communication",
+        [
+            "aac-and-nonspeaking-communication",
+            "phone-calls-are-difficult",
+            "processing-time-in-conversations-meetings",
+        ],
+    ),
+    (
+        "Work",
         [
             "workplace-support-great-britain",
             "reasonable-adjustments-at-work-great-britain",
-            "disabled-student-support-england",
             "disabled-person-looking-for-work-uk",
+            "disclosing-disability-neurodivergence-at-work",
+            "job-interview-adjustments-great-britain",
         ],
     ),
     (
-        "Finding information & support",
+        "Education & study",
+        [
+            "disabled-student-support-england",
+            "organising-study-and-assignments",
+            "send-support-school-college-england",
+        ],
+    ),
+    (
+        "Assessment & diagnosis",
+        [
+            "adult-adhd-assessment-england",
+            "adult-autism-assessment-england",
+        ],
+    ),
+    (
+        "Health & wellbeing",
+        [
+            "autism-anxiety-tools",
+            "masking-exhaustion-and-autistic-burnout",
+            "sleep-and-winding-down-routines",
+        ],
+    ),
+    (
+        "Relationships & family",
+        ["autistic-parent-support-uk"],
+    ),
+    (
+        "Information & support",
         [
             "autism-information-and-support",
             "dyslexia-information-and-support-uk",
@@ -64,130 +119,94 @@ QUESTION_GROUPS = [
             "learning-disability-information-and-support-uk",
             "dld-information-and-support",
             "adult-dyspraxia-information-uk",
+            "dyscalculia-information-and-support-uk",
         ],
     ),
     (
         "Games & downtime",
         ["low-time-pressure-games"],
     ),
+]
+_v08.QUESTION_GROUPS = QUESTION_GROUPS
+
+HUB_DEFINITIONS = [
     (
-        "Anxiety & self-management",
-        ["autism-anxiety-tools"],
+        "needs/daily-life",
+        "Daily life",
+        "Start with practical everyday tasks: getting started, routines, technology, planning and ordinary activities.",
+        {"Daily life & technology", "Games & downtime"},
+    ),
+    (
+        "needs/sensory-environment",
+        "Sensory & environment",
+        "Find governed routes about sensory load, noisy or bright places, overload and changing the environment around a person.",
+        {"Sensory & environment"},
+    ),
+    (
+        "needs/communication",
+        "Communication",
+        "Find routes for phone calls, processing time, speaking, AAC and communication access without assuming one communication style fits everyone.",
+        {"Communication"},
+    ),
+    (
+        "needs/work",
+        "Work",
+        "Find workplace support, adjustments, disclosure, interviews, job-search support and Access to Work routes.",
+        {"Work"},
+    ),
+    (
+        "needs/education-study",
+        "Education & study",
+        "Find study organisation, disabled-student support, SEND information and education access routes.",
+        {"Education & study"},
+    ),
+    (
+        "needs/assessment-diagnosis",
+        "Assessment & diagnosis",
+        "Find bounded information about assessment and diagnosis routes without turning ND Oracle into a diagnostic test.",
+        {"Assessment & diagnosis"},
+    ),
+    (
+        "needs/health-wellbeing",
+        "Health & wellbeing",
+        "Find current routes around anxiety, sleep, food-related task demands, burnout and wellbeing while keeping clinical boundaries visible.",
+        {"Health & wellbeing"},
+    ),
+    (
+        "needs/relationships-family",
+        "Relationships & family",
+        "Find routes relevant to family life, parenting and relationships where the present catalogue has governed material.",
+        {"Relationships & family"},
     ),
 ]
 
-FEATURED_QUESTION_IDS = [
-    "task-starting-and-organisation",
-    "reasonable-adjustments-at-work-great-britain",
-    "disabled-student-support-england",
-    "dld-information-and-support",
-    "low-time-pressure-games",
-    "autism-information-and-support",
-]
-
-QUESTION_DISCOVERY_HOW_SECTION = (
-    '<section><h2>Question-led discovery</h2>'
-    '<p>Practical question pages route an ordinary need across already governed topics and resources. '
-    'They show the current bounded synthesis, what is relevant to inspect, what evidence is still missing, '
-    'where people may disagree and what should cause the answer to be revisited.</p>'
-    '<p>A question route is not a personalised recommendation and does not turn a resource listing into proof that it works.</p></section>'
+NAVIGATION_ROUTES = (
+    "/needs/",
+    "/needs/daily-life/",
+    "/needs/sensory-environment/",
+    "/needs/communication/",
+    "/needs/work/",
+    "/needs/education-study/",
+    "/needs/assessment-diagnosis/",
+    "/needs/health-wellbeing/",
+    "/needs/relationships-family/",
+    "/types/",
+    "/places/",
+    "/a-z/",
 )
-QUESTION_DISCOVERY_ABOUT_SECTION = (
-    '<section><h2>Start with the problem, not the taxonomy</h2>'
-    '<p>Question-led discovery lets a reader begin with an everyday problem and then move into the governed topics and resources behind the answer. '
-    'The question page remains a route through the knowledge commons rather than a new source of authority.</p></section>'
-)
-if QUESTION_DISCOVERY_HOW_SECTION not in _v06.STATIC_PAGES["how-it-works"]["body"]:
-    _v06.STATIC_PAGES["how-it-works"]["body"] += QUESTION_DISCOVERY_HOW_SECTION
-if QUESTION_DISCOVERY_ABOUT_SECTION not in _v06.STATIC_PAGES["about"]["body"]:
-    _v06.STATIC_PAGES["about"]["body"] += QUESTION_DISCOVERY_ABOUT_SECTION
-_v06.STATIC_PAGES["oracle"]["body"] = (
-    '<p>The current public interface exposes reviewed knowledge through topic, resource and governed question pages. '
-    'Generated answers are not the source of truth. <a href="/questions/">Start with a governed question</a> or '
-    '<a href="/how-it-works/">see how the evidence route works</a>.</p>'
-)
-STATIC_PAGES = _v06.STATIC_PAGES
-
-_RESOURCE_SUBNAV_V06 = (
-    '<nav class="resource-subnav" aria-label="Explore resources">\n'
-    '  <a href="/resources/">Everything</a>\n'
-    '  <a href="/tools/">Tools &amp; apps</a>\n'
-    '  <a href="/games/">Games</a>\n'
-    '  <a href="/community/">Support &amp; organisations</a>\n'
-    '</nav>'
-)
-_RESOURCE_SUBNAV_V08 = (
-    '<nav class="resource-subnav" aria-label="Browse resources">\n'
-    '  <a href="/resources/">All resources</a>\n'
-    '  <a href="/tools/">Tools &amp; practical help</a>\n'
-    '  <a href="/games/">Games</a>\n'
-    '  <a href="/books-media/">Books &amp; media</a>\n'
-    '  <a href="/community/">Support &amp; organisations</a>\n'
-    '</nav>'
-)
-_render_resource_collection_v06 = _v06.render_resource_collection
-
-
-def render_resource_collection(
-    resources: list[dict],
-    *,
-    title: str,
-    intro: str,
-    route: str,
-    categories: set[str] | None = None,
-) -> str:
-    page = _render_resource_collection_v06(
-        resources,
-        title=title,
-        intro=intro,
-        route=route,
-        categories=categories,
-    )
-    if _RESOURCE_SUBNAV_V06 not in page:
-        raise ValueError("Cannot locate v0.6 resource sub-navigation")
-    return page.replace(_RESOURCE_SUBNAV_V06, _RESOURCE_SUBNAV_V08, 1)
-
-
-def render_resources_index(resources: list[dict]) -> str:
-    return render_resource_collection(
-        resources,
-        title="Resources",
-        intro="Tools, practical guides, games, books, services and organisations, described with their limitations and access conditions visible.",
-        route="resources",
-    )
-
-
-def load_questions() -> list[dict]:
-    questions = []
-    if not QUESTIONS_DIR.is_dir():
-        return questions
-    for path in sorted(QUESTIONS_DIR.glob("*.json")):
-        with path.open("r", encoding="utf-8") as handle:
-            questions.append(json.load(handle))
-    return sorted(questions, key=lambda item: item["question"].casefold())
+V09_ROUTE_COUNT = 125
 
 
 def validate_question_navigation(questions: list[dict]) -> None:
-    question_ids = {question["id"] for question in questions}
-    grouped_ids = [question_id for _, ids in QUESTION_GROUPS for question_id in ids]
-    grouped_set = set(grouped_ids)
-    if len(grouped_ids) != len(grouped_set):
-        raise ValueError("Question navigation groups contain duplicate question IDs")
-    if grouped_set != question_ids:
-        raise ValueError(
-            "Question navigation groups must exactly cover the governed Question corpus: "
-            f"missing={sorted(question_ids - grouped_set)}; unexpected={sorted(grouped_set - question_ids)}"
-        )
-    featured_set = set(FEATURED_QUESTION_IDS)
-    if len(FEATURED_QUESTION_IDS) != len(featured_set) or not featured_set <= question_ids:
-        raise ValueError("Featured questions must be unique governed Question IDs")
+    _v08.QUESTION_GROUPS = QUESTION_GROUPS
+    _v08.validate_question_navigation(questions)
 
 
-def question_link(question: dict) -> str:
-    return f"""<article class="topic-row">
-  <h3><a href="/questions/{esc(question['id'])}/">{esc(question['question'])}</a></h3>
-  <p>{esc(question['why_it_matters'])}</p>
-</article>"""
+def _append_before_main_end(page: str, section: str) -> str:
+    marker = "</main>"
+    if marker not in page:
+        raise ValueError("Cannot locate page main element")
+    return page.replace(marker, section + marker, 1)
 
 
 def render_index(
@@ -198,209 +217,105 @@ def render_index(
     if questions is None:
         questions = load_questions()
     validate_question_navigation(questions)
-    question_map = {question["id"]: question for question in questions}
-    base = _v06.render_index(concepts, resources)
-    practical_links = "".join(
-        f'<li><a href="/questions/{esc(question_id)}/">{esc(question_map[question_id]["question"])}</a></li>'
-        for question_id in FEATURED_QUESTION_IDS
-    )
-    practical = f"""
-<section class="start-section" aria-labelledby="practical-question-heading">
-  <h2 id="practical-question-heading">Start with something you need to do</h2>
-  <p class="section-intro">These are governed routes across the current catalogue. They identify things worth inspecting without pretending one answer fits everyone.</p>
-  <ul class="question-list">{practical_links}</ul>
-  <p><a href="/questions/">Browse all {len(questions)} practical questions →</a></p>
+    page = _v08.render_index(concepts, resources, questions)
+    browse = """
+<section class="start-section" aria-labelledby="browse-whole-heading">
+  <h2 id="browse-whole-heading">Browse the whole knowledge base</h2>
+  <p class="section-intro">Use needs, content type, geographic scope or the complete A–Z when you do not want to start from a diagnosis.</p>
+  <ul class="question-list">
+    <li><a href="/needs/">Browse by need</a></li>
+    <li><a href="/types/">Browse by content type</a></li>
+    <li><a href="/places/">Browse by geographic scope</a></li>
+    <li><a href="/a-z/">A–Z of all governed content</a></li>
+  </ul>
 </section>
 """
-    needle = '<section class="start-section" aria-labelledby="start-heading">'
-    if needle not in base:
-        raise ValueError("Cannot locate v0.6 homepage start section")
-    base = base.replace(needle, practical + needle, 1)
-
-    base = base.replace(
-        '<a class="entry-card" href="/tools/"><strong>Tools &amp; apps</strong>',
-        '<a class="entry-card" href="/tools/"><strong>Tools &amp; practical help</strong>',
-        1,
-    )
-    book_media_count = sum(1 for resource in resources if resource["category"] in BOOK_MEDIA_CATEGORIES)
-    everything_card = (
-        f'<a class="entry-card" href="/resources/"><strong>Everything</strong><span>{len(resources)} reviewed resources</span></a>'
-    )
-    books_card = (
-        f'<a class="entry-card" href="/books-media/"><strong>Books &amp; media</strong><span>{book_media_count} current entries</span></a>'
-    )
-    if everything_card not in base:
-        raise ValueError("Cannot locate homepage all-resources card")
-    return base.replace(everything_card, books_card + everything_card, 1)
+    return _append_before_main_end(page, browse)
 
 
 def render_questions_index(questions: list[dict]) -> str:
     validate_question_navigation(questions)
-    question_map = {question["id"]: question for question in questions}
-    groups = []
-    for group_name, ids in QUESTION_GROUPS:
-        group_slug = group_name.lower().replace(" ", "-").replace("&", "and")
-        rows = "".join(question_link(question_map[question_id]) for question_id in ids)
-        groups.append(
-            f'<section aria-labelledby="question-group-{esc(group_slug)}">'
-            f'<h2 id="question-group-{esc(group_slug)}">{esc(group_name)}</h2>'
-            f'<div class="topic-list">{rows}</div></section>'
-        )
-    body = f"""
-<section class="notice">
-  <strong>Relevant to inspect, not recommended.</strong> These pages route ordinary needs through reviewed ND Oracle material. They do not diagnose you, choose for you or turn a resource listing into an efficacy claim.
+    page = _v08.render_questions_index(questions)
+    browse = """
+<section aria-labelledby="question-browse-heading">
+  <h2 id="question-browse-heading">Other ways to browse</h2>
+  <p><a href="/needs/">Browse practical needs and life areas</a> · <a href="/a-z/">A–Z of all content</a></p>
 </section>
-<section aria-labelledby="questions-heading">
-  <h2 id="questions-heading">{len(questions)} governed practical questions</h2>
-  <p class="section-intro">Browse by the kind of problem you are trying to solve. Each page keeps the current synthesis, limitations, disagreement and evidence gaps visible.</p>
-</section>
-{''.join(groups)}
 """
-    return page_shell(
-        "Questions",
-        "Start with an everyday problem and follow a governed route to relevant topics, tools, games, services or organisations.",
-        body,
-        current="questions",
-        path="/questions/",
-    )
+    return _append_before_main_end(page, browse)
 
 
-def _related_question_items(
-    question: dict,
-    concept_map: dict[str, dict],
-    resource_map: dict[str, dict],
-) -> str:
-    items = []
-    for ref in question["related_objects"]:
-        object_type = ref["type"]
-        object_id = ref["id"]
-        if object_type == "concept":
-            target = concept_map.get(object_id)
-            if target is None:
-                raise ValueError(f"{question['id']}: missing related concept {object_id}")
-            items.append(
-                f'<li><a href="/understand/{esc(object_id)}/">{esc(target["name"])}</a> <span class="meta">Topic</span></li>'
-            )
-        elif object_type == "resource":
-            target = resource_map.get(object_id)
-            if target is None:
-                raise ValueError(f"{question['id']}: missing related resource {object_id}")
-            category = RESOURCE_CATEGORY_LABELS.get(
-                target["category"], target["category"].replace("_", " ").title()
-            )
-            items.append(
-                f'<li><a href="/resources/{esc(object_id)}/">{esc(target["name"])}</a> <span class="meta">{esc(category)}</span></li>'
-            )
-        else:
-            raise ValueError(
-                f"{question['id']}: public question renderer does not yet support related {object_type} objects"
-            )
-    return "<ul>" + "".join(items) + "</ul>"
+def related_questions(question: dict, questions: list[dict], limit: int = 5) -> list[dict]:
+    refs = {(ref.get("type"), ref.get("id")) for ref in question.get("related_objects", [])}
+    ranked: list[tuple[int, str, dict]] = []
+    for candidate in questions:
+        if candidate["id"] == question["id"]:
+            continue
+        candidate_refs = {
+            (ref.get("type"), ref.get("id"))
+            for ref in candidate.get("related_objects", [])
+        }
+        score = len(refs & candidate_refs)
+        if score:
+            ranked.append((-score, candidate["question"].casefold(), candidate))
+    ranked.sort(key=lambda item: (item[0], item[1]))
+    return [item[2] for item in ranked[:limit]]
 
 
 def render_question(
     question: dict,
     concept_map: dict[str, dict],
     resource_map: dict[str, dict],
+    questions: list[dict] | None = None,
 ) -> str:
-    reviewed = human_date(question["provenance"].get("last_reviewed"))
-    status = question["status"].replace("_", " ").capitalize()
-    related = _related_question_items(question, concept_map, resource_map)
-    body = f"""
-<p class="back-link"><a href="/questions/">← All questions</a></p>
-<p class="review-meta">Last reviewed: <strong>{esc(reviewed)}</strong> · Status: <strong>{esc(status)}</strong></p>
-<section class="notice">
-  <strong>Relevant to inspect, not recommended.</strong> This is a bounded synthesis of the current governed catalogue, not a personalised recommendation or proof that a listed resource will work for you.
-</section>
-<section aria-labelledby="current-understanding-heading">
-  <h2 id="current-understanding-heading">Current understanding</h2>
-  <p>{esc(question["current_understanding"])}</p>
-</section>
-<section aria-labelledby="related-things-heading">
-  <h2 id="related-things-heading">Related things to inspect</h2>
-  {related}
-</section>
-<section aria-labelledby="evidence-needed-heading">
-  <h2 id="evidence-needed-heading">What evidence is still needed</h2>
-  {list_items(question["evidence_needed"])}
-</section>
-<section aria-labelledby="dissent-heading">
-  <h2 id="dissent-heading">Where people may disagree</h2>
-  {list_items(question.get("dissent", []))}
-</section>
-<section aria-labelledby="reopen-heading">
-  <h2 id="reopen-heading">When this answer should be revisited</h2>
-  {list_items(question["reopening_conditions"])}
-</section>
-<details class="provenance"><summary>Question provenance and review state</summary>
-  <p>{esc(question["provenance"]["method"])}</p>
-  <div class="meta">Created {esc(question["provenance"]["created"])} · last reviewed {esc(reviewed)} · review state {esc(question["provenance"]["review_state"])}</div>
-</details>
-"""
-    return page_shell(
-        question["question"],
-        question["why_it_matters"],
-        body,
-        current="questions",
-        path=f"/questions/{question['id']}/",
-    )
-
-
-def _question_uses_ref(question: dict, object_type: str, object_id: str) -> bool:
-    return any(
-        ref.get("type") == object_type and ref.get("id") == object_id
-        for ref in question.get("related_objects", [])
-    )
-
-
-def _question_links_for_ref(questions: list[dict], object_type: str, object_id: str) -> str:
-    matched = [question for question in questions if _question_uses_ref(question, object_type, object_id)]
-    if not matched:
-        return '<p class="meta">No practical question route links here yet.</p>'
-    return "<ul>" + "".join(
-        f'<li><a href="/questions/{esc(question["id"])}/">{esc(question["question"])}</a></li>'
-        for question in matched
-    ) + "</ul>"
-
-
-def _resource_links_for_concept(resources: list[dict], concept_id: str) -> str:
-    matched = [
-        resource
-        for resource in resources
-        if any(
-            ref.get("type") == "concept" and ref.get("id") == concept_id
-            for ref in resource.get("related_objects", [])
+    if questions is None:
+        questions = load_questions()
+    page = _v08.render_question(question, concept_map, resource_map)
+    related = related_questions(question, questions)
+    if related:
+        items = "".join(
+            f'<li><a href="/questions/{esc(item["id"])}/">{esc(item["question"])}</a></li>'
+            for item in related
         )
-    ]
-    if not matched:
-        return '<p class="meta">No reviewed resource link recorded yet.</p>'
-    return "<ul>" + "".join(
-        f'<li><a href="/resources/{esc(resource["id"])}/">{esc(resource["name"])}</a> '
-        f'<span class="meta">{esc(RESOURCE_CATEGORY_LABELS.get(resource["category"], resource["category"].replace("_", " ").title()))}</span></li>'
-        for resource in matched
-    ) + "</ul>"
-
-
-def render_concept(
-    concept: dict,
-    concept_map: dict[str, dict],
-    resources: list[dict],
-    questions: list[dict],
-) -> str:
-    page = _v06.render_concept(concept, concept_map)
-    needle = '<section aria-labelledby="sources-heading">'
-    if needle not in page:
-        raise ValueError(f"{concept['id']}: cannot locate sources section for navigation injection")
-    discovery = f"""
-<section aria-labelledby="next-routes-heading">
-  <h2 id="next-routes-heading">Useful next routes</h2>
-  <h3>Practical questions</h3>
-  {_question_links_for_ref(questions, "concept", concept["id"])}
-  <h3>Related resources</h3>
-  {_resource_links_for_concept(resources, concept["id"])}
+    else:
+        items = '<li>No adjacent governed question has enough shared material yet.</li>'
+    section = f"""
+<section aria-labelledby="related-questions-heading">
+  <h2 id="related-questions-heading">Related questions</h2>
+  <ul>{items}</ul>
 </section>
 """
-    return page.replace(needle, discovery + needle, 1)
+    marker = '<section aria-labelledby="evidence-needed-heading">'
+    if marker not in page:
+        raise ValueError(f"{question['id']}: cannot locate evidence-needed section")
+    return page.replace(marker, section + marker, 1)
+
+
+def resource_scope(resource: dict) -> tuple[str, str]:
+    audience = str(resource.get("audience_or_context", "")).casefold()
+    whole = " ".join(
+        [
+            str(resource.get("description", "")),
+            str(resource.get("audience_or_context", "")),
+            *[str(item) for item in resource.get("limitations", [])],
+            *[str(item) for item in resource.get("cost_or_access_notes", [])],
+        ]
+    ).casefold()
+    if "great britain" in audience or "england, scotland and wales" in audience:
+        return (
+            "Great Britain",
+            "The reviewed audience/scope text identifies England, Scotland and Wales or Great Britain. Northern Ireland may use different routes.",
+        )
+    if "northern ireland" in audience and "england" not in audience and "scotland" not in audience and "wales" not in audience:
+        return ("Northern Ireland", "The reviewed audience/scope text specifically identifies Northern Ireland.")
+    if "england" in audience and "scotland" not in audience and "wales" not in audience:
+        return ("England", "The reviewed audience/scope text specifically identifies England.")
+    if "united kingdom" in audience or " uk " in f" {audience} " or "uk-wide" in whole:
+        return ("United Kingdom", "The reviewed listing describes a UK-wide or United Kingdom audience/scope.")
+    return (
+        "International / not jurisdiction-specific",
+        "No narrower UK jurisdiction is asserted by the reviewed audience text; check the resource itself for local availability and eligibility.",
+    )
 
 
 def render_resource(
@@ -408,26 +323,228 @@ def render_resource(
     concept_map: dict[str, dict],
     questions: list[dict],
 ) -> str:
-    page = _v06.render_resource(resource, concept_map)
-    needle = '<section aria-labelledby="limits-heading">'
-    if needle not in page:
-        raise ValueError(f"{resource['id']}: cannot locate limitations section for navigation injection")
-    discovery = f"""
-<section aria-labelledby="resource-question-heading">
-  <h2 id="resource-question-heading">Questions that lead here</h2>
-  {_question_links_for_ref(questions, "resource", resource["id"])}
+    page = _v08.render_resource(resource, concept_map, questions)
+    label, explanation = resource_scope(resource)
+    category = RESOURCE_CATEGORY_LABELS.get(
+        resource["category"], resource["category"].replace("_", " ").title()
+    )
+    section = f"""
+<section aria-labelledby="scope-heading">
+  <h2 id="scope-heading">Scope for navigation</h2>
+  <p><strong>{esc(label)}</strong> · {esc(category)}</p>
+  <p class="meta">{esc(explanation)} This label helps navigation; it is not an eligibility or legal determination.</p>
+  <p><a href="/places/">Browse resources by place</a> · <a href="/types/">Browse by content type</a></p>
 </section>
 """
-    return page.replace(needle, discovery + needle, 1)
+    marker = '<section aria-labelledby="limits-heading">'
+    if marker not in page:
+        raise ValueError(f"{resource['id']}: cannot locate limitations section")
+    return page.replace(marker, section + marker, 1)
 
 
-def render_books_media_index(resources: list[dict]) -> str:
-    return render_resource_collection(
-        resources,
-        title="Books & media",
-        intro="Reviewed books and media in the ND Oracle catalogue, with context, limitations and conflicts kept visible.",
-        route="books-media",
-        categories=BOOK_MEDIA_CATEGORIES,
+def render_resources_index(resources: list[dict]) -> str:
+    page = _v08.render_resources_index(resources)
+    section = """
+<section aria-labelledby="resource-browse-heading">
+  <h2 id="resource-browse-heading">Browse the catalogue</h2>
+  <p><a href="/types/">By content type</a> · <a href="/places/">By geographic scope</a> · <a href="/a-z/">A–Z</a></p>
+</section>
+"""
+    return _append_before_main_end(page, section)
+
+
+def _question_map(questions: list[dict]) -> dict[str, dict]:
+    return {question["id"]: question for question in questions}
+
+
+def _questions_for_groups(questions: list[dict], group_names: set[str]) -> list[dict]:
+    mapping = _question_map(questions)
+    ids = [
+        question_id
+        for group, group_ids in QUESTION_GROUPS
+        if group in group_names
+        for question_id in group_ids
+    ]
+    return [mapping[question_id] for question_id in ids]
+
+
+def _linked_content_from_questions(
+    questions: list[dict],
+    concept_map: dict[str, dict],
+    resource_map: dict[str, dict],
+) -> tuple[list[dict], list[dict]]:
+    concept_ids: set[str] = set()
+    resource_ids: set[str] = set()
+    for question in questions:
+        for ref in question.get("related_objects", []):
+            if ref.get("type") == "concept" and ref.get("id") in concept_map:
+                concept_ids.add(ref["id"])
+            if ref.get("type") == "resource" and ref.get("id") in resource_map:
+                resource_ids.add(ref["id"])
+    concepts = sorted((concept_map[item] for item in concept_ids), key=lambda item: item["name"].casefold())
+    resources = sorted((resource_map[item] for item in resource_ids), key=lambda item: item["name"].casefold())
+    return concepts, resources
+
+
+def render_need_hub(
+    route: str,
+    title: str,
+    intro: str,
+    group_names: set[str],
+    questions: list[dict],
+    concept_map: dict[str, dict],
+    resource_map: dict[str, dict],
+) -> str:
+    selected = _questions_for_groups(questions, group_names)
+    concepts, resources = _linked_content_from_questions(selected, concept_map, resource_map)
+    question_rows = "".join(_v08.question_link(question) for question in selected)
+    concept_items = "".join(
+        f'<li><a href="/understand/{esc(item["id"])}/">{esc(item["name"])}</a></li>'
+        for item in concepts
+    ) or "<li>No topic link is recorded yet.</li>"
+    resource_items = "".join(
+        f'<li><a href="/resources/{esc(item["id"])}/">{esc(item["name"])}</a></li>'
+        for item in resources
+    ) or "<li>No resource link is recorded yet.</li>"
+    body = f"""
+<p class="back-link"><a href="/needs/">← All needs</a></p>
+<section class="notice"><strong>Relevant to inspect, not recommended.</strong> This hub groups governed routes; it does not infer a diagnosis or choose support for an individual.</section>
+<section aria-labelledby="need-questions-heading">
+  <h2 id="need-questions-heading">Practical questions</h2>
+  <div class="topic-list">{question_rows}</div>
+</section>
+<section aria-labelledby="need-topics-heading"><h2 id="need-topics-heading">Related topics</h2><ul>{concept_items}</ul></section>
+<section aria-labelledby="need-resources-heading"><h2 id="need-resources-heading">Related resources</h2><ul>{resource_items}</ul></section>
+"""
+    return page_shell(title, intro, body, current="questions", path=f"/{route}/")
+
+
+def render_needs_index(questions: list[dict]) -> str:
+    validate_question_navigation(questions)
+    question_map = _question_map(questions)
+    hub_by_group = {
+        group: (route, title)
+        for route, title, _intro, groups in HUB_DEFINITIONS
+        for group in groups
+    }
+    sections = []
+    for group, ids in QUESTION_GROUPS:
+        if group in hub_by_group:
+            route, title = hub_by_group[group]
+            heading = f'<h2><a href="/{esc(route)}/">{esc(title)}</a></h2>'
+        else:
+            heading = f"<h2>{esc(group)}</h2>"
+        links = "".join(
+            f'<li><a href="/questions/{esc(question_id)}/">{esc(question_map[question_id]["question"])}</a></li>'
+            for question_id in ids
+        )
+        sections.append(f"<section>{heading}<ul>{links}</ul></section>")
+    body = f"""
+<section class="notice"><strong>Start with the need, not the label.</strong> Every current governed Question appears here exactly once in its primary navigation group.</section>
+{''.join(sections)}
+"""
+    return page_shell(
+        "Browse by need",
+        "Start from the problem or life area you are dealing with, then follow governed questions into topics and resources.",
+        body,
+        current="questions",
+        path="/needs/",
+    )
+
+
+def render_types_index(concepts: list[dict], resources: list[dict], questions: list[dict]) -> str:
+    sections = [
+        f'<section><h2>Questions</h2><p>{len(questions)} governed practical questions.</p><p><a href="/questions/">Browse Questions</a></p></section>',
+        f'<section><h2>Topics</h2><p>{len(concepts)} reviewed Concepts.</p><p><a href="/understand/">Browse Topics</a></p></section>',
+    ]
+    grouped: dict[str, list[dict]] = defaultdict(list)
+    for resource in resources:
+        grouped[resource["category"]].append(resource)
+    preferred = [
+        "organisation", "service", "community", "tool", "app", "practical_guide",
+        "education_work_resource", "accommodation", "game", "book", "media", "product", "other",
+    ]
+    for category in preferred:
+        items = sorted(grouped.get(category, []), key=lambda item: item["name"].casefold())
+        if not items:
+            continue
+        label = RESOURCE_CATEGORY_LABELS.get(category, category.replace("_", " ").title())
+        links = "".join(
+            f'<li><a href="/resources/{esc(item["id"])}/">{esc(item["name"])}</a></li>'
+            for item in items
+        )
+        sections.append(f"<section><h2>{esc(label)}</h2><ul>{links}</ul></section>")
+    return page_shell(
+        "Browse by content type",
+        "Separate Questions, Topics, organisations, services, tools, apps, games, books, guides and other governed resources.",
+        "".join(sections),
+        current="resources",
+        path="/types/",
+    )
+
+
+def render_places_index(resources: list[dict]) -> str:
+    grouped: dict[str, list[dict]] = defaultdict(list)
+    explanations: dict[str, str] = {}
+    for resource in resources:
+        label, explanation = resource_scope(resource)
+        grouped[label].append(resource)
+        explanations[label] = explanation
+    order = ["United Kingdom", "Great Britain", "England", "Northern Ireland", "International / not jurisdiction-specific"]
+    sections = []
+    for label in order:
+        items = sorted(grouped.get(label, []), key=lambda item: item["name"].casefold())
+        if not items:
+            continue
+        links = "".join(
+            f'<li><a href="/resources/{esc(item["id"])}/">{esc(item["name"])}</a></li>'
+            for item in items
+        )
+        sections.append(
+            f'<section><h2>{esc(label)}</h2><p class="meta">{esc(explanations[label])}</p><ul>{links}</ul></section>'
+        )
+    body = (
+        '<section class="notice"><strong>Navigation scope, not eligibility.</strong> These groups are derived from each reviewed listing\'s audience and limitation text. Always check the resource itself for current jurisdiction and eligibility.</section>'
+        + "".join(sections)
+    )
+    return page_shell(
+        "Browse by geographic scope",
+        "Distinguish UK, Great Britain, England, Northern Ireland and resources without a narrower jurisdictional scope.",
+        body,
+        current="resources",
+        path="/places/",
+    )
+
+
+def _az_letter(label: str) -> str:
+    for character in label.strip():
+        if character.isalnum():
+            return character.upper()
+    return "#"
+
+
+def render_az_index(concepts: list[dict], resources: list[dict], questions: list[dict]) -> str:
+    entries: list[tuple[str, str, str]] = []
+    entries.extend((item["name"], "Topic", f'/understand/{item["id"]}/') for item in concepts)
+    entries.extend((item["name"], "Resource", f'/resources/{item["id"]}/') for item in resources)
+    entries.extend((item["question"], "Question", f'/questions/{item["id"]}/') for item in questions)
+    entries.sort(key=lambda item: item[0].casefold())
+    grouped: dict[str, list[tuple[str, str, str]]] = defaultdict(list)
+    for entry in entries:
+        grouped[_az_letter(entry[0])].append(entry)
+    sections = []
+    for letter in sorted(grouped, key=lambda value: (value == "#", value)):
+        links = "".join(
+            f'<li><a href="{esc(route)}">{esc(label)}</a> <span class="meta">{esc(kind)}</span></li>'
+            for label, kind, route in grouped[letter]
+        )
+        sections.append(f'<section><h2>{esc(letter)}</h2><ul>{links}</ul></section>')
+    return page_shell(
+        "A–Z",
+        f"All {len(entries)} governed Topics, Resources and Questions in one alphabetical index.",
+        "".join(sections),
+        current="resources",
+        path="/a-z/",
     )
 
 
@@ -440,10 +557,11 @@ def sitemap_paths(
         resources = load_resources()
     if questions is None:
         questions = load_questions()
-    paths = _v06.sitemap_paths(concepts, resources)
-    paths.append("/books-media/")
-    paths.append("/questions/")
-    paths.extend(f"/questions/{question['id']}/" for question in questions)
+    validate_question_navigation(questions)
+    paths = list(_v08.sitemap_paths(concepts, resources, questions))
+    paths.extend(NAVIGATION_ROUTES)
+    if len(paths) != len(set(paths)):
+        raise ValueError("v0.9 sitemap contains duplicate routes")
     return paths
 
 
@@ -467,60 +585,25 @@ def render_sitemap(
 
 def build(output_dir=DEFAULT_OUTPUT_DIR):
     questions = load_questions()
-    if not questions:
-        raise ValueError("No question objects found")
     validate_question_navigation(questions)
 
-    destination = _v06.build(output_dir)
+    destination = _v08.build(output_dir)
     concepts = load_concepts()
     resources = load_resources()
-    concept_map = {concept["id"]: concept for concept in concepts}
-    resource_map = {resource["id"]: resource for resource in resources}
+    concept_map = {item["id"]: item for item in concepts}
+    resource_map = {item["id"]: item for item in resources}
 
     (destination / "index.html").write_text(
         render_index(concepts, resources, questions), encoding="utf-8"
     )
+    write_route(destination, "questions", render_questions_index(questions))
     write_route(destination, "resources", render_resources_index(resources))
-    write_route(
-        destination,
-        "tools",
-        render_resource_collection(
-            resources,
-            title="Tools & practical help",
-            intro="Tools, apps, practical guides and products that can make everyday tasks, access, work or study easier to navigate.",
-            route="tools",
-            categories=TOOL_CATEGORIES,
-        ),
-    )
-    write_route(
-        destination,
-        "games",
-        render_resource_collection(
-            resources,
-            title="Games",
-            intro="Games described by play characteristics, pressure, accessibility and possible poor fit — not as treatments or prescriptions.",
-            route="games",
-            categories={"game"},
-        ),
-    )
-    write_route(
-        destination,
-        "community",
-        render_resource_collection(
-            resources,
-            title="Support & organisations",
-            intro="Services, organisations and communities with their scope, geography and limitations kept visible.",
-            route="community",
-            categories=COMMUNITY_CATEGORIES,
-        ),
-    )
-    write_route(destination, "books-media", render_books_media_index(resources))
 
-    for concept in concepts:
+    for question in questions:
         write_route(
             destination,
-            f"understand/{concept['id']}",
-            render_concept(concept, concept_map, resources, questions),
+            f"questions/{question['id']}",
+            render_question(question, concept_map, resource_map, questions),
         )
     for resource in resources:
         write_route(
@@ -529,14 +612,20 @@ def build(output_dir=DEFAULT_OUTPUT_DIR):
             render_resource(resource, concept_map, questions),
         )
 
-    write_route(destination, "questions", render_questions_index(questions))
-    for question in questions:
+    write_route(destination, "needs", render_needs_index(questions))
+    for route, title, intro, groups in HUB_DEFINITIONS:
         write_route(
             destination,
-            f"questions/{question['id']}",
-            render_question(question, concept_map, resource_map),
+            route,
+            render_need_hub(route, title, intro, groups, questions, concept_map, resource_map),
         )
+    write_route(destination, "types", render_types_index(concepts, resources, questions))
+    write_route(destination, "places", render_places_index(resources))
+    write_route(destination, "a-z", render_az_index(concepts, resources, questions))
 
+    paths = sitemap_paths(concepts, resources, questions)
+    if len(paths) != V09_ROUTE_COUNT:
+        raise ValueError(f"Expected {V09_ROUTE_COUNT} v0.9 canonical routes, found {len(paths)}")
     (destination / "sitemap.xml").write_text(
         render_sitemap(concepts, resources, questions), encoding="utf-8"
     )
@@ -545,4 +634,4 @@ def build(output_dir=DEFAULT_OUTPUT_DIR):
 
 if __name__ == "__main__":
     destination = build()
-    print(f"Built The Neurodiverse Oracle public site v0.8 at {destination}")
+    print(f"Built The Neurodiverse Oracle public site v0.9 at {destination}")

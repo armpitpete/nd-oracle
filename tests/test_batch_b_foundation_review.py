@@ -97,9 +97,9 @@ class BatchBFoundationReviewTests(unittest.TestCase):
             self.assertEqual(obj["provenance"]["last_reviewed"], "2026-08-12", object_id)
             self.assertIn(blob_sha, obj["provenance"]["method"], object_id)
 
-    def test_all_ten_authoritative_concepts_are_now_reviewed(self) -> None:
+    def test_foundation_review_remains_valid_as_concept_corpus_grows(self) -> None:
         concept_paths = sorted(CONCEPT_DIR.glob("*.json"))
-        self.assertEqual(len(concept_paths), 10)
+        self.assertGreaterEqual(len(concept_paths), 10)
         for path in concept_paths:
             obj = load_json(path)
             self.assertEqual(obj["status"], "reviewed", path.name)
