@@ -13,11 +13,11 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The authoritative corpus currently contains 30 objects:
+The authoritative corpus currently contains 49 objects:
 
 - 10 reviewed v0.1 Concept objects covering Neurodiversity, Autism, ADHD, Executive function, Sensory processing, Dyslexia, Developmental co-ordination disorder, Tourette syndrome, Learning disability and Developmental language disorder;
-- 15 reviewed v0.2 Resource objects spanning tools/apps, games, workplace support, organisations and books;
-- 5 reviewed v0.2 Question objects that route ordinary practical needs across governed Concepts and Resources.
+- 25 reviewed v0.2 Resource objects spanning tools/apps, practical guides, games, workplace and study support, organisations, services and books;
+- 14 reviewed v0.2 Question objects that route ordinary practical needs across governed Concepts and Resources.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Any efficacy, safety or other serious testable proposition requires its own governed Claim and Evidence route.
 
@@ -25,9 +25,11 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
+The v0.8 content/navigation candidate makes this larger corpus findable through grouped practical Questions, clearer `Topics` and `Resources` navigation, a `Books & media` browse route, and bidirectional Topic ↔ Question ↔ Resource links. The public v0.8 route contract is 62 canonical routes. This repository state does **not** redefine production until a separately authorised v0.8 deployment and live verification succeed.
+
 ## Production state
 
-Production is the accepted v0.7 question-led discovery release at `https://ndoracle.org`, deployed from exact main SHA `a074b6da26f95f58f15f38e44ae2b7a43fe6383c` by deployment workflow run `33174604415` (run #11). The generated artifact SHA-256 is `f987e707af2df3551a3a8657d03c8b67be91209b09d948206d2c0963557e923b` and the Cloudflare deployment identity is `https://b7b9549a.nd-oracle.pages.dev`.
+Production remains the accepted v0.7 question-led discovery release at `https://ndoracle.org`, deployed from exact main SHA `a074b6da26f95f58f15f38e44ae2b7a43fe6383c` by deployment workflow run `33174604415` (run #11). The generated artifact SHA-256 is `f987e707af2df3551a3a8657d03c8b67be91209b09d948206d2c0963557e923b` and the Cloudflare deployment identity is `https://b7b9549a.nd-oracle.pages.dev`.
 
 The post-deployment v0.7 verifier passed all 42 canonical routes, all 15 Resource routes, all 5 Question routes, the inherited v0.6 reading/resource contracts, the v0.7 question-led discovery contract, 404, robots, sitemap, Oracle compatibility noindex route, and www redirect behaviour. See `docs/PRODUCTION_STATE_v0.7.md` for the frozen deployment and verification evidence.
 
@@ -46,6 +48,7 @@ scripts/build_site.py              Reading-first static site generator
 scripts/verify_live_site.py        Production HTTP/reading/discovery verifier
 docs/ECOSYSTEM_PUBLICATION_v0.6.md Ecosystem publication contract
 docs/PUBLIC_QUESTION_DISCOVERY_v0.7.md Question-led discovery contract
+docs/CONTENT_NAVIGATION_v0.8.md    Content-scale and findability contract
 docs/PRODUCTION_STATE_v0.7.md      Accepted v0.7 deployment evidence
 GOVERNANCE.md                      Decision rights and protected changes
 CONTRIBUTING.md                    Contribution and provenance rules
