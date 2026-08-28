@@ -11,6 +11,15 @@ from scripts.verify_live_site_v06 import *
 USER_AGENT = "nd-oracle-live-verifier/0.7"
 _v06.USER_AGENT = USER_AGENT
 
+# The compatibility module is shared across imports in the same interpreter.
+# Re-derive the immutable v0.6 route baseline so loading this wrapper twice
+# cannot extend 42 routes into 48, 54, and so on.
+ROUTES = tuple(
+    (path, marker)
+    for path, marker in _v06.ROUTES
+    if not path.startswith("/questions/")
+)
+
 QUESTION_MARKERS = {
     "/questions/task-starting-and-organisation/": "I keep losing track of tasks or struggle to get started. What might help me organise the next step?",
     "/questions/low-time-pressure-games/": "Which current games might suit me if I want little or no time pressure?",
