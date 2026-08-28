@@ -24,9 +24,9 @@ Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are e
 
 ## Production state
 
-Production remains the accepted v0.5 reading release until a later exact-main deployment is separately authorised and verified. v0.5 publishes the reviewed ten-topic reading layer at `https://ndoracle.org`; see `docs/PRODUCTION_STATE_v0.5.md` for the frozen deployment identity and evidence.
+Production is the accepted v0.6 ecosystem release at `https://ndoracle.org`, deployed from exact main SHA `a82fe49190ebc398da3c04c560c4dd0e823bd2e8` by deployment workflow run `33169505862` (run #9). The generated artifact SHA-256 is `c17be1b30afe2d8eb6c8d8dfc708aeb69627c462e946f2350d1afe95399572f1` and the Cloudflare deployment identity is `https://031d6d95.nd-oracle.pages.dev`.
 
-The ecosystem v0.6 work is a candidate until its protected schema/publication and deployment gates are passed. It activates reviewed Resources rather than exposing empty Tools/Games/Community placeholders.
+The post-deployment v0.6 verifier passed all 36 canonical routes, the 15-resource contract, reading contract, 404, robots, sitemap, Oracle compatibility noindex route, and www redirect behaviour. See `docs/PRODUCTION_STATE_v0.6.md` for the frozen deployment and verification evidence.
 
 ## Repository map
 
