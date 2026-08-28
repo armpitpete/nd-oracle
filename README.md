@@ -13,7 +13,7 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The v0.9 candidate authoritative corpus contains exactly 100 objects:
+The accepted v0.9 authoritative corpus contains exactly 100 objects:
 
 - 20 reviewed v0.1 Concept objects;
 - 50 reviewed v0.2 Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
@@ -25,15 +25,15 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-The v0.9 candidate is a content-and-navigation release, not a design release. It adds need-led hubs, browse-by-type, geographic-scope navigation, a complete A–Z, related-question links and a governed freshness gate. With the larger corpus, the candidate public contract is exactly 125 canonical routes. See `docs/CONTENT_NAVIGATION_v0.9.md` and `docs/CONTENT_GAP_MAP_v0.9.md`.
+v0.9 is a content-and-navigation release, not a design release. It adds need-led hubs, browse-by-type, geographic-scope navigation, a complete A–Z, related-question links and a governed freshness gate. The accepted public contract is exactly 125 canonical routes. See `docs/CONTENT_NAVIGATION_v0.9.md` and `docs/CONTENT_GAP_MAP_v0.9.md`.
 
 ## Production state
 
-Production remains the accepted v0.8 content/navigation release at `https://ndoracle.org`, deployed from exact main SHA `e4a93bbbd579b8a033954300e540a11dafc65f5d` by deployment workflow run `33178697469` (run #12). The generated artifact SHA-256 is `75594181876f422d62fde519ec3db29574bfdd48e6b797df15b940d223597479` and the Cloudflare deployment identity is `https://9b09ce0c.nd-oracle.pages.dev`.
+Production is the accepted v0.9 content/navigation release at `https://ndoracle.org`, deployed from exact main SHA `286c1999a27509e74da2c70e5076fbdcda46e1a1` by deployment workflow run `33204071981` (run #14). The generated artifact SHA-256 is `e13ed02c4f6794844fa6b2930937bdada772f0d15330290972acfc761b505076` and the Cloudflare deployment identity is `https://74c14b3d.nd-oracle.pages.dev`.
 
-The post-deployment v0.8 verifier passed all 62 canonical routes, all 25 Resource routes, all 14 Question routes, cross-content navigation, the inherited v0.6 reading/resource contracts, the frozen v0.7 five-question compatibility contract, 404, robots, sitemap, Oracle compatibility noindex route, and www redirect behaviour. See `docs/PRODUCTION_STATE_v0.8.md` for the frozen deployment and verification evidence.
+Fresh post-deployment verification ran from a GitHub-hosted runner against the canonical domain in workflow run `33204284355` (run #173), job `98961250853`. It passed all 125 canonical routes, all 20 Concept routes, all 50 Resource routes, all 30 Question routes, need/type/place/A–Z navigation, the accepted v0.8 object-set compatibility layer, inherited v0.6 reading/resource contracts, the frozen v0.7 five-question homepage/discovery contract, 404, robots, sitemap, Oracle compatibility noindex route and www redirect behaviour. The proof run completed with all 315 tests passing.
 
-The v0.9 candidate does **not** redefine production until its exact `main` SHA is separately authorised, deployed and verified live.
+The initial v0.9 upload from SHA `5665f8a988fe3ba58da1fd111ce45067668d9721` was deliberately not accepted after live verification exposed a two-link homepage compatibility regression. PR #95 repaired it before the accepted deployment. See `docs/PRODUCTION_STATE_v0.9.md` for the frozen deployment, repair and verification evidence.
 
 ## Repository map
 
@@ -54,9 +54,10 @@ scripts/verify_live_site_v08.py      Preserved v0.8 verifier code
 docs/ECOSYSTEM_PUBLICATION_v0.6.md   Ecosystem publication contract
 docs/PUBLIC_QUESTION_DISCOVERY_v0.7.md Question-led discovery contract
 docs/CONTENT_NAVIGATION_v0.8.md      Accepted v0.8 findability contract
-docs/CONTENT_NAVIGATION_v0.9.md      100-object/125-route candidate contract
+docs/CONTENT_NAVIGATION_v0.9.md      Accepted 100-object/125-route contract
 docs/CONTENT_GAP_MAP_v0.9.md         Need-led editorial coverage map
-docs/PRODUCTION_STATE_v0.8.md        Accepted v0.8 deployment evidence
+docs/PRODUCTION_STATE_v0.8.md        Historical accepted v0.8 deployment evidence
+docs/PRODUCTION_STATE_v0.9.md        Accepted v0.9 deployment and live-proof evidence
 GOVERNANCE.md                        Decision rights and protected changes
 CONTRIBUTING.md                      Contribution and provenance rules
 ```
