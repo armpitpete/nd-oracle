@@ -41,5 +41,8 @@ jobs:
       - name: Validate knowledge objects
         run: python scripts/validate.py
 
+      - name: Audit content freshness
+        run: python scripts/check_content_freshness.py --fail-overdue
+
       - name: Run regression tests
         run: python -m unittest discover -s tests
