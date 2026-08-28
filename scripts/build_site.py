@@ -17,18 +17,22 @@ PRIMARY_NAV = [
 ]
 _v06.PRIMARY_NAV = PRIMARY_NAV
 
-_v06.STATIC_PAGES["how-it-works"]["body"] += (
+QUESTION_DISCOVERY_HOW_SECTION = (
     '<section><h2>Question-led discovery</h2>'
     '<p>Practical question pages route an ordinary need across already governed topics and resources. '
     'They show the current bounded synthesis, what is relevant to inspect, what evidence is still missing, '
     'where people may disagree and what should cause the answer to be revisited.</p>'
     '<p>A question route is not a personalised recommendation and does not turn a resource listing into proof that it works.</p></section>'
 )
-_v06.STATIC_PAGES["about"]["body"] += (
+QUESTION_DISCOVERY_ABOUT_SECTION = (
     '<section><h2>Start with the problem, not the taxonomy</h2>'
     '<p>Question-led discovery lets a reader begin with an everyday problem and then move into the governed topics and resources behind the answer. '
     'The question page remains a route through the knowledge commons rather than a new source of authority.</p></section>'
 )
+if QUESTION_DISCOVERY_HOW_SECTION not in _v06.STATIC_PAGES["how-it-works"]["body"]:
+    _v06.STATIC_PAGES["how-it-works"]["body"] += QUESTION_DISCOVERY_HOW_SECTION
+if QUESTION_DISCOVERY_ABOUT_SECTION not in _v06.STATIC_PAGES["about"]["body"]:
+    _v06.STATIC_PAGES["about"]["body"] += QUESTION_DISCOVERY_ABOUT_SECTION
 _v06.STATIC_PAGES["oracle"]["body"] = (
     '<p>The current public interface exposes reviewed knowledge through topic, resource and governed question pages. '
     'Generated answers are not the source of truth. <a href="/questions/">Start with a governed question</a> or '
