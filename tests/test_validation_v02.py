@@ -130,7 +130,7 @@ class V02ValidationTests(unittest.TestCase):
         def mutate(obj: dict) -> None:
             obj["contributions"][0]["claim_ref"] = "not a claim ref"
 
-        self.assertTrue(self._validate_mutation("concepts/fixture-concept.json", mutate))
+        self.assertTrue(self._validate_mutation("evidence/fixture-evidence.json", mutate))
 
     def test_rejects_missing_claim_owner(self) -> None:
         def mutate(obj: dict) -> None:
