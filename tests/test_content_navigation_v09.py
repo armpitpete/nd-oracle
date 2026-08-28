@@ -7,6 +7,56 @@ from pathlib import Path
 from scripts import build_site, verify_live_site
 
 
+EXPECTED_GROUPS = {
+    "Daily life & technology": {
+        "task-starting-and-organisation",
+        "make-device-easier-to-use",
+        "meal-planning-and-everyday-food-tasks",
+    },
+    "Sensory & environment": {
+        "make-noisy-bright-place-easier",
+        "sensory-overload-what-can-i-change",
+    },
+    "Communication": {
+        "aac-and-nonspeaking-communication",
+        "phone-calls-are-difficult",
+        "processing-time-in-conversations-meetings",
+    },
+    "Work": {
+        "workplace-support-great-britain",
+        "reasonable-adjustments-at-work-great-britain",
+        "disabled-person-looking-for-work-uk",
+        "disclosing-disability-neurodivergence-at-work",
+        "job-interview-adjustments-great-britain",
+    },
+    "Education & study": {
+        "disabled-student-support-england",
+        "organising-study-and-assignments",
+        "send-support-school-college-england",
+    },
+    "Assessment & diagnosis": {
+        "adult-adhd-assessment-england",
+        "adult-autism-assessment-england",
+    },
+    "Health & wellbeing": {
+        "autism-anxiety-tools",
+        "masking-exhaustion-and-autistic-burnout",
+        "sleep-and-winding-down-routines",
+    },
+    "Relationships & family": {"autistic-parent-support-uk"},
+    "Information & support": {
+        "autism-information-and-support",
+        "dyslexia-information-and-support-uk",
+        "tourette-information-and-support-uk",
+        "learning-disability-information-and-support-uk",
+        "dld-information-and-support",
+        "adult-dyspraxia-information-uk",
+        "dyscalculia-information-and-support-uk",
+    },
+    "Games & downtime": {"low-time-pressure-games"},
+}
+
+
 class ContentNavigationV09Tests(unittest.TestCase):
     def setUp(self) -> None:
         self.tempdir = tempfile.TemporaryDirectory()
@@ -36,8 +86,10 @@ class ContentNavigationV09Tests(unittest.TestCase):
             self.assertEqual("reviewed", resource["status"])
             self.assertEqual([], resource["claims"])
 
-    def test_question_groups_cover_every_question_exactly_once(self) -> None:
+    def test_question_groups_are_explicit_and_cover_every_question_once(self) -> None:
         build_site.validate_question_navigation(self.questions)
+        actual = {group: set(ids) for group, ids in build_site.QUESTION_GROUPS}
+        self.assertEqual(EXPECTED_GROUPS, actual)
         grouped = [question_id for _group, ids in build_site.QUESTION_GROUPS for question_id in ids]
         self.assertEqual(30, len(grouped))
         self.assertEqual(30, len(set(grouped)))
@@ -49,6 +101,7 @@ class ContentNavigationV09Tests(unittest.TestCase):
         self.assertEqual(125, len(set(paths)))
         self.assertEqual(set(build_site.NAVIGATION_ROUTES), set(build_site.NAVIGATION_ROUTES) & set(paths))
         self.assertEqual(125, len(verify_live_site.V09_ROUTES))
+        self.assertEqual(set(paths), {path for path, _marker in verify_live_site.V09_ROUTES})
 
     def test_needs_index_reaches_every_question(self) -> None:
         page = self._page("/needs/")
@@ -56,13 +109,22 @@ class ContentNavigationV09Tests(unittest.TestCase):
         for question in self.questions:
             self.assertIn(f'href="/questions/{question["id"]}/"', page)
 
-    def test_eight_need_hubs_are_built_with_boundaries(self) -> None:
+    def test_eight_need_hubs_are_built_with_boundaries_and_content(self) -> None:
         self.assertEqual(8, len(build_site.HUB_DEFINITIONS))
-        for route, title, _intro, _groups in build_site.HUB_DEFINITIONS:
+        for route, title, _intro, groups in build_site.HUB_DEFINITIONS:
             page = self._page(f"/{route}/")
             self.assertIn(f"<h1>{build_site.esc(title)}</h1>", page)
             self.assertIn("Relevant to inspect, not recommended.", page)
             self.assertIn("Practical questions", page)
+            expected_ids = {
+                question_id
+                for group, ids in build_site.QUESTION_GROUPS
+                if group in groups
+                for question_id in ids
+            }
+            self.assertTrue(expected_ids, route)
+            for question_id in expected_ids:
+                self.assertIn(f'href="/questions/{question_id}/"', page)
 
     def test_content_type_index_reaches_every_resource(self) -> None:
         page = self._page("/types/")
@@ -118,6 +180,7 @@ class ContentNavigationV09Tests(unittest.TestCase):
             )
 
         self.assertEqual([], verify_live_site.verify_v08_subset_preserved())
+        self.assertEqual([], verify_live_site.verify_v09_concept_contract(origin, fetcher=fetcher))
         self.assertEqual([], verify_live_site.verify_v09_question_contract(origin, fetcher=fetcher))
         self.assertEqual([], verify_live_site.verify_v09_resource_contract(origin, fetcher=fetcher))
         self.assertEqual([], verify_live_site.verify_v09_navigation_contract(origin, fetcher=fetcher))
