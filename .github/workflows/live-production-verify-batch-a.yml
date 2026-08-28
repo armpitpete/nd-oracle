@@ -1,16 +1,13 @@
 name: ND Oracle Batch A live production verification
 
 on:
-  pull_request:
-    paths:
-      - ".github/workflows/live-production-verify-batch-a.yml"
-      - "scripts/verify_live_batch_a.py"
-      - "tests/test_verify_live_batch_a.py"
   workflow_dispatch:
 
 permissions:
   contents: read
 
+# Historical read-only production probe. It must never run automatically on a
+# candidate PR because accepted production can legitimately lag the candidate.
 jobs:
   verify-batch-a-live-production:
     name: Verify Batch A production routes
@@ -42,5 +39,5 @@ jobs:
       - name: Run full regression suite
         run: python -m unittest discover -s tests
 
-      - name: Verify five new Batch A production routes
+      - name: Verify five Batch A production routes
         run: python scripts/verify_live_batch_a.py --origin https://ndoracle.org
