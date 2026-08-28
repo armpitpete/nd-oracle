@@ -1,6 +1,6 @@
 # Ecosystem v0.6 candidate status
 
-Pre-CI status only.
+PR-validation status only.
 
 Implemented:
 
@@ -12,6 +12,11 @@ Implemented:
 - calm visual integration;
 - mixed v0.1/v0.2 repository test updates;
 - publication/scope/review documentation.
+
+Review vehicle:
+
+- draft PR #83 targets `main` so the normal pull-request validation workflow runs;
+- the ecosystem branch was originally stacked on the accepted-head candidate from PR #82, and that visual dependency remains visible in history until #82 is resolved.
 
 Not yet established by this record:
 
