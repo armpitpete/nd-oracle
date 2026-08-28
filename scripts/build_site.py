@@ -22,6 +22,20 @@ PRIMARY_NAV = [
 ]
 _v06.PRIMARY_NAV = PRIMARY_NAV
 
+# Keep one immutable handle to the proven v0.6 page shell. Tests reload this
+# module repeatedly, so a v0.8 wrapper must never wrap an earlier v0.8 wrapper.
+if not hasattr(_v06, "_V08_ORIGINAL_PAGE_SHELL"):
+    _v06._V08_ORIGINAL_PAGE_SHELL = _v06.page_shell
+_page_shell_v06 = _v06._V08_ORIGINAL_PAGE_SHELL
+
+
+def page_shell(*args, **kwargs) -> str:
+    page = _page_shell_v06(*args, **kwargs)
+    return page.replace('<a href="/resources/">Explore</a>', '<a href="/resources/">Resources</a>')
+
+
+_v06.page_shell = page_shell
+
 BOOK_MEDIA_CATEGORIES = {"book", "media"}
 
 QUESTION_GROUPS = [
@@ -105,7 +119,7 @@ _RESOURCE_SUBNAV_V06 = (
 _RESOURCE_SUBNAV_V08 = (
     '<nav class="resource-subnav" aria-label="Browse resources">\n'
     '  <a href="/resources/">All resources</a>\n'
-    '  <a href="/tools/">Tools &amp; apps</a>\n'
+    '  <a href="/tools/">Tools &amp; practical help</a>\n'
     '  <a href="/games/">Games</a>\n'
     '  <a href="/books-media/">Books &amp; media</a>\n'
     '  <a href="/community/">Support &amp; organisations</a>\n'
@@ -134,19 +148,13 @@ def render_resource_collection(
     return page.replace(_RESOURCE_SUBNAV_V06, _RESOURCE_SUBNAV_V08, 1)
 
 
-_v06.render_resource_collection = render_resource_collection
-
-
 def render_resources_index(resources: list[dict]) -> str:
     return render_resource_collection(
         resources,
         title="Resources",
-        intro="Tools, apps, games, books, services and organisations, described with their limitations and access conditions visible.",
+        intro="Tools, practical guides, games, books, services and organisations, described with their limitations and access conditions visible.",
         route="resources",
     )
-
-
-_v06.render_resources_index = render_resources_index
 
 
 def load_questions() -> list[dict]:
@@ -209,6 +217,11 @@ def render_index(
         raise ValueError("Cannot locate v0.6 homepage start section")
     base = base.replace(needle, practical + needle, 1)
 
+    base = base.replace(
+        '<a class="entry-card" href="/tools/"><strong>Tools &amp; apps</strong>',
+        '<a class="entry-card" href="/tools/"><strong>Tools &amp; practical help</strong>',
+        1,
+    )
     book_media_count = sum(1 for resource in resources if resource["category"] in BOOK_MEDIA_CATEGORIES)
     everything_card = (
         f'<a class="entry-card" href="/resources/"><strong>Everything</strong><span>{len(resources)} reviewed resources</span></a>'
@@ -226,10 +239,11 @@ def render_questions_index(questions: list[dict]) -> str:
     question_map = {question["id"]: question for question in questions}
     groups = []
     for group_name, ids in QUESTION_GROUPS:
+        group_slug = group_name.lower().replace(" ", "-").replace("&", "and")
         rows = "".join(question_link(question_map[question_id]) for question_id in ids)
         groups.append(
-            f'<section aria-labelledby="question-group-{esc(group_name.lower().replace(" ", "-").replace("&", "and"))}">'
-            f'<h2 id="question-group-{esc(group_name.lower().replace(" ", "-").replace("&", "and"))}">{esc(group_name)}</h2>'
+            f'<section aria-labelledby="question-group-{esc(group_slug)}">'
+            f'<h2 id="question-group-{esc(group_slug)}">{esc(group_name)}</h2>'
             f'<div class="topic-list">{rows}</div></section>'
         )
     body = f"""
@@ -465,6 +479,40 @@ def build(output_dir=DEFAULT_OUTPUT_DIR):
 
     (destination / "index.html").write_text(
         render_index(concepts, resources, questions), encoding="utf-8"
+    )
+    write_route(destination, "resources", render_resources_index(resources))
+    write_route(
+        destination,
+        "tools",
+        render_resource_collection(
+            resources,
+            title="Tools & practical help",
+            intro="Tools, apps, practical guides and products that can make everyday tasks, access, work or study easier to navigate.",
+            route="tools",
+            categories=TOOL_CATEGORIES,
+        ),
+    )
+    write_route(
+        destination,
+        "games",
+        render_resource_collection(
+            resources,
+            title="Games",
+            intro="Games described by play characteristics, pressure, accessibility and possible poor fit — not as treatments or prescriptions.",
+            route="games",
+            categories={"game"},
+        ),
+    )
+    write_route(
+        destination,
+        "community",
+        render_resource_collection(
+            resources,
+            title="Support & organisations",
+            intro="Services, organisations and communities with their scope, geography and limitations kept visible.",
+            route="community",
+            categories=COMMUNITY_CATEGORIES,
+        ),
     )
     write_route(destination, "books-media", render_books_media_index(resources))
 
