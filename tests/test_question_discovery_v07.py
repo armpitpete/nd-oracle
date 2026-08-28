@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import html
+import importlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -118,6 +119,14 @@ class QuestionDiscoveryV07Tests(unittest.TestCase):
         )
         self.assertIn("<h2>Question-led discovery</h2>", page)
         self.assertIn("not a personalised recommendation", page)
+
+    def test_builder_extension_is_idempotent_on_reload(self):
+        importlib.reload(build_site)
+        importlib.reload(build_site)
+        how_body = build_site._v06.STATIC_PAGES["how-it-works"]["body"]
+        about_body = build_site._v06.STATIC_PAGES["about"]["body"]
+        self.assertEqual(1, how_body.count("<h2>Question-led discovery</h2>"))
+        self.assertEqual(1, about_body.count("<h2>Start with the problem, not the taxonomy</h2>"))
 
     def test_build_does_not_modify_authoritative_questions(self):
         before = {
