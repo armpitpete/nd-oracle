@@ -77,7 +77,9 @@ if len(V09_ROUTES) != _builder.V09_ROUTE_COUNT:
 if len({path for path, _marker in V09_ROUTES}) != len(V09_ROUTES):
     raise RuntimeError("v0.9 verifier contains duplicate routes")
 
-ROUTES = V09_ROUTES
+# Keep the historical public constant frozen for legacy contract tests. The
+# shared production verifier itself is extended to the full current route set.
+ROUTES = V06_ROUTES
 _v08._v06.ROUTES = V09_ROUTES
 
 
