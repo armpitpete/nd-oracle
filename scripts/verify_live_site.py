@@ -4,6 +4,10 @@ import argparse
 import html
 import sys
 import urllib.error
+from pathlib import Path
+
+if __package__ in {None, ""}:
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from scripts import verify_live_site_v06 as _v06
 from scripts.verify_live_site_v06 import *
