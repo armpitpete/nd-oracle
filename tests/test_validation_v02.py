@@ -37,7 +37,7 @@ class V02ValidationTests(unittest.TestCase):
 
     def test_fixture_graph_passes_without_changing_authoritative_count(self) -> None:
         count, errors = validate_repository(ROOT, FIXTURES)
-        self.assertEqual(10, count)
+        self.assertEqual(25, count)
         self.assertEqual([], errors)
 
     def test_dispatcher_accepts_all_six_v02_types(self) -> None:
@@ -69,6 +69,7 @@ class V02ValidationTests(unittest.TestCase):
         self.assertEqual("fixture-no-question", claim["uncertainties"][0]["id"])
         self.assertGreaterEqual(len(question["related_objects"]), 2)
         self.assertEqual(2, len(resource["experience_ids"]))
+        self.assertEqual("url", resource["locators"][0]["type"])
 
     def test_rejects_unknown_schema_version(self) -> None:
         errors = self._validate_mutation(
