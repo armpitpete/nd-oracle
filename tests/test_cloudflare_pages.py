@@ -19,12 +19,12 @@ class CloudflarePagesHardeningTests(unittest.TestCase):
         generated = (self.output / "_headers").read_bytes()
         self.assertEqual(generated, source)
 
-    def test_security_policy_is_restrictive_for_current_static_site(self):
+    def test_security_policy_is_restrictive_for_local_discovery(self):
         headers = (self.output / "_headers").read_text(encoding="utf-8")
         required = [
             "default-src 'none'",
             "style-src 'self'",
-            "script-src 'none'",
+            "script-src 'self'",
             "connect-src 'none'",
             "object-src 'none'",
             "base-uri 'none'",
@@ -44,12 +44,17 @@ class CloudflarePagesHardeningTests(unittest.TestCase):
         self.assertNotIn("'unsafe-inline'", headers)
         self.assertNotIn("'unsafe-eval'", headers)
 
-    def test_generated_html_matches_javascript_free_form_free_policy(self):
+    def test_only_find_page_may_load_the_single_same_origin_script(self):
+        scripted = []
         for page in sorted(self.output.rglob("*.html")):
             text = page.read_text(encoding="utf-8").lower()
-            self.assertNotIn("<script", text)
             self.assertNotIn("<form", text)
             self.assertNotIn("style=", text)
+            if "<script" in text:
+                scripted.append(page.relative_to(self.output).as_posix())
+                self.assertIn('<script src="/find.js" defer></script>', text)
+        self.assertEqual(["find/index.html"], scripted)
+        self.assertTrue((self.output / "find.js").is_file())
 
     def test_release_contract_requires_exact_commit_owner_gate_and_pinned_cli(self):
         notes = (build_site.SITE_DIR / "README.md").read_text(encoding="utf-8")

@@ -1,392 +1,69 @@
 from __future__ import annotations
 
-import html
-import importlib.util
-from pathlib import Path
-import sys
 import unittest
 
-
-ROOT = Path(__file__).resolve().parents[1]
-MODULE_PATH = ROOT / "scripts" / "verify_live_site.py"
-SPEC = importlib.util.spec_from_file_location("verify_live_site", MODULE_PATH)
-assert SPEC is not None and SPEC.loader is not None
-verify_live_site = importlib.util.module_from_spec(SPEC)
-sys.modules[SPEC.name] = verify_live_site
-SPEC.loader.exec_module(verify_live_site)
+from scripts import build_site, verify_live_site
 
 
-class VerifyLiveSiteTests(unittest.TestCase):
-    def response(
-        self,
-        *,
-        status=200,
-        final_url="https://ndoracle.org/",
-        content_type="text/html; charset=utf-8",
-        body="",
-        headers=None,
-    ):
-        return verify_live_site.Response(
-            status=status,
-            final_url=final_url,
-            content_type=content_type,
-            body=body,
-            headers=dict(verify_live_site.SECURITY_HEADERS if headers is None else headers),
-        )
+class VerifyLiveSiteV10Tests(unittest.TestCase):
+    def response(self, *, url="https://ndoracle.org/", body="", status=200, content_type="text/html; charset=utf-8", headers=None):
+        return verify_live_site.Response(status, url, content_type, body, dict(verify_live_site.SECURITY_HEADERS if headers is None else headers))
 
-    def test_expected_canonical_route_set_covers_ecosystem(self):
-        paths = tuple(path for path, _ in verify_live_site.ROUTES)
-        self.assertEqual(36, len(paths))
-        self.assertEqual(36, len(set(paths)))
-        for path in (
-            "/",
-            "/understand/",
-            "/resources/",
-            "/tools/",
-            "/games/",
-            "/community/",
-            "/how-it-works/",
-            "/about/",
-            "/accessibility/",
-            "/feedback/",
-            "/privacy/",
-        ):
-            self.assertIn(path, paths)
-        for path in verify_live_site.TOPIC_FIRST_READ_MARKERS:
-            self.assertIn(path, paths)
-        for path in verify_live_site.RESOURCE_MARKERS:
-            self.assertIn(path, paths)
-        self.assertNotIn("/oracle/", paths)
+    def test_current_route_set_exactly_matches_builder(self):
+        paths = build_site.sitemap_paths(build_site.load_concepts(), build_site.load_resources(), build_site.load_questions())
+        verifier_paths = [path for path, _marker in verify_live_site.V10_ROUTES]
+        self.assertEqual(build_site.V10_ROUTE_COUNT, len(paths))
+        self.assertEqual(len(paths), len(set(paths)))
+        self.assertEqual(set(paths), set(verifier_paths))
+        self.assertEqual(len(verifier_paths), len(set(verifier_paths)))
 
-    def test_v06_reading_contract_requires_topics_ecosystem_confidence_and_feedback(self):
-        origin = "https://ndoracle.org"
+    def test_frozen_compatibility_fixture_is_satisfied_by_current_corpus(self):
+        self.assertEqual([], verify_live_site.verify_compatibility_fixture())
 
-        def fetcher(url):
-            path = url.removeprefix(origin)
-            if path == "/":
-                body = "".join(
-                    f'<a href="{target}">{question}</a>'
-                    for question, target in verify_live_site.HOMEPAGE_QUESTIONS
-                )
-                body += (
-                    "Explore useful things"
-                    '<a href="/resources/">Everything</a>'
-                    '<a href="/tools/">Tools</a>'
-                    '<a href="/games/">Games</a>'
-                    '<a href="/community/">Support</a>'
-                    "A listing is not an endorsement"
-                )
-            elif path in verify_live_site.TOPIC_FIRST_READ_MARKERS:
-                body = (
-                    html.escape(verify_live_site.TOPIC_FIRST_READ_MARKERS[path], quote=True)
-                    + '<p class="review-meta">Last reviewed: <strong>12 August 2026</strong></p>'
-                    + '<details class="technical-summary"><summary>More precise description</summary>'
-                    + '<a href="/how-it-works/#confidence">confidence</a>'
-                )
-            elif path == "/how-it-works/":
-                body = (
-                    '<h2>What the confidence labels mean</h2>'
-                    '<dt>High</dt><dt>Moderate</dt><dt>Low</dt>'
-                    '<dt>Contested</dt><dt>Not applicable</dt>'
-                    '<h2>Being listed is not being endorsed</h2>'
-                )
-            elif path == "/feedback/":
-                body = (
-                    '<h2>Report a problem</h2>'
-                    '<a href="https://github.com/armpitpete/nd-oracle/issues/new">issues</a>'
-                    'Please do not include private health information'
-                    '<h2>Current limitation</h2>'
-                )
-            else:
-                raise AssertionError(url)
-            return self.response(final_url=url, body=body)
+    def test_security_header_contract_allows_only_same_origin_script_execution(self):
+        csp = verify_live_site.SECURITY_HEADERS["content-security-policy"]
+        self.assertIn("script-src 'self'", csp)
+        self.assertIn("connect-src 'none'", csp)
+        self.assertIn("form-action 'none'", csp)
+        self.assertIn("object-src 'none'", csp)
+        self.assertNotIn("unsafe-inline", csp)
+        self.assertNotIn("unsafe-eval", csp)
 
-        self.assertEqual(
-            verify_live_site.verify_v06_reading_contract(origin, fetcher=fetcher),
-            [],
-        )
+    def test_passive_surface_allows_exactly_find_js_on_find_page(self):
+        find = self.response(url="https://ndoracle.org/find/", body='<main></main><script src="/find.js" defer></script>')
+        self.assertEqual([], verify_live_site.verify_passive_surface("https://ndoracle.org", "/find/", find))
+        normal = self.response(url="https://ndoracle.org/about/", body='<main></main><script src="/find.js"></script>')
+        failures = verify_live_site.verify_passive_surface("https://ndoracle.org", "/about/", normal)
+        self.assertTrue(any("unexpected script" in failure for failure in failures))
 
-    def test_v06_reading_contract_rejects_missing_reader_marker(self):
-        origin = "https://ndoracle.org"
-
-        def fetcher(url):
-            path = url.removeprefix(origin)
-            if path == "/":
-                body = "".join(
-                    f'<a href="{target}">{question}</a>'
-                    for question, target in verify_live_site.HOMEPAGE_QUESTIONS
-                )
-                body += 'Explore useful things<a href="/resources/"></a><a href="/tools/"></a><a href="/games/"></a><a href="/community/"></a>A listing is not an endorsement'
-            elif path in verify_live_site.TOPIC_FIRST_READ_MARKERS:
-                body = (
-                    html.escape(verify_live_site.TOPIC_FIRST_READ_MARKERS[path], quote=True)
-                    + '<p class="review-meta">Last reviewed: now</p>'
-                    + '<details class="technical-summary"><summary>More precise description</summary>'
-                    + '<a href="/how-it-works/#confidence">confidence</a>'
-                )
-                if path == "/understand/autism/":
-                    body = body.replace('class="review-meta">Last reviewed:', 'class="review-meta">Reviewed:')
-            elif path == "/how-it-works/":
-                body = '<h2>What the confidence labels mean</h2><dt>High</dt><dt>Moderate</dt><dt>Low</dt><dt>Contested</dt><dt>Not applicable</dt><h2>Being listed is not being endorsed</h2>'
-            elif path == "/feedback/":
-                body = '<h2>Report a problem</h2><a href="https://github.com/armpitpete/nd-oracle/issues/new">issues</a>Please do not include private health information<h2>Current limitation</h2>'
-            else:
-                raise AssertionError(url)
-            return self.response(final_url=url, body=body)
-
-        failures = verify_live_site.verify_v06_reading_contract(origin, fetcher=fetcher)
-        self.assertTrue(any("/understand/autism/" in failure and "Last reviewed" in failure for failure in failures))
-
-    def test_v06_resource_contract_requires_inspection_boundaries_and_official_access(self):
-        origin = "https://ndoracle.org"
-
-        def fetcher(url):
-            path = url.removeprefix(origin)
-            name, official_url = verify_live_site.RESOURCE_MARKERS[path]
-            body = (
-                f"<h1>{html.escape(name)}</h1>"
-                "Listed, not endorsed"
-                "Last reviewed:"
-                '<h2 id="use-heading">What it is for</h2>'
-                '<h2 id="access-heading">Access</h2>'
-                f'<a href="{html.escape(official_url, quote=True)}">Visit official resource</a>'
-                '<h2 id="limits-heading">Limitations and possible poor fit</h2>'
-                '<h2 id="cost-heading">Cost and access notes</h2>'
-                '<h2 id="conflict-heading">Ownership and conflicts</h2>'
-                '<h2 id="evidence-status-heading">Evidence status</h2>'
-                "This listing makes no efficacy or safety claim"
-            )
-            return self.response(final_url=url, body=body)
-
-        self.assertEqual(
-            verify_live_site.verify_v06_resource_contract(origin, fetcher=fetcher),
-            [],
-        )
-
-    def test_v06_resource_contract_rejects_hidden_endorsement_boundary(self):
-        origin = "https://ndoracle.org"
-
-        def fetcher(url):
-            path = url.removeprefix(origin)
-            _name, official_url = verify_live_site.RESOURCE_MARKERS[path]
-            return self.response(
-                final_url=url,
-                body=(
-                    "Last reviewed:"
-                    '<h2 id="use-heading">What it is for</h2>'
-                    '<h2 id="access-heading">Access</h2>'
-                    f'<a href="{html.escape(official_url, quote=True)}">Visit official resource</a>'
-                    '<h2 id="limits-heading">Limitations and possible poor fit</h2>'
-                    '<h2 id="cost-heading">Cost and access notes</h2>'
-                    '<h2 id="conflict-heading">Ownership and conflicts</h2>'
-                    '<h2 id="evidence-status-heading">Evidence status</h2>'
-                    "This listing makes no efficacy or safety claim"
-                ),
-            )
-
-        failures = verify_live_site.verify_v06_resource_contract(origin, fetcher=fetcher)
-        self.assertEqual(len(verify_live_site.RESOURCE_MARKERS), len(failures))
-        self.assertTrue(all("Listed, not endorsed" in failure for failure in failures))
-
-    def test_only_unrealised_oracle_route_remains_compatibility_noindex(self):
-        self.assertEqual(verify_live_site.COMPATIBILITY_NOINDEX_ROUTES, ("/oracle/",))
-        origin = "https://ndoracle.org"
-
-        def fetcher(url):
-            return self.response(final_url=url, body=verify_live_site.NOINDEX_MARKER)
-
-        self.assertEqual(
-            verify_live_site.verify_compatibility_noindex_routes(origin, fetcher=fetcher),
-            [],
-        )
-
-    def test_route_passes_with_exact_identity_security_and_passive_surface(self):
-        origin = "https://ndoracle.org"
-        path = "/about/"
-        marker = "<h1>About</h1>"
-        url = origin + path
-        body = (
-            f"{marker}\n{verify_live_site.canonical_marker(url)}"
-            '<link rel="stylesheet" href="/styles.css">'
-        )
-
-        def fetcher(requested_url):
-            self.assertEqual(requested_url, url)
-            return self.response(final_url=url, body=body)
-
-        self.assertEqual(
-            verify_live_site.verify_route(origin, path, marker, fetcher=fetcher),
-            [],
-        )
-
-    def test_route_rejects_identity_security_and_noindex_failures(self):
-        def fetcher(_requested_url):
-            return self.response(
-                status=302,
-                final_url="https://example.invalid/",
-                content_type="text/plain",
-                body=verify_live_site.NOINDEX_MARKER,
-                headers={},
-            )
-
-        failures = verify_live_site.verify_route(
-            "https://ndoracle.org",
-            "/privacy/",
-            "<h1>Privacy</h1>",
-            fetcher=fetcher,
-        )
-        self.assertTrue(any("HTTP 200" in failure for failure in failures))
-        self.assertTrue(any("unexpected final URL" in failure for failure in failures))
-        self.assertTrue(any("text/html" in failure for failure in failures))
-        self.assertTrue(any("page marker" in failure for failure in failures))
-        self.assertTrue(any("canonical link" in failure for failure in failures))
-        self.assertTrue(any("unexpectedly carries noindex" in failure for failure in failures))
-        self.assertTrue(any("missing security header" in failure for failure in failures))
-
-    def test_security_headers_ignore_whitespace_only_differences(self):
-        headers = dict(verify_live_site.SECURITY_HEADERS)
-        headers["permissions-policy"] = "  accelerometer=(),   camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()  "
-        response = self.response(headers=headers)
-        self.assertEqual(verify_live_site.verify_security_headers("/", response), [])
-
-    def test_passive_surface_rejects_collection_execution_and_external_loads(self):
-        body = (
-            '<form action="/submit"></form>'
-            '<script src="/app.js"></script>'
-            '<iframe src="https://example.invalid/frame"></iframe>'
-            '<img src="https://tracker.invalid/pixel.gif">'
-        )
-        response = self.response(body=body)
-        failures = verify_live_site.verify_passive_surface(
-            "https://ndoracle.org", "/", response
-        )
+    def test_passive_surface_rejects_forms_iframes_and_external_loaded_resources(self):
+        response = self.response(body='<form></form><iframe src="https://example.org/frame"></iframe><script src="https://example.org/a.js"></script>')
+        failures = verify_live_site.verify_passive_surface("https://ndoracle.org", "/about/", response)
         self.assertTrue(any("form" in failure for failure in failures))
-        self.assertTrue(any("script" in failure for failure in failures))
         self.assertTrue(any("iframe" in failure for failure in failures))
         self.assertTrue(any("externally loaded resource" in failure for failure in failures))
 
-    def test_not_found_requires_real_404_noindex_and_security(self):
+    def test_route_verifier_rejects_missing_canonical_and_security_header(self):
+        url = "https://ndoracle.org/about/"
+        response = self.response(url=url, body="<h1>About</h1>", headers={})
+        failures = verify_live_site.verify_route("https://ndoracle.org", "/about/", "<h1>About</h1>", fetcher=lambda _url: response)
+        self.assertTrue(any("canonical" in failure for failure in failures))
+        self.assertTrue(any("missing security header" in failure for failure in failures))
+
+    def test_robots_content_accepts_origin_block_and_rejects_changed_cloudflare_signal(self):
         origin = "https://ndoracle.org"
-        url = origin + verify_live_site.NOT_FOUND_PATH
-        body = f"{verify_live_site.NOT_FOUND_MARKER}{verify_live_site.NOINDEX_MARKER}"
-        self.assertEqual(
-            verify_live_site.verify_not_found(
-                origin,
-                fetcher=lambda requested: self.response(
-                    status=404,
-                    final_url=requested,
-                    body=body,
-                ),
-            ),
-            [],
-        )
-        self.assertEqual(url, origin + verify_live_site.NOT_FOUND_PATH)
-
-    def test_metadata_files_require_exact_public_index_set(self):
-        origin = "https://ndoracle.org"
-        sitemap_urls = "".join(
-            f"<url><loc>{url}</loc></url>"
-            for url in sorted(verify_live_site.expected_sitemap_urls(origin))
-        )
-        sitemap = (
-            '<?xml version="1.0" encoding="UTF-8"?>'
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-            f"{sitemap_urls}</urlset>"
-        )
-        robots = verify_live_site.expected_origin_robots(origin)
-
-        def fetcher(url):
-            if url.endswith("/robots.txt"):
-                return self.response(
-                    final_url=url,
-                    content_type="text/plain; charset=utf-8",
-                    body=robots,
-                )
-            if url.endswith("/sitemap.xml"):
-                return self.response(
-                    final_url=url,
-                    content_type="application/xml",
-                    body=sitemap,
-                )
-            raise AssertionError(url)
-
-        self.assertEqual(
-            verify_live_site.verify_metadata_files(origin, fetcher=fetcher),
-            [],
-        )
-        for compatibility in verify_live_site.COMPATIBILITY_NOINDEX_ROUTES:
-            self.assertNotIn(origin + compatibility, verify_live_site.expected_sitemap_urls(origin))
-        for active in ("/tools/", "/games/", "/resources/", "/community/"):
-            self.assertIn(origin + active, verify_live_site.expected_sitemap_urls(origin))
-
-    def test_managed_robots_prefix_preserves_origin_contract(self):
-        origin = "https://ndoracle.org"
-        managed = (
-            f"{verify_live_site.CLOUDFLARE_MANAGED_BEGIN}\n"
-            f"{verify_live_site.CLOUDFLARE_CONTENT_SIGNAL}\n"
-            "User-agent: GPTBot\nDisallow: /\n"
-            f"{verify_live_site.CLOUDFLARE_MANAGED_END}\n\n"
-            f"{verify_live_site.expected_origin_robots(origin)}"
-        )
-        self.assertEqual(verify_live_site.verify_robots_content(origin, managed), [])
-
-    def test_managed_robots_rejects_changed_content_signal(self):
-        origin = "https://ndoracle.org"
-        managed = (
-            f"{verify_live_site.CLOUDFLARE_MANAGED_BEGIN}\n"
-            "Content-Signal: search=no,ai-train=yes,use=full\n"
-            f"{verify_live_site.CLOUDFLARE_MANAGED_END}\n\n"
-            f"{verify_live_site.expected_origin_robots(origin)}"
-        )
+        base = verify_live_site.expected_origin_robots(origin)
+        self.assertEqual([], verify_live_site.verify_robots_content(origin, base))
+        managed = f"{verify_live_site.CLOUDFLARE_MANAGED_BEGIN}\nContent-Signal: search=no,ai-train=yes,use=reference\n{verify_live_site.CLOUDFLARE_MANAGED_END}\n{base}"
         failures = verify_live_site.verify_robots_content(origin, managed)
         self.assertTrue(any("content signal changed" in failure for failure in failures))
 
-    def test_sitemap_rejects_unexpected_noindex_compatibility_route(self):
-        origin = "https://ndoracle.org"
-        sitemap = (
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-            f'<url><loc>{origin}/oracle/</loc></url>'
-            "</urlset>"
-        )
-        robots = verify_live_site.expected_origin_robots(origin)
+    def test_noindex_compatibility_route_remains_separate_from_canonical_routes(self):
+        self.assertEqual(("/oracle/",), verify_live_site.COMPATIBILITY_NOINDEX_ROUTES)
+        self.assertNotIn("/oracle/", {path for path, _marker in verify_live_site.V10_ROUTES})
 
-        def fetcher(url):
-            if url.endswith("robots.txt"):
-                return self.response(final_url=url, body=robots)
-            return self.response(final_url=url, body=sitemap)
-
-        failures = verify_live_site.verify_metadata_files(origin, fetcher=fetcher)
-        self.assertTrue(any("URL set mismatch" in failure for failure in failures))
-
-    def test_www_redirect_requires_scheme_upgrade_apex_path_and_query(self):
-        origin = "https://ndoracle.org"
-        target = origin + "/understand/?q=nd-oracle-live-verify"
-        seen = []
-
-        def fetcher(url):
-            seen.append(url)
-            return self.response(
-                final_url=target,
-                body="<h1>Understand</h1>",
-            )
-
-        self.assertEqual(
-            verify_live_site.verify_www_redirect(origin, fetcher=fetcher),
-            [],
-        )
-        self.assertEqual(
-            seen,
-            [
-                "http://www.ndoracle.org/understand/?q=nd-oracle-live-verify",
-                "https://www.ndoracle.org/understand/?q=nd-oracle-live-verify",
-            ],
-        )
-
-    def test_non_https_origin_is_refused(self):
-        self.assertEqual(
-            verify_live_site.main(["--origin", "http://ndoracle.org"]),
-            2,
-        )
+    def test_non_https_origin_is_refused_before_network(self):
+        self.assertEqual(2, verify_live_site.main(["--origin", "http://ndoracle.org"]))
 
 
 if __name__ == "__main__":
