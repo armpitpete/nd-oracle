@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "purpose": "Frozen public compatibility facts from accepted ND Oracle releases. Current code may grow the corpus and add governed evidence without executing old builders or requiring old objects to remain structurally unchanged.",
+  "v06": {
+    "concept_ids": ["neurodiversity", "autism", "adhd", "executive-function", "sensory-processing", "dyslexia", "developmental-coordination-disorder", "tourette-syndrome", "learning-disability", "developmental-language-disorder"],
+    "route_count": 36
+  },
+  "v07": {
+    "question_ids": ["task-starting-and-organisation", "low-time-pressure-games", "workplace-support-great-britain", "autism-information-and-support", "autism-anxiety-tools"]
+  },
+  "v08": {
+    "resource_ids": ["goblin-tools", "tiimo", "time-timer", "habitica", "unpacking", "minecraft", "stardew-valley", "access-to-work", "national-autistic-society", "adhd-uk", "autistica", "autistic-self-advocacy-network", "autistica-tips-hub", "molehill-mountain", "unmasking-autism", "british-dyslexia-association", "tourettes-action", "mencap", "radld", "speech-and-language-uk-adult-dld-support", "abilitynet-my-computer-my-way", "acas-reasonable-adjustments", "disabled-students-allowance", "scope-support-to-work", "nhs-dyspraxia-adults"],
+    "question_ids": ["task-starting-and-organisation", "low-time-pressure-games", "workplace-support-great-britain", "autism-information-and-support", "autism-anxiety-tools", "dyslexia-information-and-support-uk", "tourette-information-and-support-uk", "learning-disability-information-and-support-uk", "dld-information-and-support", "make-device-easier-to-use", "reasonable-adjustments-at-work-great-britain", "disabled-student-support-england", "disabled-person-looking-for-work-uk", "adult-dyspraxia-information-uk"],
+    "route_count": 62
+  },
+  "v09": {
+    "counts": {"concepts": 20, "resources": 50, "questions": 30, "governed_objects": 100},
+    "route_count": 125,
+    "navigation_routes": ["/needs/", "/needs/daily-life/", "/needs/sensory-environment/", "/needs/communication/", "/needs/work/", "/needs/education-study/", "/needs/assessment-diagnosis/", "/needs/health-wellbeing/", "/needs/relationships-family/", "/types/", "/places/", "/a-z/"],
+    "question_groups": {
+      "Daily life & technology": ["task-starting-and-organisation", "make-device-easier-to-use", "meal-planning-and-everyday-food-tasks"],
+      "Sensory & environment": ["make-noisy-bright-place-easier", "sensory-overload-what-can-i-change"],
+      "Communication": ["aac-and-nonspeaking-communication", "phone-calls-are-difficult", "processing-time-in-conversations-meetings"],
+      "Work": ["workplace-support-great-britain", "reasonable-adjustments-at-work-great-britain", "disabled-person-looking-for-work-uk", "disclosing-disability-neurodivergence-at-work", "job-interview-adjustments-great-britain"],
+      "Education & study": ["disabled-student-support-england", "organising-study-and-assignments", "send-support-school-college-england"],
+      "Assessment & diagnosis": ["adult-adhd-assessment-england", "adult-autism-assessment-england"],
+      "Health & wellbeing": ["autism-anxiety-tools", "masking-exhaustion-and-autistic-burnout", "sleep-and-winding-down-routines"],
+      "Relationships & family": ["autistic-parent-support-uk"],
+      "Information & support": ["autism-information-and-support", "dyslexia-information-and-support-uk", "tourette-information-and-support-uk", "learning-disability-information-and-support-uk", "dld-information-and-support", "adult-dyspraxia-information-uk", "dyscalculia-information-and-support-uk"],
+      "Games & downtime": ["low-time-pressure-games"]
+    }
+  }
+}
