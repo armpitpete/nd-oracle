@@ -1,32 +1,17 @@
 from __future__ import annotations
 
 import html
+import json
 import tempfile
 import unittest
 from pathlib import Path
 
 from scripts import build_site
 
-
-V08_RESOURCE_IDS = {
-    "goblin-tools", "tiimo", "time-timer", "habitica", "unpacking", "minecraft",
-    "stardew-valley", "access-to-work", "national-autistic-society", "adhd-uk",
-    "autistica", "autistic-self-advocacy-network", "autistica-tips-hub",
-    "molehill-mountain", "unmasking-autism", "british-dyslexia-association",
-    "tourettes-action", "mencap", "radld", "speech-and-language-uk-adult-dld-support",
-    "abilitynet-my-computer-my-way", "acas-reasonable-adjustments",
-    "disabled-students-allowance", "scope-support-to-work", "nhs-dyspraxia-adults",
-}
-
-V08_QUESTION_IDS = {
-    "task-starting-and-organisation", "low-time-pressure-games",
-    "workplace-support-great-britain", "autism-information-and-support",
-    "autism-anxiety-tools", "dyslexia-information-and-support-uk",
-    "tourette-information-and-support-uk", "learning-disability-information-and-support-uk",
-    "dld-information-and-support", "make-device-easier-to-use",
-    "reasonable-adjustments-at-work-great-britain", "disabled-student-support-england",
-    "disabled-person-looking-for-work-uk", "adult-dyspraxia-information-uk",
-}
+ROOT = Path(__file__).resolve().parents[1]
+FIXTURE = json.loads((ROOT / "contracts" / "public-compatibility-v1.json").read_text(encoding="utf-8"))
+V08_RESOURCE_IDS = set(FIXTURE["v08"]["resource_ids"])
+V08_QUESTION_IDS = set(FIXTURE["v08"]["question_ids"])
 
 
 class ContentNavigationV08CompatibilityTests(unittest.TestCase):
@@ -46,9 +31,13 @@ class ContentNavigationV08CompatibilityTests(unittest.TestCase):
         self.assertTrue(V08_RESOURCE_IDS <= set(self.resource_map))
         self.assertTrue(V08_QUESTION_IDS <= set(self.question_map))
         for resource_id in V08_RESOURCE_IDS:
-            resource = self.resource_map[resource_id]
-            self.assertEqual("reviewed", resource["status"])
-            self.assertEqual([], resource["claims"])
+            self.assertEqual("reviewed", self.resource_map[resource_id]["status"])
+
+    def test_v08_compatibility_does_not_freeze_resources_as_permanently_claimless(self) -> None:
+        claim_bearing = {rid for rid in V08_RESOURCE_IDS if self.resource_map[rid].get("claims")}
+        self.assertEqual({"access-to-work", "acas-reasonable-adjustments", "disabled-students-allowance"}, claim_bearing)
+        for resource_id in V08_RESOURCE_IDS - claim_bearing:
+            self.assertEqual([], self.resource_map[resource_id]["claims"])
 
     def test_primary_navigation_preserves_v08_content_names(self) -> None:
         page = (self.output / "index.html").read_text(encoding="utf-8")
@@ -67,12 +56,8 @@ class ContentNavigationV08CompatibilityTests(unittest.TestCase):
 
     def test_v08_cross_link_example_remains_live(self) -> None:
         concept = (self.output / "understand" / "dyslexia" / "index.html").read_text(encoding="utf-8")
-        resource = (
-            self.output / "resources" / "british-dyslexia-association" / "index.html"
-        ).read_text(encoding="utf-8")
-        question = (
-            self.output / "questions" / "dyslexia-information-and-support-uk" / "index.html"
-        ).read_text(encoding="utf-8")
+        resource = (self.output / "resources" / "british-dyslexia-association" / "index.html").read_text(encoding="utf-8")
+        question = (self.output / "questions" / "dyslexia-information-and-support-uk" / "index.html").read_text(encoding="utf-8")
         self.assertIn('href="/resources/british-dyslexia-association/"', concept)
         self.assertIn('href="/questions/dyslexia-information-and-support-uk/"', concept)
         self.assertIn('href="/questions/dyslexia-information-and-support-uk/"', resource)
@@ -86,7 +71,7 @@ class ContentNavigationV08CompatibilityTests(unittest.TestCase):
             self.assertIn(f"/resources/{resource_id}/", paths)
         for question_id in V08_QUESTION_IDS:
             self.assertIn(f"/questions/{question_id}/", paths)
-        self.assertGreaterEqual(len(paths), 62)
+        self.assertGreaterEqual(len(paths), FIXTURE["v08"]["route_count"])
 
     def test_v08_question_boundary_remains_visible_for_original_questions(self) -> None:
         for question_id in V08_QUESTION_IDS:
