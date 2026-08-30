@@ -21,6 +21,19 @@ class DiscoveryBenchmarkV10Tests(unittest.TestCase):
         queries = [case["query"].casefold() for case in self.cases]
         self.assertEqual(len(queries), len(set(queries)))
 
+    def test_every_case_has_explicit_useful_decision_depth(self) -> None:
+        failures = []
+        for case in self.cases:
+            depth = case.get("max_useful_decision_depth")
+            if not isinstance(depth, int) or depth < 0:
+                failures.append({"query": case.get("query"), "depth": depth})
+                continue
+            if case["mode"] == "covered" and depth != 1:
+                failures.append({"query": case["query"], "mode": case["mode"], "depth": depth})
+            if case["mode"] == "no_answer" and depth != 0:
+                failures.append({"query": case["query"], "mode": case["mode"], "depth": depth})
+        self.assertEqual([], failures)
+
     def test_covered_cases_surface_an_acceptable_governed_route_in_top_three(self) -> None:
         failures = []
         for case in self.cases:
@@ -28,8 +41,17 @@ class DiscoveryBenchmarkV10Tests(unittest.TestCase):
                 continue
             mode, results = discovery.search(case["query"], limit=3, index=self.index)
             routes = [result.route for result in results]
-            if mode != "results" or not set(routes) & set(case["acceptable_routes"]):
-                failures.append({"query": case["query"], "mode": mode, "top3": routes, "acceptable": case["acceptable_routes"]})
+            acceptable = set(routes) & set(case["acceptable_routes"])
+            actual_depth = 1 if mode == "results" and acceptable else None
+            if mode != "results" or not acceptable or actual_depth > case["max_useful_decision_depth"]:
+                failures.append({
+                    "query": case["query"],
+                    "mode": mode,
+                    "top3": routes,
+                    "acceptable": case["acceptable_routes"],
+                    "actual_depth": actual_depth,
+                    "maximum_depth": case["max_useful_decision_depth"],
+                })
         self.assertEqual([], failures)
 
     def test_no_answer_cases_do_not_invent_a_route(self) -> None:
