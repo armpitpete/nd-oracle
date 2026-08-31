@@ -62,8 +62,11 @@ docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
 docs/PRODUCTION_STATE_v0.8.md        Historical accepted v0.8 deployment evidence
 docs/PRODUCTION_STATE_v0.9.md        Historical accepted v0.9 deployment evidence
 docs/PRODUCTION_STATE_v1.0.md        Accepted v1.0 deployment and live-proof evidence
+LICENSE                              Apache-2.0 software licence text
+CONTENT_LICENSE.md                   CC BY 4.0 content/database licence scope
+DCO.md                               Developer Certificate of Origin 1.1
 GOVERNANCE.md                        Decision rights and protected changes
-CONTRIBUTING.md                      Contribution and provenance rules
+CONTRIBUTING.md                      Contribution, provenance and rights rules
 ```
 
 ## Validate
@@ -81,6 +84,14 @@ The site remains intentionally semantic, reading-first and privacy-first. All ca
 
 Typed discovery text remains in browser memory and is not submitted in a URL or form request. The public surface has no accounts, profiling, personalised ranking, analytics, query storage, external search service or AI answer authority. Discovery returns bounded governed routes; generated text does not become a source of truth or bypass governed evidence and uncertainty.
 
-## Licensing status
+## Licensing
 
-No reuse licence has yet been selected. Copyright remains with contributors until an owner explicitly adopts a licence. This is recorded as protected governance issue #105 rather than guessed.
+ND Oracle uses a deliberate split licence:
+
+- **software/code:** Apache License 2.0 (`Apache-2.0`), see `LICENSE`;
+- **original ND Oracle knowledge content, prose/documentation and applicable database rights:** Creative Commons Attribution 4.0 International (`CC BY 4.0`), see `CONTENT_LICENSE.md`;
+- **third-party material:** not relicensed by ND Oracle unless a specific rights notice says otherwise.
+
+The licence grant applies only to rights the relevant contributor or rights-holder is entitled to license. File-specific and item-specific rights notices take precedence. Attribution must not imply endorsement by ND Oracle or its contributors.
+
+Software contributions use the Developer Certificate of Origin 1.1 sign-off process in `DCO.md`. Original content contributions require the parallel rights-and-licensing certification in `CONTRIBUTING.md`. ND Oracle does not require a Contributor Licence Agreement at this stage.

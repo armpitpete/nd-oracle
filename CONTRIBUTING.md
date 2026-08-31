@@ -36,7 +36,39 @@ python -m unittest discover -s tests
 
 - Explain changed objects, evidence, uncertainties, exclusions and any public-route effects.
 - Never resolve an uncertainty by deleting its history. Preserve the route by which it was reduced or resolved.
-- Sign off commits with `Signed-off-by:` when contributing material for which you hold the necessary rights.
+- Sign off each contribution commit with `Signed-off-by: Your Name <email@example.com>`.
+
+## Contributor rights and licensing certification
+
+ND Oracle uses a split licensing model. See `LICENSE`, `CONTENT_LICENSE.md` and `DCO.md`.
+
+### Software/code contributions
+
+Software/code contributions are submitted under the Apache License 2.0 (`Apache-2.0`). By adding a `Signed-off-by:` line, the contributor certifies the Developer Certificate of Origin 1.1 in `DCO.md`, including that they have the right to submit the contribution under the indicated open-source licence.
+
+Software/code includes implementation material such as source code, schemas, tests, workflows, scripts, templates, styles and other implementation assets unless a specific notice says otherwise.
+
+### Original knowledge/content contributions
+
+Original ND Oracle knowledge content, prose/documentation and applicable database rights are submitted under the Creative Commons Attribution 4.0 International licence (`CC BY 4.0`) described in `CONTENT_LICENSE.md`.
+
+For any contribution containing original content, the contributor's `Signed-off-by:` also certifies that, to the best of their knowledge:
+
+1. they created the contribution or otherwise have the necessary rights or permission to submit it;
+2. they agree that the rights they are entitled to license in their original contribution may be distributed under CC BY 4.0;
+3. any third-party quotation, excerpt, image, dataset, trade mark or other externally controlled material is clearly identified with its source and applicable licence, permission or legal basis;
+4. they have not silently represented third-party material as ND Oracle-owned or CC BY-licensed content; and
+5. they understand that the contribution and sign-off form part of the public project record.
+
+If you cannot make the applicable certification, do not submit the material until the rights position has been resolved.
+
+### Third-party material
+
+Public availability is not permission to relicense. Do not copy substantial third-party text, images or datasets merely because they can be accessed online. Keep quotations bounded, record provenance, and identify the applicable rights basis. A file-specific or item-specific licence notice overrides the repository default for the material it identifies.
+
+### No CLA
+
+ND Oracle does not require a Contributor Licence Agreement at this stage. Contributors retain copyright in their original contributions while granting the rights provided by the applicable project licence.
 
 ## Remote enforcement and protected boundaries
 
@@ -46,6 +78,14 @@ Merges and production deployments remain protected project-owner boundaries. Pro
 
 Schema changes, licensing changes, removal of material evidence/uncertainty, collection of personal or sensitive data, moderation/editorial-authority changes and representation as clinical guidance require an explicit reviewed protected decision under `GOVERNANCE.md`.
 
-## Licensing
+## Licensing baseline
 
-No reuse licence has yet been adopted. Do not assume that public availability grants reuse rights. Issue #105 tracks the protected code/content licensing decision.
+The adopted licensing baseline is:
+
+- Apache-2.0 for software/code;
+- CC BY 4.0 for original ND Oracle knowledge content, prose/documentation and applicable database rights;
+- no relicensing of third-party material unless separately identified as reusable;
+- DCO 1.1 sign-off for software plus the content-rights certification above;
+- no CLA at this stage.
+
+Future changes to this licensing baseline remain protected decisions under `GOVERNANCE.md`.
