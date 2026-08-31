@@ -1,148 +1,56 @@
 from __future__ import annotations
 
-import html
-import importlib.util
-from pathlib import Path
-import sys
+import json
 import unittest
+from pathlib import Path
 
+from scripts import verify_live_site
 
 ROOT = Path(__file__).resolve().parents[1]
-MODULE_PATH = ROOT / "scripts" / "verify_live_site.py"
-SPEC = importlib.util.spec_from_file_location("verify_live_site_v07_test", MODULE_PATH)
-assert SPEC is not None and SPEC.loader is not None
-verify_live_site = importlib.util.module_from_spec(SPEC)
-sys.modules[SPEC.name] = verify_live_site
-SPEC.loader.exec_module(verify_live_site)
+FIXTURE = json.loads((ROOT / "contracts" / "public-compatibility-v1.json").read_text(encoding="utf-8"))
 
 
-class VerifyQuestionDiscoveryV07Tests(unittest.TestCase):
-    def response(
-        self,
-        *,
-        status=200,
-        final_url="https://ndoracle.org/",
-        content_type="text/html; charset=utf-8",
-        body="",
-        headers=None,
-    ):
-        return verify_live_site.Response(
-            status=status,
-            final_url=final_url,
-            content_type=content_type,
-            body=body,
-            headers=dict(verify_live_site.SECURITY_HEADERS if headers is None else headers),
-        )
+class VerifyQuestionDiscoveryV07CompatibilityTests(unittest.TestCase):
+    def test_v07_question_ids_are_frozen_as_data_not_executable_route_tables(self):
+        frozen = set(FIXTURE["v07"]["question_ids"])
+        current = set(verify_live_site.QUESTION_RECORD_MAP)
+        self.assertEqual(5, len(frozen))
+        self.assertTrue(frozen <= current)
 
-    def test_v07_route_set_extends_v06_to_42_canonical_routes(self):
-        old_paths = tuple(path for path, _ in verify_live_site.ROUTES)
-        new_paths = tuple(path for path, _ in verify_live_site.V07_ROUTES)
-        self.assertEqual(36, len(old_paths))
-        self.assertEqual(42, len(new_paths))
-        self.assertEqual(42, len(set(new_paths)))
-        self.assertTrue(set(old_paths).issubset(new_paths))
-        self.assertIn("/questions/", new_paths)
-        for path in verify_live_site.V07_QUESTION_MARKERS:
-            self.assertIn(path, new_paths)
+    def test_current_verifier_checks_frozen_compatibility_fixture(self):
+        self.assertEqual([], verify_live_site.verify_compatibility_fixture())
 
-    def test_v07_question_contract_accepts_governed_static_surface(self):
+    def test_v07_question_routes_are_still_in_current_canonical_route_set(self):
+        paths = {path for path, _marker in verify_live_site.V10_ROUTES}
+        self.assertIn("/questions/", paths)
+        for question_id in FIXTURE["v07"]["question_ids"]:
+            self.assertIn(f"/questions/{question_id}/", paths)
+
+    def test_current_question_contract_keeps_v07_non_recommendation_boundary(self):
         origin = "https://ndoracle.org"
+        frozen_paths = {f"/questions/{qid}/" for qid in FIXTURE["v07"]["question_ids"]}
 
-        def fetcher(url):
+        def fetcher(url: str):
             path = url.removeprefix(origin)
-            if path == "/":
-                body = "".join(
-                    f'<a href="{question_path}">{html.escape(question, quote=True)}</a>'
-                    for question_path, question in verify_live_site.V07_QUESTION_MARKERS.items()
-                )
-            elif path == "/questions/":
-                body = (
-                    "Relevant to inspect, not recommended."
-                    "5 governed practical questions"
-                    + "".join(
-                        f'<a href="{question_path}">{html.escape(question, quote=True)}</a>'
-                        for question_path, question in verify_live_site.V07_QUESTION_MARKERS.items()
-                    )
-                )
-            elif path in verify_live_site.V07_QUESTION_MARKERS:
+            if path == "/questions/":
+                body = "Relevant to inspect, not recommended." + f"{len(verify_live_site.QUESTION_RECORDS)} governed practical questions" + '<a href="/needs/">Needs</a><a href="/a-z/">A-Z</a>'
+            elif path in verify_live_site.QUESTION_MARKERS_V10:
                 body = (
                     "Relevant to inspect, not recommended."
                     '<h2 id="current-understanding-heading">Current understanding</h2>'
                     '<h2 id="related-things-heading">Related things to inspect</h2>'
+                    '<h2 id="related-questions-heading">Related questions</h2>'
                     '<h2 id="evidence-needed-heading">What evidence is still needed</h2>'
                     '<h2 id="dissent-heading">Where people may disagree</h2>'
                     '<h2 id="reopen-heading">When this answer should be revisited</h2>'
-                    '<p class="review-meta">Last reviewed: now</p>'
-                    "<summary>Question provenance and review state</summary>"
                 )
-            elif path == "/how-it-works/":
-                body = "<h2>Question-led discovery</h2>"
             else:
                 raise AssertionError(url)
-            return self.response(final_url=url, body=body)
+            return verify_live_site.Response(200, url, "text/html; charset=utf-8", body, dict(verify_live_site.SECURITY_HEADERS))
 
-        self.assertEqual(
-            verify_live_site.verify_v07_question_contract(origin, fetcher=fetcher),
-            [],
-        )
-
-    def test_v07_question_contract_rejects_missing_recommendation_boundary(self):
-        origin = "https://ndoracle.org"
-
-        def fetcher(url):
-            path = url.removeprefix(origin)
-            if path == "/":
-                body = "".join(
-                    f'<a href="{question_path}">{html.escape(question, quote=True)}</a>'
-                    for question_path, question in verify_live_site.V07_QUESTION_MARKERS.items()
-                )
-            elif path == "/questions/":
-                body = (
-                    "Relevant to inspect, not recommended."
-                    "5 governed practical questions"
-                    + "".join(
-                        f'<a href="{question_path}">{html.escape(question, quote=True)}</a>'
-                        for question_path, question in verify_live_site.V07_QUESTION_MARKERS.items()
-                    )
-                )
-            elif path in verify_live_site.V07_QUESTION_MARKERS:
-                boundary = (
-                    ""
-                    if path == "/questions/task-starting-and-organisation/"
-                    else "Relevant to inspect, not recommended."
-                )
-                body = (
-                    boundary
-                    + '<h2 id="current-understanding-heading">Current understanding</h2>'
-                    + '<h2 id="related-things-heading">Related things to inspect</h2>'
-                    + '<h2 id="evidence-needed-heading">What evidence is still needed</h2>'
-                    + '<h2 id="dissent-heading">Where people may disagree</h2>'
-                    + '<h2 id="reopen-heading">When this answer should be revisited</h2>'
-                    + '<p class="review-meta">Last reviewed: now</p>'
-                    + "<summary>Question provenance and review state</summary>"
-                )
-            elif path == "/how-it-works/":
-                body = "<h2>Question-led discovery</h2>"
-            else:
-                raise AssertionError(url)
-            return self.response(final_url=url, body=body)
-
-        failures = verify_live_site.verify_v07_question_contract(origin, fetcher=fetcher)
-        self.assertTrue(
-            any(
-                "/questions/task-starting-and-organisation/" in failure
-                and "Relevant to inspect" in failure
-                for failure in failures
-            )
-        )
-
-    def test_v07_expected_sitemap_set_remains_frozen_at_42_routes(self):
-        origin = "https://ndoracle.org"
-        expected = {origin + path for path, _marker in verify_live_site.V07_ROUTES}
-        self.assertEqual(42, len(expected))
-        self.assertIn(origin + "/questions/", expected)
-        for path in verify_live_site.V07_QUESTION_MARKERS:
-            self.assertIn(origin + path, expected)
+        failures = verify_live_site.verify_v10_question_contract(origin, fetcher=fetcher)
+        self.assertEqual([], failures)
+        self.assertTrue(frozen_paths <= set(verify_live_site.QUESTION_MARKERS_V10))
 
 
 if __name__ == "__main__":

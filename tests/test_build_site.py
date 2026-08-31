@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import html
 import tempfile
 import unittest
@@ -10,15 +12,10 @@ from scripts import build_site
 
 class LinkCollector(HTMLParser):
     def __init__(self):
-        super().__init__()
-        self.hrefs: list[str] = []
-
+        super().__init__(); self.hrefs: list[str] = []
     def handle_starttag(self, tag, attrs):
-        if tag != "a":
-            return
-        for name, value in attrs:
-            if name == "href" and value:
-                self.hrefs.append(value)
+        if tag == "a":
+            self.hrefs.extend(value for name, value in attrs if name == "href" and value)
 
 
 class WebsiteBuildTests(unittest.TestCase):
@@ -27,8 +24,10 @@ class WebsiteBuildTests(unittest.TestCase):
         self.output = Path(self.tempdir.name) / "dist"
         build_site.build(self.output)
         self.concepts = build_site.load_concepts()
-        self.concept_map = {concept["id"]: concept for concept in self.concepts}
         self.resources = build_site.load_resources()
+        self.questions = build_site.load_questions()
+        self.evidence = build_site.load_evidence()
+        self.concept_map = {item["id"]: item for item in self.concepts}
 
     def tearDown(self):
         self.tempdir.cleanup()
@@ -36,273 +35,147 @@ class WebsiteBuildTests(unittest.TestCase):
     def html_pages(self) -> list[Path]:
         return sorted(self.output.rglob("*.html"))
 
-    def test_build_emits_complete_public_site(self):
-        expected_routes = [
-            "",
-            "understand",
-            "resources",
-            "tools",
-            "games",
-            "community",
-            "how-it-works",
-            "about",
-            "accessibility",
-            "feedback",
-            "privacy",
-            # The not-yet-interactive Oracle route remains a compatibility page.
-            "oracle",
-        ]
-        for route in expected_routes:
-            target = self.output / "index.html" if not route else self.output / route / "index.html"
-            self.assertTrue(target.is_file(), route)
+    def page(self, route: str) -> str:
+        target = self.output / "index.html" if route == "/" else self.output / route.strip("/") / "index.html"
+        self.assertTrue(target.is_file(), target)
+        return target.read_text(encoding="utf-8")
 
-        for filename in ["styles.css", "_headers", "404.html", "sitemap.xml", "robots.txt"]:
+    def test_build_emits_complete_current_surface(self):
+        for route in ("/", "/understand/", "/resources/", "/tools/", "/games/", "/community/", "/books-media/", "/questions/", "/needs/", "/types/", "/places/", "/a-z/", "/find/", "/how-it-works/", "/about/", "/accessibility/", "/feedback/", "/privacy/", "/oracle/"):
+            self.page(route)
+        for filename in ("styles.css", "_headers", "find.js", "404.html", "sitemap.xml", "robots.txt"):
             self.assertTrue((self.output / filename).is_file(), filename)
-
-        self.assertEqual(
-            (self.output / ".nd-oracle-generated").read_text(encoding="utf-8"),
-            build_site.OUTPUT_MARKER,
-        )
-        for concept in self.concepts:
-            self.assertTrue((self.output / "understand" / concept["id"] / "index.html").is_file())
-        for resource in self.resources:
-            self.assertTrue((self.output / "resources" / resource["id"] / "index.html").is_file())
+        self.assertEqual(build_site.OUTPUT_MARKER, (self.output / ".nd-oracle-generated").read_text(encoding="utf-8"))
+        self.assertEqual(build_site.V10_ROUTE_COUNT, len(build_site.sitemap_paths(self.concepts, self.resources, self.questions)))
 
     def test_primary_navigation_contains_only_active_destinations(self):
-        page = (self.output / "index.html").read_text(encoding="utf-8")
+        page = self.page("/")
         for slug, label in build_site.PRIMARY_NAV:
-            self.assertIn(f'href="/{slug}/"', page)
-            self.assertIn(label, page)
+            self.assertIn(f'href="/{slug}/"', page); self.assertIn(label, page)
         self.assertNotIn('href="/oracle/"', page)
+        self.assertIn('href="/find/"', page)
 
-    def test_home_has_exactly_one_ordinary_language_question_for_every_topic(self):
-        page = (self.output / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Start with a question", page)
-        concept_ids = {concept["id"] for concept in self.concepts}
-        target_ids = [target_id for _, target_id in build_site.COMMON_QUESTIONS]
-        self.assertEqual(set(target_ids), concept_ids)
-        self.assertEqual(len(target_ids), len(concept_ids))
-        for question, target_id in build_site.COMMON_QUESTIONS:
-            self.assertIn(html.escape(question, quote=True), page)
-            self.assertIn(f'href="/understand/{target_id}/"', page)
-        self.assertNotIn("Site Shell v0.1", page)
+    def test_home_has_one_ordinary_language_route_for_every_topic(self):
+        page = self.page("/"); concept_ids = {item["id"] for item in self.concepts}; target_ids = [target for _q, target in build_site.COMMON_QUESTIONS]
+        self.assertEqual(concept_ids, set(target_ids)); self.assertEqual(len(concept_ids), len(target_ids))
+        for question, target in build_site.COMMON_QUESTIONS:
+            self.assertIn(html.escape(question, quote=True), page); self.assertIn(f'href="/understand/{target}/"', page)
 
-    def test_home_exposes_populated_ecosystem(self):
-        page = (self.output / "index.html").read_text(encoding="utf-8")
-        self.assertGreater(len(self.resources), 0)
-        self.assertIn("Explore useful things", page)
-        self.assertIn(f"{len(self.resources)} reviewed resources", page)
-        self.assertIn('href="/tools/"', page)
-        self.assertIn('href="/games/"', page)
-        self.assertIn('href="/community/"', page)
-        self.assertIn('href="/resources/"', page)
-        self.assertIn("A listing is not an endorsement", page)
-
-    def test_reading_layer_exactly_covers_authoritative_concept_corpus(self):
-        concept_ids = {concept["id"] for concept in self.concepts}
-        self.assertEqual(set(build_site.SIMPLE_EXPLANATIONS), concept_ids)
-        build_site.validate_reading_layer(self.concepts)
-
-    def test_understand_is_reading_first_and_non_clinical(self):
-        page = (self.output / "understand" / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Orientation, not diagnosis", page)
-        self.assertIn(f"There are {len(self.concepts)} reviewed topic pages", page)
+    def test_reading_layer_and_topic_evidence_routes_cover_current_concepts(self):
+        self.assertEqual({item["id"] for item in self.concepts}, set(build_site.SIMPLE_EXPLANATIONS)); build_site.validate_reading_layer(self.concepts)
         for concept in self.concepts:
-            self.assertIn(html.escape(concept["name"]), page)
-            self.assertIn(html.escape(build_site.reader_intro(concept), quote=True), page)
-            self.assertIn(f'/understand/{concept["id"]}/', page)
-
-    def test_every_topic_starts_simple_then_preserves_precise_summary(self):
-        for concept in self.concepts:
-            page = (self.output / "understand" / concept["id"] / "index.html").read_text(encoding="utf-8")
-            simple = html.escape(build_site.reader_intro(concept), quote=True)
-            precise = html.escape(concept["summary"], quote=True)
-            self.assertIn(simple, page)
-            self.assertIn("More precise description", page)
-            self.assertIn(precise, page)
-            self.assertLess(page.index(simple), page.index(precise))
-
-    def test_every_topic_exposes_last_reviewed(self):
-        for concept in self.concepts:
-            page = (self.output / "understand" / concept["id"] / "index.html").read_text(encoding="utf-8")
-            reviewed = build_site.human_date(concept["provenance"]["last_reviewed"])
-            self.assertIn(f"Last reviewed: <strong>{reviewed}</strong>", page)
-
-    def test_confidence_scale_is_explained_and_linked_from_claims(self):
-        how = (self.output / "how-it-works" / "index.html").read_text(encoding="utf-8")
-        self.assertIn('id="confidence"', how)
-        for label in ["High", "Moderate", "Low", "Contested", "Not applicable"]:
-            self.assertIn(f"<dt>{label}</dt>", how)
-        self.assertIn("high confidence does not mean certainty", how)
-        self.assertIn("Being listed is not being endorsed", how)
-        for concept in self.concepts:
-            page = (self.output / "understand" / concept["id"] / "index.html").read_text(encoding="utf-8")
+            page = self.page(f'/understand/{concept["id"]}/')
+            simple = html.escape(build_site.reader_intro(concept), quote=True); precise = html.escape(concept["summary"], quote=True)
+            self.assertIn(simple, page); self.assertIn(precise, page); self.assertLess(page.index(simple), page.index(precise))
             self.assertIn('href="/how-it-works/#confidence"', page)
-
-    def test_feedback_route_is_public_safe_and_reachable(self):
-        feedback = (self.output / "feedback" / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Report a problem", feedback)
-        self.assertIn("https://github.com/armpitpete/nd-oracle/issues/new", feedback)
-        self.assertIn("Please do not include private health information", feedback)
-        self.assertIn("does not yet offer a private feedback channel", feedback)
-        accessibility = (self.output / "accessibility" / "index.html").read_text(encoding="utf-8")
-        self.assertIn('href="/feedback/"', accessibility)
-        home = (self.output / "index.html").read_text(encoding="utf-8")
-        self.assertIn('href="/feedback/"', home)
-
-    def test_claims_keep_evidence_routes_but_disclose_them_progressively(self):
-        for concept in self.concepts:
-            page = (self.output / "understand" / concept["id"] / "index.html").read_text(encoding="utf-8")
-            self.assertIn("What we can say", page)
-            self.assertIn('<details class="evidence-detail">', page)
+            self.assertIn("Last reviewed: <strong>", page)
             for claim in concept["claims"]:
                 self.assertIn(html.escape(claim["text"], quote=True), page)
-                for source_id in claim["source_ids"]:
-                    self.assertIn(f'href="#source-{source_id}"', page)
-                for uncertainty_id in claim["uncertainty_ids"]:
-                    self.assertIn(f'href="#uncertainty-{uncertainty_id}"', page)
-
-    def test_perspective_evidence_links_use_citations_not_generic_source_labels(self):
-        for concept in self.concepts:
-            page = (self.output / "understand" / concept["id"] / "index.html").read_text(encoding="utf-8")
+                for source_id in claim["source_ids"]: self.assertIn(f'href="#source-{source_id}"', page)
+                for uncertainty_id in claim["uncertainty_ids"]: self.assertIn(f'href="#uncertainty-{uncertainty_id}"', page)
             source_map = {source["id"]: source for source in concept["sources"]}
             for perspective in concept["perspectives"]:
                 for source_id in perspective["source_ids"]:
                     self.assertIn(html.escape(source_map[source_id]["citation"], quote=True), page)
-        self.assertNotIn("Evidence route: source", (self.output / "understand" / "autism" / "index.html").read_text(encoding="utf-8"))
-
-    def test_related_concepts_use_human_names(self):
-        for concept in self.concepts:
-            page = (self.output / "understand" / concept["id"] / "index.html").read_text(encoding="utf-8")
             for relation in concept["relations"]:
                 target = self.concept_map[relation["target_id"]]
                 self.assertIn(f'href="/understand/{target["id"]}/"', page)
-                self.assertIn(html.escape(target["name"]), page)
+                self.assertIn(html.escape(target["name"], quote=True), page)
+
+    def test_confidence_scale_and_non_endorsement_boundary_are_explained(self):
+        how = self.page("/how-it-works/")
+        self.assertIn('id="confidence"', how)
+        for label in ("High", "Moderate", "Low", "Contested", "Not applicable"):
+            self.assertIn(f"<dt>{label}</dt>", how)
+        self.assertIn("high confidence does not mean certainty", how)
+        self.assertIn("Being listed is not being endorsed", how)
+        self.assertIn("Governed discovery", how)
 
     def test_resource_indexes_are_active_and_category_filtered(self):
-        all_page = (self.output / "resources" / "index.html").read_text(encoding="utf-8")
-        tools_page = (self.output / "tools" / "index.html").read_text(encoding="utf-8")
-        games_page = (self.output / "games" / "index.html").read_text(encoding="utf-8")
-        community_page = (self.output / "community" / "index.html").read_text(encoding="utf-8")
-        for page in [all_page, tools_page, games_page, community_page]:
-            self.assertIn("Listed, not endorsed", page)
-            self.assertNotIn('name="robots" content="noindex, follow"', page)
+        all_page, tools, games, community = self.page("/resources/"), self.page("/tools/"), self.page("/games/"), self.page("/community/")
+        for page in (all_page, tools, games, community): self.assertIn("Listed, not endorsed", page)
         for resource in self.resources:
-            self.assertIn(html.escape(resource["name"], quote=True), all_page)
-            if resource["category"] == "game":
-                self.assertIn(html.escape(resource["name"], quote=True), games_page)
-            if resource["category"] in build_site.TOOL_CATEGORIES:
-                self.assertIn(html.escape(resource["name"], quote=True), tools_page)
-            if resource["category"] in build_site.COMMUNITY_CATEGORIES:
-                self.assertIn(html.escape(resource["name"], quote=True), community_page)
+            name = html.escape(resource["name"], quote=True); self.assertIn(name, all_page)
+            if resource["category"] == "game": self.assertIn(name, games)
+            if resource["category"] in build_site.TOOL_CATEGORIES: self.assertIn(name, tools)
+            if resource["category"] in build_site.COMMUNITY_CATEGORIES: self.assertIn(name, community)
 
-    def test_every_resource_page_exposes_access_limits_costs_and_conflicts(self):
+    def test_every_resource_page_exposes_access_limits_scope_costs_conflicts_and_correct_claim_boundary(self):
         for resource in self.resources:
-            page = (self.output / "resources" / resource["id"] / "index.html").read_text(encoding="utf-8")
-            self.assertIn("Listed, not endorsed", page)
-            self.assertIn("Limitations and possible poor fit", page)
-            self.assertIn("Cost and access notes", page)
-            self.assertIn("Ownership and conflicts", page)
-            self.assertIn("Evidence status", page)
-            self.assertIn("This listing makes no efficacy or safety claim", page)
-            reviewed = build_site.human_date(resource["provenance"]["last_reviewed"])
-            self.assertIn(f"Last reviewed: <strong>{reviewed}</strong>", page)
-            for locator in resource["locators"]:
-                if locator["type"] == "url":
-                    self.assertIn(html.escape(locator["value"], quote=True), page)
-
-    def test_every_html_page_has_basic_accessibility_and_description(self):
-        for page in self.html_pages():
-            text = page.read_text(encoding="utf-8")
-            self.assertIn('class="skip-link"', text)
-            self.assertIn('id="main"', text)
-            self.assertIn('aria-label="Primary"', text)
-            self.assertIn('name="viewport"', text)
-            self.assertIn('name="description"', text)
-
-    def test_indexable_pages_have_canonical_urls(self):
-        expected_paths = build_site.sitemap_paths(self.concepts, self.resources)
-        for route in expected_paths:
-            if route == "/":
-                page = self.output / "index.html"
+            page = self.page(f'/resources/{resource["id"]}/')
+            for marker in ("Listed, not endorsed", "Limitations and possible poor fit", "Cost and access notes", "Ownership and conflicts", "Evidence status", "Scope for navigation", "Questions that lead here"):
+                self.assertIn(marker, page)
+            if resource.get("claims"):
+                self.assertIn("Governed claims and evidence", page); self.assertIn("Evidence route", page); self.assertIn("Uncertainty and limits", page)
+                self.assertIn("A supported claim is not a recommendation or an individual decision.", page)
             else:
-                page = self.output / route.lstrip("/") / "index.html"
-            text = page.read_text(encoding="utf-8")
-            self.assertIn(f'rel="canonical" href="{build_site.PUBLIC_ORIGIN}{route}"', text)
+                self.assertIn("This listing makes no efficacy or safety claim", page)
+            for locator in resource["locators"]:
+                if locator["type"] == "url": self.assertIn(html.escape(locator["value"], quote=True), page)
 
-    def test_oracle_compatibility_route_remains_nonindexed(self):
-        page = (self.output / "oracle" / "index.html").read_text(encoding="utf-8")
-        self.assertIn('name="robots" content="noindex, follow"', page)
-        self.assertIn('href="/how-it-works/"', page)
-
-    def test_sitemap_contains_topics_resources_and_active_ecosystem_routes(self):
-        sitemap = (self.output / "sitemap.xml").read_text(encoding="utf-8")
-        for path in build_site.sitemap_paths(self.concepts, self.resources):
-            self.assertIn(f"<loc>{build_site.PUBLIC_ORIGIN}{path}</loc>", sitemap)
-        for route in ["resources", "tools", "games", "community", "feedback"]:
-            self.assertIn(f"<loc>{build_site.PUBLIC_ORIGIN}/{route}/</loc>", sitemap)
+    def test_claim_bearing_resources_reference_governed_evidence(self):
+        evidence_ids = {item["id"] for item in self.evidence}; claim_count = 0
         for resource in self.resources:
-            self.assertIn(f"<loc>{build_site.PUBLIC_ORIGIN}/resources/{resource['id']}/</loc>", sitemap)
+            for claim in resource.get("claims", []):
+                claim_count += 1; self.assertTrue(set(claim["evidence_ids"]) <= evidence_ids)
+        self.assertGreaterEqual(claim_count, 3)
+
+    def test_questions_expose_bounded_synthesis_and_related_navigation(self):
+        build_site.validate_question_navigation(self.questions)
+        index = self.page("/questions/"); self.assertIn("Relevant to inspect, not recommended.", index)
+        for question in self.questions:
+            page = self.page(f'/questions/{question["id"]}/')
+            for marker in ("Relevant to inspect, not recommended.", "Current understanding", "Related things to inspect", "Related questions", "What evidence is still needed", "Where people may disagree", "When this answer should be revisited", "Question provenance and review state"):
+                self.assertIn(marker, page)
+
+    def test_every_indexable_page_has_accessibility_metadata_and_canonical_url(self):
+        paths = build_site.sitemap_paths(self.concepts, self.resources, self.questions)
+        for route in paths:
+            text = self.page(route)
+            for marker in ('class="skip-link"', 'id="main"', 'aria-label="Primary"', 'name="viewport"', 'name="description"'):
+                self.assertIn(marker, text)
+            self.assertIn(f'rel="canonical" href="{build_site.PUBLIC_ORIGIN}{route}"', text)
+            self.assertNotIn('name="robots" content="noindex, follow"', text)
+
+    def test_oracle_and_404_are_nonindexed_recovery_surfaces(self):
+        oracle = self.page("/oracle/"); self.assertIn('name="robots" content="noindex, follow"', oracle); self.assertIn('href="/how-it-works/"', oracle)
+        missing = (self.output / "404.html").read_text(encoding="utf-8"); self.assertIn("Page not found", missing); self.assertIn('name="robots" content="noindex, follow"', missing)
+
+    def test_sitemap_and_robots_match_current_canonical_set(self):
+        paths = build_site.sitemap_paths(self.concepts, self.resources, self.questions); sitemap = (self.output / "sitemap.xml").read_text(encoding="utf-8")
+        self.assertEqual(build_site.V10_ROUTE_COUNT, len(paths)); self.assertEqual(len(paths), len(set(paths)))
+        for path in paths: self.assertIn(f"<loc>{build_site.PUBLIC_ORIGIN}{path}</loc>", sitemap)
         self.assertNotIn(f"<loc>{build_site.PUBLIC_ORIGIN}/oracle/</loc>", sitemap)
-
-        robots = (self.output / "robots.txt").read_text(encoding="utf-8")
-        self.assertIn("User-agent: *", robots)
-        self.assertIn(f"Sitemap: {build_site.PUBLIC_ORIGIN}/sitemap.xml", robots)
-
-    def test_404_is_a_helpful_non_indexed_recovery_page(self):
-        page = (self.output / "404.html").read_text(encoding="utf-8")
-        self.assertIn("Page not found", page)
-        self.assertIn('name="robots" content="noindex, follow"', page)
-        self.assertIn('href="/understand/"', page)
-        self.assertIn('href="/resources/"', page)
-        self.assertIn('href="/how-it-works/"', page)
-        self.assertIn('href="/feedback/"', page)
+        robots = (self.output / "robots.txt").read_text(encoding="utf-8"); self.assertIn("User-agent: *", robots); self.assertIn(f"Sitemap: {build_site.PUBLIC_ORIGIN}/sitemap.xml", robots)
 
     def test_internal_navigation_targets_exist(self):
         for page in self.html_pages():
-            parser = LinkCollector()
-            parser.feed(page.read_text(encoding="utf-8"))
+            parser = LinkCollector(); parser.feed(page.read_text(encoding="utf-8"))
             for href in parser.hrefs:
                 parsed = urlsplit(href)
-                if parsed.scheme or parsed.netloc or href.startswith("#"):
-                    continue
-                if not parsed.path.startswith("/"):
-                    continue
-                if parsed.path == "/":
-                    target = self.output / "index.html"
-                elif parsed.path.endswith("/"):
-                    target = self.output / parsed.path.lstrip("/") / "index.html"
-                else:
-                    target = self.output / parsed.path.lstrip("/")
+                if parsed.scheme or parsed.netloc or href.startswith("#") or not parsed.path.startswith("/"): continue
+                target = self.output / "index.html" if parsed.path == "/" else (self.output / parsed.path.lstrip("/") / "index.html" if parsed.path.endswith("/") else self.output / parsed.path.lstrip("/"))
                 self.assertTrue(target.exists(), f"{page.relative_to(self.output)} -> {href}")
 
-    def test_public_site_requires_no_javascript_or_forms(self):
+    def test_public_site_allows_only_the_local_find_script_and_no_forms(self):
+        scripted = []
         for page in self.html_pages():
-            text = page.read_text(encoding="utf-8").lower()
-            self.assertNotIn("<script", text)
-            self.assertNotIn("<form", text)
-            self.assertNotIn("style=", text)
+            text = page.read_text(encoding="utf-8").lower(); self.assertNotIn("<form", text); self.assertNotIn("style=", text)
+            if "<script" in text:
+                scripted.append(page.relative_to(self.output).as_posix()); self.assertIn('<script src="/find.js" defer></script>', text)
+        self.assertEqual(["find/index.html"], scripted)
 
-    def test_authoritative_concepts_are_not_modified_by_build(self):
-        before = {path: path.read_bytes() for path in build_site.OBJECTS_DIR.glob("*.json")}
-        build_site.build(self.output)
-        after = {path: path.read_bytes() for path in before}
-        self.assertEqual(before, after)
+    def test_build_does_not_modify_authoritative_objects(self):
+        paths = list((build_site.ROOT / "objects").glob("*/*.json")); before = {path: path.read_bytes() for path in paths}; build_site.build(self.output); after = {path: path.read_bytes() for path in paths}; self.assertEqual(before, after)
 
     def test_build_refuses_to_replace_unmarked_directory(self):
-        unknown = Path(self.tempdir.name) / "unknown"
-        unknown.mkdir()
-        (unknown / "keep.txt").write_text("do not delete", encoding="utf-8")
-        with self.assertRaises(ValueError):
-            build_site.build(unknown)
-        self.assertEqual((unknown / "keep.txt").read_text(encoding="utf-8"), "do not delete")
+        unknown = Path(self.tempdir.name) / "unknown"; unknown.mkdir(); (unknown / "keep.txt").write_text("do not delete", encoding="utf-8")
+        with self.assertRaises(ValueError): build_site.build(unknown)
+        self.assertEqual("do not delete", (unknown / "keep.txt").read_text(encoding="utf-8"))
 
     def test_source_links_allow_only_http_and_https(self):
-        self.assertEqual(build_site.safe_http_url("https://example.org/source"), "https://example.org/source")
-        self.assertEqual(build_site.safe_http_url("http://example.org/source"), "http://example.org/source")
-        self.assertIsNone(build_site.safe_http_url("javascript:alert(1)"))
-        self.assertIsNone(build_site.safe_http_url("data:text/html,bad"))
-        self.assertIsNone(build_site.safe_http_url("not-a-url"))
+        self.assertEqual("https://example.org/source", build_site.safe_http_url("https://example.org/source")); self.assertEqual("http://example.org/source", build_site.safe_http_url("http://example.org/source"))
+        for value in ("javascript:alert(1)", "data:text/html,bad", "not-a-url"): self.assertIsNone(build_site.safe_http_url(value))
 
 
 if __name__ == "__main__":

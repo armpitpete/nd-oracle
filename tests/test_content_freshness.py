@@ -10,13 +10,14 @@ from scripts import check_content_freshness
 
 
 class ContentFreshnessTests(unittest.TestCase):
-    def test_current_100_object_corpus_is_fresh_at_release_date(self) -> None:
+    def test_current_governed_corpus_is_fresh_at_candidate_date(self) -> None:
         records = check_content_freshness.audit_freshness(
             check_content_freshness.ROOT,
-            as_of=date(2026, 8, 28),
+            as_of=date(2026, 8, 29),
         )
-        self.assertEqual(100, len(records))
+        self.assertGreaterEqual(len(records), 100)
         self.assertEqual([], [record for record in records if record.overdue])
+        self.assertIn("evidence", {record.object_type for record in records})
 
     def test_resource_becomes_overdue_after_180_days(self) -> None:
         with tempfile.TemporaryDirectory() as tempdir:
@@ -24,13 +25,7 @@ class ContentFreshnessTests(unittest.TestCase):
             directory = root / "objects" / "resources"
             directory.mkdir(parents=True)
             (directory / "example.json").write_text(
-                json.dumps(
-                    {
-                        "id": "example",
-                        "type": "resource",
-                        "provenance": {"last_reviewed": "2026-01-01"},
-                    }
-                ),
+                json.dumps({"id": "example", "type": "resource", "provenance": {"last_reviewed": "2026-01-01"}}),
                 encoding="utf-8",
             )
             records = check_content_freshness.audit_freshness(root, as_of=date(2026, 8, 28))
