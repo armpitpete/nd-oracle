@@ -18,7 +18,8 @@ class DirectScriptEntrypointTests(unittest.TestCase):
                 shutil.copytree(ROOT / name, sandbox / name)
             result = subprocess.run([sys.executable, "scripts/build_site.py"], cwd=sandbox, text=True, capture_output=True, timeout=30)
             self.assertEqual(0, result.returncode, result.stderr)
-            self.assertIn("public site v1.0 candidate", result.stdout)
+            self.assertIn("public site v1.1", result.stdout)
+            self.assertNotIn("public site v1.0 candidate", result.stdout)
             for target in (
                 sandbox / "dist" / "index.html",
                 sandbox / "dist" / "questions" / "index.html",
