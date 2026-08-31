@@ -97,6 +97,14 @@ class Rewriter(ast.NodeTransformer):
             return PREFIX[self.layer] + name
         return self.inherited.get(name, name)
 
+    def resolve_module_attr(self, target_layer: str, name: str) -> str:
+        resolved = self.resolutions[target_layer].get(name)
+        if resolved is not None:
+            return resolved
+        if name.startswith("_"):
+            return PREFIX[target_layer] + name
+        return name
+
     def visit_FunctionDef(self, node: ast.FunctionDef):
         original = node.name
         node = self.generic_visit(node)
@@ -117,6 +125,28 @@ class Rewriter(ast.NodeTransformer):
         if original in self.own:
             node.name = PREFIX[self.layer] + original
         return node
+
+    def visit_Call(self, node: ast.Call):
+        if (
+            isinstance(node.func, ast.Name)
+            and node.func.id == "hasattr"
+            and len(node.args) >= 2
+            and isinstance(node.args[0], ast.Name)
+            and node.args[0].id in ALIASES
+            and isinstance(node.args[1], ast.Constant)
+            and isinstance(node.args[1].value, str)
+        ):
+            target_layer = ALIASES[node.args[0].id]
+            resolved = self.resolve_module_attr(target_layer, node.args[1].value)
+            return ast.copy_location(
+                ast.Compare(
+                    left=ast.Constant(resolved),
+                    ops=[ast.In()],
+                    comparators=[ast.Call(func=ast.Name(id="globals", ctx=ast.Load()), args=[], keywords=[])],
+                ),
+                node,
+            )
+        return self.generic_visit(node)
 
     def visit_Name(self, node: ast.Name):
         if node.id in ALIASES:
@@ -139,7 +169,7 @@ class Rewriter(ast.NodeTransformer):
                         return self.generic_visit(node)
                     final = attr
             if final is not None:
-                resolved = self.resolutions[target_layer].get(final, final)
+                resolved = self.resolve_module_attr(target_layer, final)
                 return ast.copy_location(ast.Name(id=resolved, ctx=node.ctx), node)
         return self.generic_visit(node)
 
