@@ -19,7 +19,11 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@v6
         with:
-          python-version: '3.12'
+          python-version: '3.13'
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - name: Install validation dependencies
+        run: python -m pip install --requirement requirements-dev.txt
       - name: Generate one current builder
         run: python scripts/flatten_build_site_once.py
       - name: Verify no legacy builder imports remain
@@ -29,6 +33,7 @@ jobs:
         run: |
           set +e
           {
+            python -m compileall -q scripts tests
             python scripts/validate.py
             python scripts/check_content_freshness.py --fail-overdue
             python -m unittest discover -s tests
