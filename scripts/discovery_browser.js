@@ -344,7 +344,7 @@
           trace.final_reason === "clinical_diagnosis_boundary" ||
           trace.final_reason === "clinical_medication_boundary"
         ) {
-          output.innerHTML = '<h2>No governed answer</h2><p>ND Oracle cannot diagnose a person, choose medication or make an individual clinical decision. Try browsing <a href="/questions/">Questions</a> or <a href="/needs/">needs</a> instead.</p>';
+          output.innerHTML = '<h2>No governed answer</h2><p>ND Oracle cannot diagnose you or another person, choose medication or make an individual clinical decision. Try browsing <a href="/questions/">Questions</a> or <a href="/needs/">needs</a> instead.</p>';
           return;
         }
 
