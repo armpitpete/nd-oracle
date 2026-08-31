@@ -12,8 +12,8 @@ IDENTITY = ROOT / "scripts" / "release_identity.py"
 
 
 class BuilderReleaseIdentityTests(unittest.TestCase):
-    def test_public_site_release_identity_is_explicit_v11(self) -> None:
-        self.assertEqual("v1.1", PUBLIC_SITE_RELEASE)
+    def test_public_site_release_identity_is_explicit_v12(self) -> None:
+        self.assertEqual("v1.2", PUBLIC_SITE_RELEASE)
         self.assertTrue(IDENTITY.is_file())
 
     def test_builder_uses_identity_without_stale_hard_coded_label(self) -> None:
