@@ -4,6 +4,8 @@ import json
 import unittest
 from pathlib import Path
 
+from scripts import discovery
+
 ROOT = Path(__file__).resolve().parents[1]
 POLICY = ROOT / "discovery" / "routing-policy-v1.1.json"
 BROWSER = ROOT / "scripts" / "discovery_browser.js"
@@ -38,6 +40,21 @@ class DiscoveryV11BoundaryTests(unittest.TestCase):
         )
         hits = [token for token in forbidden if token in source]
         self.assertEqual([], hits)
+
+    def test_clinical_boundary_distinguishes_education_from_personal_decisions(self) -> None:
+        educational = (
+            "Can you confirm what an ADHD diagnosis involves for my child?",
+            "Would you say ADHD assessments for my child involve a specialist?",
+            "What should I do if I want general information about my ADHD medication?",
+            "What should I know about sleep and my ADHD medication?",
+        )
+        for query in educational:
+            with self.subTest(query=query):
+                self.assertIsNone(discovery.clinical_boundary(query))
+
+        self.assertEqual("clinical_diagnosis_boundary", discovery.clinical_boundary("Can you confirm I am autistic?"))
+        self.assertEqual("clinical_diagnosis_boundary", discovery.clinical_boundary("Based on this am I probably ADHD?"))
+        self.assertEqual("clinical_medication_boundary", discovery.clinical_boundary("What should I do with my dose if I cannot sleep?"))
 
 
 if __name__ == "__main__":
