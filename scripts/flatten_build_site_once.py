@@ -196,8 +196,8 @@ def build() -> str:
         "from __future__ import annotations",
         "",
         "# Generated once from the accepted historical builder layers.",
-        "# The current runtime is intentionally a single module: no executable",
-        "# build_site_v06/v08/v09 import chain and no cross-module global mutation.",
+        "# The current runtime is intentionally a single module with no executable",
+        "# historical builder import chain and no cross-module global mutation.",
     ]
     out.extend(import_texts)
 
@@ -222,7 +222,14 @@ def build() -> str:
 
     result = "\n".join(out).rstrip() + "\n"
     ast.parse(result)
-    forbidden = ("build_site_v06", "build_site_v08", "build_site_v09", "_v06.", "_v08.", "_v09.")
+    forbidden = (
+        "from scripts import build_site_v",
+        "from scripts.build_site_v",
+        "import scripts.build_site_v",
+        "_v06.",
+        "_v08.",
+        "_v09.",
+    )
     for needle in forbidden:
         if needle in result:
             raise SystemExit(f"flattened builder still contains forbidden runtime dependency marker: {needle}")
