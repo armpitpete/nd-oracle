@@ -19,6 +19,7 @@ from urllib.parse import urlsplit
 import sys
 from collections import defaultdict
 from scripts import discovery
+from scripts.release_identity import PUBLIC_SITE_RELEASE
 
 # ---- v06 compatibility foundation ----
 _compat06__ROOT = Path(__file__).resolve().parents[1]
@@ -871,4 +872,4 @@ write_route = _compat06__write_route
 # ---- command-line entrypoint ----
 if __name__ == '__main__':
     destination = build()
-    print(f'Built The Neurodiverse Oracle public site v1.0 candidate at {destination}')
+    print(f'Built The Neurodiverse Oracle public site {PUBLIC_SITE_RELEASE} at {destination}')
