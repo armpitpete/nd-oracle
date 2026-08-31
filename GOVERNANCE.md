@@ -26,7 +26,7 @@ Governance protects provenance, recorded uncertainty, contributor dignity, priva
 The following require an explicit owner decision and a reviewed pull request:
 
 - schema-version changes or migrations;
-- licensing changes;
+- changes to the adopted licensing baseline or licence scope;
 - removal of a source, uncertainty, perspective or material limitation;
 - changes to these governing rules;
 - merge to protected `main` when an exact-head gate is being used;
@@ -34,6 +34,22 @@ The following require an explicit owner decision and a reviewed pull request:
 - representation as clinical guidance;
 - collection of personal or sensitive data;
 - changes to moderation, editorial authority or community representation.
+
+## Licensing baseline
+
+The protected licensing decision recorded in issue #105 adopts the following baseline:
+
+- **software/code:** Apache License 2.0 (`Apache-2.0`), with the full licence text in `LICENSE`;
+- **original ND Oracle knowledge content, prose/documentation and applicable database rights:** Creative Commons Attribution 4.0 International (`CC BY 4.0`), with scope and rights boundaries in `CONTENT_LICENSE.md`;
+- **third-party material:** not relicensed by ND Oracle unless a specific rights notice identifies a valid separate licence or permission;
+- **contributor certification:** Developer Certificate of Origin 1.1 sign-off for software/code plus the parallel content-rights certification in `CONTRIBUTING.md`;
+- **CLA:** no Contributor Licence Agreement at this stage.
+
+The repository default never grants rights a contributor or project does not hold. File-specific and item-specific rights notices take precedence for the material they identify. Quotations, source material, external images/datasets, trade marks and other third-party rights remain governed by their original rights position or applicable legal exceptions/limitations unless explicitly stated otherwise.
+
+Attribution under CC BY 4.0 must not imply ND Oracle endorsement of a reuse or downstream conclusion.
+
+A future change from Apache-2.0, CC BY 4.0, the stated code/content boundary, contributor certification model or third-party-material boundary is itself a protected licensing change.
 
 ## Review gates
 
