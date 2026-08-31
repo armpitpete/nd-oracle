@@ -1,0 +1,771 @@
+Traceback (most recent call last):
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+Freshness audit: 119 governed objects checked; 0 overdue as of 2026-08-31. Resource limit=180 days; other current content limit=365 days.
+EEEE.......E...EEEEEEE................EEEEEEFF.....E.......EEEE........EEEEE...............EEEEEE
+======================================================================
+ERROR: test_batch_a_candidates (unittest.loader._FailedTest.test_batch_a_candidates)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_batch_a_candidates
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_batch_a_candidates.py", line 8, in <module>
+    from scripts import validate as nd_validate
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_batch_a_public_site (unittest.loader._FailedTest.test_batch_a_public_site)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_batch_a_public_site
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_batch_a_public_site.py", line 7, in <module>
+    from scripts import build_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+======================================================================
+ERROR: test_batch_b_foundation_review (unittest.loader._FailedTest.test_batch_b_foundation_review)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_batch_b_foundation_review
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_batch_b_foundation_review.py", line 8, in <module>
+    from scripts import validate as nd_validate
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_build_site (unittest.loader._FailedTest.test_build_site)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_build_site
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_build_site.py", line 10, in <module>
+    from scripts import build_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+======================================================================
+ERROR: test_cloudflare_pages (unittest.loader._FailedTest.test_cloudflare_pages)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_cloudflare_pages
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_cloudflare_pages.py", line 5, in <module>
+    from scripts import build_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+======================================================================
+ERROR: test_content_navigation_v08 (unittest.loader._FailedTest.test_content_navigation_v08)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_content_navigation_v08
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_content_navigation_v08.py", line 9, in <module>
+    from scripts import build_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+======================================================================
+ERROR: test_content_navigation_v09 (unittest.loader._FailedTest.test_content_navigation_v09)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_content_navigation_v09
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_content_navigation_v09.py", line 8, in <module>
+    from scripts import build_site, verify_live_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+======================================================================
+ERROR: test_d10_neurodiversity_paradigm_perspective_framing (unittest.loader._FailedTest.test_d10_neurodiversity_paradigm_perspective_framing)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d10_neurodiversity_paradigm_perspective_framing
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d10_neurodiversity_paradigm_perspective_framing.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d10_neurodiversity_paradigm_perspective_framing.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d10_neurodiversity_paradigm_perspective_framing.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_d11_singer_edition_identity_preservation (unittest.loader._FailedTest.test_d11_singer_edition_identity_preservation)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d11_singer_edition_identity_preservation
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d11_singer_edition_identity_preservation.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d11_singer_edition_identity_preservation.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d11_singer_edition_identity_preservation.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_d12_singer_2017_date_enrichment (unittest.loader._FailedTest.test_d12_singer_2017_date_enrichment)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d12_singer_2017_date_enrichment
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d12_singer_2017_date_enrichment.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d12_singer_2017_date_enrichment.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d12_singer_2017_date_enrichment.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_d13_singer_edition_specific_contribution_bindings (unittest.loader._FailedTest.test_d13_singer_edition_specific_contribution_bindings)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d13_singer_edition_specific_contribution_bindings
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d13_singer_edition_specific_contribution_bindings.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d13_singer_edition_specific_contribution_bindings.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d13_singer_edition_specific_contribution_bindings.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_d14_singer_2016_claim2_binding_followup (unittest.loader._FailedTest.test_d14_singer_2016_claim2_binding_followup)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d14_singer_2016_claim2_binding_followup
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d14_singer_2016_claim2_binding_followup.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d14_singer_2016_claim2_binding_followup.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d14_singer_2016_claim2_binding_followup.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_d17_paired_candidate_implementation (unittest.loader._FailedTest.test_d17_paired_candidate_implementation)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d17_paired_candidate_implementation
+Traceback (most recent call last):
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_build_paired_migration_candidate.py", line 19, in <module>
+    from scripts.validate import v01_preservation_inventory
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d17_paired_candidate_implementation.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d17_paired_candidate_implementation.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d17_paired_candidate_implementation.py", line 7, in <module>
+    from scripts.build_paired_migration_candidate import build_candidate
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_paired_migration_candidate.py", line 9, in <module>
+    from scripts import _historical_build_paired_migration_candidate as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_build_paired_migration_candidate.py", line 22, in <module>
+    from validate import v01_preservation_inventory
+ModuleNotFoundError: No module named 'validate'
+
+
+======================================================================
+ERROR: test_d1_d17_state_normalization (unittest.loader._FailedTest.test_d1_d17_state_normalization)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d1_d17_state_normalization
+Traceback (most recent call last):
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_build_paired_migration_candidate.py", line 19, in <module>
+    from scripts.validate import v01_preservation_inventory
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_normalized_paired_migration_candidate.py", line 9, in <module>
+    from scripts.build_paired_migration_candidate import build_candidate as build_partial_candidate
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_paired_migration_candidate.py", line 9, in <module>
+    from scripts import _historical_build_paired_migration_candidate as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_build_paired_migration_candidate.py", line 22, in <module>
+    from validate import v01_preservation_inventory
+ModuleNotFoundError: No module named 'validate'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d1_d17_state_normalization.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d1_d17_state_normalization.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d1_d17_state_normalization.py", line 8, in <module>
+    from scripts.build_normalized_paired_migration_candidate import build_candidate
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_normalized_paired_migration_candidate.py", line 12, in <module>
+    from build_paired_migration_candidate import build_candidate as build_partial_candidate
+ModuleNotFoundError: No module named 'build_paired_migration_candidate'
+
+
+======================================================================
+ERROR: test_d6_structural_confidence_policy (unittest.loader._FailedTest.test_d6_structural_confidence_policy)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d6_structural_confidence_policy
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d6_structural_confidence_policy.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d6_structural_confidence_policy.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d6_structural_confidence_policy.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_d7_autism_who_perspective_framing (unittest.loader._FailedTest.test_d7_autism_who_perspective_framing)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d7_autism_who_perspective_framing
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d7_autism_who_perspective_framing.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d7_autism_who_perspective_framing.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d7_autism_who_perspective_framing.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_d8_neurodiversity_botha_citation_correction (unittest.loader._FailedTest.test_d8_neurodiversity_botha_citation_correction)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d8_neurodiversity_botha_citation_correction
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d8_neurodiversity_botha_citation_correction.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d8_neurodiversity_botha_citation_correction.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d8_neurodiversity_botha_citation_correction.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_d9_neurodiversity_collective_perspective_framing (unittest.loader._FailedTest.test_d9_neurodiversity_collective_perspective_framing)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_d9_neurodiversity_collective_perspective_framing
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_d9_neurodiversity_collective_perspective_framing.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_d9_neurodiversity_collective_perspective_framing.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_d9_neurodiversity_collective_perspective_framing.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_embedded_uncertainty_schema_candidate (unittest.loader._FailedTest.test_embedded_uncertainty_schema_candidate)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_embedded_uncertainty_schema_candidate
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_embedded_uncertainty_schema_candidate.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_embedded_uncertainty_schema_candidate.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_embedded_uncertainty_schema_candidate.py", line 6, in <module>
+    from jsonschema import Draft202012Validator
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_evidence_date_precision_implementation (unittest.loader._FailedTest.test_evidence_date_precision_implementation)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_evidence_date_precision_implementation
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_evidence_date_precision_implementation.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_evidence_date_precision_implementation.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_evidence_date_precision_implementation.py", line 9, in <module>
+    from scripts.validate import validate_repository
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_migration_package (unittest.loader._FailedTest.test_migration_package)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_migration_package
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_migration_package.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_migration_package.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_migration_package.py", line 10, in <module>
+    from scripts.validate_migration import git_blob_sha, validate_package
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_migration_proof_autism (unittest.loader._FailedTest.test_migration_proof_autism)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_migration_proof_autism
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_migration_proof_autism.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_migration_proof_autism.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_migration_proof_autism.py", line 8, in <module>
+    from scripts.validate import missing_v01_preservation_units, v01_preservation_inventory
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_neurodiversity_enrichment_research (unittest.loader._FailedTest.test_neurodiversity_enrichment_research)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_neurodiversity_enrichment_research
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_neurodiversity_enrichment_research.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_neurodiversity_enrichment_research.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_neurodiversity_enrichment_research.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_paired_migration_candidate (unittest.loader._FailedTest.test_paired_migration_candidate)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_paired_migration_candidate
+Traceback (most recent call last):
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_build_paired_migration_candidate.py", line 19, in <module>
+    from scripts.validate import v01_preservation_inventory
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_paired_migration_candidate.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_paired_migration_candidate.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_paired_migration_candidate.py", line 8, in <module>
+    from scripts.build_paired_migration_candidate import (
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_paired_migration_candidate.py", line 9, in <module>
+    from scripts import _historical_build_paired_migration_candidate as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_build_paired_migration_candidate.py", line 22, in <module>
+    from validate import v01_preservation_inventory
+ModuleNotFoundError: No module named 'validate'
+
+
+======================================================================
+ERROR: test_question_discovery_v07 (unittest.loader._FailedTest.test_question_discovery_v07)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_question_discovery_v07
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_question_discovery_v07.py", line 10, in <module>
+    from scripts import build_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+======================================================================
+ERROR: test_resource_locator_v02 (unittest.loader._FailedTest.test_resource_locator_v02)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resource_locator_v02
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_resource_locator_v02.py", line 7, in <module>
+    from scripts.validate import load_schema_validators
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_singer_2016_followup_research (unittest.loader._FailedTest.test_singer_2016_followup_research)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_singer_2016_followup_research
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_singer_2016_followup_research.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_singer_2016_followup_research.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_singer_2016_followup_research.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_singer_edition_enrichment_research (unittest.loader._FailedTest.test_singer_edition_enrichment_research)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_singer_edition_enrichment_research
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_singer_edition_enrichment_research.py", line 2, in <module>
+    export_historical_tests(globals(), __file__, "_historical_test_singer_edition_enrichment_research.py")
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/historical_test_adapter.py", line 61, in export_historical_tests
+    spec.loader.exec_module(module)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/_historical_test_singer_edition_enrichment_research.py", line 7, in <module>
+    from scripts.validate_migration import git_blob_sha
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate_migration.py", line 11, in <module>
+    from scripts import _historical_validate_migration as _impl
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/_historical_validate_migration.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_v10_journey_quality (unittest.loader._FailedTest.test_v10_journey_quality)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_v10_journey_quality
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_v10_journey_quality.py", line 7, in <module>
+    from scripts import build_site, discovery
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+======================================================================
+ERROR: test_validation (unittest.loader._FailedTest.test_validation)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_validation
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_validation.py", line 10, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_validation_v02 (unittest.loader._FailedTest.test_validation_v02)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_validation_v02
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_validation_v02.py", line 9, in <module>
+    from scripts.validate import (
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/validate.py", line 12, in <module>
+    from jsonschema import Draft202012Validator, FormatChecker
+ModuleNotFoundError: No module named 'jsonschema'
+
+
+======================================================================
+ERROR: test_verify_live_batch_a (unittest.loader._FailedTest.test_verify_live_batch_a)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_verify_live_batch_a
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_verify_live_batch_a.py", line 5, in <module>
+    from scripts import verify_live_batch_a
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/verify_live_batch_a.py", line 8, in <module>
+    from scripts import verify_live_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/verify_live_site.py", line 18, in <module>
+    from scripts import build_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+======================================================================
+ERROR: test_verify_live_site (unittest.loader._FailedTest.test_verify_live_site)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_verify_live_site
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_verify_live_site.py", line 5, in <module>
+    from scripts import build_site, verify_live_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+======================================================================
+ERROR: test_verify_question_discovery_v07 (unittest.loader._FailedTest.test_verify_question_discovery_v07)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_verify_question_discovery_v07
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_verify_question_discovery_v07.py", line 7, in <module>
+    from scripts import verify_live_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/verify_live_site.py", line 18, in <module>
+    from scripts import build_site
+  File "/home/runner/work/nd-oracle/nd-oracle/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+======================================================================
+FAIL: test_build_site_runs_as_deployment_command (test_direct_script_entrypoints.DirectScriptEntrypointTests.test_build_site_runs_as_deployment_command)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_direct_script_entrypoints.py", line 20, in test_build_site_runs_as_deployment_command
+    self.assertEqual(0, result.returncode, result.stderr)
+AssertionError: 0 != 1 : Traceback (most recent call last):
+  File "/tmp/tmperhkgrcx/scripts/build_site.py", line 15, in <module>
+    from scripts import discovery
+ModuleNotFoundError: No module named 'scripts'
+
+
+======================================================================
+FAIL: test_live_verifier_runs_as_direct_script_before_network (test_direct_script_entrypoints.DirectScriptEntrypointTests.test_live_verifier_runs_as_direct_script_before_network)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/nd-oracle/nd-oracle/tests/test_direct_script_entrypoints.py", line 42, in test_live_verifier_runs_as_direct_script_before_network
+    self.assertEqual(2, result.returncode, result.stderr)
+AssertionError: 2 != 1 : Traceback (most recent call last):
+  File "/tmp/tmpmfyoid1h/scripts/verify_live_site.py", line 18, in <module>
+    from scripts import build_site
+  File "/tmp/tmpmfyoid1h/scripts/build_site.py", line 246, in <module>
+    if not hasattr(_v06, '_V08_ORIGINAL_PAGE_SHELL'):
+                   ^^^^
+NameError: name '_v06' is not defined
+
+
+----------------------------------------------------------------------
+Ran 97 tests in 0.486s
+
+FAILED (failures=2, errors=34)
