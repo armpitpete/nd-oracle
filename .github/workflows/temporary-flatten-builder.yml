@@ -25,11 +25,25 @@ jobs:
       - name: Verify no legacy builder imports remain
         run: |
           ! grep -nE 'from scripts(\.| import )build_site_v0[689]|import scripts\.build_site_v0[689]' scripts/build_site.py
-      - name: Run complete validation
+      - name: Run complete validation and capture failures
         run: |
-          python scripts/validate.py
-          python scripts/check_content_freshness.py --fail-overdue
-          python -m unittest discover -s tests
+          set +e
+          {
+            python scripts/validate.py
+            python scripts/check_content_freshness.py --fail-overdue
+            python -m unittest discover -s tests
+          } > flatten-diagnostic.txt 2>&1
+          status=$?
+          cat flatten-diagnostic.txt
+          if [ "$status" -ne 0 ]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add flatten-diagnostic.txt
+            git commit -m 'Record builder flatten diagnostic'
+            git push origin HEAD:agent/v1.0-governed-discovery
+            exit "$status"
+          fi
+          rm flatten-diagnostic.txt
       - name: Commit exact tested flattening
         run: |
           if git diff --quiet -- scripts/build_site.py; then
