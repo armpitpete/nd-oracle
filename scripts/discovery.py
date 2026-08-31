@@ -136,8 +136,8 @@ def validate_policy(*, policy: dict[str, Any] | None = None, index: list[dict] |
         raise ValueError("Unexpected scope binding contract")
 
     entries = provenance.get("routes")
-    if not isinstance(entries, dict) or len(entries) != 29:
-        raise ValueError(f"Expected 29 frozen scoped routes, found {len(entries) if isinstance(entries, dict) else 'invalid'}")
+    if not isinstance(entries, dict) or len(entries) != 35:
+        raise ValueError(f"Expected 35 governed scoped routes, found {len(entries) if isinstance(entries, dict) else 'invalid'}")
     indexed = {record["route"] for record in (build_index() if index is None else index)}
     for route, encoded in entries.items():
         if not isinstance(encoded, dict) or set(encoded) != {"scope", "basis_path", "basis_sha256", "binding_sha256"}:
