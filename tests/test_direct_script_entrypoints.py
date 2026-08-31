@@ -14,7 +14,7 @@ class DirectScriptEntrypointTests(unittest.TestCase):
     def test_build_site_runs_as_deployment_command(self) -> None:
         with tempfile.TemporaryDirectory() as tempdir:
             sandbox = Path(tempdir)
-            for name in ("scripts", "objects", "site"):
+            for name in ("scripts", "objects", "site", "discovery"):
                 shutil.copytree(ROOT / name, sandbox / name)
             result = subprocess.run([sys.executable, "scripts/build_site.py"], cwd=sandbox, text=True, capture_output=True, timeout=30)
             self.assertEqual(0, result.returncode, result.stderr)
@@ -36,7 +36,7 @@ class DirectScriptEntrypointTests(unittest.TestCase):
     def test_live_verifier_runs_as_direct_script_before_network(self) -> None:
         with tempfile.TemporaryDirectory() as tempdir:
             sandbox = Path(tempdir)
-            for name in ("scripts", "objects", "contracts"):
+            for name in ("scripts", "objects", "contracts", "discovery"):
                 shutil.copytree(ROOT / name, sandbox / name)
             result = subprocess.run([sys.executable, "scripts/verify_live_site.py", "--origin", "http://ndoracle.org"], cwd=sandbox, text=True, capture_output=True, timeout=30)
             self.assertEqual(2, result.returncode, result.stderr)
