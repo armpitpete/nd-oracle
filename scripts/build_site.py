@@ -369,15 +369,15 @@ def _compat08__render_concept(concept: dict, concept_map: dict[str, dict], resou
     needle = '<section aria-labelledby="sources-heading">'
     if needle not in page:
         raise ValueError(f"{concept['id']}: cannot locate sources section for navigation injection")
-    discovery = f"""\n<section aria-labelledby="next-routes-heading">\n  <h2 id="next-routes-heading">Useful next routes</h2>\n  <h3>Practical questions</h3>\n  {_compat08___question_links_for_ref(questions, 'concept', concept['id'])}\n  <h3>Related resources</h3>\n  {_compat08___resource_links_for_concept(resources, concept['id'])}\n</section>\n"""
-    return page.replace(needle, discovery + needle, 1)
+    discovery_section = f"""\n<section aria-labelledby="next-routes-heading">\n  <h2 id="next-routes-heading">Useful next routes</h2>\n  <h3>Practical questions</h3>\n  {_compat08___question_links_for_ref(questions, 'concept', concept['id'])}\n  <h3>Related resources</h3>\n  {_compat08___resource_links_for_concept(resources, concept['id'])}\n</section>\n"""
+    return page.replace(needle, discovery_section + needle, 1)
 def _compat08__render_resource(resource: dict, concept_map: dict[str, dict], questions: list[dict]) -> str:
     page = _compat06__render_resource(resource, concept_map)
     needle = '<section aria-labelledby="limits-heading">'
     if needle not in page:
         raise ValueError(f"{resource['id']}: cannot locate limitations section for navigation injection")
-    discovery = f"""\n<section aria-labelledby="resource-question-heading">\n  <h2 id="resource-question-heading">Questions that lead here</h2>\n  {_compat08___question_links_for_ref(questions, 'resource', resource['id'])}\n</section>\n"""
-    return page.replace(needle, discovery + needle, 1)
+    discovery_section = f"""\n<section aria-labelledby="resource-question-heading">\n  <h2 id="resource-question-heading">Questions that lead here</h2>\n  {_compat08___question_links_for_ref(questions, 'resource', resource['id'])}\n</section>\n"""
+    return page.replace(needle, discovery_section + needle, 1)
 def _compat08__render_books_media_index(resources: list[dict]) -> str:
     return _compat08__render_resource_collection(resources, title='Books & media', intro='Reviewed books and media in the ND Oracle catalogue, with context, limitations and conflicts kept visible.', route='books-media', categories=_compat08__BOOK_MEDIA_CATEGORIES)
 def _compat08__sitemap_paths(concepts: list[dict], resources: list[dict] | None=None, questions: list[dict] | None=None) -> list[str]:
@@ -791,7 +791,7 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
         _compat06__write_route(destination, f"resources/{resource['id']}", render_resource(resource, concept_map, questions, evidence_map))
     _compat06__write_route(destination, 'places', render_places_index(resources))
     _compat06__write_route(destination, 'find', render_find_page())
-    (destination / 'find.js').write_text(FIND_JS, encoding='utf-8')
+    (destination / 'find.js').write_text((_compat06__ROOT / 'scripts' / 'discovery_browser.js').read_text(encoding='utf-8'), encoding='utf-8')
     home = (destination / 'index.html').read_text(encoding='utf-8')
     find_section = '<section class="start-section" aria-labelledby="find-oracle-heading"><h2 id="find-oracle-heading">Describe the problem in your own words</h2><p>Use local governed discovery when you do not know the name of the Topic, Question or Resource you need.</p><p><a href="/find/">Find a governed route →</a></p></section>'
     (destination / 'index.html').write_text(_append_before_main_end(home, find_section), encoding='utf-8')
