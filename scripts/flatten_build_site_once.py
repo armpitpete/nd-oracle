@@ -225,6 +225,12 @@ def build() -> str:
     out: list[str] = [
         "from __future__ import annotations",
         "",
+        "import sys",
+        "from pathlib import Path",
+        "",
+        "if __package__ in {None, ''}:",
+        "    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))",
+        "",
         "# Generated once from the accepted historical builder layers.",
         "# The current runtime is intentionally a single module with no executable",
         "# historical builder import chain and no cross-module global mutation.",
