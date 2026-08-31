@@ -13,28 +13,28 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The accepted v1.0 authoritative corpus contains exactly 119 governed objects:
+The accepted v1.1 authoritative corpus contains exactly 119 governed objects:
 
 - 20 reviewed Concept objects;
 - 58 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
 - 38 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
 - 3 governed Evidence objects supporting the bounded claim-bearing Resource pilot.
 
-Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the v1.0 claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
+Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
 
 Question routes use the boundary **Relevant to inspect, not recommended**. They expose a bounded current understanding, related governed objects, adjacent Questions, evidence gaps, dissent and reopening conditions without turning discovery into a personalised recommendation.
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-v1.0 is a governed-discovery and evidence-depth release. It preserves the accepted reading/navigation surface while adding deterministic ordinary-language discovery at `/find/`, explicit no-answer behaviour, a frozen 50-case discovery benchmark, bounded evidence presentation and improved jurisdiction precision. The accepted public contract is exactly 142 canonical routes.
+v1.1 preserves the accepted v1.0 corpus, reading/navigation surface, evidence presentation and 142-route public contract while hardening deterministic ordinary-language discovery. The v1.1 policy adds a compositional personal clinical-decision boundary, explicit requested-jurisdiction containment, meaningful lexical eligibility, governed route-scope provenance fingerprints and Python/browser decision-trace parity. Orientation remains disabled because ablation showed it was unnecessary. No knowledge objects or schemas changed for v1.1.
 
 ## Production state
 
-Production is the accepted v1.0 governed-discovery release at `https://ndoracle.org`, deployed from exact main SHA `a0081e7d879e23568792ad5a468250eeb21dd20b` by deployment workflow run `33383848729` (run #15). The generated artifact SHA-256 is `e8155159a1f439e5d8a17e65e1bb960430207ad43e1836959fdb1d48737ded51` and the Cloudflare deployment identity is `https://9c561434.nd-oracle.pages.dev`.
+Production is the accepted v1.1 bounded-discovery release at `https://ndoracle.org`, deployed from exact main SHA `3032305dd81d48b2c6cc777b72f038267f995819` by deployment workflow run `33425750168` (run #16). The generated artifact SHA-256 is `84f6ac3e76d07d26367794b87cf6f85736aa4d8e976865d2d79a806bd429dfb7` and the Cloudflare deployment identity is `https://29c88484.nd-oracle.pages.dev`.
 
-Fresh post-deployment verification ran from a GitHub-hosted runner against the canonical domain in workflow run `33384188012` (run #15), job `99462984077`, from exact source SHA `a0081e7d879e23568792ad5a468250eeb21dd20b`. It passed the complete 305-test regression suite before verifying all 142 canonical routes, all 20 Concept routes, all 58 Resource routes, all 38 Question routes, v1.0 governed discovery/evidence, navigation and frozen compatibility contracts.
+Fresh post-deployment verification ran from a GitHub-hosted runner against the canonical domain in workflow run `33426342672` (run #16), job `99600728836`, from exact source SHA `3032305dd81d48b2c6cc777b72f038267f995819`. It passed the complete 322-test regression suite before verifying all 142 canonical routes, all 20 Concept routes, all 58 Resource routes, all 38 Question routes, the v1.1 bounded discovery contract, governed evidence, navigation and frozen public compatibility contracts.
 
-See `docs/PRODUCTION_STATE_v1.0.md` for the frozen deployment and live-proof evidence. Historical accepted production states remain recorded separately in their versioned production-state documents.
+See `docs/PRODUCTION_STATE_v1.1.md` for the accepted v1.1 deployment and live-proof evidence. Historical accepted production states remain recorded separately in their versioned production-state documents, including `docs/PRODUCTION_STATE_v1.0.md`.
 
 ## Repository map
 
@@ -46,6 +46,7 @@ objects/evidence/                    Governed evidence objects
 schema/object-v0.1.json              v0.1 concept contract
 schema/object-v0.2.json              v0.2 object dispatcher
 schema/types/                        v0.2 object-type contracts
+discovery/routing-policy-v1.1.json   Shared deterministic v1.1 discovery policy
 site/                                Static public site source
 scripts/validate.py                  Schema, governance-route, and graph checks
 scripts/check_content_freshness.py   Review-age/freshness gate
@@ -61,7 +62,8 @@ docs/CONTENT_NAVIGATION_v0.9.md      Historical accepted v0.9 navigation contrac
 docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
 docs/PRODUCTION_STATE_v0.8.md        Historical accepted v0.8 deployment evidence
 docs/PRODUCTION_STATE_v0.9.md        Historical accepted v0.9 deployment evidence
-docs/PRODUCTION_STATE_v1.0.md        Accepted v1.0 deployment and live-proof evidence
+docs/PRODUCTION_STATE_v1.0.md        Historical accepted v1.0 deployment evidence
+docs/PRODUCTION_STATE_v1.1.md        Accepted v1.1 deployment and live-proof evidence
 LICENSE                              Apache-2.0 software licence text
 CONTENT_LICENSE.md                   CC BY 4.0 content/database licence scope
 DCO.md                               Developer Certificate of Origin 1.1
