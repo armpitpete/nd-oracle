@@ -1,0 +1,43 @@
+name: Temporary flatten current builder
+
+on:
+  push:
+    branches:
+      - agent/v1.0-governed-discovery
+
+permissions:
+  contents: write
+
+jobs:
+  flatten:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: agent/v1.0-governed-discovery
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Generate one current builder
+        run: python scripts/flatten_build_site_once.py
+      - name: Verify no legacy builder imports remain
+        run: |
+          ! grep -nE 'from scripts(\.| import )build_site_v0[689]|import scripts\.build_site_v0[689]' scripts/build_site.py
+      - name: Run complete validation
+        run: |
+          python scripts/validate.py
+          python scripts/check_content_freshness.py --fail-overdue
+          python -m unittest discover -s tests
+      - name: Commit exact tested flattening
+        run: |
+          if git diff --quiet -- scripts/build_site.py; then
+            echo 'No builder change produced'
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/build_site.py
+          git commit -m 'Flatten current site builder'
+          git push origin HEAD:agent/v1.0-governed-discovery
