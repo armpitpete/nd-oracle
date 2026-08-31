@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import re
 import unittest
 
 from scripts import discovery
@@ -56,37 +55,51 @@ BENIGN_OUT_OF_DOMAIN = [
     "need ideas for a birthday cake", "where can I buy batteries", "how do I mend a chair",
 ]
 
-JURISDICTIONS = {
-    "England": {"England", "Great Britain", "England and Wales", "UK"},
-    "Scotland": {"Scotland", "Great Britain", "UK"},
-    "Wales": {"Wales", "Great Britain", "England and Wales", "UK"},
-    "Northern Ireland": {"Northern Ireland", "UK"},
+# Scope is taken from the governed title/audience/current-understanding of the
+# current catalogue, not inferred from a publisher name. UK-wide routes are
+# omitted because all four nations are compatible by definition.
+SCOPED_ROUTES = {
+    "/questions/adhd-driving-dvla-great-britain/": ("Great Britain", "ADHD driving notification"),
+    "/questions/workplace-support-great-britain/": ("Great Britain", "workplace disability support"),
+    "/questions/job-interview-adjustments-great-britain/": ("Great Britain", "job interview disability adjustments"),
+    "/questions/reasonable-adjustments-at-work-great-britain/": ("Great Britain", "reasonable adjustments at work"),
+    "/questions/adult-adhd-assessment-england/": ("England", "adult ADHD assessment"),
+    "/questions/adult-autism-assessment-england/": ("England", "adult autism assessment"),
+    "/questions/disabled-student-support-england/": ("England", "university disability support"),
+    "/questions/send-support-school-college-england/": ("England", "SEND school college support"),
+    "/questions/healthcare-communication-adjustments-england/": ("England", "health appointment communication adjustments"),
+    "/questions/disabled-travel-support-scotland/": ("Scotland", "disabled concessionary travel"),
+    "/questions/disabled-travel-support-wales/": ("Wales", "disabled concessionary travel"),
+    "/questions/disabled-travel-support-northern-ireland/": ("Northern Ireland", "disabled concessionary travel"),
+    "/resources/access-to-work/": ("Great Britain", "Access to Work"),
+    "/resources/acas-reasonable-adjustments/": ("Great Britain", "Acas reasonable adjustments at work"),
+    "/resources/govuk-adhd-driving/": ("Great Britain", "GOV.UK ADHD driving"),
+    "/resources/govuk-pip-england-wales/": ("England and Wales", "personal independence payment PIP"),
+    "/resources/nhs-england-accessible-information-adjustments/": ("England", "NHS accessible information reasonable adjustments"),
+    "/resources/disabled-students-allowance/": ("England", "disabled students allowance DSA"),
+    "/resources/ipsea/": ("England", "SEND legal advice IPSEA"),
+    "/resources/govuk-send-code-practice/": ("England", "SEND code of practice"),
+    "/resources/nhs-adhd-adults/": ("England", "NHS adult ADHD information assessment"),
+    "/resources/autism-central-adult-diagnosis/": ("England", "Autism Central adult diagnosis"),
+    "/resources/nice-adhd-guideline/": ("England and Wales", "NICE ADHD diagnosis management"),
+    "/resources/nice-autism-adults-guideline/": ("England and Wales", "NICE adult autism diagnosis management"),
+    "/resources/scotland-adult-disability-payment/": ("Scotland", "adult disability payment"),
+    "/resources/scotland-disabled-bus-pass/": ("Scotland", "disabled bus pass"),
+    "/resources/wales-disabled-concessionary-travel/": ("Wales", "disabled concessionary travel card"),
+    "/resources/northern-ireland-disabled-concessionary-travel/": ("Northern Ireland", "disabled concessionary travel"),
+    "/resources/nidirect-pip/": ("Northern Ireland", "PIP nidirect"),
 }
 
-
-def route_scope(route: str) -> str | None:
-    if "northern-ireland" in route:
-        return "Northern Ireland"
-    if "great-britain" in route:
-        return "Great Britain"
-    if "england-wales" in route:
-        return "England and Wales"
-    if "scotland" in route:
-        return "Scotland"
-    if "wales" in route:
-        return "Wales"
-    if "england" in route:
-        return "England"
-    if route.endswith("-uk/") or "-uk/" in route:
-        return "UK"
-    return None
-
-
-def swap_scope(title: str, target: str) -> str:
-    value = title
-    for marker in ["Northern Ireland", "Great Britain", "England and Wales", "Scotland", "England", "Wales", "the UK", "UK"]:
-        value = re.sub(re.escape(marker), target, value, flags=re.IGNORECASE)
-    return value
+JURISDICTIONS = ["England", "Scotland", "Wales", "Northern Ireland"]
+COMPATIBLE = {
+    "England": {"England"},
+    "Scotland": {"Scotland"},
+    "Wales": {"Wales"},
+    "Northern Ireland": {"Northern Ireland"},
+    "Great Britain": {"England", "Scotland", "Wales"},
+    "England and Wales": {"England", "Wales"},
+}
+GENERIC_RISK_TOKENS = {"how", "where", "need", "help", "support", "find", "information", "work", "should", "change", "use", "adult"}
 
 
 def compact(query: str) -> dict:
@@ -94,78 +107,101 @@ def compact(query: str) -> dict:
     return {"query": query, "mode": mode, "results": [{"route": r.route, "score": r.score} for r in results]}
 
 
+def refusal_hit(query: str) -> bool:
+    qnorm = discovery._normalise(query)
+    return any(pattern in qnorm for pattern in discovery.REFUSAL_PATTERNS)
+
+
+def scoped_top(route: str | None) -> str | None:
+    if route in SCOPED_ROUTES:
+        return SCOPED_ROUTES[route][0]
+    if route and (route.endswith("-uk/") or "-uk/" in route):
+        return "UK"
+    return None
+
+
 class Issue109EvidenceBatch3(unittest.TestCase):
     def test_emit_batch3_evidence(self) -> None:
-        diagnosis_failures = [row for row in (compact(q) for q in CLINICAL_DIAGNOSIS) if row["mode"] != "no_answer"]
-        medication_failures = [row for row in (compact(q) for q in CLINICAL_MEDICATION) if row["mode"] != "no_answer"]
-        positive_false_refusals = [row for row in (compact(q) for q in CLINICAL_POSITIVE) if row["mode"] == "no_answer"]
-        print("E109B3_CLINICAL", json.dumps({
-            "diagnosis_total": len(CLINICAL_DIAGNOSIS), "diagnosis_escaped": len(diagnosis_failures),
-            "medication_total": len(CLINICAL_MEDICATION), "medication_escaped": len(medication_failures),
-            "positive_total": len(CLINICAL_POSITIVE), "positive_false_refusals": len(positive_false_refusals),
-            "diagnosis_failures": diagnosis_failures, "medication_failures": medication_failures,
-            "positive_failures": positive_false_refusals,
+        diagnosis_missed = [q for q in CLINICAL_DIAGNOSIS if not refusal_hit(q)]
+        medication_missed = [q for q in CLINICAL_MEDICATION if not refusal_hit(q)]
+        diagnosis_accidental_no_answer = [q for q in diagnosis_missed if compact(q)["mode"] == "no_answer"]
+        medication_accidental_no_answer = [q for q in medication_missed if compact(q)["mode"] == "no_answer"]
+        positive_false_boundary = [q for q in CLINICAL_POSITIVE if refusal_hit(q)]
+        positive_no_coverage = [q for q in CLINICAL_POSITIVE if compact(q)["mode"] == "no_answer" and not refusal_hit(q)]
+        print("E109B3_CLINICAL_CORRECTED", json.dumps({
+            "diagnosis_total": len(CLINICAL_DIAGNOSIS), "diagnosis_boundary_missed": len(diagnosis_missed),
+            "diagnosis_accidental_no_answer": diagnosis_accidental_no_answer,
+            "medication_total": len(CLINICAL_MEDICATION), "medication_boundary_missed": len(medication_missed),
+            "medication_accidental_no_answer": medication_accidental_no_answer,
+            "positive_total": len(CLINICAL_POSITIVE), "positive_false_boundary_hits": positive_false_boundary,
+            "positive_no_coverage_not_refusal": positive_no_coverage,
         }, sort_keys=True))
 
-        index = discovery.build_index()
-        scoped_records = [r for r in index if route_scope(r["route"]) is not None]
-        jurisdiction_rows = []
+        index_routes = {record["route"] for record in discovery.build_index()}
+        missing_inventory = sorted(set(SCOPED_ROUTES) - index_routes)
+        conflict_rows = []
+        compatible_rows = []
         incompatible_top1 = []
-        for record in scoped_records:
-            source_scope = route_scope(record["route"])
+        source_leak_top1 = []
+        for source_route, (scope, stem) in SCOPED_ROUTES.items():
             for jurisdiction in JURISDICTIONS:
-                query = swap_scope(record["title"], jurisdiction)
+                query = f"{stem} {jurisdiction}"
                 row = compact(query)
                 top_route = row["results"][0]["route"] if row["results"] else None
-                top_scope = route_scope(top_route) if top_route else None
-                incompatible = bool(top_scope and top_scope not in JURISDICTIONS[jurisdiction])
-                evidence = {"source_route": record["route"], "source_scope": source_scope,
-                            "query_jurisdiction": jurisdiction, "query": query, "top_route": top_route,
-                            "top_scope": top_scope, "incompatible_top1": incompatible}
-                jurisdiction_rows.append(evidence)
-                if incompatible:
-                    incompatible_top1.append(evidence)
-        print("E109B3_JURISDICTION", json.dumps({
-            "scoped_records": len(scoped_records), "probe_total": len(jurisdiction_rows),
-            "incompatible_top1": len(incompatible_top1), "failures": incompatible_top1,
+                top_scope = scoped_top(top_route)
+                is_compatible_query = jurisdiction in COMPATIBLE[scope]
+                evidence = {"source_route": source_route, "source_scope": scope, "query": query,
+                            "query_jurisdiction": jurisdiction, "top_route": top_route, "top_scope": top_scope}
+                if is_compatible_query:
+                    compatible_rows.append(evidence)
+                else:
+                    conflict_rows.append(evidence)
+                    if top_scope not in {None, "UK"} and jurisdiction not in COMPATIBLE[top_scope]:
+                        incompatible_top1.append(evidence)
+                    if top_route == source_route:
+                        source_leak_top1.append(evidence)
+        print("E109B3_JURISDICTION_CORRECTED", json.dumps({
+            "scoped_route_inventory": len(SCOPED_ROUTES), "missing_from_index": missing_inventory,
+            "conflict_probe_total": len(conflict_rows), "conflict_incompatible_top1": len(incompatible_top1),
+            "conflict_source_route_still_top1": len(source_leak_top1),
+            "compatible_probe_total": len(compatible_rows), "failures": incompatible_top1,
+            "source_leaks": source_leak_top1,
         }, sort_keys=True))
 
-        orientation_failures = []
+        info_failures = []
         action_failures = []
-        orientation_rows = []
         for info_query, info_route, action_query, action_route in ORIENTATION_PAIRS:
             info = compact(info_query); action = compact(action_query)
             info_top = info["results"][0]["route"] if info["results"] else None
             action_top = action["results"][0]["route"] if action["results"] else None
             row = {"info_query": info_query, "expected_info": info_route, "info_top": info_top,
                    "action_query": action_query, "expected_action": action_route, "action_top": action_top}
-            orientation_rows.append(row)
             if info_top != info_route:
-                orientation_failures.append(row)
+                info_failures.append(row)
             if action_top != action_route:
                 action_failures.append(row)
-        print("E109B3_ORIENTATION", json.dumps({
-            "pair_total": len(ORIENTATION_PAIRS), "info_wrong_top1": len(orientation_failures),
-            "action_wrong_top1": len(action_failures), "info_failures": orientation_failures,
-            "action_failures": action_failures, "rows": orientation_rows,
+        print("E109B3_ORIENTATION_CORRECTED", json.dumps({
+            "pair_total": len(ORIENTATION_PAIRS), "info_wrong_top1": len(info_failures),
+            "action_wrong_top1": len(action_failures), "info_failures": info_failures,
+            "action_failures": action_failures,
         }, sort_keys=True))
 
-        title_tokens: dict[str, int] = {}
-        for record in index:
-            for token in set(discovery._tokens(record["title"])):
-                title_tokens[token] = title_tokens.get(token, 0) + 1
+        index = discovery.build_index()
+        title_tokens = sorted({token for record in index for token in discovery._tokens(record["title"])})
         token_rows = []
-        for token, title_occurrences in title_tokens.items():
+        for token in title_tokens:
             mode, results = discovery.search(token, limit=200, index=index)
-            token_rows.append({"token": token, "title_occurrences": title_occurrences,
-                               "eligible_results": len(results) if mode == "results" else 0,
+            count = len(results) if mode == "results" else 0
+            token_rows.append({"token": token, "eligible_results": count,
                                "top_score": results[0].score if results else 0,
                                "top_route": results[0].route if results else None})
         token_rows.sort(key=lambda row: (-row["eligible_results"], -row["top_score"], row["token"]))
-        benign_false_positives = [row for row in (compact(q) for q in BENIGN_OUT_OF_DOMAIN) if row["mode"] == "results"]
-        print("E109B3_PRECISION", json.dumps({
-            "single_title_tokens_tested": len(token_rows), "top_damaging_tokens": token_rows[:30],
-            "benign_total": len(BENIGN_OUT_OF_DOMAIN), "benign_false_positive_count": len(benign_false_positives),
+        generic_rows = [row for row in token_rows if row["token"] in GENERIC_RISK_TOKENS]
+        benign_false_positives = [compact(q) for q in BENIGN_OUT_OF_DOMAIN if compact(q)["mode"] == "results"]
+        print("E109B3_PRECISION_CORRECTED", json.dumps({
+            "single_title_tokens_tested": len(token_rows), "top_20_all_tokens": token_rows[:20],
+            "generic_risk_tokens": generic_rows, "benign_total": len(BENIGN_OUT_OF_DOMAIN),
+            "benign_false_positive_count": len(benign_false_positives),
             "benign_false_positives": benign_false_positives,
         }, sort_keys=True))
-        self.assertTrue(True)
+        self.assertEqual(missing_inventory, [])
