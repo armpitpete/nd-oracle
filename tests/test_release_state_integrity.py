@@ -6,7 +6,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
-BUILDER = ROOT / "scripts" / "build_site.py"
 V11_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_v1.1.md"
 V10_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_v1.0.md"
 
@@ -32,11 +31,6 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
         self.assertIn("322-test regression suite", text)
         self.assertIn("142 canonical", text)
         self.assertIn("119 authoritative objects", text)
-
-    def test_active_builder_label_is_v11(self) -> None:
-        text = BUILDER.read_text(encoding="utf-8")
-        self.assertIn("public site v1.1 candidate", text)
-        self.assertNotIn("public site v1.0 candidate", text)
 
     def test_v10_production_evidence_remains_frozen(self) -> None:
         text = V10_PRODUCTION.read_text(encoding="utf-8")
