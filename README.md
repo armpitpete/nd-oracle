@@ -13,11 +13,11 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The accepted v1.1 authoritative corpus contains exactly 119 governed objects:
+The accepted v1.2 authoritative corpus contains exactly 125 governed objects:
 
 - 20 reviewed Concept objects;
-- 58 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
-- 38 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
+- 61 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
+- 41 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
 - 3 governed Evidence objects supporting the bounded claim-bearing Resource pilot.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
@@ -26,15 +26,15 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-v1.1 preserves the accepted v1.0 corpus, reading/navigation surface, evidence presentation and 142-route public contract while hardening deterministic ordinary-language discovery. The v1.1 policy adds a compositional personal clinical-decision boundary, explicit requested-jurisdiction containment, meaningful lexical eligibility, governed route-scope provenance fingerprints and Python/browser decision-trace parity. Orientation remains disabled because ablation showed it was unnecessary. No knowledge objects or schemas changed for v1.1.
+v1.2 preserves the accepted v1.1 discovery architecture, evidence presentation, reading/navigation surface and privacy/static boundaries while expanding the public contract to 148 routes. It adds three governed higher-education disability-support Questions and three non-claim-bearing official Resources for Scotland, Wales and Northern Ireland, while preserving the existing England route. The human-facing builder release identity is also separated from production evidence so future release-label changes do not require replacing the large builder module. No schemas, ranking weights, clinical-decision boundaries, jurisdiction-containment rules, query persistence, analytics or AI answer authority changed for v1.2.
 
 ## Production state
 
-Production is the accepted v1.1 bounded-discovery release at `https://ndoracle.org`, deployed from exact main SHA `3032305dd81d48b2c6cc777b72f038267f995819` by deployment workflow run `33425750168` (run #16). The generated artifact SHA-256 is `84f6ac3e76d07d26367794b87cf6f85736aa4d8e976865d2d79a806bd429dfb7` and the Cloudflare deployment identity is `https://29c88484.nd-oracle.pages.dev`.
+Production is the accepted v1.2 release at `https://ndoracle.org`, deployed from exact main SHA `fad8e560979ba67bf94104d02f3b5100db8572cf` by deployment workflow run `33490134037` (run #18). The generated artifact SHA-256 is `b88c462115434d3ce9929f1e62ec29d0fb0095c13c05ec17c87b813afea426a1` and the Cloudflare deployment identity is `https://600ea685.nd-oracle.pages.dev`.
 
-Fresh post-deployment verification ran from a GitHub-hosted runner against the canonical domain in workflow run `33426342672` (run #16), job `99600728836`, from exact source SHA `3032305dd81d48b2c6cc777b72f038267f995819`. It passed the complete 322-test regression suite before verifying all 142 canonical routes, all 20 Concept routes, all 58 Resource routes, all 38 Question routes, the v1.1 bounded discovery contract, governed evidence, navigation and frozen public compatibility contracts.
+Fresh post-deployment verification ran from a GitHub-hosted runner against the canonical domain in validation run `33490631672` (run #256), job `99801014835`, using the exact production verifier from source SHA `fad8e560979ba67bf94104d02f3b5100db8572cf`. It passed all 336 tests in the evidence run (335 permanent production tests plus one temporary read-only live-probe wrapper) before verifying all 148 canonical routes, all 20 Concept routes, all 61 Resource routes, all 41 Question routes, the governed discovery/evidence contracts, navigation and frozen public compatibility contracts. The temporary evidence PR was closed unmerged and its branch reset to the production SHA.
 
-See `docs/PRODUCTION_STATE_v1.1.md` for the accepted v1.1 deployment and live-proof evidence. Historical accepted production states remain recorded separately in their versioned production-state documents, including `docs/PRODUCTION_STATE_v1.0.md`.
+See `docs/PRODUCTION_STATE_v1.2.md` for the accepted v1.2 deployment and live-proof evidence. Historical accepted production states remain recorded separately in their versioned production-state documents, including `docs/PRODUCTION_STATE_v1.1.md` and `docs/PRODUCTION_STATE_v1.0.md`.
 
 ## Repository map
 
@@ -63,7 +63,8 @@ docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
 docs/PRODUCTION_STATE_v0.8.md        Historical accepted v0.8 deployment evidence
 docs/PRODUCTION_STATE_v0.9.md        Historical accepted v0.9 deployment evidence
 docs/PRODUCTION_STATE_v1.0.md        Historical accepted v1.0 deployment evidence
-docs/PRODUCTION_STATE_v1.1.md        Accepted v1.1 deployment and live-proof evidence
+docs/PRODUCTION_STATE_v1.1.md        Historical accepted v1.1 deployment evidence
+docs/PRODUCTION_STATE_v1.2.md        Accepted v1.2 deployment and live-proof evidence
 LICENSE                              Apache-2.0 software licence text
 CONTENT_LICENSE.md                   CC BY 4.0 content/database licence scope
 DCO.md                               Developer Certificate of Origin 1.1
