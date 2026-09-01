@@ -46,7 +46,7 @@ class DiscoveryV11AcceptanceTests(unittest.TestCase):
     def test_policy_provenance_is_exact_and_fails_closed_on_drift(self) -> None:
         discovery.validate_policy(index=self.index)
         entries = discovery.POLICY["scope_provenance"]["routes"]
-        self.assertEqual(35, len(entries))
+        self.assertEqual(41, len(entries))
         for route, entry in entries.items():
             self.assertEqual(
                 {"scope", "basis_path", "basis_sha256", "binding_sha256"},
