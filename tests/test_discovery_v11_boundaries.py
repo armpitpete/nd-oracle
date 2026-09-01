@@ -25,7 +25,7 @@ class DiscoveryV11BoundaryTests(unittest.TestCase):
         parsed = json.loads(POLICY.read_text(encoding="utf-8"), object_pairs_hook=reject_duplicate_pairs)
         self.assertEqual("1.1", parsed["version"])
         self.assertFalse(parsed["orientation"]["enabled"])
-        self.assertEqual(35, len(parsed["scope_provenance"]["routes"]))
+        self.assertEqual(41, len(parsed["scope_provenance"]["routes"]))
 
     def test_browser_discovery_has_no_network_or_query_storage_authority(self) -> None:
         source = BROWSER.read_text(encoding="utf-8")
