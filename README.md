@@ -13,11 +13,11 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The accepted v1.2 authoritative corpus contains exactly 125 governed objects:
+The current repository corpus contains exactly 154 governed objects:
 
 - 20 reviewed Concept objects;
-- 61 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
-- 41 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
+- 76 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
+- 55 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
 - 3 governed Evidence objects supporting the bounded claim-bearing Resource pilot.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
@@ -26,7 +26,7 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-v1.2 preserves the accepted v1.1 discovery architecture, evidence presentation, reading/navigation surface and privacy/static boundaries while expanding the public contract to 148 routes. It adds three governed higher-education disability-support Questions and three non-claim-bearing official Resources for Scotland, Wales and Northern Ireland, while preserving the existing England route. The human-facing builder release identity is also separated from production evidence so future release-label changes do not require replacing the large builder module. No schemas, ranking weights, clinical-decision boundaries, jurisdiction-containment rules, query persistence, analytics or AI answer authority changed for v1.2.
+The current repository preserves the accepted v1.2 discovery architecture, evidence presentation, reading/navigation surface and privacy/static boundaries while expanding the repository public contract to 177 routes. Since the accepted production tree it adds devolved healthcare-communication parity and a bounded Games & downtime expansion built around observable play/access characteristics rather than diagnosis-based or “calming game” recommendations. The Games slice adds ten non-claim-bearing game Resources and nine additional practical Questions while keeping the sensory-demand comparison explicitly not currently answerable where evidence is insufficient. A follow-on support slice adds Steam's developer-declared accessibility-feature system and one tightly scoped 18+ autistic gaming-community route, plus Questions that expose both without treating platform tags or local community membership as universal fit. No schemas, ranking weights, clinical-decision boundaries, jurisdiction-containment rules, query persistence, analytics or AI answer authority change in this repository expansion.
 
 ## Production state
 
@@ -60,6 +60,8 @@ docs/PUBLIC_QUESTION_DISCOVERY_v0.7.md Historical question-led discovery contrac
 docs/CONTENT_NAVIGATION_v0.8.md      Historical accepted v0.8 findability contract
 docs/CONTENT_NAVIGATION_v0.9.md      Historical accepted v0.9 navigation contract
 docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
+docs/CONTENT_GAP_MAP_v1.3.md         Current need-led editorial coverage map
+docs/GAMES_DOWNTIME_FACETS_v1.md     Governed descriptive-facet contract for games and downtime
 docs/PRODUCTION_STATE_v0.8.md        Historical accepted v0.8 deployment evidence
 docs/PRODUCTION_STATE_v0.9.md        Historical accepted v0.9 deployment evidence
 docs/PRODUCTION_STATE_v1.0.md        Historical accepted v1.0 deployment evidence

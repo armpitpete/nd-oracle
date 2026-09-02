@@ -35,8 +35,8 @@ class V12NeedCoverageTests(unittest.TestCase):
             kind: len(list((OBJECTS / kind).glob("*.json")))
             for kind in ("concepts", "resources", "questions", "evidence")
         }
-        self.assertEqual({"concepts": 20, "resources": 64, "questions": 44, "evidence": 3}, counts)
-        self.assertEqual(131, sum(counts.values()))
+        self.assertEqual({"concepts": 20, "resources": 76, "questions": 55, "evidence": 3}, counts)
+        self.assertEqual(154, sum(counts.values()))
 
     def test_each_new_nation_query_selects_matching_practical_question(self) -> None:
         for nation, expected in EXPECTED.items():
