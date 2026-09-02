@@ -5,6 +5,9 @@ This check is deliberately metadata-based and network-independent. `provenance.l
 is the governed record of when the object and its access/source route were last checked.
 A separate review may use the web, but CI must not make publication depend on transient network
 availability.
+
+Evidence uses source-kind-specific review intervals. These intervals govern review of the Oracle's
+interpretation and source route; they do not imply that an older paper/book has become invalid.
 """
 
 from __future__ import annotations
@@ -24,6 +27,18 @@ MAX_AGE_DAYS = {
     "evidence": 365,
     "perspective": 365,
     "experience": 365,
+}
+EVIDENCE_SOURCE_KIND_MAX_AGE_DAYS = {
+    "authoritative_guidance": 180,
+    "commercial": 180,
+    "community": 180,
+    "practical": 180,
+    "dataset": 365,
+    "other": 365,
+    "peer_reviewed": 730,
+    "lived_experience": 730,
+    "book": 1095,
+    "historical": 1095,
 }
 
 
@@ -52,13 +67,21 @@ def _load_objects(root: Path = ROOT) -> list[tuple[Path, dict]]:
     return records
 
 
+def _max_age_for_object(obj: dict) -> int:
+    object_type = str(obj.get("type", "unknown"))
+    if object_type == "evidence":
+        source_kind = str(obj.get("source_kind", "other"))
+        return EVIDENCE_SOURCE_KIND_MAX_AGE_DAYS.get(source_kind, EVIDENCE_SOURCE_KIND_MAX_AGE_DAYS["other"])
+    return MAX_AGE_DAYS.get(object_type, 365)
+
+
 def audit_freshness(root: Path = ROOT, *, as_of: date | None = None) -> list[FreshnessRecord]:
     if as_of is None:
         as_of = date.today()
     output: list[FreshnessRecord] = []
     for path, obj in _load_objects(root):
         object_type = str(obj.get("type", "unknown"))
-        max_age = MAX_AGE_DAYS.get(object_type, 365)
+        max_age = _max_age_for_object(obj)
         raw = obj.get("provenance", {}).get("last_reviewed")
         reviewed: date | None
         try:
@@ -103,10 +126,13 @@ def main(argv: list[str] | None = None) -> int:
                 f"OVERDUE {record.object_type} {record.object_id}: last_reviewed={reviewed}; "
                 f"age_days={age}; limit={record.max_age_days}; path={record.path.relative_to(ROOT)}"
             )
+    evidence_limits = ", ".join(
+        f"{kind}={days}d" for kind, days in sorted(EVIDENCE_SOURCE_KIND_MAX_AGE_DAYS.items())
+    )
     print(
         f"Freshness audit: {len(records)} governed objects checked; {len(overdue)} overdue "
         f"as of {as_of.isoformat()}. Resource limit={MAX_AGE_DAYS['resource']} days; "
-        f"other current content limit=365 days."
+        f"Evidence source-kind limits: {evidence_limits}; other current content=365 days."
     )
     if args.fail_overdue and overdue:
         return 1
