@@ -41,6 +41,9 @@ jobs:
       - name: Validate knowledge objects
         run: python scripts/validate.py
 
+      - name: Audit Evidence coverage
+        run: python scripts/evidence_coverage.py --summary --fail-gaps
+
       - name: Audit content freshness
         run: python scripts/check_content_freshness.py --fail-overdue
 
