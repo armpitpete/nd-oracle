@@ -13,6 +13,7 @@ from scripts import build_site, discovery
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "tests" / "fixtures" / "discovery-v1.1-acceptance.json"
+BASE_POLICY = ROOT / "discovery" / "routing-policy-v1.1.json"
 BROWSER = ROOT / "scripts" / "discovery_browser.js"
 NATIONS = ("England", "Scotland", "Wales", "Northern Ireland")
 
@@ -45,7 +46,8 @@ class DiscoveryV11AcceptanceTests(unittest.TestCase):
 
     def test_policy_provenance_is_exact_and_fails_closed_on_drift(self) -> None:
         discovery.validate_policy(index=self.index)
-        entries = discovery.POLICY["scope_provenance"]["routes"]
+        frozen_policy = json.loads(BASE_POLICY.read_text(encoding="utf-8"))
+        entries = frozen_policy["scope_provenance"]["routes"]
         self.assertEqual(41, len(entries))
         for route, entry in entries.items():
             self.assertEqual(
