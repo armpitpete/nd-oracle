@@ -44,6 +44,9 @@ jobs:
       - name: Audit Evidence coverage
         run: python scripts/evidence_coverage.py --summary --fail-gaps
 
+      - name: Audit Evidence source freshness
+        run: python scripts/evidence_source_freshness.py --fail-overdue
+
       - name: Audit content freshness
         run: python scripts/check_content_freshness.py --fail-overdue
 
