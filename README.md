@@ -13,7 +13,7 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current repository candidate contains exactly 190 governed objects:
+The current repository and accepted production corpus contain exactly 190 governed objects:
 
 - 20 reviewed Concept objects;
 - 91 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
@@ -26,17 +26,17 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-The current repository preserves the accepted v1.2 discovery architecture, reading/navigation surface and privacy/static boundaries while expanding the repository public contract to 274 routes. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections. Since the accepted production tree, the repository also adds devolved healthcare-communication parity, bounded Games & downtime coverage, and a UK Assessment & diagnosis reference implementation.
+The current accepted public contract contains 274 canonical routes. It preserves the v1.2 public-site builder identity, frozen discovery architecture, reading/navigation surface and privacy/static boundaries while including devolved healthcare-communication parity, bounded Games & downtime coverage, and the UK Assessment & diagnosis reference implementation. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections.
 
-Assessment & diagnosis now contains the adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus cross-cutting routes for private assessment, waiting/support, refusal or disagreement, after-assessment outcomes, communication/sensory adjustments, co-occurring autism/ADHD and other neurodevelopmental assessments. England-specific Right to Choose is contained to England; Scottish health-board variation, Welsh health-board/local-service variation and Northern Ireland Trust/service-development variation remain explicit. Fifteen new assessment Resources are claimless service/guidance listings, not provider endorsements or diagnostic claims. Discovery adds 29 cryptographically scope-bound routes without replacing the frozen 41-route v1.1 scope registry, producing 70 governed scoped routes in the candidate. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
+Assessment & diagnosis contains the adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus cross-cutting routes for private assessment, waiting/support, refusal or disagreement, after-assessment outcomes, communication/sensory adjustments, co-occurring autism/ADHD and other neurodevelopmental assessments. England-specific Right to Choose is contained to England; Scottish health-board variation, Welsh health-board/local-service variation and Northern Ireland Trust/service-development variation remain explicit. Fifteen new assessment Resources are claimless service/guidance listings, not provider endorsements or diagnostic claims. Discovery adds 29 cryptographically scope-bound routes without replacing the frozen 41-route v1.1 scope registry, producing 70 governed scoped routes in current accepted production. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
 
 ## Production state
 
-Production is the accepted v1.2 release at `https://ndoracle.org`, deployed from exact main SHA `fad8e560979ba67bf94104d02f3b5100db8572cf` by deployment workflow run `33490134037` (run #18). The generated artifact SHA-256 is `b88c462115434d3ce9929f1e62ec29d0fb0095c13c05ec17c87b813afea426a1` and the Cloudflare deployment identity is `https://600ea685.nd-oracle.pages.dev`.
+Current production is the accepted 2026-09-03 deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `20926066e76e06beeef7d9ba87f24b88bada8658` and tree `e19ef7a180a1ad5b31849763aa00b516f384d53e` by deployment workflow run `33784220017` (run #19). The generated artifact SHA-256 is `166bab6dc89dd02d119dbba23035f948666a5b3e3ee39cd179f71a45d3289c71` and the Cloudflare deployment identity is `https://4651e0b6.nd-oracle.pages.dev`.
 
-Fresh post-deployment verification ran from a GitHub-hosted runner against the canonical domain in validation run `33490631672` (run #256), job `99801014835`, using the exact production verifier from source SHA `fad8e560979ba67bf94104d02f3b5100db8572cf`. It passed all 336 tests in the evidence run (335 permanent production tests plus one temporary read-only live-probe wrapper) before verifying all 148 canonical routes, all 20 Concept routes, all 61 Resource routes, all 41 Question routes, the governed discovery/evidence contracts, navigation and frozen public compatibility contracts. The temporary evidence PR was closed unmerged and its branch reset to the production SHA.
+Fresh network-backed production verification ran against the canonical domain in validation run `33785057163` (run #316), job `100747694338`. It revalidated all 190 governed objects, 49/49 Claim coverage with 0 gaps, 60 governed source records with 0 overdue, 190 governed objects with 0 overdue, the complete 380-test regression suite, and all 274 canonical live routes plus the governed discovery/evidence and frozen compatibility contracts. Temporary evidence PR #135 was closed unmerged and its disposable branch was reset to the accepted production source SHA.
 
-See `docs/PRODUCTION_STATE_v1.2.md` for the accepted v1.2 deployment and live-proof evidence. Historical accepted production states remain recorded separately in their versioned production-state documents, including `docs/PRODUCTION_STATE_v1.1.md` and `docs/PRODUCTION_STATE_v1.0.md`.
+`contracts/current-production.json` is the canonical machine-readable current-production pointer. It references `docs/PRODUCTION_STATE_2026-09-03.md`, the immutable human-readable evidence record for this accepted deployment. `docs/PRODUCTION_STATE_v1.2.md` and earlier versioned production-state documents remain frozen historical evidence and are not used as implicit current-state pointers.
 
 ## Repository map
 
@@ -56,6 +56,7 @@ scripts/check_content_freshness.py   Review-age/freshness gate, including Eviden
 scripts/evidence_coverage.py         Claim/Evidence coverage registry and CI gate
 scripts/evidence_public.py           Public Evidence projection and static browsing
 contracts/evidence-layer-v1.json     Machine-readable Evidence policy
+contracts/current-production.json    Canonical machine-readable current-production pointer
 docs/EVIDENCE_LAYER_STATE_v1.md      Current Evidence-layer implementation state
 docs/ASSESSMENT_DIAGNOSIS_UK_v1.md   UK assessment/diagnosis reference contract
 docs/ASSESSMENT_DIAGNOSIS_UK_SOURCE_MATRIX_v1.md UK source/jurisdiction matrix
@@ -71,11 +72,12 @@ docs/CONTENT_NAVIGATION_v0.9.md      Historical accepted v0.9 navigation contrac
 docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
 docs/CONTENT_GAP_MAP_v1.4.md         Current need-led editorial coverage map
 docs/GAMES_DOWNTIME_FACETS_v1.md     Governed descriptive-facet contract for games and downtime
+docs/PRODUCTION_STATE_2026-09-03.md  Current accepted deployment evidence
 docs/PRODUCTION_STATE_v0.8.md        Historical accepted v0.8 deployment evidence
 docs/PRODUCTION_STATE_v0.9.md        Historical accepted v0.9 deployment evidence
 docs/PRODUCTION_STATE_v1.0.md        Historical accepted v1.0 deployment evidence
 docs/PRODUCTION_STATE_v1.1.md        Historical accepted v1.1 deployment evidence
-docs/PRODUCTION_STATE_v1.2.md        Accepted v1.2 deployment and live-proof evidence
+docs/PRODUCTION_STATE_v1.2.md        Historical accepted 2026-09-01 v1.2 deployment evidence
 LICENSE                              Apache-2.0 software licence text
 CONTENT_LICENSE.md                   CC BY 4.0 content/database licence scope
 DCO.md                               Developer Certificate of Origin 1.1
