@@ -89,3 +89,12 @@ The adopted licensing baseline is:
 - no CLA at this stage.
 
 Future changes to this licensing baseline remain protected decisions under `GOVERNANCE.md`.
+
+
+## Evidence contributions
+
+Evidence is accepted for an exact governed Claim, not as citation volume. State the source identity, the exact proposition it bears on, its source kind, relevant population/context, methodology and material limitations. Normalized v0.2 Evidence Contributions must use a bounded contribution role and remain reciprocal with the target Claim.
+
+Official status, publication prestige, source count and community popularity are not automatic quality scores. First-party commercial material may establish current first-party product/service facts when conflicts are explicit, but it does not independently establish efficacy, safety, accessibility quality or personal fit. Lived experience can establish the experience as reported without becoming prevalence, mechanism or diagnosis.
+
+Do not add dataset, book, commercial or other source classes merely to satisfy a diversity quota. Add them when a real Claim needs them. Contradictory, falsifying and inconclusive evidence must remain visible rather than being removed to simplify a conclusion. Material Evidence-role, confidence or interpretation changes require a provenance-bearing explanation.

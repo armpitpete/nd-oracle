@@ -326,7 +326,7 @@ Legacy v0.1 source pages must clearly state that they are **legacy embedded sour
 
 Claim → Evidence and Evidence → Claim navigation should be symmetrical.
 
-Evidence pages do **not** join ordinary practical `/find/` ranking. Dedicated Evidence search may filter citation, title/authorship, source kind, DOI/ISBN/locator and claim references entirely in the browser. Queries must not be transmitted or stored.
+Evidence pages do **not** join ordinary practical `/find/` ranking. Dedicated Evidence browsing may filter citation, title/authorship, source kind, DOI/ISBN/locator and claim references entirely in the browser. Queries must not be transmitted or stored.
 
 ## 16. Acceptance
 
@@ -340,7 +340,7 @@ Evidence Layer v1 passes only when:
 - contradiction and multi-claim fixtures remain valid;
 - evidence-specific freshness rules pass;
 - public Evidence index and individual Evidence projections build;
-- dedicated Evidence search is browser-local;
+- dedicated Evidence browsing is browser-local;
 - ordinary discovery ranking, clinical boundaries, jurisdiction filtering, privacy/query handling, schema authority and release-state gates remain unchanged;
 - full exact-head CI passes;
 - final hostile review finds no certainty inflation, hidden contradiction, endorsement conversion or provenance loss.

@@ -657,7 +657,7 @@ def _compat09__build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
 if __package__ in {None, ''}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 EVIDENCE_DIR = _compat06__ROOT / 'objects' / 'evidence'
-V10_ROUTE_COUNT = 177
+V10_ROUTE_COUNT = 238
 QUESTION_GROUPS = [('Daily life & technology', ['task-starting-and-organisation', 'make-device-easier-to-use', 'meal-planning-and-everyday-food-tasks']), ('Sensory & environment', ['make-noisy-bright-place-easier', 'sensory-overload-what-can-i-change']), ('Communication', ['aac-and-nonspeaking-communication', 'phone-calls-are-difficult', 'processing-time-in-conversations-meetings']), ('Work', ['workplace-support-great-britain', 'reasonable-adjustments-at-work-great-britain', 'disabled-person-looking-for-work-uk', 'disclosing-disability-neurodivergence-at-work', 'job-interview-adjustments-great-britain']), ('Education & study', ['disabled-student-support-england', 'disabled-student-support-scotland', 'disabled-student-support-wales', 'disabled-student-support-northern-ireland', 'organising-study-and-assignments', 'send-support-school-college-england']), ('Assessment & diagnosis', ['adult-adhd-assessment-england', 'adult-autism-assessment-england']), ('Health & wellbeing', ['autism-anxiety-tools', 'masking-exhaustion-and-autistic-burnout', 'sleep-and-winding-down-routines', 'healthcare-communication-adjustments-england', 'healthcare-communication-adjustments-scotland', 'healthcare-communication-adjustments-wales', 'healthcare-communication-adjustments-northern-ireland']), ('Relationships & family', ['autistic-parent-support-uk', 'communication-needs-in-relationships', 'neurodivergent-parent-overwhelmed-by-admin']), ('Money & administration', ['disability-benefits-where-start-uk']), ('Mobility & travel', ['adhd-driving-dvla-great-britain', 'disabled-travel-support-scotland', 'disabled-travel-support-wales', 'disabled-travel-support-northern-ireland']), ('Information & support', ['autism-information-and-support', 'dyslexia-information-and-support-uk', 'tourette-information-and-support-uk', 'learning-disability-information-and-support-uk', 'dld-information-and-support', 'adult-dyspraxia-information-uk', 'dyscalculia-information-and-support-uk']), ('Games & downtime', ['low-time-pressure-games', 'low-reaction-demand-games', 'easy-to-interrupt-games', 'configurable-game-pressure', 'simple-control-games', 'low-consequence-games', 'solo-low-social-pressure-games', 'building-sorting-collecting-games', 'gaming-community-social-load', 'low-sensory-demand-games', 'checking-game-accessibility-before-buying', 'adult-autistic-gaming-communities'])]
 _compat09__QUESTION_GROUPS = QUESTION_GROUPS
 _compat08__QUESTION_GROUPS = QUESTION_GROUPS
@@ -808,6 +808,43 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
     (destination / 'sitemap.xml').write_text(render_sitemap(concepts, resources, questions), encoding='utf-8')
     return destination
 
+
+# ---- Evidence Layer v1 public projection ----
+from scripts import evidence_public as _evidence_public
+_evidence_v1_base_sitemap_paths = sitemap_paths
+_evidence_v1_base_build = build
+
+def load_evidence_projections() -> list[dict]:
+    return _evidence_public.build_projections(_compat06__ROOT)
+
+def evidence_route_markers() -> list[tuple[str, str]]:
+    return _evidence_public.route_markers(load_evidence_projections())
+
+def sitemap_paths(concepts: list[dict], resources: list[dict] | None=None, questions: list[dict] | None=None) -> list[str]:
+    paths = _evidence_v1_base_sitemap_paths(concepts, resources, questions)
+    projections = load_evidence_projections()
+    return paths + ['/evidence/'] + [item['route'] for item in projections]
+
+def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
+    destination = _evidence_v1_base_build(output_dir)
+    concepts = _compat06__load_concepts()
+    resources = _compat06__load_resources()
+    questions = _compat08__load_questions()
+    projections = load_evidence_projections()
+    _evidence_public.write_evidence_routes(destination, projections, page_shell=_compat06__page_shell)
+    _evidence_public.inject_claim_links(destination, projections)
+    how_path = destination / 'how-it-works' / 'index.html'
+    how_page = how_path.read_text(encoding='utf-8')
+    evidence_phrase = '<h2>Evidence is inspectable</h2>'
+    if evidence_phrase in how_page and '/evidence/' not in how_page:
+        how_page = how_page.replace(evidence_phrase, evidence_phrase + '<p><a href="/evidence/">Browse the governed Evidence catalogue</a>.</p>', 1)
+        how_path.write_text(how_page, encoding='utf-8')
+    paths = sitemap_paths(concepts, resources, questions)
+    if len(paths) != V10_ROUTE_COUNT:
+        raise ValueError(f'Expected {V10_ROUTE_COUNT} Evidence Layer v1 canonical routes, found {len(paths)}')
+    (destination / 'sitemap.xml').write_text(render_sitemap(concepts, resources, questions), encoding='utf-8')
+    return destination
+
 # Public compatibility names retained for callers/tests.
 BOOK_MEDIA_CATEGORIES = _compat09__BOOK_MEDIA_CATEGORIES
 COMMON_QUESTIONS = _compat09__COMMON_QUESTIONS
@@ -868,6 +905,33 @@ safe_http_url = _compat06__safe_http_url
 topic_link = _compat06__topic_link
 validate_reading_layer = _compat06__validate_reading_layer
 write_route = _compat06__write_route
+
+
+# ---- Evidence Layer v1 no-script compatibility ----
+import re as _evidence_v1_re
+_EVIDENCE_V1_NOJS_BASE_BUILD = build
+
+
+def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
+    destination = _EVIDENCE_V1_NOJS_BASE_BUILD(output_dir)
+    evidence_index = destination / 'evidence' / 'index.html'
+    if not evidence_index.is_file():
+        raise ValueError('Evidence Layer v1 index was not generated')
+    text = evidence_index.read_text(encoding='utf-8')
+    text = text.replace('<script src="/evidence-find.js" defer></script>', '')
+    text = _evidence_v1_re.sub(
+        r'<section aria-labelledby="evidence-search-heading">.*?</section>',
+        '<section aria-labelledby="evidence-search-heading"><h2 id="evidence-search-heading">Find a source locally</h2><p>This catalogue sends no search query anywhere and loads no script. Use your browser’s built-in <strong>Find in page</strong> command (usually Ctrl+F or Command+F), or browse the source-kind groups below.</p></section>',
+        text,
+        count=1,
+        flags=_evidence_v1_re.S,
+    )
+    evidence_index.write_text(text, encoding='utf-8')
+    generated_script = destination / 'evidence-find.js'
+    if generated_script.exists():
+        generated_script.unlink()
+    return destination
+
 
 # ---- command-line entrypoint ----
 if __name__ == '__main__':

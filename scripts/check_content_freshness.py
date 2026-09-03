@@ -71,7 +71,9 @@ def _max_age_for_object(obj: dict) -> int:
     object_type = str(obj.get("type", "unknown"))
     if object_type == "evidence":
         source_kind = str(obj.get("source_kind", "other"))
-        return EVIDENCE_SOURCE_KIND_MAX_AGE_DAYS.get(source_kind, EVIDENCE_SOURCE_KIND_MAX_AGE_DAYS["other"])
+        if source_kind not in EVIDENCE_SOURCE_KIND_MAX_AGE_DAYS:
+            raise ValueError(f"Unknown Evidence source_kind for freshness policy: {source_kind}")
+        return EVIDENCE_SOURCE_KIND_MAX_AGE_DAYS[source_kind]
     return MAX_AGE_DAYS.get(object_type, 365)
 
 
