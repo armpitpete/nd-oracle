@@ -118,6 +118,17 @@ class AssessmentDiagnosisUKV1Tests(unittest.TestCase):
                     failures.append((route, nation, trace["final_reason"]))
         self.assertEqual([], failures)
 
+    def test_assessment_questions_use_publicly_renderable_related_types(self) -> None:
+        failures = []
+        routes = {case["expected_top"] for case in self.benchmark["cases"] if case["expected_top"].startswith("/questions/")}
+        for route in sorted(routes):
+            question_id = route.strip("/").split("/")[1]
+            document = json.loads((ROOT / "objects" / "questions" / f"{question_id}.json").read_text(encoding="utf-8"))
+            unsupported = sorted({item["type"] for item in document["related_objects"]} - {"concept", "resource"})
+            if unsupported:
+                failures.append((route, unsupported))
+        self.assertEqual([], failures)
+
     def test_tampered_extension_scope_binding_is_rejected_by_policy_validation(self) -> None:
         route = sorted(self.extension["scope_provenance"]["routes"])[0]
         tampered = copy.deepcopy(discovery.POLICY)
