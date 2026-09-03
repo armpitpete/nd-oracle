@@ -13,14 +13,14 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current repository candidate contains exactly 208 governed objects, while the accepted production corpus remains the separately recorded 190-object deployment described under **Production state** below:
+The current governed corpus contains exactly 208 objects, matching the accepted Relationships & family production corpus described under **Production state** below:
 
 - 20 reviewed Concept objects;
 - 99 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
 - 86 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
-- 3 normalized v0.2 Evidence objects plus 57 accepted legacy v0.1 embedded source records, giving 60 governed source records across 49 governed Claims. The repository candidate object count is 208 because legacy source projections are not duplicated into new objects.
+- 3 normalized v0.2 Evidence objects plus 57 accepted legacy v0.1 embedded source records, giving 60 governed source records across 49 governed Claims. Legacy source projections are not duplicated into new objects.
 
-The Relationships & family UK v1 candidate adds bounded friendship, partner, boundaries/conflict, intimacy/consent, parenting and disabled-parent access routes while preserving the existing clinical, jurisdiction, evidence, privacy and non-recommendation boundaries. It is not production until separately merged, deployed and verified through the protected exact-SHA release process.
+Relationships & family is now a strong bounded seed. The accepted release adds governed friendship, partner communication, boundaries/conflict, intimacy/consent, parenting-a-neurodivergent-child, disabled-parent access, family-event sensory/social load, domestic-abuse/safeguarding and explicit leave/stay no-authority routes while preserving existing clinical, jurisdiction, evidence, privacy and non-recommendation boundaries.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
 
@@ -28,17 +28,21 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-The current accepted public contract contains 274 canonical routes. It preserves the v1.2 public-site builder identity, frozen discovery architecture, reading/navigation surface and privacy/static boundaries while including devolved healthcare-communication parity, bounded Games & downtime coverage, and the UK Assessment & diagnosis reference implementation. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections.
+The current accepted public contract contains 292 canonical routes. It preserves the v1.2 public-site builder identity, frozen discovery architecture, reading/navigation surface and privacy/static boundaries while including devolved healthcare-communication parity, bounded Games & downtime coverage, the UK Assessment & diagnosis reference implementation, and the Relationships & family UK v1 bounded reference slice. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections.
 
-Assessment & diagnosis contains the adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus cross-cutting routes for private assessment, waiting/support, refusal or disagreement, after-assessment outcomes, communication/sensory adjustments, co-occurring autism/ADHD and other neurodevelopmental assessments. England-specific Right to Choose is contained to England; Scottish health-board variation, Welsh health-board/local-service variation and Northern Ireland Trust/service-development variation remain explicit. Fifteen new assessment Resources are claimless service/guidance listings, not provider endorsements or diagnostic claims. Discovery adds 29 cryptographically scope-bound routes without replacing the frozen 41-route v1.1 scope registry, producing 70 governed scoped routes in current accepted production. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
+Assessment & diagnosis contains the adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus cross-cutting routes for private assessment, waiting/support, refusal or disagreement, after-assessment outcomes, communication/sensory adjustments, co-occurring autism/ADHD and other neurodevelopmental assessments. England-specific Right to Choose is contained to England; Scottish health-board variation, Welsh health-board/local-service variation and Northern Ireland Trust/service-development variation remain explicit. Fifteen assessment Resources are claimless service/guidance listings, not provider endorsements or diagnostic claims. Discovery adds 29 cryptographically scope-bound routes without replacing the frozen 41-route v1.1 scope registry, producing 70 governed scoped routes in current accepted production. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
+
+Relationships & family keeps parenting a neurodivergent child separate from support for a neurodivergent or disabled parent; ordinary relationship communication does not displace safeguarding where fear, control, violence or sexual pressure is present; consent remains explicit and revocable; ND Oracle does not diagnose a partner, decide who is right, or decide whether a relationship should continue; and disability-service access preserves the England/Scotland/Wales versus Northern Ireland legal split. The accepted 48-case benchmark was integrated without changing frozen ranking weights.
 
 ## Production state
 
-Current production is the accepted 2026-09-03 deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `20926066e76e06beeef7d9ba87f24b88bada8658` and tree `e19ef7a180a1ad5b31849763aa00b516f384d53e` by deployment workflow run `33784220017` (run #19). The generated artifact SHA-256 is `166bab6dc89dd02d119dbba23035f948666a5b3e3ee39cd179f71a45d3289c71` and the Cloudflare deployment identity is `https://4651e0b6.nd-oracle.pages.dev`.
+Current production is the accepted 2026-09-03 Relationships & family deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `5c05d775a5d548c0f4ad92f78e25008febe40d69` and tree `5861cd9ecbd33b2e465bbbd9027324182a9ef12b` by deployment workflow run `33796135523` (run #22). The generated artifact SHA-256 is `4864e9a9aa56a3278ad46d4a32695354f25018b9ce9d2ccb46cf8fa68ba4ba2a` and the Cloudflare deployment identity is `https://7452fa61.nd-oracle.pages.dev`.
 
-Fresh network-backed production verification ran against the canonical domain in validation run `33785057163` (run #316), job `100747694338`. It revalidated all 190 governed objects, 49/49 Claim coverage with 0 gaps, 60 governed source records with 0 overdue, 190 governed objects with 0 overdue, the complete 380-test regression suite, and all 274 canonical live routes plus the governed discovery/evidence and frozen compatibility contracts. Temporary evidence PR #135 was closed unmerged and its disposable branch was reset to the accepted production source SHA.
+Fresh network-backed production verification ran against the canonical domain in workflow run `33796510768` (run #17), job `100785403728`. It revalidated all 208 governed objects, ran the complete 392-test regression suite, and verified all 292 canonical live routes plus the governed discovery/evidence and frozen compatibility contracts. Exact-head run `33795297003` (#331) on the identical accepted tree separately proved 49/49 Claim coverage with 0 gaps, 60 governed source records with 0 overdue and 208 governed objects with 0 overdue.
 
-`contracts/current-production.json` is the canonical machine-readable current-production pointer. It references `docs/PRODUCTION_STATE_2026-09-03.md`, the immutable human-readable evidence record for this accepted deployment. `docs/PRODUCTION_STATE_v1.2.md` and earlier versioned production-state documents remain frozen historical evidence and are not used as implicit current-state pointers.
+`contracts/current-production.json` is the canonical machine-readable current-production pointer. It references `docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md`, the immutable human-readable evidence record for this accepted deployment. `docs/PRODUCTION_STATE_2026-09-03.md`, `docs/PRODUCTION_STATE_v1.2.md` and earlier production-state documents remain frozen historical evidence and are not used as implicit current-state pointers.
+
+The administrative state-reconciliation commit that updates these records is not itself a deployment. The accepted public artifact remains the exact artifact generated from source SHA `5c05d775a5d548c0f4ad92f78e25008febe40d69`.
 
 ## Repository map
 
@@ -62,6 +66,8 @@ contracts/current-production.json    Canonical machine-readable current-producti
 docs/EVIDENCE_LAYER_STATE_v1.md      Current Evidence-layer implementation state
 docs/ASSESSMENT_DIAGNOSIS_UK_v1.md   UK assessment/diagnosis reference contract
 docs/ASSESSMENT_DIAGNOSIS_UK_SOURCE_MATRIX_v1.md UK source/jurisdiction matrix
+docs/RELATIONSHIPS_FAMILY_UK_v1.md   Relationships & family bounded coverage contract
+docs/RELATIONSHIPS_FAMILY_UK_SOURCE_MATRIX_v1.md Relationships & family source matrix
 scripts/build_site.py                Current self-contained static site generator
 scripts/discovery.py                 Deterministic governed discovery index/routing
 scripts/verify_live_site.py          Current production HTTP/content verifier
@@ -74,7 +80,8 @@ docs/CONTENT_NAVIGATION_v0.9.md      Historical accepted v0.9 navigation contrac
 docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
 docs/CONTENT_GAP_MAP_v1.4.md         Current need-led editorial coverage map
 docs/GAMES_DOWNTIME_FACETS_v1.md     Governed descriptive-facet contract for games and downtime
-docs/PRODUCTION_STATE_2026-09-03.md  Current accepted deployment evidence
+docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md Current accepted deployment evidence
+docs/PRODUCTION_STATE_2026-09-03.md  Previous same-day accepted deployment evidence
 docs/PRODUCTION_STATE_v0.8.md        Historical accepted v0.8 deployment evidence
 docs/PRODUCTION_STATE_v0.9.md        Historical accepted v0.9 deployment evidence
 docs/PRODUCTION_STATE_v1.0.md        Historical accepted v1.0 deployment evidence
