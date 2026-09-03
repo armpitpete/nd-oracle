@@ -93,6 +93,8 @@ NAVIGATION_MARKERS = (
     ("/places/", "<h1>Browse by geographic scope</h1>"), ("/a-z/", "<h1>A–Z</h1>"), ("/find/", "<h1>Find a governed route</h1>"),
 )
 ROUTES = tuple([STABLE_BASE_MARKERS[0], STABLE_BASE_MARKERS[1]] + [(p, f"<h1>{html.escape(n, quote=True)}</h1>") for p, n in CONCEPT_MARKERS_V10.items()] + list(STABLE_BASE_MARKERS[2:7]) + [(p, f"<h1>{html.escape(n, quote=True)}</h1>") for p, (n, _u) in RESOURCE_MARKERS_V10.items()] + [STABLE_BASE_MARKERS[7]] + [(p, f"<h1>{html.escape(q, quote=True)}</h1>") for p, q in QUESTION_MARKERS_V10.items()] + list(STABLE_BASE_MARKERS[8:]) + list(NAVIGATION_MARKERS))
+EVIDENCE_MARKERS = tuple(build_site.evidence_route_markers())
+ROUTES = tuple(list(ROUTES) + list(EVIDENCE_MARKERS))
 V10_ROUTES = ROUTES
 V09_ROUTES = ROUTES
 if len(ROUTES) != build_site.V10_ROUTE_COUNT: raise RuntimeError(f"v1.0 verifier route count mismatch: expected {build_site.V10_ROUTE_COUNT}, got {len(ROUTES)}")

@@ -1,0 +1,2422 @@
+{
+  "claims": [
+    {
+      "claim_ref": "acas-reasonable-adjustments#acas-adjustments-guidance",
+      "claim_text": "Acas guidance for Great Britain says employers should consider reasonable adjustments for disabled workers and job applicants, with what is reasonable depending on the circumstances.",
+      "confidence": "high",
+      "contribution_roles": [
+        "supportive"
+      ],
+      "coverage_status": "covered",
+      "evidence_model": "normalized_v0.2",
+      "evidence_routes": [
+        "acas-reasonable-adjustments-2025"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "acas-reasonable-adjustments",
+      "owner_path": "objects/resources/acas-reasonable-adjustments.json",
+      "owner_type": "resource",
+      "review_age_days": 6,
+      "schema_version": "0.2",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "authoritative_guidance"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "access-to-work#atw-scheme-scope",
+      "claim_text": "Access to Work is a Great Britain scheme that may fund practical workplace support for eligible people whose disability or health condition affects their work.",
+      "confidence": "high",
+      "contribution_roles": [
+        "supportive"
+      ],
+      "coverage_status": "covered",
+      "evidence_model": "normalized_v0.2",
+      "evidence_routes": [
+        "govuk-access-to-work-factsheet-2026"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "access-to-work",
+      "owner_path": "objects/resources/access-to-work.json",
+      "owner_type": "resource",
+      "review_age_days": 6,
+      "schema_version": "0.2",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "authoritative_guidance"
+      ],
+      "triage_flags": [
+        "possible_legal_or_entitlement"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "adhd#adhd-claim-assessment",
+      "claim_text": "ADHD diagnosis is based on specialist clinical assessment, developmental and psychiatric history, functioning across settings and consideration of alternatives and co-occurring conditions; no single rating scale, observation or cognitive test is sufficient by itself.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:adhd:adhd-source-nice"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "adhd",
+      "owner_path": "objects/concepts/adhd.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "authoritative_guidance"
+      ],
+      "triage_flags": [
+        "possible_diagnostic"
+      ],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "adhd#adhd-claim-core",
+      "claim_text": "ADHD is a neurodevelopmental condition in which persistent inattention and/or hyperactivity-impulsivity begins in childhood, occurs across important settings and is associated with meaningful impairment; symptoms and impact can continue into adulthood and change over time.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:adhd:adhd-source-nice",
+        "legacy:adhd:adhd-source-faraone-2021"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "adhd",
+      "owner_path": "objects/concepts/adhd.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "adhd#adhd-claim-environment",
+      "claim_text": "ADHD-related impairment depends partly on environmental demands, and individualised environmental modifications can be part of support rather than treating the person as the only thing that must change.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:adhd:adhd-source-nice"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "adhd",
+      "owner_path": "objects/concepts/adhd.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "authoritative_guidance"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "adhd#adhd-claim-executive",
+      "claim_text": "Executive-function difficulties are common at group level in ADHD, but profiles are heterogeneous and executive-function measures do not uniquely distinguish ADHD from autism or other neurodevelopmental conditions.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:adhd:adhd-source-kofler-2024",
+        "legacy:adhd:adhd-source-sadozai-2024"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "adhd",
+      "owner_path": "objects/concepts/adhd.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_prevalence"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "alexithymia#alexithymia-claim-core",
+      "claim_text": "Meta-analytic evidence finds alexithymia is more common in autistic samples than comparison samples but is not universal, supporting separation of alexithymia from autism itself.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:alexithymia:alexithymia-source-core"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "alexithymia",
+      "owner_path": "objects/concepts/alexithymia.json",
+      "owner_type": "concept",
+      "review_age_days": 6,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_prevalence"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "autism#autism-claim-diversity",
+      "claim_text": "Autism is a diverse neurodevelopmental condition whose abilities, disabilities and support needs vary substantially between people and can change with age, environment and circumstances.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:autism:autism-source-who-2025",
+        "legacy:autism:autism-source-nice-adults"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "autism",
+      "owner_path": "objects/concepts/autism.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "autism#autism-claim-language",
+      "claim_text": "Many autistic adults prefer identity-first language such as 'autistic person', but preferences vary within and between cultures and no single terminology should be imposed on every person.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:autism:autism-source-schuck-2025"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "autism",
+      "owner_path": "objects/concepts/autism.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "autism#autism-claim-sensory",
+      "claim_text": "Sensory hyperreactivity, hyporeactivity and unusual sensory interests can be part of autistic experience, but sensory profiles are heterogeneous and sensory differences are not unique to autism.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:autism:autism-source-who-2025",
+        "legacy:autism:autism-source-chen-2024"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "autism",
+      "owner_path": "objects/concepts/autism.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "autism#autism-claim-support",
+      "claim_text": "Useful autism support should be based on the person's goals, communication, needs and context rather than assuming that reducing visible autistic traits is automatically the desired outcome.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:autism:autism-source-nice-adults",
+        "legacy:autism:autism-source-pellicano-2022"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "autism",
+      "owner_path": "objects/concepts/autism.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "autistic-burnout#autistic-burnout-claim-core",
+      "claim_text": "Qualitative research with autistic adults has described autistic burnout as a distinct lived-experience construct involving severe exhaustion and reduced capacity, while diagnostic boundaries and mechanisms remain unsettled.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:autistic-burnout:autistic-burnout-source-core"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "autistic-burnout",
+      "owner_path": "objects/concepts/autistic-burnout.json",
+      "owner_type": "concept",
+      "review_age_days": 6,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_causal_or_mechanistic",
+        "possible_diagnostic"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "communication-differences#communication-differences-claim-core",
+      "claim_text": "Studies of autistic and non-autistic interaction show that communication and rapport can depend on the match between partners' neurotypes, supporting an interactional component rather than a purely one-sided deficit account.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:communication-differences:communication-differences-source-core"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "communication-differences",
+      "owner_path": "objects/concepts/communication-differences.json",
+      "owner_type": "concept",
+      "review_age_days": 6,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "developmental-coordination-disorder#dcd-claim-core",
+      "claim_text": "DCD is a developmental condition in which motor coordination is substantially below expectation and persistently affects everyday activities or participation, with assessment also considering other explanations for the motor difficulties.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:developmental-coordination-disorder:dcd-source-nhs-diagnosis",
+        "legacy:developmental-coordination-disorder:dcd-source-blank-2019"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "developmental-coordination-disorder",
+      "owner_path": "objects/concepts/developmental-coordination-disorder.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "developmental-coordination-disorder#dcd-claim-lifespan",
+      "claim_text": "DCD often continues to affect people in adolescence and adulthood, although the activities that create difficulty and the support needed can change over time and with context.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:developmental-coordination-disorder:dcd-source-nhs-overview",
+        "legacy:developmental-coordination-disorder:dcd-source-nhs-adults",
+        "legacy:developmental-coordination-disorder:dcd-source-blank-2019"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "developmental-coordination-disorder",
+      "owner_path": "objects/concepts/developmental-coordination-disorder.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 3,
+      "source_kinds": [
+        "authoritative_guidance",
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "developmental-coordination-disorder#dcd-claim-terminology",
+      "claim_text": "In UK public use, dyspraxia is often used for DCD, but healthcare guidance prefers DCD for the developmental condition because dyspraxia can also refer to movement difficulties acquired after brain injury or stroke.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:developmental-coordination-disorder:dcd-source-nhs-overview",
+        "legacy:developmental-coordination-disorder:dcd-source-nhs-adults"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "developmental-coordination-disorder",
+      "owner_path": "objects/concepts/developmental-coordination-disorder.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance"
+      ],
+      "triage_flags": [
+        "possible_causal_or_mechanistic"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "developmental-language-disorder#dld-claim-cooccurrence",
+      "claim_text": "Under CATALISE, risk factors do not by themselves rule out DLD and DLD can co-occur with some other neurodevelopmental disorders such as ADHD; this does not mean every language difficulty occurring with another diagnosis is DLD.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:developmental-language-disorder:dld-source-catalise"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "developmental-language-disorder",
+      "owner_path": "objects/concepts/developmental-language-disorder.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_diagnostic",
+        "possible_safety"
+      ],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "developmental-language-disorder#dld-claim-core",
+      "claim_text": "In the CATALISE framework widely used in English-speaking research and services, DLD is a persistent developmental language disorder with meaningful everyday impact that is not associated with a known biomedical cause.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:developmental-language-disorder:dld-source-catalise",
+        "legacy:developmental-language-disorder:dld-source-nhs"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "developmental-language-disorder",
+      "owner_path": "objects/concepts/developmental-language-disorder.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_causal_or_mechanistic"
+      ],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "developmental-language-disorder#dld-claim-international-variation",
+      "claim_text": "DLD terminology is not completely uniform internationally: some current clinical guidance uses the term more broadly than CATALISE, so ND Oracle should state which framework a definition follows rather than presenting one usage as universal.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:developmental-language-disorder:dld-source-catalise",
+        "legacy:developmental-language-disorder:dld-source-german-guideline"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "developmental-language-disorder",
+      "owner_path": "objects/concepts/developmental-language-disorder.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "developmental-language-disorder#dld-claim-multilingual",
+      "claim_text": "Learning or using more than one language does not cause DLD; assessment needs to distinguish multilingual language difference from persistent language disorder.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:developmental-language-disorder:dld-source-nhs",
+        "legacy:developmental-language-disorder:dld-source-speech-language-uk"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "developmental-language-disorder",
+      "owner_path": "objects/concepts/developmental-language-disorder.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "community"
+      ],
+      "triage_flags": [
+        "possible_causal_or_mechanistic"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "disabled-students-allowance#dsa-england-scope",
+      "claim_text": "Disabled Students' Allowance is an England student-support route for eligible students with disability-related study needs, with application and evidence requirements set for the relevant academic year.",
+      "confidence": "high",
+      "contribution_roles": [
+        "supportive"
+      ],
+      "coverage_status": "covered",
+      "evidence_model": "normalized_v0.2",
+      "evidence_routes": [
+        "govuk-dsa-2026-27"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "disabled-students-allowance",
+      "owner_path": "objects/resources/disabled-students-allowance.json",
+      "owner_type": "resource",
+      "review_age_days": 6,
+      "schema_version": "0.2",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "authoritative_guidance"
+      ],
+      "triage_flags": [
+        "possible_legal_or_entitlement"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "dyscalculia#dyscalculia-claim-core",
+      "claim_text": "Research on developmental dyscalculia identifies both domain-specific and domain-general cognitive correlates, supporting a heterogeneous rather than single-deficit account.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:dyscalculia:dyscalculia-source-core"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "dyscalculia",
+      "owner_path": "objects/concepts/dyscalculia.json",
+      "owner_type": "concept",
+      "review_age_days": 6,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "dyslexia#dyslexia-claim-core",
+      "claim_text": "Dyslexia is characterised primarily by persistent difficulty with word reading and/or spelling, involving accuracy, speed or both, and its presentation can vary with the writing system.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:dyslexia:dyslexia-source-ida-2025",
+        "legacy:dyslexia:dyslexia-source-catts-2026"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "dyslexia",
+      "owner_path": "objects/concepts/dyslexia.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "dyslexia#dyslexia-claim-intelligence",
+      "claim_text": "Dyslexic word-level literacy difficulties occur across a range of cognitive profiles, so general intelligence should not be used as a simple test of whether someone can be dyslexic.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:dyslexia:dyslexia-source-ida-2025",
+        "legacy:dyslexia:dyslexia-source-catts-2026",
+        "legacy:dyslexia:dyslexia-source-nhs-children"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "dyslexia",
+      "owner_path": "objects/concepts/dyslexia.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 3,
+      "source_kinds": [
+        "authoritative_guidance",
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "dyslexia#dyslexia-claim-lifespan",
+      "claim_text": "Dyslexic difficulties can continue into adulthood, while their practical impact varies with the person, task, environment, expectations and available support.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:dyslexia:dyslexia-source-nhs-adults",
+        "legacy:dyslexia:dyslexia-source-bda-lived"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "dyslexia",
+      "owner_path": "objects/concepts/dyslexia.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "lived_experience"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "executive-function#executive-function-claim-ecology",
+      "claim_text": "A cognitive task's resemblance to an everyday activity does not by itself show that its score predicts real-world functioning; ecological validity requires direct evidence linking test performance to real-world outcomes.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:executive-function:executive-function-source-suchy-2024"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "executive-function",
+      "owner_path": "objects/concepts/executive-function.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "executive-function#executive-function-claim-method",
+      "claim_text": "Performance tests and informant questionnaires can capture different aspects of executive functioning and should not be assumed to be interchangeable measures of one underlying deficit.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:executive-function:executive-function-source-kofler-2024"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "executive-function",
+      "owner_path": "objects/concepts/executive-function.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "executive-function#executive-function-claim-transdiagnostic",
+      "claim_text": "Executive-function difficulties occur across multiple neurodevelopmental conditions and are heterogeneous within diagnoses, so executive-function measures should not be treated as condition-specific diagnostic signatures.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:executive-function:executive-function-source-sadozai-2024",
+        "legacy:executive-function:executive-function-source-kofler-2024"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "executive-function",
+      "owner_path": "objects/concepts/executive-function.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_diagnostic"
+      ],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "executive-function#executive-function-claim-unity",
+      "claim_text": "Common executive-function constructs such as working-memory updating, shifting and inhibition show both shared variance and separability, but studies do not support one factor structure that fits all ages and samples.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:executive-function:executive-function-source-miyake-2000",
+        "legacy:executive-function:executive-function-source-karr-2018"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "executive-function",
+      "owner_path": "objects/concepts/executive-function.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_prevalence"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "interoception#interoception-claim-core",
+      "claim_text": "A 2025 systematic review and meta-analysis found inconsistent interoception results across autistic samples and no significant group difference in comparable adult cardiac interoceptive accuracy studies.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:interoception:interoception-source-core"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "interoception",
+      "owner_path": "objects/concepts/interoception.json",
+      "owner_type": "concept",
+      "review_age_days": 6,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "learning-disability#learning-disability-claim-adjustments",
+      "claim_text": "A learning-disability diagnosis can be relevant to healthcare access and reasonable adjustments, but the diagnosis alone does not specify an individual person's communication or support needs.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:learning-disability:learning-disability-source-nhs-england",
+        "legacy:learning-disability:learning-disability-source-mencap-rights"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "learning-disability",
+      "owner_path": "objects/concepts/learning-disability.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "community"
+      ],
+      "triage_flags": [
+        "possible_diagnostic"
+      ],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "learning-disability#learning-disability-claim-heterogeneity",
+      "claim_text": "People with a learning disability have widely varying abilities and support needs: some work, have relationships or live independently, while others need substantial support throughout life.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:learning-disability:learning-disability-source-nhs-overview",
+        "legacy:learning-disability:learning-disability-source-mencap-rights"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "learning-disability",
+      "owner_path": "objects/concepts/learning-disability.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "community"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "learning-disability#learning-disability-claim-international-terms",
+      "claim_text": "International clinical and research sources use related terminology including intellectual disability, while WHO ICD-11 uses the diagnostic-group wording disorders of intellectual development; the labels substantially overlap but are not assumed to be legally or operationally identical in every system.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:learning-disability:learning-disability-source-who",
+        "legacy:learning-disability:learning-disability-source-nhs-england"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "learning-disability",
+      "owner_path": "objects/concepts/learning-disability.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance"
+      ],
+      "triage_flags": [
+        "possible_diagnostic",
+        "possible_legal_or_entitlement"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "learning-disability#learning-disability-claim-uk-definition",
+      "claim_text": "In current NHS England usage, learning disability involves developmental difficulty understanding or learning new information and skills together with reduced adaptive independence, and it is distinct from a specific learning difficulty such as dyslexia.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:learning-disability:learning-disability-source-nhs-england"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "learning-disability",
+      "owner_path": "objects/concepts/learning-disability.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "authoritative_guidance"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "masking#masking-claim-core",
+      "claim_text": "Autistic camouflaging is measured in multiple ways and varies substantially between people; systematic-review evidence does not support treating it as a universal autistic experience.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:masking:masking-source-core"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "masking",
+      "owner_path": "objects/concepts/masking.json",
+      "owner_type": "concept",
+      "review_age_days": 6,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "monotropism#monotropism-claim-core",
+      "claim_text": "Monotropism proposes that atypical allocation of attention and strongly concentrated interests may help explain aspects of autistic experience, but this remains a theoretical account rather than a proven universal mechanism.",
+      "confidence": "contested",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:monotropism:monotropism-source-core"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "monotropism",
+      "owner_path": "objects/concepts/monotropism.json",
+      "owner_type": "concept",
+      "review_age_days": 6,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_causal_or_mechanistic"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "neurodiversity#neurodiversity-claim-disability",
+      "claim_text": "A neurodiversity framing does not require denying disability, substantial support needs or clinical care; disagreement remains about how medical and social explanations should be balanced in particular contexts.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:neurodiversity:neurodiversity-source-pellicano-2022",
+        "legacy:neurodiversity:neurodiversity-source-kapp-2026"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "neurodiversity",
+      "owner_path": "objects/concepts/neurodiversity.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "neurodiversity#neurodiversity-claim-origins",
+      "claim_text": "Neurodiversity theory developed through collective autistic and neurodivergent community activity as well as named writers; Judy Singer was an important early contributor, but a single-originator account is not supported by the historical record.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:neurodiversity:neurodiversity-source-botha-2024",
+        "legacy:neurodiversity:neurodiversity-source-singer-2016"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "neurodiversity",
+      "owner_path": "objects/concepts/neurodiversity.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "historical",
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "neurodiversity#neurodiversity-claim-paradigm",
+      "claim_text": "Neurodiversity as a descriptive fact about human variation is distinct from the neurodiversity paradigm or movement, which adds social, ethical and political commitments about how that variation should be understood and accommodated.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:neurodiversity:neurodiversity-source-pellicano-2022",
+        "legacy:neurodiversity:neurodiversity-source-kapp-2026"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "neurodiversity",
+      "owner_path": "objects/concepts/neurodiversity.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "sensory-overload#sensory-overload-claim-core",
+      "claim_text": "Autistic-adult sensory research describes overwhelm as context-dependent and influenced by control, predictability, tolerance and the wider state of the person rather than by stimulus intensity alone.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:sensory-overload:sensory-overload-source-core"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "sensory-overload",
+      "owner_path": "objects/concepts/sensory-overload.json",
+      "owner_type": "concept",
+      "review_age_days": 6,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "sensory-processing#sensory-processing-claim-individual",
+      "claim_text": "A group-level sensory profile does not by itself establish which environmental change, accommodation or intervention will benefit a particular person.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:sensory-processing:sensory-processing-source-acuna-2025",
+        "legacy:sensory-processing:sensory-processing-source-kishida-2026"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "sensory-processing",
+      "owner_path": "objects/concepts/sensory-processing.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_efficacy"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "sensory-processing#sensory-processing-claim-intervention",
+      "claim_text": "Evidence for sensory-based interventions depends on the intervention, population and outcome: recent reviews of fidelity-defined Ayres Sensory Integration report some benefits for individualized functional goals in autistic children, while evidence is not a basis for assuming broad behaviour change or universal benefit.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:sensory-processing:sensory-processing-source-acuna-2025",
+        "legacy:sensory-processing:sensory-processing-source-kishida-2026"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "sensory-processing",
+      "owner_path": "objects/concepts/sensory-processing.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_efficacy"
+      ],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "sensory-processing#sensory-processing-claim-transdiagnostic",
+      "claim_text": "Group-level sensory differences are reported in autism and ADHD as well as other developmental and behavioural conditions, so sensory differences are not specific enough to identify one diagnosis by themselves.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:sensory-processing:sensory-processing-source-jurek-2025",
+        "legacy:sensory-processing:sensory-processing-source-chen-2024",
+        "legacy:sensory-processing:sensory-processing-source-aap-2012"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "sensory-processing",
+      "owner_path": "objects/concepts/sensory-processing.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 3,
+      "source_kinds": [
+        "authoritative_guidance",
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_diagnostic"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "sensory-processing#sensory-processing-claim-variation",
+      "claim_text": "Sensory processing is multidimensional: sensitivity, avoidance, seeking, registration and other sensory responses can vary across modalities, people and contexts rather than forming one uniform profile.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:sensory-processing:sensory-processing-source-dunn-1997",
+        "legacy:sensory-processing:sensory-processing-source-jurek-2025",
+        "legacy:sensory-processing:sensory-processing-source-chen-2024"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "sensory-processing",
+      "owner_path": "objects/concepts/sensory-processing.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 3,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "stimming#stimming-claim-core",
+      "claim_text": "Qualitative research with autistic adults reports that stimming can serve self-regulatory and expressive functions and that social pressure to suppress it can be experienced negatively.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:stimming:stimming-source-core"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "stimming",
+      "owner_path": "objects/concepts/stimming.json",
+      "owner_type": "concept",
+      "review_age_days": 6,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "task-initiation#task-initiation-claim-core",
+      "claim_text": "Research finds initiation and procrastination difficulties can be associated with neurodevelopmental traits, but patterns vary and do not identify a single diagnosis or mechanism.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:task-initiation:task-initiation-source-core"
+      ],
+      "last_reviewed": "2026-08-28",
+      "owner_id": "task-initiation",
+      "owner_path": "objects/concepts/task-initiation.json",
+      "owner_type": "concept",
+      "review_age_days": 6,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 1,
+      "source_kinds": [
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_causal_or_mechanistic",
+        "possible_diagnostic"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "tourette-syndrome#tourette-claim-cooccurrence-support",
+      "claim_text": "ADHD and OCD commonly co-occur with Tourette syndrome, and support or treatment decisions should take account of the difficulties and priorities that matter to the person rather than assuming every tic requires treatment.",
+      "confidence": "moderate",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:tourette-syndrome:tourette-source-nhs",
+        "legacy:tourette-syndrome:tourette-source-essts-psych",
+        "legacy:tourette-syndrome:tourette-source-community"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "tourette-syndrome",
+      "owner_path": "objects/concepts/tourette-syndrome.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 3,
+      "source_kinds": [
+        "authoritative_guidance",
+        "community",
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_prevalence"
+      ],
+      "uncertainty_route_count": 2
+    },
+    {
+      "claim_ref": "tourette-syndrome#tourette-claim-coprolalia",
+      "claim_text": "Swearing or coprolalia is not required for Tourette syndrome and occurs in only a minority of people with it.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:tourette-syndrome:tourette-source-nhs",
+        "legacy:tourette-syndrome:tourette-source-community"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "tourette-syndrome",
+      "owner_path": "objects/concepts/tourette-syndrome.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "community"
+      ],
+      "triage_flags": [
+        "possible_legal_or_entitlement"
+      ],
+      "uncertainty_route_count": 1
+    },
+    {
+      "claim_ref": "tourette-syndrome#tourette-claim-core",
+      "claim_text": "Tourette syndrome is a tic disorder involving both motor and vocal tics, with onset during development and persistence over time; exact diagnostic wording differs between classification systems.",
+      "confidence": "high",
+      "contribution_roles": [],
+      "coverage_status": "covered",
+      "evidence_model": "legacy_v0.1_embedded",
+      "evidence_routes": [
+        "legacy:tourette-syndrome:tourette-source-nhs",
+        "legacy:tourette-syndrome:tourette-source-essts-assessment"
+      ],
+      "last_reviewed": "2026-08-12",
+      "owner_id": "tourette-syndrome",
+      "owner_path": "objects/concepts/tourette-syndrome.json",
+      "owner_type": "concept",
+      "review_age_days": 22,
+      "schema_version": "0.1",
+      "semantic_classification": "editorial_not_machine_inferred",
+      "source_count": 2,
+      "source_kinds": [
+        "authoritative_guidance",
+        "peer_reviewed"
+      ],
+      "triage_flags": [
+        "possible_diagnostic"
+      ],
+      "uncertainty_route_count": 2
+    }
+  ],
+  "errors": [],
+  "purpose": "Machine-readable claim/evidence coverage projection across accepted v0.1 embedded sources and v0.2 normalized Evidence Contributions. Metrics are audit signals, not truth scores.",
+  "sources": [
+    {
+      "accessed": "2026-08-28",
+      "citation": "Acas, Reasonable adjustments at work, updated 30 January 2025.",
+      "doi": null,
+      "evidence_id": "acas-reasonable-adjustments-2025",
+      "evidence_model": "normalized_v0.2",
+      "locator": {
+        "type": "url",
+        "value": "https://www.acas.org.uk/reasonable-adjustments"
+      },
+      "owner_id": null,
+      "owner_path": "objects/evidence/acas-reasonable-adjustments-2025.json",
+      "referenced_by_claims": [
+        "acas-reasonable-adjustments#acas-adjustments-guidance"
+      ],
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Department for Work and Pensions, Access to Work factsheet for customers, GOV.UK, updated 5 May 2026.",
+      "doi": null,
+      "evidence_id": "govuk-access-to-work-factsheet-2026",
+      "evidence_model": "normalized_v0.2",
+      "locator": {
+        "type": "url",
+        "value": "https://www.gov.uk/government/publications/access-to-work-factsheet/access-to-work-factsheet-for-customers"
+      },
+      "owner_id": null,
+      "owner_path": "objects/evidence/govuk-access-to-work-factsheet-2026.json",
+      "referenced_by_claims": [
+        "access-to-work#atw-scheme-scope"
+      ],
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Student Loans Company and Department for Education, Disabled Students' Allowance application forms and notes for 2026 to 2027, GOV.UK, updated 27 August 2026.",
+      "doi": null,
+      "evidence_id": "govuk-dsa-2026-27",
+      "evidence_model": "normalized_v0.2",
+      "locator": {
+        "type": "url",
+        "value": "https://www.gov.uk/government/publications/disabled-students-allowance-application-forms-and-notes-for-2026-to-2027"
+      },
+      "owner_id": null,
+      "owner_path": "objects/evidence/govuk-dsa-2026-27.json",
+      "referenced_by_claims": [
+        "disabled-students-allowance#dsa-england-scope"
+      ],
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Faraone SV et al. The World Federation of ADHD International Consensus Statement: 208 Evidence-based conclusions about the disorder. Neuroscience & Biobehavioral Reviews. 2021;128:789-818.",
+      "doi": "10.1016/j.neubiorev.2021.01.022",
+      "evidence_id": "legacy:adhd:adhd-source-faraone-2021",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/33549739/"
+      },
+      "owner_id": "adhd",
+      "owner_path": "objects/concepts/adhd.json",
+      "referenced_by_claims": [
+        "adhd#adhd-claim-core"
+      ],
+      "source_id": "adhd-source-faraone-2021",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Jurek L et al. Sensory Processing in Individuals With Attention-Deficit/Hyperactivity Disorder Compared With Control Populations: A Systematic Review and Meta-Analysis. Journal of the American Academy of Child & Adolescent Psychiatry. 2025;64(10):1132-1147.",
+      "doi": "10.1016/j.jaac.2025.02.019",
+      "evidence_id": "legacy:adhd:adhd-source-jurek-2025",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/40250555/"
+      },
+      "owner_id": "adhd",
+      "owner_path": "objects/concepts/adhd.json",
+      "referenced_by_claims": [],
+      "source_id": "adhd-source-jurek-2025",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Kofler MJ et al. Executive function deficits in attention-deficit/hyperactivity disorder and autism spectrum disorder. Nature Reviews Psychology. 2024;3(10):701-719.",
+      "doi": "10.1038/s44159-024-00350-9",
+      "evidence_id": "legacy:adhd:adhd-source-kofler-2024",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/39429646/"
+      },
+      "owner_id": "adhd",
+      "owner_path": "objects/concepts/adhd.json",
+      "referenced_by_claims": [
+        "adhd#adhd-claim-executive"
+      ],
+      "source_id": "adhd-source-kofler-2024",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "NICE. Attention deficit hyperactivity disorder: diagnosis and management (NG87). Last reviewed 7 May 2025.",
+      "doi": null,
+      "evidence_id": "legacy:adhd:adhd-source-nice",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.nice.org.uk/guidance/ng87/chapter/recommendations"
+      },
+      "owner_id": "adhd",
+      "owner_path": "objects/concepts/adhd.json",
+      "referenced_by_claims": [
+        "adhd#adhd-claim-core",
+        "adhd#adhd-claim-assessment",
+        "adhd#adhd-claim-environment"
+      ],
+      "source_id": "adhd-source-nice",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Sadozai AK et al. Executive function in children with neurodevelopmental conditions: a systematic review and meta-analysis. Nature Human Behaviour. 2024;8(12):2357-2366.",
+      "doi": "10.1038/s41562-024-02000-9",
+      "evidence_id": "legacy:adhd:adhd-source-sadozai-2024",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/39424962/"
+      },
+      "owner_id": "adhd",
+      "owner_path": "objects/concepts/adhd.json",
+      "referenced_by_claims": [
+        "adhd#adhd-claim-executive"
+      ],
+      "source_id": "adhd-source-sadozai-2024",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Kinnaird E, Stewart C, Tchanturia K. Investigating alexithymia in autism: A systematic review and meta-analysis. European Psychiatry. 2019;55:80-89.",
+      "doi": "10.1016/j.eurpsy.2018.09.004",
+      "evidence_id": "legacy:alexithymia:alexithymia-source-core",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/30399531/"
+      },
+      "owner_id": "alexithymia",
+      "owner_path": "objects/concepts/alexithymia.json",
+      "referenced_by_claims": [
+        "alexithymia#alexithymia-claim-core"
+      ],
+      "source_id": "alexithymia-source-core",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Chen Y et al. A systematic review and meta-analysis of the relationship between sensory processing differences and internalising/externalising problems in autism. Clinical Psychology Review. 2024;114:102516.",
+      "doi": "10.1016/j.cpr.2024.102516",
+      "evidence_id": "legacy:autism:autism-source-chen-2024",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/39515075/"
+      },
+      "owner_id": "autism",
+      "owner_path": "objects/concepts/autism.json",
+      "referenced_by_claims": [
+        "autism#autism-claim-sensory"
+      ],
+      "source_id": "autism-source-chen-2024",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "NICE. Autism spectrum disorder in adults: diagnosis and management (CG142), recommendations. Current guidance reviewed through 2025.",
+      "doi": null,
+      "evidence_id": "legacy:autism:autism-source-nice-adults",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.nice.org.uk/guidance/cg142/chapter/recommendations"
+      },
+      "owner_id": "autism",
+      "owner_path": "objects/concepts/autism.json",
+      "referenced_by_claims": [
+        "autism#autism-claim-diversity",
+        "autism#autism-claim-support"
+      ],
+      "source_id": "autism-source-nice-adults",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Pellicano E, den Houting J. Annual Research Review: Shifting from 'normal science' to neurodiversity in autism science. Journal of Child Psychology and Psychiatry. 2022;63(4):381-396.",
+      "doi": "10.1111/jcpp.13534",
+      "evidence_id": "legacy:autism:autism-source-pellicano-2022",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/34730840/"
+      },
+      "owner_id": "autism",
+      "owner_path": "objects/concepts/autism.json",
+      "referenced_by_claims": [
+        "autism#autism-claim-support"
+      ],
+      "source_id": "autism-source-pellicano-2022",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Schuck RK et al. Preferences for Identity-First and Person-First Language: A Systematic Review of Research With Autistic Adults/Adults With Autism. Journal of Autism and Developmental Disorders. 2025; correction 2026.",
+      "doi": "10.1007/s10803-025-07174-3",
+      "evidence_id": "legacy:autism:autism-source-schuck-2025",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/41389164/"
+      },
+      "owner_id": "autism",
+      "owner_path": "objects/concepts/autism.json",
+      "referenced_by_claims": [
+        "autism#autism-claim-language"
+      ],
+      "source_id": "autism-source-schuck-2025",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "World Health Organization. Autism fact sheet. 17 September 2025.",
+      "doi": null,
+      "evidence_id": "legacy:autism:autism-source-who-2025",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.who.int/news-room/fact-sheets/detail/autism-spectrum-disorders"
+      },
+      "owner_id": "autism",
+      "owner_path": "objects/concepts/autism.json",
+      "referenced_by_claims": [
+        "autism#autism-claim-diversity",
+        "autism#autism-claim-sensory"
+      ],
+      "source_id": "autism-source-who-2025",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Raymaker DM et al. Having All of Your Internal Resources Exhausted Beyond Measure and Being Left with No Clean-Up Crew: Defining Autistic Burnout. Autism in Adulthood. 2020;2(2):132-143.",
+      "doi": "10.1089/aut.2019.0079",
+      "evidence_id": "legacy:autistic-burnout:autistic-burnout-source-core",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/32851204/"
+      },
+      "owner_id": "autistic-burnout",
+      "owner_path": "objects/concepts/autistic-burnout.json",
+      "referenced_by_claims": [
+        "autistic-burnout#autistic-burnout-claim-core"
+      ],
+      "source_id": "autistic-burnout-source-core",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Crompton CJ et al. Neurotype-Matching, but Not Being Autistic, Influences Self and Observer Ratings of Interpersonal Rapport. Frontiers in Psychology. 2020;11:586171.",
+      "doi": "10.3389/fpsyg.2020.586171",
+      "evidence_id": "legacy:communication-differences:communication-differences-source-core",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/33192918/"
+      },
+      "owner_id": "communication-differences",
+      "owner_path": "objects/concepts/communication-differences.json",
+      "referenced_by_claims": [
+        "communication-differences#communication-differences-claim-core"
+      ],
+      "source_id": "communication-differences-source-core",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Blank R et al. International clinical practice recommendations on the definition, diagnosis, assessment, intervention, and psychosocial aspects of developmental coordination disorder. Developmental Medicine & Child Neurology. 2019;61(3):242-285.",
+      "doi": "10.1111/dmcn.14132",
+      "evidence_id": "legacy:developmental-coordination-disorder:dcd-source-blank-2019",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/30671947/"
+      },
+      "owner_id": "developmental-coordination-disorder",
+      "owner_path": "objects/concepts/developmental-coordination-disorder.json",
+      "referenced_by_claims": [
+        "developmental-coordination-disorder#dcd-claim-core",
+        "developmental-coordination-disorder#dcd-claim-lifespan"
+      ],
+      "source_id": "dcd-source-blank-2019",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "NHS. Dyspraxia in adults (developmental co-ordination disorder).",
+      "doi": null,
+      "evidence_id": "legacy:developmental-coordination-disorder:dcd-source-nhs-adults",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.nhs.uk/conditions/developmental-coordination-disorder-dyspraxia-in-adults/"
+      },
+      "owner_id": "developmental-coordination-disorder",
+      "owner_path": "objects/concepts/developmental-coordination-disorder.json",
+      "referenced_by_claims": [
+        "developmental-coordination-disorder#dcd-claim-lifespan",
+        "developmental-coordination-disorder#dcd-claim-terminology"
+      ],
+      "source_id": "dcd-source-nhs-adults",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "NHS. Developmental co-ordination disorder (dyspraxia) in children \u2014 diagnosis.",
+      "doi": null,
+      "evidence_id": "legacy:developmental-coordination-disorder:dcd-source-nhs-diagnosis",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.nhs.uk/conditions/developmental-coordination-disorder-dyspraxia/diagnosis/"
+      },
+      "owner_id": "developmental-coordination-disorder",
+      "owner_path": "objects/concepts/developmental-coordination-disorder.json",
+      "referenced_by_claims": [
+        "developmental-coordination-disorder#dcd-claim-core"
+      ],
+      "source_id": "dcd-source-nhs-diagnosis",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "NHS. Developmental co-ordination disorder (dyspraxia) in children \u2014 overview.",
+      "doi": null,
+      "evidence_id": "legacy:developmental-coordination-disorder:dcd-source-nhs-overview",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.nhs.uk/conditions/developmental-coordination-disorder-dyspraxia/"
+      },
+      "owner_id": "developmental-coordination-disorder",
+      "owner_path": "objects/concepts/developmental-coordination-disorder.json",
+      "referenced_by_claims": [
+        "developmental-coordination-disorder#dcd-claim-lifespan",
+        "developmental-coordination-disorder#dcd-claim-terminology"
+      ],
+      "source_id": "dcd-source-nhs-overview",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Bishop DVM, Snowling MJ, Thompson PA, Greenhalgh T; CATALISE-2 consortium. Phase 2 of CATALISE: a multinational and multidisciplinary Delphi consensus study of problems with language development: Terminology. Journal of Child Psychology and Psychiatry. 2017;58(10):1068-1080.",
+      "doi": "10.1111/jcpp.12721",
+      "evidence_id": "legacy:developmental-language-disorder:dld-source-catalise",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/28369935/"
+      },
+      "owner_id": "developmental-language-disorder",
+      "owner_path": "objects/concepts/developmental-language-disorder.json",
+      "referenced_by_claims": [
+        "developmental-language-disorder#dld-claim-core",
+        "developmental-language-disorder#dld-claim-cooccurrence",
+        "developmental-language-disorder#dld-claim-international-variation"
+      ],
+      "source_id": "dld-source-catalise",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Neumann K et al. Clinical practice guideline: Interventions for Developmental Language Delay and Disorders. Deutsches \u00c4rzteblatt International. 2024;121(5):155-162.",
+      "doi": "10.3238/arztebl.m2024.0004",
+      "evidence_id": "legacy:developmental-language-disorder:dld-source-german-guideline",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/38377329/"
+      },
+      "owner_id": "developmental-language-disorder",
+      "owner_path": "objects/concepts/developmental-language-disorder.json",
+      "referenced_by_claims": [
+        "developmental-language-disorder#dld-claim-international-variation"
+      ],
+      "source_id": "dld-source-german-guideline",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Speech and Language UK. You can't see DLD: lived-experience awareness material. 17 October 2025.",
+      "doi": null,
+      "evidence_id": "legacy:developmental-language-disorder:dld-source-lived",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://speechandlanguage.org.uk/about-us/news-and-blogs/dld-day-2025/"
+      },
+      "owner_id": "developmental-language-disorder",
+      "owner_path": "objects/concepts/developmental-language-disorder.json",
+      "referenced_by_claims": [],
+      "source_id": "dld-source-lived",
+      "source_kind": "lived_experience"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Bedfordshire and Luton Children's Health / NHS. Developmental Language Disorder (DLD). Last reviewed 24 November 2025.",
+      "doi": null,
+      "evidence_id": "legacy:developmental-language-disorder:dld-source-nhs",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://bedslutonchildrenshealth.nhs.uk/services/bedfordshire-and-luton-childrens-speech-and-language-therapy-service/developmental-language-disorder-dld/"
+      },
+      "owner_id": "developmental-language-disorder",
+      "owner_path": "objects/concepts/developmental-language-disorder.json",
+      "referenced_by_claims": [
+        "developmental-language-disorder#dld-claim-core",
+        "developmental-language-disorder#dld-claim-multilingual"
+      ],
+      "source_id": "dld-source-nhs",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Speech and Language UK. Developmental Language Disorder (DLD) awareness; resource developed with lived-experience participation.",
+      "doi": null,
+      "evidence_id": "legacy:developmental-language-disorder:dld-source-speech-language-uk",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://speechandlanguage.org.uk/help-for-families/developmental-language-disorder-awareness/"
+      },
+      "owner_id": "developmental-language-disorder",
+      "owner_path": "objects/concepts/developmental-language-disorder.json",
+      "referenced_by_claims": [
+        "developmental-language-disorder#dld-claim-multilingual"
+      ],
+      "source_id": "dld-source-speech-language-uk",
+      "source_kind": "community"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Mishra A, Khan A. Domain-general and domain-specific cognitive correlates of developmental dyscalculia: a systematic review of the last two decades' literature. Child Neuropsychology. 2023;29(8):1179-1229.",
+      "doi": "10.1080/09297049.2022.2147914",
+      "evidence_id": "legacy:dyscalculia:dyscalculia-source-core",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/36440471/"
+      },
+      "owner_id": "dyscalculia",
+      "owner_path": "objects/concepts/dyscalculia.json",
+      "referenced_by_claims": [
+        "dyscalculia#dyscalculia-claim-core"
+      ],
+      "source_id": "dyscalculia-source-core",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "British Dyslexia Association. My Dyslexia Story: Rebecca Harrison-Ruddock. 26 May 2026.",
+      "doi": null,
+      "evidence_id": "legacy:dyslexia:dyslexia-source-bda-lived",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.bdadyslexia.org.uk/stories/my-dyslexia-story-rebecca-harrison-ruddock"
+      },
+      "owner_id": "dyslexia",
+      "owner_path": "objects/concepts/dyslexia.json",
+      "referenced_by_claims": [
+        "dyslexia#dyslexia-claim-lifespan"
+      ],
+      "source_id": "dyslexia-source-bda-lived",
+      "source_kind": "lived_experience"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Catts HW, Haynes CW, Joshi RM. Defining dyslexia: 2025 revision. Annals of Dyslexia. 2026.",
+      "doi": "10.1007/s11881-026-00363-4",
+      "evidence_id": "legacy:dyslexia:dyslexia-source-catts-2026",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/42053753/"
+      },
+      "owner_id": "dyslexia",
+      "owner_path": "objects/concepts/dyslexia.json",
+      "referenced_by_claims": [
+        "dyslexia#dyslexia-claim-core",
+        "dyslexia#dyslexia-claim-intelligence"
+      ],
+      "source_id": "dyslexia-source-catts-2026",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "International Dyslexia Association. 2025 Dyslexia Definition Project; definition adopted 22 October 2025.",
+      "doi": null,
+      "evidence_id": "legacy:dyslexia:dyslexia-source-ida-2025",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://dyslexiaida.org/2025-dyslexia-definition-project/"
+      },
+      "owner_id": "dyslexia",
+      "owner_path": "objects/concepts/dyslexia.json",
+      "referenced_by_claims": [
+        "dyslexia#dyslexia-claim-core",
+        "dyslexia#dyslexia-claim-intelligence"
+      ],
+      "source_id": "dyslexia-source-ida-2025",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "NHS. Dyslexia in adults.",
+      "doi": null,
+      "evidence_id": "legacy:dyslexia:dyslexia-source-nhs-adults",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.nhs.uk/conditions/dyslexia-in-adults/"
+      },
+      "owner_id": "dyslexia",
+      "owner_path": "objects/concepts/dyslexia.json",
+      "referenced_by_claims": [
+        "dyslexia#dyslexia-claim-lifespan"
+      ],
+      "source_id": "dyslexia-source-nhs-adults",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "NHS. Dyslexia in children.",
+      "doi": null,
+      "evidence_id": "legacy:dyslexia:dyslexia-source-nhs-children",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.nhs.uk/conditions/dyslexia-in-children/"
+      },
+      "owner_id": "dyslexia",
+      "owner_path": "objects/concepts/dyslexia.json",
+      "referenced_by_claims": [
+        "dyslexia#dyslexia-claim-intelligence"
+      ],
+      "source_id": "dyslexia-source-nhs-children",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Karr JE et al. The unity and diversity of executive functions: A systematic review and re-analysis of latent variable studies. Psychological Bulletin. 2018;144(11):1147-1185.",
+      "doi": "10.1037/bul0000160",
+      "evidence_id": "legacy:executive-function:executive-function-source-karr-2018",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/30080055/"
+      },
+      "owner_id": "executive-function",
+      "owner_path": "objects/concepts/executive-function.json",
+      "referenced_by_claims": [
+        "executive-function#executive-function-claim-unity"
+      ],
+      "source_id": "executive-function-source-karr-2018",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Kofler MJ et al. Executive function deficits in attention-deficit/hyperactivity disorder and autism spectrum disorder. Nature Reviews Psychology. 2024;3(10):701-719.",
+      "doi": "10.1038/s44159-024-00350-9",
+      "evidence_id": "legacy:executive-function:executive-function-source-kofler-2024",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/39429646/"
+      },
+      "owner_id": "executive-function",
+      "owner_path": "objects/concepts/executive-function.json",
+      "referenced_by_claims": [
+        "executive-function#executive-function-claim-transdiagnostic",
+        "executive-function#executive-function-claim-method"
+      ],
+      "source_id": "executive-function-source-kofler-2024",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Miyake A et al. The unity and diversity of executive functions and their contributions to complex frontal lobe tasks. Cognitive Psychology. 2000;41(1):49-100.",
+      "doi": "10.1006/cogp.1999.0734",
+      "evidence_id": "legacy:executive-function:executive-function-source-miyake-2000",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/10945922/"
+      },
+      "owner_id": "executive-function",
+      "owner_path": "objects/concepts/executive-function.json",
+      "referenced_by_claims": [
+        "executive-function#executive-function-claim-unity"
+      ],
+      "source_id": "executive-function-source-miyake-2000",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Sadozai AK et al. Executive function in children with neurodevelopmental conditions: a systematic review and meta-analysis. Nature Human Behaviour. 2024;8(12):2357-2366.",
+      "doi": "10.1038/s41562-024-02000-9",
+      "evidence_id": "legacy:executive-function:executive-function-source-sadozai-2024",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/39424962/"
+      },
+      "owner_id": "executive-function",
+      "owner_path": "objects/concepts/executive-function.json",
+      "referenced_by_claims": [
+        "executive-function#executive-function-claim-transdiagnostic"
+      ],
+      "source_id": "executive-function-source-sadozai-2024",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Suchy Y et al. Pitfalls in research on ecological validity of novel executive function tests: A systematic review and a call to action. Psychological Assessment. 2024;36(4):243-261.",
+      "doi": "10.1037/pas0001297",
+      "evidence_id": "legacy:executive-function:executive-function-source-suchy-2024",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/38421761/"
+      },
+      "owner_id": "executive-function",
+      "owner_path": "objects/concepts/executive-function.json",
+      "referenced_by_claims": [
+        "executive-function#executive-function-claim-ecology"
+      ],
+      "source_id": "executive-function-source-suchy-2024",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Klein M, Witthoft M, Jungmann SM. Interoception in individuals with autism spectrum disorder: a systematic literature review and meta-analysis. Frontiers in Psychiatry. 2025;16:1573263.",
+      "doi": "10.3389/fpsyt.2025.1573263",
+      "evidence_id": "legacy:interoception:interoception-source-core",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/40909407/"
+      },
+      "owner_id": "interoception",
+      "owner_path": "objects/concepts/interoception.json",
+      "referenced_by_claims": [
+        "interoception#interoception-claim-core"
+      ],
+      "source_id": "interoception-source-core",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Mencap. Learning Disability Rights.",
+      "doi": null,
+      "evidence_id": "legacy:learning-disability:learning-disability-source-mencap-rights",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.mencap.org.uk/learning-disability-explained/learning-disability-rights"
+      },
+      "owner_id": "learning-disability",
+      "owner_path": "objects/concepts/learning-disability.json",
+      "referenced_by_claims": [
+        "learning-disability#learning-disability-claim-heterogeneity",
+        "learning-disability#learning-disability-claim-adjustments"
+      ],
+      "source_id": "learning-disability-source-mencap-rights",
+      "source_kind": "community"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "NHS England. Find out about the Learning Disability Register. Updated 12 August 2025.",
+      "doi": null,
+      "evidence_id": "legacy:learning-disability:learning-disability-source-nhs-england",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.england.nhs.uk/long-read/find-out-about-the-learning-disability-register/"
+      },
+      "owner_id": "learning-disability",
+      "owner_path": "objects/concepts/learning-disability.json",
+      "referenced_by_claims": [
+        "learning-disability#learning-disability-claim-uk-definition",
+        "learning-disability#learning-disability-claim-international-terms",
+        "learning-disability#learning-disability-claim-adjustments"
+      ],
+      "source_id": "learning-disability-source-nhs-england",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "NHS. Learning disabilities \u2014 overview.",
+      "doi": null,
+      "evidence_id": "legacy:learning-disability:learning-disability-source-nhs-overview",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.nhs.uk/conditions/learning-disabilities/"
+      },
+      "owner_id": "learning-disability",
+      "owner_path": "objects/concepts/learning-disability.json",
+      "referenced_by_claims": [
+        "learning-disability#learning-disability-claim-heterogeneity"
+      ],
+      "source_id": "learning-disability-source-nhs-overview",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "World Health Organization. Mental disorders fact sheet. 30 September 2025; ICD-11 terminology for disorders of intellectual development.",
+      "doi": null,
+      "evidence_id": "legacy:learning-disability:learning-disability-source-who",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.who.int/news-room/fact-sheets/detail/mental-disorders"
+      },
+      "owner_id": "learning-disability",
+      "owner_path": "objects/concepts/learning-disability.json",
+      "referenced_by_claims": [
+        "learning-disability#learning-disability-claim-international-terms"
+      ],
+      "source_id": "learning-disability-source-who",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Cook J, Hull L, Crane L, Mandy W. Camouflaging in autism: A systematic review. Clinical Psychology Review. 2021;89:102080.",
+      "doi": "10.1016/j.cpr.2021.102080",
+      "evidence_id": "legacy:masking:masking-source-core",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/34563942/"
+      },
+      "owner_id": "masking",
+      "owner_path": "objects/concepts/masking.json",
+      "referenced_by_claims": [
+        "masking#masking-claim-core"
+      ],
+      "source_id": "masking-source-core",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Murray D, Lesser M, Lawson W. Attention, monotropism and the diagnostic criteria for autism. Autism. 2005;9(2):139-156.",
+      "doi": "10.1177/1362361305051398",
+      "evidence_id": "legacy:monotropism:monotropism-source-core",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://journals.sagepub.com/doi/10.1177/1362361305051398"
+      },
+      "owner_id": "monotropism",
+      "owner_path": "objects/concepts/monotropism.json",
+      "referenced_by_claims": [
+        "monotropism#monotropism-claim-core"
+      ],
+      "source_id": "monotropism-source-core",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Botha M et al. The neurodiversity concept was developed collectively: An overdue correction on the origins of neurodiversity theory. Autism. 2024;28(6):1591-1594.",
+      "doi": "10.1177/13623613241237871",
+      "evidence_id": "legacy:neurodiversity:neurodiversity-source-botha-2024",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://researchportal.port.ac.uk/en/publications/the-neurodiversity-concept-was-developed-collectively-an-overdue-/"
+      },
+      "owner_id": "neurodiversity",
+      "owner_path": "objects/concepts/neurodiversity.json",
+      "referenced_by_claims": [
+        "neurodiversity#neurodiversity-claim-origins"
+      ],
+      "source_id": "neurodiversity-source-botha-2024",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Kapp SK. The neurodiversity movement vs. the medical model of autism. World Psychiatry. 2026;25(2):322-323.",
+      "doi": "10.1002/wps.70076",
+      "evidence_id": "legacy:neurodiversity:neurodiversity-source-kapp-2026",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/42136518/"
+      },
+      "owner_id": "neurodiversity",
+      "owner_path": "objects/concepts/neurodiversity.json",
+      "referenced_by_claims": [
+        "neurodiversity#neurodiversity-claim-paradigm",
+        "neurodiversity#neurodiversity-claim-disability"
+      ],
+      "source_id": "neurodiversity-source-kapp-2026",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Pellicano E, den Houting J. Annual Research Review: Shifting from 'normal science' to neurodiversity in autism science. Journal of Child Psychology and Psychiatry. 2022;63(4):381-396.",
+      "doi": "10.1111/jcpp.13534",
+      "evidence_id": "legacy:neurodiversity:neurodiversity-source-pellicano-2022",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/34730840/"
+      },
+      "owner_id": "neurodiversity",
+      "owner_path": "objects/concepts/neurodiversity.json",
+      "referenced_by_claims": [
+        "neurodiversity#neurodiversity-claim-paradigm",
+        "neurodiversity#neurodiversity-claim-disability"
+      ],
+      "source_id": "neurodiversity-source-pellicano-2022",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Singer J. NeuroDiversity: The Birth of an Idea. Kindle edition. 2016; based on the 1998 thesis Odd People In.",
+      "doi": null,
+      "evidence_id": "legacy:neurodiversity:neurodiversity-source-singer-2016",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://wellcomecollection.org/works/ywrdd8ff"
+      },
+      "owner_id": "neurodiversity",
+      "owner_path": "objects/concepts/neurodiversity.json",
+      "referenced_by_claims": [
+        "neurodiversity#neurodiversity-claim-origins"
+      ],
+      "source_id": "neurodiversity-source-singer-2016",
+      "source_kind": "historical"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "MacLennan K, O'Brien S, Tavassoli T. In Our Own Words: The Complex Sensory Experiences of Autistic Adults. Journal of Autism and Developmental Disorders. 2022;52(7):3061-3075.",
+      "doi": "10.1007/s10803-021-05186-3",
+      "evidence_id": "legacy:sensory-overload:sensory-overload-source-core",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/34255236/"
+      },
+      "owner_id": "sensory-overload",
+      "owner_path": "objects/concepts/sensory-overload.json",
+      "referenced_by_claims": [
+        "sensory-overload#sensory-overload-claim-core"
+      ],
+      "source_id": "sensory-overload-source-core",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "American Academy of Pediatrics. Sensory integration therapies for children with developmental and behavioral disorders. Pediatrics. 2012;129(6):1186-1189.",
+      "doi": "10.1542/peds.2012-0876",
+      "evidence_id": "legacy:sensory-processing:sensory-processing-source-aap-2012",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/22641765/"
+      },
+      "owner_id": "sensory-processing",
+      "owner_path": "objects/concepts/sensory-processing.json",
+      "referenced_by_claims": [
+        "sensory-processing#sensory-processing-claim-transdiagnostic"
+      ],
+      "source_id": "sensory-processing-source-aap-2012",
+      "source_kind": "authoritative_guidance"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Acu\u00f1a C et al. Ayres Sensory Integration With Children Ages 0 to 12: A Systematic Review of Randomized Controlled Trials. American Journal of Occupational Therapy. 2025;79(3):7903205180.",
+      "doi": "10.5014/ajot.2025.051023",
+      "evidence_id": "legacy:sensory-processing:sensory-processing-source-acuna-2025",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/40193295/"
+      },
+      "owner_id": "sensory-processing",
+      "owner_path": "objects/concepts/sensory-processing.json",
+      "referenced_by_claims": [
+        "sensory-processing#sensory-processing-claim-intervention",
+        "sensory-processing#sensory-processing-claim-individual"
+      ],
+      "source_id": "sensory-processing-source-acuna-2025",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Chen Y et al. A systematic review and meta-analysis of the relationship between sensory processing differences and internalising/externalising problems in autism. Clinical Psychology Review. 2024;114:102516.",
+      "doi": "10.1016/j.cpr.2024.102516",
+      "evidence_id": "legacy:sensory-processing:sensory-processing-source-chen-2024",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/39515075/"
+      },
+      "owner_id": "sensory-processing",
+      "owner_path": "objects/concepts/sensory-processing.json",
+      "referenced_by_claims": [
+        "sensory-processing#sensory-processing-claim-variation",
+        "sensory-processing#sensory-processing-claim-transdiagnostic"
+      ],
+      "source_id": "sensory-processing-source-chen-2024",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Dunn W. The impact of sensory processing abilities on the daily lives of young children and their families: A conceptual model. American Journal of Occupational Therapy. 1997;51(1):23-35.",
+      "doi": "10.5014/ajot.51.1.23",
+      "evidence_id": "legacy:sensory-processing:sensory-processing-source-dunn-1997",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/9311421/"
+      },
+      "owner_id": "sensory-processing",
+      "owner_path": "objects/concepts/sensory-processing.json",
+      "referenced_by_claims": [
+        "sensory-processing#sensory-processing-claim-variation"
+      ],
+      "source_id": "sensory-processing-source-dunn-1997",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Jurek L et al. Sensory Processing in Individuals With Attention-Deficit/Hyperactivity Disorder Compared With Control Populations: A Systematic Review and Meta-Analysis. Journal of the American Academy of Child & Adolescent Psychiatry. 2025;64(10):1132-1147.",
+      "doi": "10.1016/j.jaac.2025.02.019",
+      "evidence_id": "legacy:sensory-processing:sensory-processing-source-jurek-2025",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/40250555/"
+      },
+      "owner_id": "sensory-processing",
+      "owner_path": "objects/concepts/sensory-processing.json",
+      "referenced_by_claims": [
+        "sensory-processing#sensory-processing-claim-variation",
+        "sensory-processing#sensory-processing-claim-transdiagnostic"
+      ],
+      "source_id": "sensory-processing-source-jurek-2025",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Kishida Y et al. Efficacy of Interventions Adhering to the Revised Ayres Sensory Integration Fidelity Measure: A Systematic Review. Journal of Autism and Developmental Disorders. 2026.",
+      "doi": "10.1007/s10803-026-07283-7",
+      "evidence_id": "legacy:sensory-processing:sensory-processing-source-kishida-2026",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/41903087/"
+      },
+      "owner_id": "sensory-processing",
+      "owner_path": "objects/concepts/sensory-processing.json",
+      "referenced_by_claims": [
+        "sensory-processing#sensory-processing-claim-intervention",
+        "sensory-processing#sensory-processing-claim-individual"
+      ],
+      "source_id": "sensory-processing-source-kishida-2026",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Kapp SK et al. People should be allowed to do what they like: Autistic adults' views and experiences of stimming. Autism. 2019;23(7):1782-1792.",
+      "doi": "10.1177/1362361319829628",
+      "evidence_id": "legacy:stimming:stimming-source-core",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/30818970/"
+      },
+      "owner_id": "stimming",
+      "owner_path": "objects/concepts/stimming.json",
+      "referenced_by_claims": [
+        "stimming#stimming-claim-core"
+      ],
+      "source_id": "stimming-source-core",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-28",
+      "citation": "Suriano R. A systematic review on the association between ADHD and procrastination. Research in Developmental Disabilities. 2026;175:105342.",
+      "doi": "10.1016/j.ridd.2026.105342",
+      "evidence_id": "legacy:task-initiation:task-initiation-source-core",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/42456607/"
+      },
+      "owner_id": "task-initiation",
+      "owner_path": "objects/concepts/task-initiation.json",
+      "referenced_by_claims": [
+        "task-initiation#task-initiation-claim-core"
+      ],
+      "source_id": "task-initiation-source-core",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Tourettes Action. Tourette's Awareness Month 2026 \u2014 No Choice.",
+      "doi": null,
+      "evidence_id": "legacy:tourette-syndrome:tourette-source-community",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.tourettes-action.org.uk/206-tourettes-awareness-month-2026.html"
+      },
+      "owner_id": "tourette-syndrome",
+      "owner_path": "objects/concepts/tourette-syndrome.json",
+      "referenced_by_claims": [
+        "tourette-syndrome#tourette-claim-coprolalia",
+        "tourette-syndrome#tourette-claim-cooccurrence-support"
+      ],
+      "source_id": "tourette-source-community",
+      "source_kind": "community"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Szejko N et al. European clinical guidelines for Tourette syndrome and other tic disorders\u2014version 2.0. Part I: assessment. European Child & Adolescent Psychiatry. 2022;31(3):383-402.",
+      "doi": "10.1007/s00787-021-01842-2",
+      "evidence_id": "legacy:tourette-syndrome:tourette-source-essts-assessment",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/34661764/"
+      },
+      "owner_id": "tourette-syndrome",
+      "owner_path": "objects/concepts/tourette-syndrome.json",
+      "referenced_by_claims": [
+        "tourette-syndrome#tourette-claim-core"
+      ],
+      "source_id": "tourette-source-essts-assessment",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "Andr\u00e9n P et al. European clinical guidelines for Tourette syndrome and other tic disorders\u2014version 2.0. Part II: psychological interventions. European Child & Adolescent Psychiatry. 2022;31(3):403-423.",
+      "doi": "10.1007/s00787-021-01845-z",
+      "evidence_id": "legacy:tourette-syndrome:tourette-source-essts-psych",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://pubmed.ncbi.nlm.nih.gov/34313861/"
+      },
+      "owner_id": "tourette-syndrome",
+      "owner_path": "objects/concepts/tourette-syndrome.json",
+      "referenced_by_claims": [
+        "tourette-syndrome#tourette-claim-cooccurrence-support"
+      ],
+      "source_id": "tourette-source-essts-psych",
+      "source_kind": "peer_reviewed"
+    },
+    {
+      "accessed": "2026-08-12",
+      "citation": "NHS. Tourette syndrome. Last reviewed 20 May 2025.",
+      "doi": null,
+      "evidence_id": "legacy:tourette-syndrome:tourette-source-nhs",
+      "evidence_model": "legacy_v0.1_embedded",
+      "locator": {
+        "type": "url",
+        "value": "https://www.nhs.uk/conditions/tourette-syndrome/"
+      },
+      "owner_id": "tourette-syndrome",
+      "owner_path": "objects/concepts/tourette-syndrome.json",
+      "referenced_by_claims": [
+        "tourette-syndrome#tourette-claim-core",
+        "tourette-syndrome#tourette-claim-coprolalia",
+        "tourette-syndrome#tourette-claim-cooccurrence-support"
+      ],
+      "source_id": "tourette-source-nhs",
+      "source_kind": "authoritative_guidance"
+    }
+  ],
+  "summary": {
+    "as_of": "2026-09-03",
+    "claims_with_multiple_source_routes": 29,
+    "confidence_counts": {
+      "contested": 1,
+      "high": 33,
+      "moderate": 15
+    },
+    "covered_claims": 49,
+    "gap_claims": 0,
+    "legacy_embedded_sources": 57,
+    "legacy_v0.1_claims": 46,
+    "normalized_evidence_objects": 3,
+    "normalized_orphan_evidence_objects": [],
+    "normalized_v0.2_claims": 3,
+    "source_kind_counts": {
+      "authoritative_guidance": 18,
+      "community": 3,
+      "historical": 1,
+      "lived_experience": 2,
+      "peer_reviewed": 36
+    },
+    "total_claims": 49,
+    "total_governed_source_records": 60,
+    "triage_flag_counts": {
+      "possible_causal_or_mechanistic": 6,
+      "possible_diagnostic": 9,
+      "possible_efficacy": 2,
+      "possible_legal_or_entitlement": 4,
+      "possible_prevalence": 4,
+      "possible_safety": 1
+    }
+  },
+  "version": "1.0"
+}
