@@ -93,17 +93,19 @@
     "practical": "Useful for bounded practice description; evaluate authorship and basis before treating as evidence of outcomes.",
     "other": "Requires explicit justification because the source class does not supply a default evidential expectation."
   },
-  "freshness_days": {
-    "authoritative_guidance": 180,
-    "commercial": 180,
-    "community": 180,
-    "practical": 180,
-    "dataset": 365,
-    "peer_reviewed": 730,
-    "lived_experience": 730,
-    "book": 1095,
-    "historical": 1095,
-    "other": 365
+  "freshness": {
+    "source_kind_max_age_days": {
+      "authoritative_guidance": 180,
+      "commercial": 180,
+      "community": 180,
+      "practical": 180,
+      "dataset": 365,
+      "peer_reviewed": 730,
+      "lived_experience": 730,
+      "book": 1095,
+      "historical": 1095,
+      "other": 365
+    }
   },
   "contradiction": {
     "rules": [
@@ -120,8 +122,8 @@
   },
   "discovery": {
     "ordinary_find": "Evidence pages do not participate in ordinary practical /find/ ranking.",
-    "dedicated_evidence_search": "Evidence lookup is local in the browser and may search citation, title/authorship, source kind, DOI/ISBN/locator and exact claim references.",
-    "privacy": "Evidence search terms are not transmitted, stored or profiled."
+    "dedicated_evidence_browsing": "Evidence inspection is static and local. Readers can use browser-native Find in page or browse the generated catalogue; no Evidence query is transmitted, stored or profiled.",
+    "privacy": "Evidence browsing does not add a query service, analytics, profiling or network request."
   },
   "acceptance": {
     "requirements": [
