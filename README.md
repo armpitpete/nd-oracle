@@ -32,7 +32,7 @@ Assessment & diagnosis now contains the adult/child × autism/ADHD × England/Sc
 
 ## Production state
 
-Production is still the accepted v1.2 release at `https://ndoracle.org`, deployed from exact main SHA `fad8e560979ba67bf94104d02f3b5100db8572cf` by deployment workflow run `33490134037` (run #18). The generated artifact SHA-256 is `b88c462115434d3ce9929f1e62ec29d0fb0095c13c05ec17c87b813afea426a1` and the Cloudflare deployment identity is `https://600ea685.nd-oracle.pages.dev`.
+Production is the accepted v1.2 release at `https://ndoracle.org`, deployed from exact main SHA `fad8e560979ba67bf94104d02f3b5100db8572cf` by deployment workflow run `33490134037` (run #18). The generated artifact SHA-256 is `b88c462115434d3ce9929f1e62ec29d0fb0095c13c05ec17c87b813afea426a1` and the Cloudflare deployment identity is `https://600ea685.nd-oracle.pages.dev`.
 
 Fresh post-deployment verification ran from a GitHub-hosted runner against the canonical domain in validation run `33490631672` (run #256), job `99801014835`, using the exact production verifier from source SHA `fad8e560979ba67bf94104d02f3b5100db8572cf`. It passed all 336 tests in the evidence run (335 permanent production tests plus one temporary read-only live-probe wrapper) before verifying all 148 canonical routes, all 20 Concept routes, all 61 Resource routes, all 41 Question routes, the governed discovery/evidence contracts, navigation and frozen public compatibility contracts. The temporary evidence PR was closed unmerged and its branch reset to the production SHA.
 
