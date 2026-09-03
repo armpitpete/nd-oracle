@@ -36,7 +36,7 @@ class V12NeedCoverageTests(unittest.TestCase):
             for kind in ("concepts", "resources", "questions", "evidence")
         }
         self.assertEqual({"concepts": 20, "resources": 91, "questions": 76, "evidence": 3}, counts)
-        self.assertEqual(154, sum(counts.values()))
+        self.assertEqual(190, sum(counts.values()))
 
     def test_each_new_nation_query_selects_matching_practical_question(self) -> None:
         for nation, expected in EXPECTED.items():
