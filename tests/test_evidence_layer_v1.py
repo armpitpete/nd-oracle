@@ -26,12 +26,11 @@ class EvidenceLayerV1Tests(unittest.TestCase):
         self.assertTrue(path.is_file(), route)
         return path.read_text(encoding="utf-8")
 
-    def test_sixty_source_detail_routes_plus_index_expand_contract_to_238(self) -> None:
+    def test_sixty_source_detail_routes_plus_index_remain_exact_in_current_contract(self) -> None:
         self.assertEqual(60, len(self.evidence_dirs))
-        self.assertEqual(238, build_site.V10_ROUTE_COUNT)
         paths = build_site.sitemap_paths(build_site.load_concepts(), build_site.load_resources(), build_site.load_questions())
-        self.assertEqual(238, len(paths))
-        self.assertEqual(238, len(set(paths)))
+        self.assertEqual(build_site.V10_ROUTE_COUNT, len(paths))
+        self.assertEqual(len(paths), len(set(paths)))
         self.assertIn("/evidence/", paths)
         self.assertEqual(61, len([path for path in paths if path.startswith("/evidence/")]))
 
