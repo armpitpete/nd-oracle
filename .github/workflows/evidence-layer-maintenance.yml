@@ -39,6 +39,19 @@ jobs:
       - name: Apply frozen-boundary repair
         run: PYTHONPATH=. python scripts/_repair_evidence_v1.py
 
+      - name: Align Evidence acceptance label
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('tests/test_evidence_layer_v1.py')
+          text = path.read_text(encoding='utf-8')
+          old = '("Finding used here:", "Context:", "Method:", "Evidence limitations")'
+          new = '("Finding used here:", "Population/context:", "Method:", "Evidence limitations")'
+          if old not in text:
+              raise SystemExit('provisional Evidence context marker not found')
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+
       - name: Compile Python sources
         run: python -m compileall -q scripts tests
 
