@@ -52,3 +52,6 @@ jobs:
 
       - name: Run regression tests
         run: python -m unittest discover -s tests
+
+      - name: Verify live production contract
+        run: python scripts/verify_live_site.py --origin https://ndoracle.org
