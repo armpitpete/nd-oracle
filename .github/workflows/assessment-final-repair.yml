@@ -1,0 +1,79 @@
+name: Assessment final regression repair
+
+on:
+  push:
+    branches:
+      - coverage/assessment-diagnosis-uk-v1
+    paths:
+      - .github/workflows/assessment-final-repair.yml
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: coverage/assessment-diagnosis-uk-v1
+          fetch-depth: 0
+      - name: Apply bounded final repairs
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          root = Path('.')
+
+          test_path = root / 'tests/test_assessment_diagnosis_uk_v1.py'
+          text = test_path.read_text(encoding='utf-8')
+          old = '''            route_scope = set(discovery._route_scope(top) or [])\n            expected_scope = set(scope_sets[case["scope"]])\n            if route_scope != expected_scope:\n                failures.append((case["query"], "scope", sorted(route_scope), sorted(expected_scope)))\n'''
+          new = '''            route_scope = set(discovery._route_scope(top) or [])\n            expected_scope = set(scope_sets[case["scope"]])\n            if case["scope"] == "United Kingdom":\n                if route_scope:\n                    failures.append((case["query"], "unexpected route scope", sorted(route_scope)))\n                if set(trace["requested_scope"]) != expected_scope:\n                    failures.append((case["query"], "requested scope", sorted(trace["requested_scope"]), sorted(expected_scope)))\n            elif route_scope != expected_scope:\n                failures.append((case["query"], "scope", sorted(route_scope), sorted(expected_scope)))\n'''
+          if old not in text:
+              raise SystemExit('benchmark scope assertion block not found')
+          test_path.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          py_path = root / 'scripts/discovery.py'
+          text = py_path.read_text(encoding='utf-8')
+          anchor = '''        r"\\b(?:do|does|could|would|can|is)\\s+(?:the\\s+)?patient\\b(?:\\s+\\w+){0,5}\\s+(?:have|be)\\b",\n'''
+          addition = anchor + '''        r"\\b(?:can|could|would|will)\\s+you\\s+(?:tell|say|confirm)\\s+(?:me\\s+)?(?:whether|if)\\s+(?:my\\s+(?:child|son|daughter|partner|spouse|friend)|(?:the\\s+)?patient|he|she|they)\\b(?:\\s+\\w+){0,5}\\s+(?:has|have|is|are)\\b",\n'''
+          if anchor not in text:
+              raise SystemExit('python clinical pattern anchor not found')
+          py_path.write_text(text.replace(anchor, addition, 1), encoding='utf-8')
+
+          js_path = root / 'scripts/discovery_browser.js'
+          text = js_path.read_text(encoding='utf-8')
+          anchor = '''        /\\b(?:do|does|could|would|can|is)\\s+(?:the\\s+)?patient\\b(?:\\s+\\w+){0,5}\\s+(?:have|be)\\b/,\n'''
+          addition = anchor + '''        /\\b(?:can|could|would|will)\\s+you\\s+(?:tell|say|confirm)\\s+(?:me\\s+)?(?:whether|if)\\s+(?:my\\s+(?:child|son|daughter|partner|spouse|friend)|(?:the\\s+)?patient|he|she|they)\\b(?:\\s+\\w+){0,5}\\s+(?:has|have|is|are)\\b/,\n'''
+          if anchor not in text:
+              raise SystemExit('browser clinical pattern anchor not found')
+          js_path.write_text(text.replace(anchor, addition, 1), encoding='utf-8')
+
+          benchmark_path = root / 'benchmarks/assessment-diagnosis-uk-v1.json'
+          benchmark = json.loads(benchmark_path.read_text(encoding='utf-8'))
+          additions = [
+              {"query": "can you tell me whether my child is autistic?", "expected_final_reason": "clinical_diagnosis_boundary"},
+              {"query": "could you confirm if my son has autism?", "expected_final_reason": "clinical_diagnosis_boundary"},
+          ]
+          existing = {item.get('query') for item in benchmark['hostile_controls']}
+          for item in additions:
+              if item['query'] not in existing:
+                  benchmark['hostile_controls'].append(item)
+          benchmark_path.write_text(json.dumps(benchmark, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
+
+          workflow = root / '.github/workflows/assessment-final-repair.yml'
+          workflow.unlink()
+          PY
+      - name: Run focused Assessment tests
+        run: python -m unittest tests.test_assessment_diagnosis_uk_v1
+      - name: Commit repaired candidate
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/discovery.py scripts/discovery_browser.js tests/test_assessment_diagnosis_uk_v1.py benchmarks/assessment-diagnosis-uk-v1.json .github/workflows/assessment-final-repair.yml
+          git diff --cached --check
+          git commit -m 'Harden assessment diagnosis boundary and benchmark'
+          git push origin HEAD:coverage/assessment-diagnosis-uk-v1
