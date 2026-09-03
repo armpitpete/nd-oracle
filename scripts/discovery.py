@@ -33,6 +33,27 @@ POLICY["intent_phrases"].update(_extension_intents)
 POLICY["scope_provenance"]["routes"].update(_extension_scopes)
 EXPECTED_SCOPED_ROUTE_COUNT = _BASE_SCOPE_COUNT + len(_extension_scopes)
 
+# Assessment v1 adds only refusal-language coverage here. The frozen v1.1 policy
+# file is not rewritten; browser discovery receives the same merged POLICY in
+# browser_index_json(), preserving Python/browser clinical-boundary equivalence.
+_ASSESSMENT_DIAGNOSIS_REQUEST_PHRASES = (
+    "tell me whether my child has",
+    "tell me whether my child is",
+    "tell me if my child has",
+    "tell me if my child is",
+    "confirm if my child has",
+    "confirm if my child is",
+    "confirm whether my child has",
+    "confirm whether my child is",
+    "confirm if my son has",
+    "confirm if my son is",
+    "confirm if my daughter has",
+    "confirm if my daughter is",
+)
+for _phrase in _ASSESSMENT_DIAGNOSIS_REQUEST_PHRASES:
+    if _phrase not in POLICY["clinical"]["diagnosis_request_phrases"]:
+        POLICY["clinical"]["diagnosis_request_phrases"].append(_phrase)
+
 STOP_WORDS = set(POLICY["normalization"]["stop_words"])
 GENERIC_WORDS = set(POLICY["normalization"]["generic_words"])
 INTENT_PHRASES = {route: tuple(values) for route, values in POLICY["intent_phrases"].items()}
