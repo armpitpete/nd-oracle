@@ -18,7 +18,7 @@ The current repository corpus contains exactly 154 governed objects:
 - 20 reviewed Concept objects;
 - 76 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
 - 55 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
-- 3 governed Evidence objects supporting the bounded claim-bearing Resource pilot.
+- 3 normalized v0.2 Evidence objects plus 57 accepted legacy v0.1 embedded source records, giving 60 governed source records across 49 governed Claims. The authoritative object count remains 154 because legacy source projections are not duplicated into new objects.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
 
@@ -26,7 +26,7 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-The current repository preserves the accepted v1.2 discovery architecture, evidence presentation, reading/navigation surface and privacy/static boundaries while expanding the repository public contract to 177 routes. Since the accepted production tree it adds devolved healthcare-communication parity and a bounded Games & downtime expansion built around observable play/access characteristics rather than diagnosis-based or “calming game” recommendations. The Games slice adds ten non-claim-bearing game Resources and nine additional practical Questions while keeping the sensory-demand comparison explicitly not currently answerable where evidence is insufficient. A follow-on support slice adds Steam's developer-declared accessibility-feature system and one tightly scoped 18+ autistic gaming-community route, plus Questions that expose both without treating platform tags or local community membership as universal fit. No schemas, ranking weights, clinical-decision boundaries, jurisdiction-containment rules, query persistence, analytics or AI answer authority change in this repository expansion.
+The current repository preserves the accepted v1.2 discovery architecture, reading/navigation surface and privacy/static boundaries while the Evidence Layer v1 candidate expands the repository public contract to 238 routes: the existing 177 routes plus `/evidence/` and 60 deterministic Evidence detail projections. Since the accepted production tree it adds devolved healthcare-communication parity and a bounded Games & downtime expansion built around observable play/access characteristics rather than diagnosis-based or “calming game” recommendations. The Games slice adds ten non-claim-bearing game Resources and nine additional practical Questions while keeping the sensory-demand comparison explicitly not currently answerable where evidence is insufficient. A follow-on support slice adds Steam's developer-declared accessibility-feature system and one tightly scoped 18+ autistic gaming-community route, plus Questions that expose both without treating platform tags or local community membership as universal fit. No schemas, ranking weights, clinical-decision boundaries, jurisdiction-containment rules, query persistence, analytics or AI answer authority change in this repository expansion.
 
 ## Production state
 
@@ -49,7 +49,11 @@ schema/types/                        v0.2 object-type contracts
 discovery/routing-policy-v1.1.json   Shared deterministic v1.1 discovery policy
 site/                                Static public site source
 scripts/validate.py                  Schema, governance-route, and graph checks
-scripts/check_content_freshness.py   Review-age/freshness gate
+scripts/check_content_freshness.py   Review-age/freshness gate, including Evidence source-kind cadence
+scripts/evidence_coverage.py         Claim/Evidence coverage registry and CI gate
+scripts/evidence_public.py           Public Evidence projection and static browsing
+contracts/evidence-layer-v1.json     Machine-readable Evidence policy
+docs/EVIDENCE_LAYER_STATE_v1.md      Current Evidence-layer implementation state
 scripts/build_site.py                Current self-contained static site generator
 scripts/discovery.py                 Deterministic governed discovery index/routing
 scripts/verify_live_site.py          Current production HTTP/content verifier
@@ -79,6 +83,8 @@ CONTRIBUTING.md                      Contribution, provenance and rights rules
 ```shell
 python -m pip install -r requirements-dev.txt
 python scripts/validate.py
+python scripts/evidence_coverage.py --summary --fail-gaps
+python scripts/evidence_source_freshness.py --fail-overdue
 python scripts/check_content_freshness.py --fail-overdue
 python -m unittest discover -s tests
 ```
@@ -87,7 +93,7 @@ python -m unittest discover -s tests
 
 The site remains intentionally semantic, reading-first and privacy-first. All canonical content remains useful without JavaScript. `/find/` adds one bounded same-origin local JavaScript enhancement for deterministic discovery while retaining a useful no-script fallback.
 
-Typed discovery text remains in browser memory and is not submitted in a URL or form request. The public surface has no accounts, profiling, personalised ranking, analytics, query storage, external search service or AI answer authority. Discovery returns bounded governed routes; generated text does not become a source of truth or bypass governed evidence and uncertainty.
+Typed discovery text remains in browser memory and is not submitted in a URL or form request. Evidence inspection adds no second script or query surface: `/evidence/` is statically rendered, and readers can browse it or use their browser's built-in Find in page command. No Evidence query is transmitted, stored, profiled or allowed to alter ordinary `/find/` ranking. The public surface has no accounts, profiling, personalised ranking, analytics, query storage, external search service or AI answer authority. Discovery returns bounded governed routes; generated text does not become a source of truth or bypass governed evidence and uncertainty.
 
 ## Licensing
 

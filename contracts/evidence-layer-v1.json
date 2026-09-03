@@ -1,0 +1,139 @@
+{
+  "version": "1.0",
+  "title": "ND Oracle Evidence Layer policy v1",
+  "principles": [
+    "A source is not a conclusion.",
+    "Evidence roles apply to one exact claim, not globally to a source.",
+    "Authority about a source's own rules is not evidence that a service or intervention is effective.",
+    "Resource inclusion is not endorsement.",
+    "Confidence applies only to exact claim wording and scope.",
+    "Contradiction, minority evidence and unresolved limitations remain inspectable.",
+    "Source count is an audit signal, not a truth vote.",
+    "Legacy v0.1 embedded sources remain authoritative until separately migrated; v1 does not duplicate them merely to increase top-level Evidence counts."
+  ],
+  "claim_classes": {
+    "source_identity_or_availability": {
+      "minimum": "One current first-party source can be sufficient for a narrowly worded claim about the source's own identity, published feature, availability or access route.",
+      "corroboration": "Required when the claim extends beyond what the source can authoritatively say about itself.",
+      "forbidden_shortcut": "Do not convert existence, availability, popularity or marketing into efficacy, safety or personal fit."
+    },
+    "legal_or_official_guidance": {
+      "minimum": "Current authoritative legislation, regulator or official guidance may support a bounded claim about what the rule or guidance says.",
+      "corroboration": "Independent legal interpretation or case authority is required for broader legal conclusions when wording or application is contested.",
+      "forbidden_shortcut": "Official status does not establish an individual entitlement or case outcome."
+    },
+    "diagnostic_or_definition": {
+      "minimum": "Current authoritative clinical/diagnostic guidance plus appropriate synthesis where the claim goes beyond the text of one authority.",
+      "corroboration": "Expected for contested boundaries, biomarkers, differential diagnosis or cross-population generalisation.",
+      "forbidden_shortcut": "No checklist, single study, cognitive test or group difference becomes an individual diagnosis."
+    },
+    "prevalence_or_frequency": {
+      "minimum": "Population, place, time period, sampling frame and measurement must be explicit; use representative datasets or appropriate epidemiological studies.",
+      "corroboration": "Expected when estimates vary materially across methods or populations.",
+      "forbidden_shortcut": "Reported experience frequency or community participation is not population prevalence."
+    },
+    "association": {
+      "minimum": "Use appropriately designed observational evidence or synthesis with population/context explicit.",
+      "corroboration": "Multiple studies or synthesis preferred for broad claims.",
+      "forbidden_shortcut": "Association is not causation."
+    },
+    "efficacy_or_benefit": {
+      "minimum": "Use comparative outcome evidence appropriate to the intervention and outcome; person-defined outcomes and adverse effects remain relevant.",
+      "corroboration": "Independent replication or synthesis is expected before a broad high-confidence efficacy claim.",
+      "forbidden_shortcut": "Testimonials, popularity, vendor claims or uncontrolled before/after descriptions are not sufficient."
+    },
+    "safety_or_harm": {
+      "minimum": "Use safety-specific evidence, adverse-event data and relevant authoritative warnings where available.",
+      "corroboration": "Expected for broad safety claims; absence of reported harm is not proof of safety.",
+      "forbidden_shortcut": "Do not infer safety from effectiveness, popularity or lack of a warning."
+    },
+    "mechanism": {
+      "minimum": "Use multiple converging evidence lines appropriate to the proposed mechanism.",
+      "corroboration": "Required for strong mechanistic claims.",
+      "forbidden_shortcut": "A plausible explanation or group correlation is not a demonstrated mechanism."
+    },
+    "causation": {
+      "minimum": "Require designs capable of supporting causal inference and explicit treatment of plausible alternatives.",
+      "corroboration": "Strongly required unless the claim is extremely narrow and the design directly identifies causality.",
+      "forbidden_shortcut": "Temporal order or association alone is insufficient."
+    },
+    "historical": {
+      "minimum": "Prefer primary/archival evidence, contemporaneous records or careful scholarship; represent date precision honestly.",
+      "corroboration": "Expected when attribution or exact dating is disputed.",
+      "forbidden_shortcut": "Do not turn the best current date candidate into an unqualified exact date."
+    },
+    "product_or_service_feature": {
+      "minimum": "First-party documentation can support a current feature claim when commercial interest is explicit.",
+      "corroboration": "Independent evidence is required for usability, accessibility quality, efficacy, safety or personal-fit claims.",
+      "forbidden_shortcut": "Developer-declared accessibility metadata is not independent accessibility certification."
+    },
+    "lived_experience": {
+      "minimum": "Published or appropriately governed experience evidence can support the fact and bounded pattern of reported experience.",
+      "corroboration": "Use broader evidence for frequency, prevalence, mechanism or causation.",
+      "forbidden_shortcut": "Experience is not automatically prevalence, mechanism or universality."
+    }
+  },
+  "confidence": {
+    "high": "Strong support for the exact bounded proposition, with important contrary evidence considered and no known disagreement large enough to require material rewording.",
+    "moderate": "Supported, but important limitations, indirectness, transfer problems or unresolved uncertainty constrain the proposition.",
+    "low": "Some support exists but it is limited, indirect, fragile or under-replicated; wording must remain provisional.",
+    "contested": "Credible evidence or interpretation materially disagrees; disagreement must remain visible.",
+    "not_applicable": "Epistemic confidence is not the right descriptor for this record; it must not be used to evade evidence appraisal.",
+    "change_rule": "A material confidence change requires evidence-backed rationale in provenance/commit history and must not silently erase earlier uncertainty."
+  },
+  "source_quality": {
+    "authoritative_guidance": "Strong for what current official guidance/rules say; not automatically strong for effectiveness, causation or individual outcomes.",
+    "peer_reviewed": "Quality depends on design, measurement, population, analysis, replication and relevance; publication status alone is not a quality score.",
+    "dataset": "Strength depends on provenance, coverage, definitions, missingness, sampling and whether the dataset measures the claimed construct.",
+    "community": "Strong for the community's own stated position, service or reported experience; not automatically population-representative.",
+    "lived_experience": "Strong for the reported experience as reported; does not by itself establish frequency, mechanism or diagnosis.",
+    "historical": "Assess primary/secondary status, provenance, edition/version and date certainty.",
+    "book": "Treat as a source whose evidential role depends on genre, sourcing and the exact claim.",
+    "commercial": "Can establish current first-party product/service facts when conflicts are explicit; cannot independently establish efficacy or accessibility quality.",
+    "practical": "Useful for bounded practice description; evaluate authorship and basis before treating as evidence of outcomes.",
+    "other": "Requires explicit justification because the source class does not supply a default evidential expectation."
+  },
+  "freshness": {
+    "source_kind_max_age_days": {
+      "authoritative_guidance": 180,
+      "commercial": 180,
+      "community": 180,
+      "practical": 180,
+      "dataset": 365,
+      "peer_reviewed": 730,
+      "lived_experience": 730,
+      "book": 1095,
+      "historical": 1095,
+      "other": 365
+    }
+  },
+  "contradiction": {
+    "rules": [
+      "Contradictory and falsifying contributions remain in the graph and are never deleted merely because other sources support the claim.",
+      "Source count must not be used as a majority vote.",
+      "Material contradiction triggers editorial review of claim wording, scope and confidence.",
+      "A Perspective is used for identifiable interpretation/framing; factual disagreement still requires claim/evidence treatment where ND Oracle evaluates it as factual."
+    ]
+  },
+  "provenance": {
+    "role_change": "A changed Evidence role requires a changed finding/rationale where appropriate and a provenance/commit-history explanation.",
+    "deprecation": "Retracted, withdrawn or materially superseded sources are retained as deprecated historical records where the schema permits; claims are re-reviewed rather than silently rewired.",
+    "web_snapshots": "Not mandatory by default. Consider an immutable snapshot/hash only for high-consequence mutable web evidence where exact wording matters and licensing/copyright/storage rules permit it."
+  },
+  "discovery": {
+    "ordinary_find": "Evidence pages do not participate in ordinary practical /find/ ranking.",
+    "dedicated_evidence_browsing": "Evidence inspection is static and local. Readers can use browser-native Find in page or browse the generated catalogue; no Evidence query is transmitted, stored or profiled.",
+    "privacy": "Evidence browsing does not add a query service, analytics, profiling or network request."
+  },
+  "acceptance": {
+    "requirements": [
+      "Every governed claim has an evidence route and an explicit uncertainty route under its accepted schema model.",
+      "Every normalized v0.2 claim/evidence route is reciprocal at exact claim level.",
+      "Coverage registry includes every governed claim and every normalized Evidence object.",
+      "No normalized Evidence object is orphaned from a claim contribution.",
+      "Source-kind, contradiction, commercial-conflict, locator and negative semantic fixtures pass.",
+      "Public Evidence index and individual normalized/legacy evidence projections build without network access.",
+      "Ordinary discovery ranking, clinical boundaries, jurisdiction filtering, privacy and release-state gates remain unchanged."
+    ]
+  }
+}
