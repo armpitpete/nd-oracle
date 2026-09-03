@@ -13,12 +13,14 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current repository and accepted production corpus contain exactly 190 governed objects:
+The current repository candidate contains exactly 208 governed objects, while the accepted production corpus remains the separately recorded 190-object deployment described under **Production state** below:
 
 - 20 reviewed Concept objects;
-- 91 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
-- 76 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
-- 3 normalized v0.2 Evidence objects plus 57 accepted legacy v0.1 embedded source records, giving 60 governed source records across 49 governed Claims. The authoritative object count is 190 because legacy source projections are not duplicated into new objects.
+- 99 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
+- 86 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
+- 3 normalized v0.2 Evidence objects plus 57 accepted legacy v0.1 embedded source records, giving 60 governed source records across 49 governed Claims. The repository candidate object count is 208 because legacy source projections are not duplicated into new objects.
+
+The Relationships & family UK v1 candidate adds bounded friendship, partner, boundaries/conflict, intimacy/consent, parenting and disabled-parent access routes while preserving the existing clinical, jurisdiction, evidence, privacy and non-recommendation boundaries. It is not production until separately merged, deployed and verified through the protected exact-SHA release process.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
 

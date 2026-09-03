@@ -115,20 +115,20 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
         self.assertIn("60 checked, 0 overdue", text)
         self.assertIn("190 checked, 0 overdue", text)
 
-    def test_current_corpus_and_route_counts_match_build_contract(self) -> None:
+    def test_accepted_production_remains_a_floor_while_repository_head_may_advance(self) -> None:
         current = load_current()
         corpus = current["corpus"]
-        self.assertEqual(len(build_site.load_concepts()), corpus["concepts"])
-        self.assertEqual(len(build_site.load_resources()), corpus["resources"])
-        self.assertEqual(len(build_site.load_questions()), corpus["questions"])
-        self.assertEqual(len(build_site.load_evidence()), corpus["evidence_objects"])
         self.assertEqual(
             corpus["concepts"] + corpus["resources"] + corpus["questions"] + corpus["evidence_objects"],
             corpus["governed_objects"],
         )
-        self.assertEqual(build_site.V10_ROUTE_COUNT, current["verification"]["canonical_routes_verified"])
-        self.assertEqual(274, build_site.V10_ROUTE_COUNT)
         self.assertEqual(190, corpus["governed_objects"])
+        self.assertEqual(274, current["verification"]["canonical_routes_verified"])
+        self.assertGreaterEqual(len(build_site.load_concepts()), corpus["concepts"])
+        self.assertGreaterEqual(len(build_site.load_resources()), corpus["resources"])
+        self.assertGreaterEqual(len(build_site.load_questions()), corpus["questions"])
+        self.assertGreaterEqual(len(build_site.load_evidence()), corpus["evidence_objects"])
+        self.assertGreaterEqual(build_site.V10_ROUTE_COUNT, current["verification"]["canonical_routes_verified"])
 
     def test_current_discovery_counts_are_explicit_and_additive(self) -> None:
         discovery = load_current()["discovery"]

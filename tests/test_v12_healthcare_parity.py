@@ -42,13 +42,16 @@ EXPECTED = {
 
 
 class V12HealthcareParityTests(unittest.TestCase):
-    def test_current_governed_object_counts(self) -> None:
+    def test_v12_governed_object_floor_is_preserved(self) -> None:
         counts = {
             kind: len(list((OBJECTS / kind).glob("*.json")))
             for kind in ("concepts", "resources", "questions", "evidence")
         }
-        self.assertEqual({"concepts": 20, "resources": 91, "questions": 76, "evidence": 3}, counts)
-        self.assertEqual(190, sum(counts.values()))
+        self.assertEqual(20, counts["concepts"])
+        self.assertGreaterEqual(counts["resources"], 91)
+        self.assertGreaterEqual(counts["questions"], 76)
+        self.assertEqual(3, counts["evidence"])
+        self.assertGreaterEqual(sum(counts.values()), 190)
 
     def test_each_nation_query_selects_matching_question_and_resource(self) -> None:
         for nation, expected in EXPECTED.items():
