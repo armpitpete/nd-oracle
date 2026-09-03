@@ -97,7 +97,12 @@ class AssessmentDiagnosisUKV1Tests(unittest.TestCase):
                 continue
             route_scope = set(discovery._route_scope(top) or [])
             expected_scope = set(scope_sets[case["scope"]])
-            if route_scope != expected_scope:
+            if case["scope"] == "United Kingdom":
+                if route_scope:
+                    failures.append((case["query"], "unexpected route scope", sorted(route_scope)))
+                if set(trace["requested_scope"]) != expected_scope:
+                    failures.append((case["query"], "requested scope", sorted(trace["requested_scope"]), sorted(expected_scope)))
+            elif route_scope != expected_scope:
                 failures.append((case["query"], "scope", sorted(route_scope), sorted(expected_scope)))
         self.assertEqual([], failures)
 
@@ -114,6 +119,17 @@ class AssessmentDiagnosisUKV1Tests(unittest.TestCase):
             if leaked:
                 failures.append((case["query"], "incompatible routes leaked", leaked))
         self.assertEqual([], failures)
+
+    def test_indirect_child_diagnosis_requests_fail_closed(self) -> None:
+        for query in (
+            "can you tell me whether my child has ADHD?",
+            "can you tell me whether my child is autistic?",
+            "could you confirm if my son has autism?",
+        ):
+            with self.subTest(query=query):
+                trace, results = discovery.evaluate(query, limit=10, index=self.index)
+                self.assertEqual("clinical_diagnosis_boundary", trace["final_reason"])
+                self.assertEqual([], results)
 
     def test_every_new_nation_question_fails_closed_in_incompatible_nations(self) -> None:
         scope_sets = discovery.POLICY["jurisdiction"]["scope_sets"]
