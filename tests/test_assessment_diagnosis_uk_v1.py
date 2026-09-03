@@ -13,6 +13,23 @@ BASE_POLICY = ROOT / "discovery" / "routing-policy-v1.1.json"
 EXTENSION = ROOT / "discovery" / "assessment-diagnosis-uk-v1.json"
 BENCHMARK = ROOT / "benchmarks" / "assessment-diagnosis-uk-v1.json"
 NATIONS = ("England", "Scotland", "Wales", "Northern Ireland")
+ASSESSMENT_RESOURCE_IDS = (
+    "betsi-cadwaladr-child-neurodevelopmental-assessment",
+    "cardiff-vale-adult-autism-assessment",
+    "dhcw-child-neurodevelopmental-assessments-wales",
+    "health-ni-adhd-needs-assessment-2026",
+    "hywel-dda-adult-adhd",
+    "nhs-adhd-children-young-people",
+    "nhs-england-autism-assessments",
+    "nhs-inform-adhd-adults-scotland",
+    "nhs-inform-adhd-children-scotland",
+    "nhs-inform-autism-adults-scotland",
+    "nhs-inform-autism-children-scotland",
+    "nice-autism-under-19s-guideline",
+    "nidirect-autism-assessment-northern-ireland",
+    "northern-trust-paediatric-adhd-assessment",
+    "welsh-government-neurodivergence-improvement-2026-27",
+)
 
 
 def canonical(value: object) -> bytes:
@@ -127,6 +144,35 @@ class AssessmentDiagnosisUKV1Tests(unittest.TestCase):
             unsupported = sorted({item["type"] for item in document["related_objects"]} - {"concept", "resource"})
             if unsupported:
                 failures.append((route, unsupported))
+        self.assertEqual([], failures)
+
+    def test_new_assessment_resources_remain_reviewed_claimless_navigation_records(self) -> None:
+        failures = []
+        for resource_id in ASSESSMENT_RESOURCE_IDS:
+            document = json.loads((ROOT / "objects" / "resources" / f"{resource_id}.json").read_text(encoding="utf-8"))
+            if document["status"] != "reviewed":
+                failures.append((resource_id, "status", document["status"]))
+            if document["claims"] != []:
+                failures.append((resource_id, "claims", document["claims"]))
+            if not document["locators"] or not all(locator["value"].startswith("https://") for locator in document["locators"] if locator["type"] == "url"):
+                failures.append((resource_id, "locators"))
+        self.assertEqual([], failures)
+
+    def test_england_right_to_choose_does_not_leak_into_other_nations(self) -> None:
+        england_routes = {
+            "/questions/adult-autism-assessment-england/",
+            "/questions/adult-adhd-assessment-england/",
+        }
+        failures = []
+        for query in (
+            "Right to Choose adult autism assessment Scotland",
+            "Right to Choose adult ADHD assessment Wales",
+            "Right to Choose adult autism assessment Northern Ireland",
+        ):
+            trace, results = discovery.evaluate(query, limit=10, index=self.index)
+            leaked = sorted(england_routes & {item.route for item in results})
+            if leaked:
+                failures.append((query, trace["requested_scope"], leaked))
         self.assertEqual([], failures)
 
     def test_tampered_extension_scope_binding_is_rejected_by_policy_validation(self) -> None:
