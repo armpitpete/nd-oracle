@@ -4,7 +4,7 @@ import json
 import unittest
 from pathlib import Path
 
-from scripts import discovery
+from scripts import build_site, discovery
 
 ROOT = Path(__file__).resolve().parents[1]
 BENCHMARK = ROOT / "benchmarks" / "relationships-family-uk-v1.json"
@@ -84,12 +84,16 @@ class RelationshipsFamilyUKV1Tests(unittest.TestCase):
 
     def test_disability_access_resource_preserves_uk_legal_split(self) -> None:
         item = json.loads((ROOT / "objects" / "resources" / "uk-disability-service-access-starting-points.json").read_text(encoding="utf-8"))
-        self.assertIn("England, Scotland and Wales", item["audience_or_context"])
-        self.assertIn("Northern Ireland", item["audience_or_context"])
+        text = " ".join([item["description"], *item["limitations"]])
+        self.assertIn("England, Scotland and Wales", text)
+        self.assertIn("Northern Ireland", text)
         urls = {locator["value"] for locator in item["locators"]}
         self.assertTrue(any("equalityhumanrights.com" in url for url in urls))
         self.assertTrue(any("equalityni.org" in url for url in urls))
         self.assertTrue(any("not legal advice" in limit.lower() for limit in item["limitations"]))
+        label, note = build_site.resource_scope(item)
+        self.assertEqual("United Kingdom", label)
+        self.assertIn("UK-wide", note)
 
     def test_48_case_benchmark(self) -> None:
         benchmark = json.loads(BENCHMARK.read_text(encoding="utf-8"))
