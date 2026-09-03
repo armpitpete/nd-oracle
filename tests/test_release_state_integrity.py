@@ -41,13 +41,37 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
         self.assertEqual("docs/PRODUCTION_STATE_2026-09-03.md", current["production_state_document"])
         self.assertEqual(CURRENT_RELEASE_SHA, current["source_sha"])
         self.assertEqual(CURRENT_TREE_SHA, current["source_tree_sha"])
-        self.assertEqual(CURRENT_ARTIFACT_SHA256, current["deployment"]["artifact_sha256"])
-        self.assertEqual(CURRENT_DEPLOYMENT_RUN, current["deployment"]["workflow_run_id"])
-        self.assertEqual(19, current["deployment"]["workflow_run_number"])
-        self.assertEqual(CURRENT_VERIFICATION_RUN, current["verification"]["workflow_run_id"])
-        self.assertEqual(316, current["verification"]["workflow_run_number"])
-        self.assertEqual(CURRENT_VERIFICATION_JOB, current["verification"]["job_id"])
-        self.assertEqual(135, current["verification"]["temporary_pr"])
+
+        deployment = current["deployment"]
+        self.assertEqual(CURRENT_DEPLOYMENT_RUN, deployment["workflow_run_id"])
+        self.assertEqual(19, deployment["workflow_run_number"])
+        self.assertEqual(100744979763, deployment["guard_job_id"])
+        self.assertEqual(100745012361, deployment["upload_job_id"])
+        self.assertEqual(CURRENT_ARTIFACT_SHA256, deployment["artifact_sha256"])
+        self.assertEqual("https://4651e0b6.nd-oracle.pages.dev", deployment["cloudflare_deployment"])
+        self.assertEqual("nd-oracle", deployment["cloudflare_project"])
+        self.assertEqual("main", deployment["production_branch"])
+
+        verification = current["verification"]
+        self.assertEqual(CURRENT_VERIFICATION_RUN, verification["workflow_run_id"])
+        self.assertEqual(316, verification["workflow_run_number"])
+        self.assertEqual(CURRENT_VERIFICATION_JOB, verification["job_id"])
+        self.assertEqual(135, verification["temporary_pr"])
+        self.assertEqual(274, verification["canonical_routes_verified"])
+        self.assertEqual(380, verification["regression_tests_passed"])
+
+        corpus = current["corpus"]
+        self.assertEqual(190, corpus["governed_objects"])
+        self.assertEqual(20, corpus["concepts"])
+        self.assertEqual(91, corpus["resources"])
+        self.assertEqual(76, corpus["questions"])
+        self.assertEqual(3, corpus["evidence_objects"])
+        self.assertEqual(60, corpus["governed_source_records"])
+        self.assertEqual(49, corpus["governed_claims"])
+        self.assertEqual(49, corpus["covered_claims"])
+        self.assertEqual(0, corpus["evidence_gaps"])
+        self.assertEqual(0, corpus["overdue_source_records"])
+        self.assertEqual(0, corpus["overdue_governed_objects"])
 
     def test_readme_current_production_matches_pointer(self) -> None:
         current = load_current()
@@ -76,6 +100,8 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
             current["source_tree_sha"],
             current["deployment"]["artifact_sha256"],
             str(current["deployment"]["workflow_run_id"]),
+            str(current["deployment"]["guard_job_id"]),
+            str(current["deployment"]["upload_job_id"]),
             str(current["verification"]["workflow_run_id"]),
             str(current["verification"]["job_id"]),
             current["deployment"]["cloudflare_deployment"],
@@ -85,6 +111,9 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
         self.assertIn("380-test permanent regression suite", text)
         self.assertIn("274 canonical", text)
         self.assertIn("49/49 Claims covered", text)
+        self.assertIn("60 governed source records", text)
+        self.assertIn("60 checked, 0 overdue", text)
+        self.assertIn("190 checked, 0 overdue", text)
 
     def test_current_corpus_and_route_counts_match_build_contract(self) -> None:
         current = load_current()
