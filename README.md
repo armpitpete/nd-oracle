@@ -13,12 +13,12 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current repository corpus contains exactly 154 governed objects:
+The current repository candidate contains exactly 190 governed objects:
 
 - 20 reviewed Concept objects;
-- 76 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
-- 55 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
-- 3 normalized v0.2 Evidence objects plus 57 accepted legacy v0.1 embedded source records, giving 60 governed source records across 49 governed Claims. The authoritative object count remains 154 because legacy source projections are not duplicated into new objects.
+- 91 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
+- 76 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
+- 3 normalized v0.2 Evidence objects plus 57 accepted legacy v0.1 embedded source records, giving 60 governed source records across 49 governed Claims. The authoritative object count is 190 because legacy source projections are not duplicated into new objects.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
 
@@ -26,7 +26,9 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-The current repository preserves the accepted v1.2 discovery architecture, reading/navigation surface and privacy/static boundaries while the Evidence Layer v1 candidate expands the repository public contract to 238 routes: the existing 177 routes plus `/evidence/` and 60 deterministic Evidence detail projections. Since the accepted production tree it adds devolved healthcare-communication parity and a bounded Games & downtime expansion built around observable play/access characteristics rather than diagnosis-based or “calming game” recommendations. The Games slice adds ten non-claim-bearing game Resources and nine additional practical Questions while keeping the sensory-demand comparison explicitly not currently answerable where evidence is insufficient. A follow-on support slice adds Steam's developer-declared accessibility-feature system and one tightly scoped 18+ autistic gaming-community route, plus Questions that expose both without treating platform tags or local community membership as universal fit. No schemas, ranking weights, clinical-decision boundaries, jurisdiction-containment rules, query persistence, analytics or AI answer authority change in this repository expansion.
+The current repository preserves the accepted v1.2 discovery architecture, reading/navigation surface and privacy/static boundaries while expanding the repository public contract to 274 routes. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections. Since the accepted production tree, the repository also adds devolved healthcare-communication parity, bounded Games & downtime coverage, and a UK Assessment & diagnosis reference implementation.
+
+Assessment & diagnosis now contains the adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus cross-cutting routes for private assessment, waiting/support, refusal or disagreement, after-assessment outcomes, communication/sensory adjustments, co-occurring autism/ADHD and other neurodevelopmental assessments. England-specific Right to Choose is contained to England; Scottish health-board variation, Welsh health-board/local-service variation and Northern Ireland Trust/service-development variation remain explicit. Fifteen new assessment Resources are claimless service/guidance listings, not provider endorsements or diagnostic claims. Discovery adds 29 cryptographically scope-bound routes without replacing the frozen 41-route v1.1 scope registry, producing 70 governed scoped routes in the candidate. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
 
 ## Production state
 
@@ -46,7 +48,8 @@ objects/evidence/                    Governed evidence objects
 schema/object-v0.1.json              v0.1 concept contract
 schema/object-v0.2.json              v0.2 object dispatcher
 schema/types/                        v0.2 object-type contracts
-discovery/routing-policy-v1.1.json   Shared deterministic v1.1 discovery policy
+discovery/routing-policy-v1.1.json   Frozen deterministic v1.1 discovery policy
+discovery/assessment-diagnosis-uk-v1.json Additive UK assessment discovery extension
 site/                                Static public site source
 scripts/validate.py                  Schema, governance-route, and graph checks
 scripts/check_content_freshness.py   Review-age/freshness gate, including Evidence source-kind cadence
@@ -54,6 +57,8 @@ scripts/evidence_coverage.py         Claim/Evidence coverage registry and CI gat
 scripts/evidence_public.py           Public Evidence projection and static browsing
 contracts/evidence-layer-v1.json     Machine-readable Evidence policy
 docs/EVIDENCE_LAYER_STATE_v1.md      Current Evidence-layer implementation state
+docs/ASSESSMENT_DIAGNOSIS_UK_v1.md   UK assessment/diagnosis reference contract
+docs/ASSESSMENT_DIAGNOSIS_UK_SOURCE_MATRIX_v1.md UK source/jurisdiction matrix
 scripts/build_site.py                Current self-contained static site generator
 scripts/discovery.py                 Deterministic governed discovery index/routing
 scripts/verify_live_site.py          Current production HTTP/content verifier
@@ -64,7 +69,7 @@ docs/PUBLIC_QUESTION_DISCOVERY_v0.7.md Historical question-led discovery contrac
 docs/CONTENT_NAVIGATION_v0.8.md      Historical accepted v0.8 findability contract
 docs/CONTENT_NAVIGATION_v0.9.md      Historical accepted v0.9 navigation contract
 docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
-docs/CONTENT_GAP_MAP_v1.3.md         Current need-led editorial coverage map
+docs/CONTENT_GAP_MAP_v1.4.md         Current need-led editorial coverage map
 docs/GAMES_DOWNTIME_FACETS_v1.md     Governed descriptive-facet contract for games and downtime
 docs/PRODUCTION_STATE_v0.8.md        Historical accepted v0.8 deployment evidence
 docs/PRODUCTION_STATE_v0.9.md        Historical accepted v0.9 deployment evidence
