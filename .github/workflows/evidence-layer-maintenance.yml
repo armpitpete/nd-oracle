@@ -36,6 +36,9 @@ jobs:
       - name: Prepare Evidence Layer v1 completion patch
         run: PYTHONPATH=. python scripts/_complete_evidence_v1.py
 
+      - name: Apply frozen-boundary repair
+        run: PYTHONPATH=. python scripts/_repair_evidence_v1.py
+
       - name: Compile Python sources
         run: python -m compileall -q scripts tests
 
@@ -45,6 +48,9 @@ jobs:
       - name: Audit Evidence coverage
         run: python scripts/evidence_coverage.py --summary --fail-gaps
 
+      - name: Audit Evidence source freshness
+        run: python scripts/evidence_source_freshness.py --fail-overdue
+
       - name: Audit content freshness
         run: python scripts/check_content_freshness.py --fail-overdue
 
@@ -52,7 +58,7 @@ jobs:
         run: python -m unittest discover -s tests
 
       - name: Remove maintenance machinery
-        run: rm scripts/_complete_evidence_v1.py .github/workflows/evidence-layer-maintenance.yml
+        run: rm scripts/_complete_evidence_v1.py scripts/_repair_evidence_v1.py .github/workflows/evidence-layer-maintenance.yml
 
       - name: Commit validated product tree
         run: |
