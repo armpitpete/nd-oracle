@@ -4,18 +4,18 @@ Date: 2026-09-03
 
 ## Purpose
 
-This is the current need-led editorial coverage map for the repository candidate. A strong section means the current corpus provides several useful governed routes; it does not mean the subject is exhausted or universally applicable.
+This is the current need-led editorial coverage map for the accepted production corpus. A strong section means the current corpus provides several useful governed routes; it does not mean the subject is exhausted or universally applicable.
 
-## Current repository candidate
+## Current accepted production corpus
 
 - 20 reviewed Concepts
 - 91 reviewed Resources
 - 76 reviewed practical Questions
 - 3 governed Evidence objects
 - 190 governed objects total
-- 274 canonical public routes in the repository build contract
+- 274 canonical public routes in the accepted production build contract
 
-Accepted production remains separately recorded in `docs/PRODUCTION_STATE_v1.2.md`; this document does not claim that this repository candidate is deployed.
+Current production identity is resolved through `contracts/current-production.json` and recorded in `docs/PRODUCTION_STATE_2026-09-03.md`. Earlier versioned production-state documents remain immutable historical evidence.
 
 ## Need-domain matrix
 
@@ -41,13 +41,13 @@ Accepted production remains separately recorded in `docs/PRODUCTION_STATE_v1.2.m
 
 ## Assessment & diagnosis acceptance boundary
 
-The UK reference implementation now contains 23 Assessment & diagnosis Questions: the adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus seven cross-cutting routes for private assessment, waiting/support, refusal/disagreement, after-assessment outcomes, communication/sensory adjustments, co-occurring autism/ADHD and other neurodevelopmental assessments.
+The UK reference implementation contains 23 Assessment & diagnosis Questions: the adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus seven cross-cutting routes for private assessment, waiting/support, refusal/disagreement, after-assessment outcomes, communication/sensory adjustments, co-occurring autism/ADHD and other neurodevelopmental assessments.
 
 The section deliberately does not pretend the four nations have one service system. England-specific Right to Choose is contained to England; Scottish health-board variation, Welsh health-board/local IAS variation and Northern Ireland Trust/service-development variation remain visible. Local service evidence cannot silently become a national promise. ADHD diagnosis is kept separate from medication, titration, prescribing and shared-care decisions. Child educational support is not presented as requiring a diagnosis where the relevant system does not require one.
 
-Fifteen new claimless Resources record current first-party national guidance, system information and bounded local examples. Listing a service or guidance route does not make a diagnostic, efficacy or provider-quality claim.
+Fifteen claimless Resources record current first-party national guidance, system information and bounded local examples. Listing a service or guidance route does not make a diagnostic, efficacy or provider-quality claim.
 
-Discovery adds 29 cryptographically scope-bound Assessment routes on top of the frozen 41-route v1.1 scope registry, for 70 governed scoped routes in the candidate. The extension is additive: it cannot replace a frozen v1.1 scope or intent route, and each added scope is bound to an exact governed field fingerprint.
+Discovery adds 29 cryptographically scope-bound Assessment routes on top of the frozen 41-route v1.1 scope registry, for 70 governed scoped routes in accepted production. The extension is additive: it cannot replace a frozen v1.1 scope or intent route, and each added scope is bound to an exact governed field fingerprint.
 
 ## Games & downtime acceptance boundary
 
