@@ -10,7 +10,29 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 OBJECTS = ROOT / "objects"
 POLICY_PATH = ROOT / "discovery" / "routing-policy-v1.1.json"
+ASSESSMENT_EXTENSION_PATH = ROOT / "discovery" / "assessment-diagnosis-uk-v1.json"
 POLICY: dict[str, Any] = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
+ASSESSMENT_EXTENSION: dict[str, Any] = json.loads(ASSESSMENT_EXTENSION_PATH.read_text(encoding="utf-8"))
+
+_BASE_SCOPE_COUNT = len(POLICY["scope_provenance"]["routes"])
+if ASSESSMENT_EXTENSION.get("version") != "1":
+    raise ValueError("Assessment discovery extension must be v1")
+if ASSESSMENT_EXTENSION.get("base_policy") != "discovery/routing-policy-v1.1.json":
+    raise ValueError("Assessment discovery extension must target frozen v1.1 policy")
+if ASSESSMENT_EXTENSION.get("base_scope_count") != 41 or _BASE_SCOPE_COUNT != 41:
+    raise ValueError("Assessment discovery extension base scope count does not match frozen v1.1")
+_extension_intents = ASSESSMENT_EXTENSION.get("intent_phrases", {})
+_extension_scopes = ASSESSMENT_EXTENSION.get("scope_provenance", {}).get("routes", {})
+if not isinstance(_extension_intents, dict) or not isinstance(_extension_scopes, dict):
+    raise ValueError("Malformed assessment discovery extension")
+if set(POLICY["intent_phrases"]) & set(_extension_intents):
+    raise ValueError("Assessment discovery extension may not replace frozen v1.1 intent routes")
+if set(POLICY["scope_provenance"]["routes"]) & set(_extension_scopes):
+    raise ValueError("Assessment discovery extension may not replace frozen v1.1 scope routes")
+POLICY["intent_phrases"].update(_extension_intents)
+POLICY["scope_provenance"]["routes"].update(_extension_scopes)
+EXPECTED_SCOPED_ROUTE_COUNT = _BASE_SCOPE_COUNT + len(_extension_scopes)
+
 STOP_WORDS = set(POLICY["normalization"]["stop_words"])
 GENERIC_WORDS = set(POLICY["normalization"]["generic_words"])
 INTENT_PHRASES = {route: tuple(values) for route, values in POLICY["intent_phrases"].items()}
@@ -136,8 +158,8 @@ def validate_policy(*, policy: dict[str, Any] | None = None, index: list[dict] |
         raise ValueError("Unexpected scope binding contract")
 
     entries = provenance.get("routes")
-    if not isinstance(entries, dict) or len(entries) != 41:
-        raise ValueError(f"Expected 41 governed scoped routes, found {len(entries) if isinstance(entries, dict) else 'invalid'}")
+    if not isinstance(entries, dict) or len(entries) != EXPECTED_SCOPED_ROUTE_COUNT:
+        raise ValueError(f"Expected {EXPECTED_SCOPED_ROUTE_COUNT} governed scoped routes, found {len(entries) if isinstance(entries, dict) else 'invalid'}")
     indexed = {record["route"] for record in (build_index() if index is None else index)}
     for route, encoded in entries.items():
         if not isinstance(encoded, dict) or set(encoded) != {"scope", "basis_path", "basis_sha256", "binding_sha256"}:
