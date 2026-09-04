@@ -1,0 +1,80 @@
+{
+  "version": "1",
+  "date": "2026-09-04",
+  "status": "readiness_pass",
+  "jurisdiction": {
+    "canonical_name": "Republic of Ireland",
+    "short_label": "Ireland",
+    "country_scope_must_exclude": ["Northern Ireland"],
+    "public_health_authority": "Health Service Executive",
+    "service_geography": {
+      "national_authority": "HSE",
+      "regions": [
+        "HSE Dublin and North East",
+        "HSE Dublin and Midlands",
+        "HSE Dublin and South East",
+        "HSE Mid West",
+        "HSE South West",
+        "HSE West and North West"
+      ],
+      "local_decision_making": true
+    }
+  },
+  "pilot_domain": "assessment_and_diagnosis",
+  "journeys": {
+    "adult_autism_assessment": {
+      "readiness": "ready_bounded_private_access",
+      "national_public_access_uniform": false,
+      "provider_endorsement_allowed": false
+    },
+    "child_autism_assessment": {
+      "readiness": "ready_national_framework_local_routing",
+      "national_protocol_effective": "2026-03-25",
+      "local_service_variation": true
+    },
+    "adult_adhd_assessment": {
+      "readiness": "ready_national_model_regional_implementation",
+      "universal_current_public_team_availability": false,
+      "regional_availability_must_be_explicit": true
+    },
+    "child_adhd_assessment": {
+      "readiness": "partial",
+      "strong_national_access_route_allowed_now": false
+    },
+    "assessment_of_need_vs_diagnosis": {
+      "readiness": "ready",
+      "must_remain_distinct_from_clinical_diagnosis": true,
+      "required_for_hse_service_access": false
+    }
+  },
+  "initial_candidate_routes": [
+    "adult_autism_assessment_republic_of_ireland",
+    "child_autism_assessment_republic_of_ireland",
+    "adult_adhd_assessment_republic_of_ireland",
+    "assessment_of_need_vs_diagnostic_assessment_republic_of_ireland"
+  ],
+  "deferred_routes": [
+    "child_adhd_assessment_republic_of_ireland"
+  ],
+  "hostile_boundaries": [
+    "no_england_right_to_choose_in_ireland",
+    "no_northern_ireland_hsc_as_republic_of_ireland_hse",
+    "no_republic_of_ireland_hse_as_northern_ireland_hsc",
+    "assessment_of_need_is_not_clinical_diagnosis",
+    "adult_autism_private_access_is_not_provider_endorsement",
+    "adult_adhd_model_is_not_universal_service_availability",
+    "local_service_example_is_not_national_rule",
+    "support_not_falsely_conditioned_on_diagnosis",
+    "diagnosis_does_not_authorize_medication_decisions"
+  ],
+  "source_urls": [
+    "https://www2.hse.ie/conditions/autism/assessment-and-support/assessment-autism/",
+    "https://www2.healthservice.hse.ie/organisation/national-pppgs/hse-national-protocol-for-autism-assessment-and-intervention-pathways/",
+    "https://about.hse.ie/publications/hcp-adhd-in-adults-model-of-care/",
+    "https://www2.hse.ie/babies-children/disabilities/services/getting-a-referral/",
+    "https://www.hse.ie/services/disability/applying-for-an-assessment-of-need/assessment-of-need/",
+    "https://about.hse.ie/leadership-and-operations/hse-health-regions/"
+  ],
+  "next_action": "build_bounded_ireland_assessment_diagnosis_candidate",
+  "broad_country_expansion_authorized": false
+}
