@@ -4,20 +4,20 @@ Date: 2026-09-04
 
 ## Purpose
 
-This is the current need-led editorial coverage map for the repository candidate. A strong section means the current corpus provides several useful governed routes; it does not mean the subject is exhausted or universally applicable. Accepted production remains separately identified below until a protected deployment is completed and verified.
+This is the current need-led editorial coverage map for the accepted UK Reference Baseline v1. A strong section means the current corpus provides several useful governed routes; it does not mean the subject is exhausted or universally applicable.
 
-## Current repository candidate
+## Current accepted UK Reference Baseline v1
 
 - 20 reviewed Concepts
 - 136 reviewed Resources
 - 148 reviewed practical Questions
 - 3 governed Evidence objects
 - 307 governed objects total
-- 391 canonical public routes in the current candidate build contract
+- 391 canonical public routes in the accepted production contract
 
 ## Current accepted production
 
-Accepted production is the separately recorded 2026-09-03 Relationships & family deployment with 208 governed objects and 292 canonical routes. Production identity is resolved through `contracts/current-production.json` and recorded in `docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md`. This UK-breadth repository candidate is not production unless and until a protected exact-SHA deployment and fresh live verification are completed; earlier production-state documents remain immutable historical evidence.
+Accepted production is the 2026-09-04 UK Reference Baseline v1 deployment with 307 governed objects and 391 canonical routes, generated from exact source SHA `579c012cc9b31707409579da05b52a4d07efe61c` and freshly verified at `https://ndoracle.org`. Production identity is resolved through `contracts/current-production.json` and recorded in `docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md`; earlier production-state documents remain immutable historical evidence.
 
 ## Need-domain matrix
 
@@ -53,7 +53,7 @@ Discovery adds 29 cryptographically scope-bound Assessment routes on top of the 
 
 ## Relationships & family acceptance boundary
 
-The current candidate contains 13 Relationships & family Questions: the three earlier parent/relationship routes plus ten new governed journeys covering friendship misunderstandings, partner communication/processing/sensory needs, boundaries, ordinary conflict and repair, intimacy/consent, parenting a neurodivergent child, disabled/neurodivergent parent service access, family-event sensory/social load, domestic-abuse/safeguarding routing, and an explicit no-authority leave/stay route.
+The accepted baseline contains 13 Relationships & family Questions: the three earlier parent/relationship routes plus ten new governed journeys covering friendship misunderstandings, partner communication/processing/sensory needs, boundaries, ordinary conflict and repair, intimacy/consent, parenting a neurodivergent child, disabled/neurodivergent parent service access, family-event sensory/social load, domestic-abuse/safeguarding routing, and an explicit no-authority leave/stay route.
 
 Eight new Resources are reviewed, claimless navigation records from NHS/public health, GOV.UK, equality regulators, Contact and the National Autistic Society. Their inclusion does not establish efficacy, provider quality, legal entitlement or suitability for an individual.
 
@@ -65,13 +65,13 @@ A 48-case deterministic benchmark covers the two original defects, friendship/pa
 
 ## Organisations & peer community acceptance boundary
 
-The current candidate contains 16 Organisations & peer community Questions: the three UK-breadth routes plus thirteen new journeys covering peer/user-led governance, rural/no-local-group fallback, online-versus-in-person fit, accessibility, moderation, privacy, cross-neurodivergent discovery, awaiting-assessment eligibility, leaving poor-fit groups, missing-policy uncertainty, explicit Scotland/Wales/Northern-Ireland navigation and a direct Tourette peer-support route.
+The accepted baseline contains 16 Organisations & peer community Questions: the three UK-breadth routes plus thirteen new journeys covering peer/user-led governance, rural/no-local-group fallback, online-versus-in-person fit, accessibility, moderation, privacy, cross-neurodivergent discovery, awaiting-assessment eligibility, leaving poor-fit groups, missing-policy uncertainty, explicit Scotland/Wales/Northern-Ireland navigation and a direct Tourette peer-support route.
 
 Eleven new Resources broaden the section beyond autism and ADHD to include dyslexia, dyspraxia/DCD, Tourette syndrome, learning-disability/self-advocacy and Disabled People's Organisation routes. AMASE and ARGH Scotland are recorded as autistic peer-controlled only because their own governance statements support that description; People First is recorded as user-led and Disability Wales full members are exposed through explicit DPO membership criteria. These labels are descriptive and never become quality or safety scores.
 
 `contracts/organisations-peer-community-uk-v1.json` provides additive machine-readable geography, leadership, accessibility, moderation and privacy metadata without changing the frozen core Resource schema. Metadata uses observed/partial/not-found/not-applicable states so missing public information cannot silently become a negative claim.
 
-No independently evidenced complete, peer-governed UK-wide cross-neurodivergent directory was found. The candidate therefore exposes a commercial cross-ND event directory only with its self-described completeness and commercial conflict visible, while preserving condition-specific and DPO/self-advocacy routes.
+No independently evidenced complete, peer-governed UK-wide cross-neurodivergent directory was found. The accepted baseline therefore exposes a commercial cross-ND event directory only with its self-described completeness and commercial conflict visible, while preserving condition-specific and DPO/self-advocacy routes.
 
 A bounded geographic proof set covers York/Yorkshire, Cumbria, Highland, Powys and Fermanagh. These are discovery proofs, not a promise that ND Oracle maintains a complete local-group catalogue.
 
