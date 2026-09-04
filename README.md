@@ -13,17 +13,19 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current repository and accepted production contain exactly **319 governed objects**:
+The current repository and accepted production contain exactly **325 governed objects**:
 
 - 20 reviewed Concept objects;
-- 144 reviewed Resource objects;
-- 152 reviewed Question objects;
+- 147 reviewed Resource objects;
+- 155 reviewed Question objects;
 - 3 normalized v0.2 Evidence objects;
-- **403 canonical public routes**.
+- **409 canonical public routes**.
 
 The frozen **UK Reference Baseline v1** remains intact underneath the first accepted international package: **Republic of Ireland Assessment & diagnosis v1**. The Ireland package adds exactly 4 Questions and 8 reviewed, claimless HSE Resources covering adult autism, child autism, adult ADHD, and the distinction between HSE Assessment of Need and clinical diagnostic assessment. Child ADHD remains deliberately deferred because current first-party evidence does not yet justify a strong uniform national access route.
 
-Current accepted production was generated from exact source SHA `10fe0a0bc1f1a075e420dd0bc432d0a69cc15197` and tree `bce34c6908a409daefce1ba24ce06349fa24cac2`, then freshly verified at `https://ndoracle.org`. Frozen UK discovery, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged; Ireland is added through a separate additive jurisdiction extension.
+Accepted production also includes **NHS bulletin promotion v1**: three reviewed, claimless Resources plus three bounded Questions covering learning-disability register / annual-health-check guidance, autistic school-attendance support, and person-centred suicide-safety policy. Their diagnosis, eligibility, safeguarding, crisis and professional-authority boundaries remain explicit.
+
+Current accepted production was generated from exact source SHA `94d1ab0d8df5699b1316e64d70c28fe11b25b7cf` and tree `9270919d26d3529889db498b202b8132bc3316b7`, then freshly verified at `https://ndoracle.org`. Frozen UK discovery, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged; Ireland remains an additive jurisdiction extension and the three NHS bulletin additions do not alter discovery-policy or ranking weights.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
 
@@ -31,7 +33,7 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-The current accepted public contract contains 403 canonical routes. It preserves the v1.2 public-site builder identity, frozen discovery architecture, reading/navigation surface and privacy/static boundaries while exposing the frozen UK Reference Baseline v1 plus the bounded Republic of Ireland Assessment & diagnosis v1 package. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections.
+The current accepted public contract contains 409 canonical routes. It preserves the v1.2 public-site builder identity, frozen discovery architecture, reading/navigation surface and privacy/static boundaries while exposing the frozen UK Reference Baseline v1 plus the bounded Republic of Ireland Assessment & diagnosis v1 package. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections.
 
 Assessment & diagnosis preserves the accepted adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus its UK cross-cutting routes and now includes four accepted Republic-of-Ireland journeys. England-specific Right to Choose remains contained to England; Northern Ireland HSC/NHS and Republic-of-Ireland HSE routes are explicitly separate; HSE adult autism public/private access, adult ADHD regional rollout and Assessment-of-Need distinctions remain bounded. The Ireland slice adds 8 reviewed, claimless first-party HSE Resources. Discovery keeps the frozen 41-route v1.1 registry and 29-route UK Assessment extension unchanged, then adds 12 exact Republic-of-Ireland scope bindings for 82 governed scoped routes in accepted production. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
 
@@ -39,13 +41,13 @@ Relationships & family keeps parenting a neurodivergent child separate from supp
 
 ## Production state
 
-Current production is the accepted **UK Reference Baseline v1 + Republic of Ireland Assessment & diagnosis v1** deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `10fe0a0bc1f1a075e420dd0bc432d0a69cc15197` and tree `bce34c6908a409daefce1ba24ce06349fa24cac2` by deployment workflow run `33896144673` (run #24). The generated artifact SHA-256 is `4967f8a711aefeb8bf878de7dba5a18063cd57d0b1ca54e53d6022d9cfe5f033` and the Cloudflare deployment identity is `https://325a78a3.nd-oracle.pages.dev`.
+Current production is the accepted **UK Reference Baseline v1 + Republic of Ireland Assessment & diagnosis v1 + NHS bulletin promotion v1** deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `94d1ab0d8df5699b1316e64d70c28fe11b25b7cf` and tree `9270919d26d3529889db498b202b8132bc3316b7` by deployment workflow run `33924992354` (run #25). The generated artifact SHA-256 is `2899f9c214f6eecded51c8cf64aa356fd76674b32bdd1b801dfa2ae5521aedbb` and the Cloudflare deployment identity is `https://99fd62e1.nd-oracle.pages.dev`.
 
-Fresh network-backed production verification ran against the canonical domain in workflow run `33896431576` (run #18), job `101100054619`. It revalidated all 319 governed objects, ran the complete 439-test deployed-source regression suite, and verified all 403 canonical live routes plus the governed discovery/evidence and frozen compatibility contracts. Exact-tree candidate acceptance also proved 49/49 Claim coverage with 0 gaps, 60 governed source records with 0 overdue and 319 governed objects with 0 overdue.
+Fresh network-backed production verification ran against the canonical domain in workflow run `33925184354` (run #19), job `101192042604`. It revalidated all 325 governed objects, ran the complete 451-test deployed-source regression suite, and verified all 409 canonical live routes plus the governed discovery/evidence and frozen compatibility contracts. Exact-head candidate acceptance also proved 49/49 Claim coverage with 0 gaps, 60 governed source records with 0 overdue and 325 governed objects with 0 overdue.
 
-`contracts/current-production.json` is the canonical machine-readable current-production pointer. It references `docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md`, the immutable human-readable evidence record for this deployment after reconciliation. `docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md`, `docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md`, `docs/PRODUCTION_STATE_2026-09-03.md`, `docs/PRODUCTION_STATE_v1.2.md` and earlier production-state documents remain frozen historical evidence.
+`contracts/current-production.json` is the canonical machine-readable current-production pointer. It references `docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md`, the immutable human-readable evidence record for this deployment after reconciliation. `docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md`, `docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md`, `docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md`, `docs/PRODUCTION_STATE_2026-09-03.md`, `docs/PRODUCTION_STATE_v1.2.md` and earlier production-state documents remain frozen historical evidence.
 
-The administrative production-state reconciliation is not itself a deployment. The accepted public artifact remains the exact artifact generated from source SHA `10fe0a0bc1f1a075e420dd0bc432d0a69cc15197`.
+The administrative production-state reconciliation is not itself a deployment. The accepted public artifact remains the exact artifact generated from source SHA `94d1ab0d8df5699b1316e64d70c28fe11b25b7cf`.
 
 ## Repository map
 
@@ -97,7 +99,8 @@ docs/CONTENT_NAVIGATION_v0.9.md      Historical accepted v0.9 navigation contrac
 docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
 docs/CONTENT_GAP_MAP_v1.4.md         Current need-led editorial coverage map
 docs/GAMES_DOWNTIME_FACETS_v1.md     Governed descriptive-facet contract for games and downtime
-docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md Current accepted deployment evidence
+docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md Current accepted deployment evidence
+docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md Previous accepted Ireland deployment evidence
 docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md Previous accepted UK-baseline deployment evidence
 docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md Previous accepted deployment evidence
 docs/PRODUCTION_STATE_2026-09-03.md  Previous same-day accepted deployment evidence
