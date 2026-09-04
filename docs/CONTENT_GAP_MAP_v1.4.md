@@ -4,20 +4,20 @@ Date: 2026-09-04
 
 ## Purpose
 
-This is the current need-led editorial coverage map for the accepted UK Reference Baseline v1. A strong section means the current corpus provides several useful governed routes; it does not mean the subject is exhausted or universally applicable.
+This is the current need-led editorial coverage map. The UK Reference Baseline v1 remains the frozen UK content baseline, while accepted production now also contains the bounded Republic of Ireland Assessment & diagnosis v1 package. A strong section means the current corpus provides several useful governed routes; it does not mean the subject is exhausted or universally applicable.
 
-## Current accepted UK Reference Baseline v1
+## Frozen UK Reference Baseline v1
 
 - 20 reviewed Concepts
 - 136 reviewed Resources
 - 148 reviewed practical Questions
 - 3 governed Evidence objects
 - 307 governed objects total
-- 391 canonical public routes in the accepted production contract
+- 391 canonical public routes in the frozen UK baseline contract
 
 ## Current accepted production
 
-Accepted production is the 2026-09-04 UK Reference Baseline v1 deployment with 307 governed objects and 391 canonical routes, generated from exact source SHA `579c012cc9b31707409579da05b52a4d07efe61c` and freshly verified at `https://ndoracle.org`. Production identity is resolved through `contracts/current-production.json` and recorded in `docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md`; earlier production-state documents remain immutable historical evidence.
+Accepted production contains the frozen UK Reference Baseline v1 plus Republic of Ireland Assessment & diagnosis v1, with 319 governed objects and 403 canonical routes, generated from exact source SHA `10fe0a0bc1f1a075e420dd0bc432d0a69cc15197` and freshly verified at `https://ndoracle.org`. Production identity is resolved through `contracts/current-production.json` and recorded in `docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md`; the UK-baseline and earlier production-state documents remain immutable historical evidence.
 
 ## Need-domain matrix
 
@@ -28,7 +28,7 @@ Accepted production is the 2026-09-04 UK Reference Baseline v1 deployment with 3
 | Communication | **Strong** | broader AAC systems, cross-service alternative-contact implementation and stronger mixed-neurotype communication evidence |
 | Work | **Strong reference seed** | stronger occupational-health first-party guidance, Northern Ireland process depth and employment-retention evidence |
 | Education & study | **Strong reference seed** | official exam-adjustment depth, England transition-specific evidence, FE breadth and implementation quality across four nations |
-| Assessment & diagnosis | **Strong UK reference implementation** | local board/Trust depth, private-assessment quality evidence, broader non-autism/ADHD pathways and international expansion |
+| Assessment & diagnosis | **Strong UK reference implementation + Ireland pilot** | UK local board/Trust depth, Irish regional service implementation, private-assessment quality evidence, broader non-autism/ADHD pathways and carefully sequenced further international expansion |
 | Relationships & family | **Strong bounded seed** | siblings, kinship/unpaid carers, family-law boundaries, broader ADHD/mixed-neurotype relationship evidence, disabled-parent service evidence, four-nation parenting depth, accessible human relationship-support routes |
 | Money & administration | **Strong bounded seed** | accessible advocacy, council-tax/local-welfare routes, banking/scam safety, nation-specific debt depth and supported form completion |
 | Sleep | **Strong bounded seed** | sleep-clinic navigation, children, circadian/shift-work evidence, medication evidence and broader four-nation clinical pathways |
@@ -49,7 +49,17 @@ The section deliberately does not pretend the four nations have one service syst
 
 Fifteen claimless Resources record current first-party national guidance, system information and bounded local examples. Listing a service or guidance route does not make a diagnostic, efficacy or provider-quality claim.
 
-Discovery adds 29 cryptographically scope-bound Assessment routes on top of the frozen 41-route v1.1 scope registry, for 70 governed scoped routes in accepted production. The extension is additive: it cannot replace a frozen v1.1 scope or intent route, and each added scope is bound to an exact governed field fingerprint.
+Discovery adds 29 cryptographically scope-bound UK Assessment routes on top of the frozen 41-route v1.1 scope registry. Accepted production then adds 12 Republic-of-Ireland Assessment bindings through a separate additive sidecar, for 82 governed scoped routes total. Neither extension can replace the frozen v1.1 routes; each added scope is bound to an exact governed field fingerprint.
+
+## Republic of Ireland Assessment & diagnosis acceptance boundary
+
+The accepted first international package adds exactly four Questions and eight reviewed, claimless HSE Resources. It covers adult autism assessment, child autism assessment, adult ADHD assessment, and the distinction between HSE Assessment of Need and clinical diagnostic assessment.
+
+The package deliberately does not claim comprehensive Irish neurodivergence coverage. Child ADHD remains deferred because current first-party evidence does not support a strong uniform national access route.
+
+Republic-of-Ireland HSE and Northern Ireland HSC/NHS service rules are kept separate. England Right to Choose cannot surface as an Irish entitlement. The HSE Adult ADHD Model of Care is not treated as proof that specialist public teams are currently available everywhere. Adult autism private-access information is not provider endorsement. Assessment of Need is not presented as autism or ADHD diagnosis, and diagnosis remains separate from medication initiation, titration, prescribing and ongoing treatment.
+
+The Ireland extension contributes 12 exact scope bindings without rewriting the frozen v1.1 discovery-policy file or the accepted 29-route UK Assessment sidecar. Current accepted discovery therefore contains 82 scoped routes: 41 frozen base + 29 UK Assessment + 12 Republic of Ireland Assessment.
 
 ## Relationships & family acceptance boundary
 
