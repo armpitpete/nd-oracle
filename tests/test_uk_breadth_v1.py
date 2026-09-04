@@ -207,13 +207,13 @@ class UKBreadthV1Tests(unittest.TestCase):
                 self.assertIsNotNone(rank, f"{case['query']!r}: {routes}")
                 self.assertLessEqual(rank, case["max_rank"], f"{case['query']!r}: {routes}")
 
-    def test_candidate_does_not_rewrite_accepted_production_truth(self) -> None:
+    def test_accepted_production_truth_is_exact_verified_uk_baseline(self) -> None:
         current = json.loads((ROOT / "contracts" / "current-production.json").read_text(encoding="utf-8"))
-        self.assertEqual("5c05d775a5d548c0f4ad92f78e25008febe40d69", current["source_sha"])
-        self.assertEqual(208, current["corpus"]["governed_objects"])
-        self.assertEqual(292, current["verification"]["canonical_routes_verified"])
+        self.assertEqual("579c012cc9b31707409579da05b52a4d07efe61c", current["source_sha"])
+        self.assertEqual(307, current["corpus"]["governed_objects"])
+        self.assertEqual(391, current["verification"]["canonical_routes_verified"])
         self.assertEqual(
-            "docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md",
+            "docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md",
             current["production_state_document"],
         )
 
