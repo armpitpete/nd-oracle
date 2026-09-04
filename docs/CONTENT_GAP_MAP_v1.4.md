@@ -9,37 +9,37 @@ This is the current need-led editorial coverage map for the repository candidate
 ## Current repository candidate
 
 - 20 reviewed Concepts
-- 99 reviewed Resources
-- 86 reviewed practical Questions
+- 125 reviewed Resources
+- 135 reviewed practical Questions
 - 3 governed Evidence objects
-- 208 governed objects total
-- 292 canonical public routes in the current candidate build contract
+- 283 governed objects total
+- 367 canonical public routes in the current candidate build contract
 
 ## Current accepted production
 
-Accepted production remains the separately recorded 2026-09-03 deployment with 190 governed objects and 274 canonical routes until a newer exact SHA is deployed and live-verified. Production identity is resolved through `contracts/current-production.json` and recorded in `docs/PRODUCTION_STATE_2026-09-03.md`. Earlier versioned production-state documents remain immutable historical evidence.
+Accepted production is the separately recorded 2026-09-03 Relationships & family deployment with 208 governed objects and 292 canonical routes. Production identity is resolved through `contracts/current-production.json` and recorded in `docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md`. This UK-breadth repository candidate is not production unless and until a protected exact-SHA deployment and fresh live verification are completed; earlier production-state documents remain immutable historical evidence.
 
 ## Need-domain matrix
 
 | Domain | Current coverage | Important remaining gaps |
 | --- | --- | --- |
-| Daily living | Strong seed | shopping, household work, appointments, correspondence, transitions, more paperwork/admin routes |
-| Sensory needs | Strong seed | clothing, temperature, smell/taste, travel environments, more person-controlled accommodations |
-| Communication | Strong seed | broader AAC systems and service contexts, conflict evidence depth, mixed-neurotype communication research |
-| Work | Strong | staying in work, performance processes, occupational health, self-employment, Northern Ireland employment routes |
-| Education & study | Strong | exams, note-taking, school transitions, further education and broader four-nation school routes |
+| Daily living | **Strong** | broader household-support services, supported admin and independent evidence on practical task adaptations |
+| Sensory needs | **Strong** | stronger comparative accommodation evidence, workplace/school uniform depth and broader travel implementation data |
+| Communication | **Strong** | broader AAC systems, cross-service alternative-contact implementation and stronger mixed-neurotype communication evidence |
+| Work | **Strong reference seed** | stronger occupational-health first-party guidance, Northern Ireland process depth and employment-retention evidence |
+| Education & study | **Strong reference seed** | official exam-adjustment depth, England transition-specific evidence, FE breadth and implementation quality across four nations |
 | Assessment & diagnosis | **Strong UK reference implementation** | local board/Trust depth, private-assessment quality evidence, broader non-autism/ADHD pathways and international expansion |
 | Relationships & family | **Strong bounded seed** | siblings, kinship/unpaid carers, family-law boundaries, broader ADHD/mixed-neurotype relationship evidence, disabled-parent service evidence, four-nation parenting depth, accessible human relationship-support routes |
-| Money & administration | Thin | budgeting, debt, forms, correspondence, deadlines, appeals and advocacy |
-| Sleep | Emerging | environment, shift work, clinical routes and stronger evidence coverage |
-| Food & eating | Emerging | sensory eating, restricted diets, ARFID boundary, nutrition access and cooking supports |
-| Healthcare access | Strong seed | hospital-specific routes, dentistry, medication-navigation and broader service implementation evidence |
-| Mental wellbeing | Partial | crisis/support boundaries, depression, trauma, therapy access and neurodivergent adaptations |
-| Mobility & travel | Good seed | England travel-support parity, public transport/navigation and coordination-related mobility |
-| Technology & accessibility | Strong seed | browser/OS breadth, speech-to-text breadth, distraction reduction and setup guidance |
+| Money & administration | **Strong bounded seed** | accessible advocacy, council-tax/local-welfare routes, banking/scam safety, nation-specific debt depth and supported form completion |
+| Sleep | **Strong bounded seed** | sleep-clinic navigation, children, circadian/shift-work evidence, medication evidence and broader four-nation clinical pathways |
+| Food & eating | **Strong bounded seed** | dietetic access, children, pica/swallowing boundaries, broader ARFID pathways and stronger cooking-support evidence |
+| Healthcare access | **Strong** | dentistry-specific national sources, medication-review routes, hospital implementation evidence and four-nation adjustment-recording depth |
+| Mental wellbeing | **Strong safety-gated seed** | Wales/NI therapy navigation, crisis non-voice accessibility, adaptation outcomes and broader condition/service coverage |
+| Mobility & travel | **Strong seed** | Northern Ireland rail-assistance depth, bus/coach accessibility, operator-level cognitive/sensory metadata and journey-planning evidence |
+| Technology & accessibility | **Strong** | browser-specific depth, independent comparative usability evidence, privacy/offline speech-tool comparison and setup walkthroughs |
 | Games & downtime | **Strong bounded seed** | per-game accessibility inventories and implementation quality, broader-geography adult gaming communities, multiplayer social-control facets, broader platform coverage and non-gaming hobby routes |
-| Books & media | Partial | wider authorship, children’s books, research-informed introductions, media/podcasts |
-| Organisations & peer community | Partial | local/community routes, more condition-specific peer-led groups and geographic breadth |
+| Books & media | **Good bounded seed** | wider authorship, podcasts/documentaries, accessible formats and research-informed introductory material |
+| Organisations & peer community | **Good bounded seed** | cross-neurodivergent local directories, geographic breadth, comparable accessibility/moderation metadata and more peer-led groups |
 
 ## Assessment & diagnosis acceptance boundary
 
