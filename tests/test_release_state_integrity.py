@@ -10,24 +10,32 @@ from scripts import build_site
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
 CURRENT_POINTER = ROOT / "contracts" / "current-production.json"
-CURRENT_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md"
+CURRENT_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md"
+UK_BASELINE = ROOT / "docs" / "UK_REFERENCE_BASELINE_v1.md"
+PREVIOUS_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md"
 PREVIOUS_20260903_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_2026-09-03.md"
 V12_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_v1.2.md"
 V11_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_v1.1.md"
 V10_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_v1.0.md"
 
-CURRENT_RELEASE_SHA = "5c05d775a5d548c0f4ad92f78e25008febe40d69"
-CURRENT_TREE_SHA = "5861cd9ecbd33b2e465bbbd9027324182a9ef12b"
-CURRENT_ARTIFACT_SHA256 = "4864e9a9aa56a3278ad46d4a32695354f25018b9ce9d2ccb46cf8fa68ba4ba2a"
-CURRENT_DEPLOYMENT_RUN = 33796135523
-CURRENT_VERIFICATION_RUN = 33796510768
-CURRENT_VERIFICATION_JOB = 100785403728
+CURRENT_RELEASE_SHA = "579c012cc9b31707409579da05b52a4d07efe61c"
+CURRENT_TREE_SHA = "5d9dd369a9ddb271d4949e9d6d3f3bd0928d1d84"
+CURRENT_ARTIFACT_SHA256 = "5357cc31658b37dc6c7d9f0ff4f0330894df8877a7869024ad6feefce8d4e0f4"
+CURRENT_DEPLOYMENT_RUN = 33880971901
+CURRENT_VERIFICATION_RUN = 33881392179
+CURRENT_VERIFICATION_JOB = 101050648620
+
+PREVIOUS_RELEASE_SHA = "5c05d775a5d548c0f4ad92f78e25008febe40d69"
+PREVIOUS_ARTIFACT_SHA256 = "4864e9a9aa56a3278ad46d4a32695354f25018b9ce9d2ccb46cf8fa68ba4ba2a"
 PREVIOUS_20260903_RELEASE_SHA = "20926066e76e06beeef7d9ba87f24b88bada8658"
 PREVIOUS_20260903_ARTIFACT_SHA256 = "166bab6dc89dd02d119dbba23035f948666a5b3e3ee39cd179f71a45d3289c71"
 HISTORICAL_V12_RELEASE_SHA = "fad8e560979ba67bf94104d02f3b5100db8572cf"
 HISTORICAL_V12_ARTIFACT_SHA256 = "b88c462115434d3ce9929f1e62ec29d0fb0095c13c05ec17c87b813afea426a1"
 V11_RELEASE_SHA = "3032305dd81d48b2c6cc777b72f038267f995819"
 V10_RELEASE_SHA = "a0081e7d879e23568792ad5a468250eeb21dd20b"
+
+BASELINE_CONTENT_SHA = "802e69b4437a276c234a036d9cd8f3f58f582b71"
+BASELINE_CONTENT_TREE = "8cf57114836ba4e5443d5bae3943531aa2f42722"
 
 
 def load_current() -> dict:
@@ -39,36 +47,39 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
         current = load_current()
         self.assertEqual("1", current["schema_version"])
         self.assertEqual("accepted", current["status"])
-        self.assertEqual("2026-09-03", current["as_of"])
+        self.assertEqual("2026-09-04", current["as_of"])
         self.assertEqual("https://ndoracle.org", current["canonical_site"])
         self.assertEqual("v1.2", current["builder_release"])
-        self.assertEqual("docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md", current["production_state_document"])
+        self.assertEqual(
+            "docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md",
+            current["production_state_document"],
+        )
         self.assertEqual(CURRENT_RELEASE_SHA, current["source_sha"])
         self.assertEqual(CURRENT_TREE_SHA, current["source_tree_sha"])
 
         deployment = current["deployment"]
         self.assertEqual(CURRENT_DEPLOYMENT_RUN, deployment["workflow_run_id"])
-        self.assertEqual(22, deployment["workflow_run_number"])
-        self.assertEqual(100784510018, deployment["guard_job_id"])
-        self.assertEqual(100784550321, deployment["upload_job_id"])
+        self.assertEqual(23, deployment["workflow_run_number"])
+        self.assertEqual(101049268139, deployment["guard_job_id"])
+        self.assertEqual(101049294282, deployment["upload_job_id"])
         self.assertEqual(CURRENT_ARTIFACT_SHA256, deployment["artifact_sha256"])
-        self.assertEqual("https://7452fa61.nd-oracle.pages.dev", deployment["cloudflare_deployment"])
+        self.assertEqual("https://925a10c7.nd-oracle.pages.dev", deployment["cloudflare_deployment"])
         self.assertEqual("nd-oracle", deployment["cloudflare_project"])
         self.assertEqual("main", deployment["production_branch"])
 
         verification = current["verification"]
         self.assertEqual(CURRENT_VERIFICATION_RUN, verification["workflow_run_id"])
-        self.assertEqual(17, verification["workflow_run_number"])
+        self.assertEqual(340, verification["workflow_run_number"])
         self.assertEqual(CURRENT_VERIFICATION_JOB, verification["job_id"])
-        self.assertIsNone(verification["temporary_pr"])
-        self.assertEqual(292, verification["canonical_routes_verified"])
-        self.assertEqual(392, verification["regression_tests_passed"])
+        self.assertEqual(142, verification["temporary_pr"])
+        self.assertEqual(391, verification["canonical_routes_verified"])
+        self.assertEqual(416, verification["regression_tests_passed"])
 
         corpus = current["corpus"]
-        self.assertEqual(208, corpus["governed_objects"])
+        self.assertEqual(307, corpus["governed_objects"])
         self.assertEqual(20, corpus["concepts"])
-        self.assertEqual(99, corpus["resources"])
-        self.assertEqual(86, corpus["questions"])
+        self.assertEqual(136, corpus["resources"])
+        self.assertEqual(148, corpus["questions"])
         self.assertEqual(3, corpus["evidence_objects"])
         self.assertEqual(60, corpus["governed_source_records"])
         self.assertEqual(49, corpus["governed_claims"])
@@ -91,8 +102,9 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
             "contracts/current-production.json",
         ):
             self.assertIn(value, text)
-        self.assertIn("Current production is the accepted 2026-09-03 Relationships & family deployment", text)
-        self.assertNotIn("Production is the accepted v1.2 release", text)
+        self.assertIn("Current production is the accepted **2026-09-04 UK Reference Baseline v1** deployment", text)
+        self.assertIn("307 governed objects", text)
+        self.assertIn("391 canonical routes", text)
 
     def test_current_production_record_matches_pointer(self) -> None:
         current = load_current()
@@ -112,28 +124,27 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
             current["deployment"]["cloudflare_deployment"],
         ):
             self.assertIn(value, text)
-        self.assertIn("208 governed objects", text)
-        self.assertIn("392-test regression suite", text)
-        self.assertIn("292 canonical", text)
-        self.assertIn("49 Claims are evidence-covered", text)
+        self.assertIn("307 governed objects", text)
+        self.assertIn("416-test regression suite", text)
+        self.assertIn("391 canonical", text)
+        self.assertIn("All 49 Claims are evidence-covered", text)
         self.assertIn("60 governed source records", text)
         self.assertIn("60 governed Evidence source records checked; 0 overdue", text)
-        self.assertIn("208 governed objects checked; 0 overdue", text)
+        self.assertIn("307 governed objects checked; 0 overdue", text)
 
-    def test_accepted_production_remains_a_floor_while_repository_head_may_advance(self) -> None:
+    def test_accepted_production_matches_current_repository_contract(self) -> None:
         current = load_current()
         corpus = current["corpus"]
         self.assertEqual(
             corpus["concepts"] + corpus["resources"] + corpus["questions"] + corpus["evidence_objects"],
             corpus["governed_objects"],
         )
-        self.assertEqual(208, corpus["governed_objects"])
-        self.assertEqual(292, current["verification"]["canonical_routes_verified"])
-        self.assertGreaterEqual(len(build_site.load_concepts()), corpus["concepts"])
-        self.assertGreaterEqual(len(build_site.load_resources()), corpus["resources"])
-        self.assertGreaterEqual(len(build_site.load_questions()), corpus["questions"])
-        self.assertGreaterEqual(len(build_site.load_evidence()), corpus["evidence_objects"])
-        self.assertGreaterEqual(build_site.V10_ROUTE_COUNT, current["verification"]["canonical_routes_verified"])
+        self.assertEqual(len(build_site.load_concepts()), corpus["concepts"])
+        self.assertEqual(len(build_site.load_resources()), corpus["resources"])
+        self.assertEqual(len(build_site.load_questions()), corpus["questions"])
+        self.assertEqual(len(build_site.load_evidence()), corpus["evidence_objects"])
+        self.assertEqual(build_site.V10_ROUTE_COUNT, current["verification"]["canonical_routes_verified"])
+        self.assertEqual(391, build_site.V10_ROUTE_COUNT)
 
     def test_current_discovery_counts_are_explicit_and_additive(self) -> None:
         discovery = load_current()["discovery"]
@@ -145,9 +156,31 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
             discovery["total_scoped_routes"],
         )
 
-    def test_previous_20260903_production_evidence_remains_frozen(self) -> None:
+    def test_uk_reference_baseline_content_snapshot_remains_frozen(self) -> None:
+        text = UK_BASELINE.read_text(encoding="utf-8")
+        self.assertIn(BASELINE_CONTENT_SHA, text)
+        self.assertIn(BASELINE_CONTENT_TREE, text)
+        self.assertIn("**307 governed objects**", text)
+        self.assertIn("**391 canonical public routes**", text)
+        self.assertIn("FROZEN CONTENT BASELINE", text)
+        self.assertNotIn(CURRENT_ARTIFACT_SHA256, text)
+
+    def test_previous_relationships_production_evidence_remains_frozen(self) -> None:
         current = load_current()
-        self.assertNotEqual("docs/PRODUCTION_STATE_2026-09-03.md", current["production_state_document"])
+        self.assertNotEqual(
+            "docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md",
+            current["production_state_document"],
+        )
+        text = PREVIOUS_PRODUCTION.read_text(encoding="utf-8")
+        self.assertIn(PREVIOUS_RELEASE_SHA, text)
+        self.assertIn(PREVIOUS_ARTIFACT_SHA256, text)
+        self.assertIn("208 governed objects", text)
+        self.assertIn("392-test regression suite", text)
+        self.assertIn("292 canonical", text)
+        self.assertNotIn(CURRENT_RELEASE_SHA, text)
+        self.assertNotIn(CURRENT_ARTIFACT_SHA256, text)
+
+    def test_previous_20260903_production_evidence_remains_frozen(self) -> None:
         text = PREVIOUS_20260903_PRODUCTION.read_text(encoding="utf-8")
         self.assertIn(PREVIOUS_20260903_RELEASE_SHA, text)
         self.assertIn(PREVIOUS_20260903_ARTIFACT_SHA256, text)
@@ -158,8 +191,6 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
         self.assertNotIn(CURRENT_ARTIFACT_SHA256, text)
 
     def test_historical_v12_production_evidence_remains_frozen(self) -> None:
-        current = load_current()
-        self.assertNotEqual("docs/PRODUCTION_STATE_v1.2.md", current["production_state_document"])
         text = V12_PRODUCTION.read_text(encoding="utf-8")
         self.assertIn("# ND Oracle production state v1.2", text)
         self.assertIn(HISTORICAL_V12_RELEASE_SHA, text)
