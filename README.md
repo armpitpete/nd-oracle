@@ -13,15 +13,15 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current repository candidate contains exactly 283 governed objects. It is the bounded `coverage/uk-breadth-v1` candidate and is **not accepted production**:
+The current repository candidate contains exactly 307 governed objects. It extends the merged UK-breadth baseline with the bounded `coverage/organisations-peer-community-uk-v1` reference slice and is **not accepted production**:
 
 - 20 reviewed Concept objects;
-- 125 reviewed Resource objects;
-- 135 reviewed Question objects;
+- 136 reviewed Resource objects;
+- 148 reviewed Question objects;
 - 3 normalized v0.2 Evidence objects;
-- 367 canonical public routes in the candidate build contract.
+- 391 canonical public routes in the candidate build contract.
 
-The UK-breadth slice adds 49 reviewed Questions and 26 reviewed, claimless Resources across daily living, sensory needs, communication, work, education, money and administration, sleep, food and eating, healthcare access, mental wellbeing, mobility and travel, technology and accessibility, books and media, and organisations / peer community. The candidate preserves frozen discovery, jurisdiction, clinical, privacy, provenance, ranking and AI-authority boundaries.
+The merged UK-breadth slice added 49 reviewed Questions and 26 reviewed, claimless Resources across the remaining breadth domains. This candidate adds a further 13 Organisations & peer community Questions and 11 reviewed Resources spanning autistic-led organisations, user-led self-advocacy, Welsh DPOs, dyslexia, dyspraxia/DCD, Tourette syndrome, Northern Ireland peer networks and a bounded cross-neurodivergent directory route. A separate tested metadata contract records geography, leadership, accessibility, moderation and privacy using explicit unknown/not-found semantics and no quality or safety score. Frozen discovery, jurisdiction, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged.
 
 Accepted production remains the 2026-09-03 Relationships & family deployment: 208 governed objects and 292 canonical routes from exact source SHA `5c05d775a5d548c0f4ad92f78e25008febe40d69`. `contracts/current-production.json` remains the only current-production pointer until a separately protected deployment and fresh live verification succeed.
 
@@ -72,6 +72,10 @@ docs/ASSESSMENT_DIAGNOSIS_UK_SOURCE_MATRIX_v1.md UK source/jurisdiction matrix
 docs/RELATIONSHIPS_FAMILY_UK_v1.md   Relationships & family bounded coverage contract
 docs/RELATIONSHIPS_FAMILY_UK_SOURCE_MATRIX_v1.md Relationships & family source matrix
 docs/UK_BREADTH_CANDIDATE_v1.md      UK breadth candidate contract and acceptance gates
+docs/ORGANISATIONS_PEER_COMMUNITY_UK_v1.md Organisations & peer community UK v1 contract
+docs/ORGANISATIONS_PEER_COMMUNITY_UK_SOURCE_MATRIX_v1.md Organisations & peer community source/geography matrix
+contracts/organisations-peer-community-uk-v1.json Machine-readable leadership/access/moderation/privacy metadata
+benchmarks/organisations-peer-community-uk-v1.json Organisations & peer community deterministic/hostile benchmark
 benchmarks/uk-breadth-v1.json        UK breadth deterministic discovery/hostile benchmark
 scripts/build_site.py                Current self-contained static site generator
 scripts/discovery.py                 Deterministic governed discovery index/routing

@@ -1,0 +1,527 @@
+{
+  "version": "1",
+  "date": "2026-09-04",
+  "purpose": "Machine-readable Organisations & peer community UK v1 metadata extension. It records inspectable geography, leadership, access, moderation and privacy facts without changing the core Resource schema or creating quality or safety scores.",
+  "state_semantics": {
+    "observed": "Explicitly published on a reviewed first-party route.",
+    "partial": "Some relevant information is published but important fields remain unknown.",
+    "not_found": "Not found on the reviewed public route; this is uncertainty, not evidence that the feature or policy is absent.",
+    "not_applicable": "The field does not meaningfully apply to this resource type."
+  },
+  "leadership_types": [
+    "peer_controlled",
+    "lived_experience_volunteer_led",
+    "user_led",
+    "dpo_membership_governed",
+    "organisation_led",
+    "commercial_operator",
+    "unclear"
+  ],
+  "moderation_states": [
+    "observed",
+    "partial",
+    "not_found",
+    "not_applicable"
+  ],
+  "privacy_states": [
+    "observed",
+    "partial",
+    "not_found",
+    "not_applicable"
+  ],
+  "accessibility_states": [
+    "observed",
+    "partial",
+    "not_found"
+  ],
+  "no_quality_or_safety_score": true,
+  "resources": {
+    "nas-autism-services-directory": {
+      "geography": {
+        "nations": [
+          "England",
+          "Scotland",
+          "Wales",
+          "Northern Ireland"
+        ],
+        "scope": "UK-wide directory with local listings; individual entry coverage varies."
+      },
+      "leadership": {
+        "type": "organisation_led",
+        "state": "observed",
+        "note": "National Autistic Society-managed directory; directory status does not establish leadership of listed groups."
+      },
+      "access": {
+        "state": "partial",
+        "format": "web directory",
+        "text_participation": "not_applicable",
+        "spoken_required": "not_applicable",
+        "video_required": "not_applicable",
+        "note": "Individual listed services require separate access checks."
+      },
+      "moderation": {
+        "state": "not_applicable",
+        "note": "Directory listing rather than a discussion community."
+      },
+      "privacy": {
+        "state": "observed",
+        "visibility": "public directory",
+        "note": "Following a listing uses the destination's own terms."
+      }
+    },
+    "adhd-uk-support-groups": {
+      "geography": {
+        "nations": [
+          "England",
+          "Scotland",
+          "Wales",
+          "Northern Ireland"
+        ],
+        "scope": "UK support-group route; session details must be checked."
+      },
+      "leadership": {
+        "type": "organisation_led",
+        "state": "observed",
+        "note": "Groups are operated by ADHD UK; peer participation does not establish participant control of the organisation."
+      },
+      "access": {
+        "state": "partial",
+        "format": "scheduled support groups",
+        "text_participation": "not_found",
+        "spoken_required": "not_found",
+        "video_required": "not_found",
+        "note": "Event-specific format and capacity require current checking."
+      },
+      "moderation": {
+        "state": "not_found",
+        "note": "Comparable public moderation detail was not established in this slice."
+      },
+      "privacy": {
+        "state": "not_found",
+        "visibility": "unknown",
+        "note": "Check registration and platform terms for the selected event."
+      }
+    },
+    "nas-online-community": {
+      "geography": {
+        "nations": [
+          "England",
+          "Scotland",
+          "Wales",
+          "Northern Ireland"
+        ],
+        "scope": "Online autism community route; current eligibility and rules apply."
+      },
+      "leadership": {
+        "type": "organisation_led",
+        "state": "observed",
+        "note": "National Autistic Society-operated community."
+      },
+      "access": {
+        "state": "partial",
+        "format": "online community",
+        "text_participation": "observed",
+        "spoken_required": "not_found",
+        "video_required": "not_found",
+        "note": "The public description supports an online community route; current account and rule details require checking."
+      },
+      "moderation": {
+        "state": "partial",
+        "note": "Community rules and moderation terms are relevant inspection points; effectiveness is not inferred."
+      },
+      "privacy": {
+        "state": "partial",
+        "visibility": "membership-dependent",
+        "note": "Check current registration and privacy terms before posting."
+      }
+    },
+    "amase-autistic-mutual-aid-society-edinburgh": {
+      "geography": {
+        "nations": [
+          "Scotland"
+        ],
+        "scope": "Edinburgh, Lothians and Fife full-membership base; many events online."
+      },
+      "leadership": {
+        "type": "peer_controlled",
+        "state": "observed",
+        "note": "AMASE states all full members are autistic and describes itself as an Autistic People's Organisation."
+      },
+      "access": {
+        "state": "partial",
+        "format": "online and in-person events",
+        "text_participation": "partial",
+        "spoken_required": "not_found",
+        "video_required": "not_found",
+        "note": "Members-only Discord provides a text-based route; event access varies."
+      },
+      "moderation": {
+        "state": "not_found",
+        "note": "No comparable public moderation specification is inferred from membership or Discord use."
+      },
+      "privacy": {
+        "state": "partial",
+        "visibility": "members-only Discord plus public event information",
+        "note": "Discord and event privacy differ; inspect the actual activity."
+      }
+    },
+    "argh-scotland": {
+      "geography": {
+        "nations": [
+          "Scotland"
+        ],
+        "scope": "Highland-rooted; organisation states Scotland-wide activity."
+      },
+      "leadership": {
+        "type": "peer_controlled",
+        "state": "observed",
+        "note": "ARGH states its committee and full voting members are autistic."
+      },
+      "access": {
+        "state": "partial",
+        "format": "online social meet-ups, courses and in-person events",
+        "text_participation": "not_found",
+        "spoken_required": "not_found",
+        "video_required": "not_found",
+        "note": "Activity-specific arrangements vary."
+      },
+      "moderation": {
+        "state": "not_found",
+        "note": "Peer control does not substitute for activity-specific rules."
+      },
+      "privacy": {
+        "state": "partial",
+        "visibility": "public site plus registration-based activities",
+        "note": "Registration forms and activities use ARGH's own terms."
+      }
+    },
+    "people-first-self-advocacy": {
+      "geography": {
+        "nations": [
+          "England",
+          "Scotland",
+          "Wales",
+          "Northern Ireland"
+        ],
+        "scope": "National organisation with a map of independent member self-advocacy organisations."
+      },
+      "leadership": {
+        "type": "user_led",
+        "state": "observed",
+        "note": "People First states its management committee and staff are people with learning difficulties and that member groups are self-advocacy organisations."
+      },
+      "access": {
+        "state": "partial",
+        "format": "membership, advocacy, meetings and member network",
+        "text_participation": "partial",
+        "spoken_required": "not_found",
+        "video_required": "not_found",
+        "note": "The public site includes accessibility information; member-group access varies."
+      },
+      "moderation": {
+        "state": "not_applicable",
+        "note": "Organisation and member network rather than one online discussion community."
+      },
+      "privacy": {
+        "state": "observed",
+        "visibility": "public site with membership and contact routes",
+        "note": "Member organisations have separate policies."
+      }
+    },
+    "disability-wales-full-member-dpos": {
+      "geography": {
+        "nations": [
+          "Wales"
+        ],
+        "scope": "Wales DPO membership listing, including local and all-Wales organisations."
+      },
+      "leadership": {
+        "type": "dpo_membership_governed",
+        "state": "observed",
+        "note": "Full-member criteria require at least 51% disabled voting membership and 51% disabled governing body."
+      },
+      "access": {
+        "state": "partial",
+        "format": "public membership directory",
+        "text_participation": "not_applicable",
+        "spoken_required": "not_applicable",
+        "video_required": "not_applicable",
+        "note": "Member-level accessibility must be checked separately."
+      },
+      "moderation": {
+        "state": "not_applicable",
+        "note": "Directory and membership list rather than discussion community."
+      },
+      "privacy": {
+        "state": "observed",
+        "visibility": "public directory",
+        "note": "Contacting member organisations uses their own terms."
+      }
+    },
+    "bda-dyslexia-charity-network": {
+      "geography": {
+        "nations": [
+          "England",
+          "Scotland",
+          "Wales"
+        ],
+        "scope": "Postcode and local directory plus national groupings; reviewed page does not establish equivalent all-Northern-Ireland directory coverage."
+      },
+      "leadership": {
+        "type": "organisation_led",
+        "state": "observed",
+        "note": "BDA network of not-for-profit dyslexia charities; peer-led status varies by member."
+      },
+      "access": {
+        "state": "partial",
+        "format": "public postcode-searchable directory",
+        "text_participation": "not_applicable",
+        "spoken_required": "not_applicable",
+        "video_required": "not_applicable",
+        "note": "Entries expose activity types but member accessibility varies."
+      },
+      "moderation": {
+        "state": "not_applicable",
+        "note": "Directory rather than discussion community."
+      },
+      "privacy": {
+        "state": "observed",
+        "visibility": "public directory",
+        "note": "Individual member sites have separate terms."
+      }
+    },
+    "bda-local-dyslexia-hubs": {
+      "geography": {
+        "nations": [
+          "England",
+          "Wales",
+          "Northern Ireland"
+        ],
+        "scope": "Current hub development in Northern Ireland, South Wales and Devon."
+      },
+      "leadership": {
+        "type": "organisation_led",
+        "state": "observed",
+        "note": "BDA describes the project as volunteer-led; lived-experience control is not established by the reviewed source."
+      },
+      "access": {
+        "state": "partial",
+        "format": "events plus private Facebook group",
+        "text_participation": "observed",
+        "spoken_required": "partial",
+        "video_required": "not_found",
+        "note": "Facebook account and platform requirements apply to private online support."
+      },
+      "moderation": {
+        "state": "partial",
+        "note": "A private BDA-associated Facebook community is described, but moderation effectiveness is not scored."
+      },
+      "privacy": {
+        "state": "observed",
+        "visibility": "private Facebook group for online community",
+        "note": "Third-party Facebook terms and participant sharing still apply."
+      }
+    },
+    "tourettes-action-support-groups": {
+      "geography": {
+        "nations": [
+          "England",
+          "Scotland",
+          "Wales",
+          "Northern Ireland"
+        ],
+        "scope": "Online groups for UK residents plus in-person regional groups and events; actual in-person coverage varies."
+      },
+      "leadership": {
+        "type": "organisation_led",
+        "state": "observed",
+        "note": "Groups are facilitated or organised by Tourettes Action; lived-experience participation does not imply participant control."
+      },
+      "access": {
+        "state": "observed",
+        "format": "Zoom online groups and regional in-person groups",
+        "text_participation": "not_found",
+        "spoken_required": "partial",
+        "video_required": "not_found",
+        "note": "Online meetings are capped at 20 and require advance booking; Zoom is required."
+      },
+      "moderation": {
+        "state": "observed",
+        "note": "Tourettes Action states an Online Support Groups Leader facilitates groups and that medical advice is not discussed."
+      },
+      "privacy": {
+        "state": "partial",
+        "visibility": "registration-based Zoom sessions",
+        "note": "Zoom and booking terms apply; no confidentiality guarantee is inferred."
+      }
+    },
+    "dyspraxia-foundation-local-groups": {
+      "geography": {
+        "nations": [
+          "England",
+          "Wales"
+        ],
+        "scope": "Listed local groups in England and Wales; Foundation explicitly says it cannot recruit groups in Scotland."
+      },
+      "leadership": {
+        "type": "lived_experience_volunteer_led",
+        "state": "observed",
+        "note": "Foundation states groups are organised by volunteers with lived experience."
+      },
+      "access": {
+        "state": "partial",
+        "format": "local meetings and support; group-specific",
+        "text_participation": "not_found",
+        "spoken_required": "not_found",
+        "video_required": "not_found",
+        "note": "Some contact information is member-only."
+      },
+      "moderation": {
+        "state": "partial",
+        "note": "Foundation distinguishes official listed groups from unaffiliated social-media groups but does not create a universal moderation claim."
+      },
+      "privacy": {
+        "state": "partial",
+        "visibility": "public listing; individual group contact and meeting arrangements vary",
+        "note": "Check local group terms."
+      }
+    },
+    "dyspraxic-adults-forum": {
+      "geography": {
+        "nations": [
+          "England",
+          "Scotland",
+          "Wales",
+          "Northern Ireland"
+        ],
+        "scope": "Online forum accessible without a location-specific programme; no completeness claim."
+      },
+      "leadership": {
+        "type": "unclear",
+        "state": "not_found",
+        "note": "This slice does not infer peer governance from forum subject or membership."
+      },
+      "access": {
+        "state": "observed",
+        "format": "asynchronous web forum",
+        "text_participation": "observed",
+        "spoken_required": "not_applicable",
+        "video_required": "not_applicable",
+        "note": "Public reading is possible; posting uses forum account controls."
+      },
+      "moderation": {
+        "state": "observed",
+        "note": "Forum visibly identifies a Moderator Team on topic areas; effectiveness is not scored."
+      },
+      "privacy": {
+        "state": "observed",
+        "visibility": "publicly readable forum",
+        "note": "Do not assume posts are private or confidential."
+      }
+    },
+    "autism-ni-autistic-adult-peer-networks": {
+      "geography": {
+        "nations": [
+          "Northern Ireland"
+        ],
+        "scope": "PACE project areas in Northern Ireland; availability tied to current project eligibility."
+      },
+      "leadership": {
+        "type": "organisation_led",
+        "state": "observed",
+        "note": "Networks are coordinated by Autism NI; participant peer support does not mean organisation-level peer control."
+      },
+      "access": {
+        "state": "observed",
+        "format": "online peer networks",
+        "text_participation": "observed",
+        "spoken_required": "not_found",
+        "video_required": "not_found",
+        "note": "Autism NI explicitly states text-based communication is available via chat."
+      },
+      "moderation": {
+        "state": "partial",
+        "note": "Networks are coordinated by Autism NI; no effectiveness score is inferred."
+      },
+      "privacy": {
+        "state": "partial",
+        "visibility": "programme and participant online groups",
+        "note": "Contact Autism NI for current platform and privacy arrangements."
+      }
+    },
+    "neurodiversity-uk-events-directory": {
+      "geography": {
+        "nations": [
+          "England",
+          "Scotland",
+          "Wales",
+          "Northern Ireland"
+        ],
+        "scope": "Operator describes a nationwide event and support-group directory; completeness is not independently established."
+      },
+      "leadership": {
+        "type": "commercial_operator",
+        "state": "observed",
+        "note": "Trading name of Neurodiversity Awareness Ltd, a social enterprise that also sells services."
+      },
+      "access": {
+        "state": "partial",
+        "format": "web event and support-group directory",
+        "text_participation": "not_applicable",
+        "spoken_required": "not_applicable",
+        "video_required": "not_applicable",
+        "note": "Individual event accessibility must be checked."
+      },
+      "moderation": {
+        "state": "not_applicable",
+        "note": "Directory-level listing; each group needs separate moderation review."
+      },
+      "privacy": {
+        "state": "observed",
+        "visibility": "public website",
+        "note": "Individual event and platform terms apply after following listings."
+      }
+    }
+  },
+  "geographic_proofs": [
+    {
+      "probe": "York / Yorkshire",
+      "nation": "England",
+      "result": "bounded",
+      "evidence": "BDA Dyslexia Charity Network lists Yorkshire-area association coverage; NAS directory remains a local-search fallback rather than an Oracle-maintained York catalogue."
+    },
+    {
+      "probe": "Cumbria",
+      "nation": "England",
+      "result": "bounded",
+      "evidence": "Dyspraxia Foundation lists a Cumbria local group and BDA network includes regional routes."
+    },
+    {
+      "probe": "Highland",
+      "nation": "Scotland",
+      "result": "bounded",
+      "evidence": "ARGH Scotland is Highland-rooted and autistic-led, with Scotland-wide activity."
+    },
+    {
+      "probe": "Powys",
+      "nation": "Wales",
+      "result": "bounded",
+      "evidence": "Disability Wales full-member DPO list includes Accessibility Powys; directory use does not imply neurodivergence-specific support."
+    },
+    {
+      "probe": "Fermanagh",
+      "nation": "Northern Ireland",
+      "result": "bounded",
+      "evidence": "Autism NI states support is delivered across Northern Ireland including Fermanagh; PACE peer-network eligibility remains separate."
+    }
+  ],
+  "research_evidence": [
+    {
+      "status": "contextual_not_claim_bearing",
+      "citation": "Crompton CJ, Hallett S, McAuliffe C, Stanfield AC, Fletcher-Watson S. “A Group of Fellow Travellers Who Understand”: Interviews With Autistic People About Post-diagnostic Peer Support in Adulthood. Frontiers in Psychology. 2022;13:831628.",
+      "doi": "10.3389/fpsyg.2022.831628",
+      "finding": "A qualitative UK study of 12 autistic adults found generally positive views of post-diagnostic autistic peer support while also identifying accessibility, facilitator training and support, sustainability, intersectionality and specialist-service boundaries as important design constraints.",
+      "limits": "Small self-selecting qualitative sample of autistic adults diagnosed in adulthood; it cannot establish universal efficacy, certify any listed group, or generalise to every neurodivergent population."
+    }
+  ]
+}

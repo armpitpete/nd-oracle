@@ -1,6 +1,6 @@
 # ND Oracle content-gap map v1.4
 
-Date: 2026-09-03
+Date: 2026-09-04
 
 ## Purpose
 
@@ -9,11 +9,11 @@ This is the current need-led editorial coverage map for the repository candidate
 ## Current repository candidate
 
 - 20 reviewed Concepts
-- 125 reviewed Resources
-- 135 reviewed practical Questions
+- 136 reviewed Resources
+- 148 reviewed practical Questions
 - 3 governed Evidence objects
-- 283 governed objects total
-- 367 canonical public routes in the current candidate build contract
+- 307 governed objects total
+- 391 canonical public routes in the current candidate build contract
 
 ## Current accepted production
 
@@ -39,7 +39,7 @@ Accepted production is the separately recorded 2026-09-03 Relationships & family
 | Technology & accessibility | **Strong** | browser-specific depth, independent comparative usability evidence, privacy/offline speech-tool comparison and setup walkthroughs |
 | Games & downtime | **Strong bounded seed** | per-game accessibility inventories and implementation quality, broader-geography adult gaming communities, multiplayer social-control facets, broader platform coverage and non-gaming hobby routes |
 | Books & media | **Good bounded seed** | wider authorship, podcasts/documentaries, accessible formats and research-informed introductory material |
-| Organisations & peer community | **Good bounded seed** | cross-neurodivergent local directories, geographic breadth, comparable accessibility/moderation metadata and more peer-led groups |
+| Organisations & peer community | **Strong UK reference seed** | DLD/dyscalculia-specific peer networks, deeper local accessibility publication, independent moderation/outcome evidence and ongoing directory freshness |
 
 ## Assessment & diagnosis acceptance boundary
 
@@ -62,6 +62,20 @@ The section deliberately keeps several boundaries separate. Parenting a neurodiv
 Disability-service access preserves the legal split between England, Scotland and Wales and Northern Ireland. The combined UK Resource is only a jurisdiction signpost and does not assert one UK-wide disability statute.
 
 A 48-case deterministic benchmark covers the two original defects, friendship/partner/boundary/conflict/intimacy journeys, parenting and disabled-parent access, family events, domestic-abuse routing, leave/stay refusal and preserved diagnosis/medication boundaries. Two partner queries permit the intended relationship-specific route at rank 4 because frozen discovery correctly places other governed communication or sensory routes above it; no ranking weights were changed to manufacture a stronger result.
+
+## Organisations & peer community acceptance boundary
+
+The current candidate contains 16 Organisations & peer community Questions: the three UK-breadth routes plus thirteen new journeys covering peer/user-led governance, rural/no-local-group fallback, online-versus-in-person fit, accessibility, moderation, privacy, cross-neurodivergent discovery, awaiting-assessment eligibility, leaving poor-fit groups, missing-policy uncertainty, explicit Scotland/Wales/Northern-Ireland navigation and a direct Tourette peer-support route.
+
+Eleven new Resources broaden the section beyond autism and ADHD to include dyslexia, dyspraxia/DCD, Tourette syndrome, learning-disability/self-advocacy and Disabled People's Organisation routes. AMASE and ARGH Scotland are recorded as autistic peer-controlled only because their own governance statements support that description; People First is recorded as user-led and Disability Wales full members are exposed through explicit DPO membership criteria. These labels are descriptive and never become quality or safety scores.
+
+`contracts/organisations-peer-community-uk-v1.json` provides additive machine-readable geography, leadership, accessibility, moderation and privacy metadata without changing the frozen core Resource schema. Metadata uses observed/partial/not-found/not-applicable states so missing public information cannot silently become a negative claim.
+
+No independently evidenced complete, peer-governed UK-wide cross-neurodivergent directory was found. The candidate therefore exposes a commercial cross-ND event directory only with its self-described completeness and commercial conflict visible, while preserving condition-specific and DPO/self-advocacy routes.
+
+A bounded geographic proof set covers York/Yorkshire, Cumbria, Highland, Powys and Fermanagh. These are discovery proofs, not a promise that ND Oracle maintains a complete local-group catalogue.
+
+The section records directly relevant peer-reviewed autistic peer-support research as contextual, non-claim-bearing evidence. It does not alter the frozen Evidence Layer or generalise a small autism-specific qualitative study to all neurodivergent people.
 
 ## Games & downtime acceptance boundary
 
