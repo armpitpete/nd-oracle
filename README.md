@@ -13,17 +13,17 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current repository and accepted production contain exactly **307 governed objects** as the frozen **UK Reference Baseline v1**:
+The current repository candidate contains exactly **319 governed objects**:
 
 - 20 reviewed Concept objects;
-- 136 reviewed Resource objects;
-- 148 reviewed Question objects;
+- 144 reviewed Resource objects;
+- 152 reviewed Question objects;
 - 3 normalized v0.2 Evidence objects;
-- **391 canonical public routes**.
+- **403 canonical public routes** in the candidate build contract.
 
-The baseline combines the accepted UK Assessment & diagnosis and Relationships & family work with the UK breadth expansion and Organisations & peer community UK v1 slice. The breadth work added 49 reviewed Questions and 26 reviewed, claimless Resources across the remaining need domains; Organisations & peer community adds 13 Questions and 11 reviewed Resources spanning peer/user-led governance, DPOs, autism, ADHD, dyslexia, dyspraxia/DCD, Tourette syndrome, learning-disability/self-advocacy, Northern Ireland peer networks and bounded cross-neurodivergent discovery. A tested metadata contract records geography, leadership, accessibility, moderation and privacy using explicit uncertainty states and no quality or safety score.
+The accepted **UK Reference Baseline v1** remains intact beneath this candidate. The candidate adds the first non-UK jurisdiction package: a bounded **Republic of Ireland Assessment & diagnosis v1** slice with 4 Questions and 8 reviewed, claimless HSE Resources. It covers adult autism, child autism, adult ADHD, and the distinction between HSE Assessment of Need and clinical diagnostic assessment. Child ADHD remains deliberately deferred because current first-party evidence does not yet justify a strong uniform national access route.
 
-Current accepted production is the 2026-09-04 UK Reference Baseline v1 deployment from exact source SHA `579c012cc9b31707409579da05b52a4d07efe61c`, with 307 governed objects and 391 canonical routes freshly verified at `https://ndoracle.org`. Frozen discovery, jurisdiction, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged.
+Current accepted production remains the 2026-09-04 UK Reference Baseline v1 deployment from exact source SHA `579c012cc9b31707409579da05b52a4d07efe61c`, with 307 governed objects and 391 canonical routes freshly verified at `https://ndoracle.org`. The Ireland candidate is not accepted production. Frozen UK discovery, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged; Ireland is added through a separate additive jurisdiction extension.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
 
@@ -33,7 +33,7 @@ Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are e
 
 The current accepted public contract contains 391 canonical routes. It preserves the v1.2 public-site builder identity, frozen discovery architecture, reading/navigation surface and privacy/static boundaries while exposing the full UK Reference Baseline v1 across all current need domains. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections.
 
-Assessment & diagnosis contains the adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus cross-cutting routes for private assessment, waiting/support, refusal or disagreement, after-assessment outcomes, communication/sensory adjustments, co-occurring autism/ADHD and other neurodevelopmental assessments. England-specific Right to Choose is contained to England; Scottish health-board variation, Welsh health-board/local-service variation and Northern Ireland Trust/service-development variation remain explicit. Fifteen assessment Resources are claimless service/guidance listings, not provider endorsements or diagnostic claims. Discovery adds 29 cryptographically scope-bound routes without replacing the frozen 41-route v1.1 scope registry, producing 70 governed scoped routes in current accepted production. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
+Assessment & diagnosis preserves the accepted adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus its UK cross-cutting routes, and the candidate adds four Republic-of-Ireland journeys. England-specific Right to Choose remains contained to England; Northern Ireland HSC/NHS and Republic-of-Ireland HSE routes are explicitly separate; HSE adult autism public/private access, adult ADHD regional rollout and Assessment-of-Need distinctions remain bounded. The Ireland slice adds 8 reviewed, claimless first-party HSE Resources. Discovery keeps the frozen 41-route v1.1 registry and 29-route UK Assessment extension unchanged, then adds 12 exact Republic-of-Ireland scope bindings for 82 governed scoped routes in the candidate. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
 
 Relationships & family keeps parenting a neurodivergent child separate from support for a neurodivergent or disabled parent; ordinary relationship communication does not displace safeguarding where fear, control, violence or sexual pressure is present; consent remains explicit and revocable; ND Oracle does not diagnose a partner, decide who is right, or decide whether a relationship should continue; and disability-service access preserves the England/Scotland/Wales versus Northern Ireland legal split. The accepted 48-case benchmark was integrated without changing frozen ranking weights.
 
@@ -59,6 +59,7 @@ schema/object-v0.2.json              v0.2 object dispatcher
 schema/types/                        v0.2 object-type contracts
 discovery/routing-policy-v1.1.json   Frozen deterministic v1.1 discovery policy
 discovery/assessment-diagnosis-uk-v1.json Additive UK assessment discovery extension
+discovery/assessment-diagnosis-ireland-v1.json Additive Republic-of-Ireland assessment discovery extension
 site/                                Static public site source
 scripts/validate.py                  Schema, governance-route, and graph checks
 scripts/check_content_freshness.py   Review-age/freshness gate, including Evidence source-kind cadence
@@ -69,6 +70,8 @@ contracts/current-production.json    Canonical machine-readable current-producti
 docs/EVIDENCE_LAYER_STATE_v1.md      Current Evidence-layer implementation state
 docs/ASSESSMENT_DIAGNOSIS_UK_v1.md   UK assessment/diagnosis reference contract
 docs/ASSESSMENT_DIAGNOSIS_UK_SOURCE_MATRIX_v1.md UK source/jurisdiction matrix
+docs/ASSESSMENT_DIAGNOSIS_IRELAND_v1.md Republic-of-Ireland assessment reference contract
+docs/ASSESSMENT_DIAGNOSIS_IRELAND_SOURCE_MATRIX_v1.md Republic-of-Ireland source/jurisdiction matrix
 docs/RELATIONSHIPS_FAMILY_UK_v1.md   Relationships & family bounded coverage contract
 docs/RELATIONSHIPS_FAMILY_UK_SOURCE_MATRIX_v1.md Relationships & family source matrix
 docs/UK_BREADTH_CANDIDATE_v1.md      UK breadth candidate contract and acceptance gates
