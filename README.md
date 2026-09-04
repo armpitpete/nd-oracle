@@ -13,17 +13,17 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current repository candidate contains exactly 307 governed objects. It extends the merged UK-breadth baseline with the bounded `coverage/organisations-peer-community-uk-v1` reference slice and is **not accepted production**:
+The current repository and accepted production contain exactly **307 governed objects** as the frozen **UK Reference Baseline v1**:
 
 - 20 reviewed Concept objects;
 - 136 reviewed Resource objects;
 - 148 reviewed Question objects;
 - 3 normalized v0.2 Evidence objects;
-- 391 canonical public routes in the candidate build contract.
+- **391 canonical public routes**.
 
-The merged UK-breadth slice added 49 reviewed Questions and 26 reviewed, claimless Resources across the remaining breadth domains. This candidate adds a further 13 Organisations & peer community Questions and 11 reviewed Resources spanning autistic-led organisations, user-led self-advocacy, Welsh DPOs, dyslexia, dyspraxia/DCD, Tourette syndrome, Northern Ireland peer networks and a bounded cross-neurodivergent directory route. A separate tested metadata contract records geography, leadership, accessibility, moderation and privacy using explicit unknown/not-found semantics and no quality or safety score. Frozen discovery, jurisdiction, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged.
+The baseline combines the accepted UK Assessment & diagnosis and Relationships & family work with the UK breadth expansion and Organisations & peer community UK v1 slice. The breadth work added 49 reviewed Questions and 26 reviewed, claimless Resources across the remaining need domains; Organisations & peer community adds 13 Questions and 11 reviewed Resources spanning peer/user-led governance, DPOs, autism, ADHD, dyslexia, dyspraxia/DCD, Tourette syndrome, learning-disability/self-advocacy, Northern Ireland peer networks and bounded cross-neurodivergent discovery. A tested metadata contract records geography, leadership, accessibility, moderation and privacy using explicit uncertainty states and no quality or safety score.
 
-Accepted production remains the 2026-09-03 Relationships & family deployment: 208 governed objects and 292 canonical routes from exact source SHA `5c05d775a5d548c0f4ad92f78e25008febe40d69`. `contracts/current-production.json` remains the only current-production pointer until a separately protected deployment and fresh live verification succeed.
+Current accepted production is the 2026-09-04 UK Reference Baseline v1 deployment from exact source SHA `579c012cc9b31707409579da05b52a4d07efe61c`, with 307 governed objects and 391 canonical routes freshly verified at `https://ndoracle.org`. Frozen discovery, jurisdiction, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
 
@@ -31,7 +31,7 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-The current accepted public contract contains 292 canonical routes. It preserves the v1.2 public-site builder identity, frozen discovery architecture, reading/navigation surface and privacy/static boundaries while including devolved healthcare-communication parity, bounded Games & downtime coverage, the UK Assessment & diagnosis reference implementation, and the Relationships & family UK v1 bounded reference slice. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections.
+The current accepted public contract contains 391 canonical routes. It preserves the v1.2 public-site builder identity, frozen discovery architecture, reading/navigation surface and privacy/static boundaries while exposing the full UK Reference Baseline v1 across all current need domains. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections.
 
 Assessment & diagnosis contains the adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus cross-cutting routes for private assessment, waiting/support, refusal or disagreement, after-assessment outcomes, communication/sensory adjustments, co-occurring autism/ADHD and other neurodevelopmental assessments. England-specific Right to Choose is contained to England; Scottish health-board variation, Welsh health-board/local-service variation and Northern Ireland Trust/service-development variation remain explicit. Fifteen assessment Resources are claimless service/guidance listings, not provider endorsements or diagnostic claims. Discovery adds 29 cryptographically scope-bound routes without replacing the frozen 41-route v1.1 scope registry, producing 70 governed scoped routes in current accepted production. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
 
@@ -39,13 +39,13 @@ Relationships & family keeps parenting a neurodivergent child separate from supp
 
 ## Production state
 
-Current production is the accepted 2026-09-03 Relationships & family deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `5c05d775a5d548c0f4ad92f78e25008febe40d69` and tree `5861cd9ecbd33b2e465bbbd9027324182a9ef12b` by deployment workflow run `33796135523` (run #22). The generated artifact SHA-256 is `4864e9a9aa56a3278ad46d4a32695354f25018b9ce9d2ccb46cf8fa68ba4ba2a` and the Cloudflare deployment identity is `https://7452fa61.nd-oracle.pages.dev`.
+Current production is the accepted **2026-09-04 UK Reference Baseline v1** deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `579c012cc9b31707409579da05b52a4d07efe61c` and tree `5d9dd369a9ddb271d4949e9d6d3f3bd0928d1d84` by deployment workflow run `33880971901` (run #23). The generated artifact SHA-256 is `5357cc31658b37dc6c7d9f0ff4f0330894df8877a7869024ad6feefce8d4e0f4` and the Cloudflare deployment identity is `https://925a10c7.nd-oracle.pages.dev`.
 
-Fresh network-backed production verification ran against the canonical domain in workflow run `33796510768` (run #17), job `100785403728`. It revalidated all 208 governed objects, ran the complete 392-test regression suite, and verified all 292 canonical live routes plus the governed discovery/evidence and frozen compatibility contracts. Exact-head run `33795297003` (#331) on the identical accepted tree separately proved 49/49 Claim coverage with 0 gaps, 60 governed source records with 0 overdue and 208 governed objects with 0 overdue.
+Fresh network-backed production verification ran against the canonical domain in workflow run `33881392179` (run #340), job `101050648620`, through temporary evidence PR #142 rooted directly in the deployed source. It revalidated all 307 governed objects, ran the complete 416-test deployed-source regression suite, and verified all 391 canonical live routes plus the governed discovery/evidence and frozen compatibility contracts. The same acceptance run proved 49/49 Claim coverage with 0 gaps, 60 governed source records with 0 overdue and 307 governed objects with 0 overdue.
 
-`contracts/current-production.json` is the canonical machine-readable current-production pointer. It references `docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md`, the immutable human-readable evidence record for this accepted deployment. `docs/PRODUCTION_STATE_2026-09-03.md`, `docs/PRODUCTION_STATE_v1.2.md` and earlier production-state documents remain frozen historical evidence and are not used as implicit current-state pointers.
+`contracts/current-production.json` is the canonical machine-readable current-production pointer. It references `docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md`, the immutable human-readable evidence record for this accepted deployment. `docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md`, `docs/PRODUCTION_STATE_2026-09-03.md`, `docs/PRODUCTION_STATE_v1.2.md` and earlier production-state documents remain frozen historical evidence.
 
-The administrative state-reconciliation commit that updates these records is not itself a deployment. The accepted public artifact remains the exact artifact generated from source SHA `5c05d775a5d548c0f4ad92f78e25008febe40d69`.
+The administrative production-state reconciliation is not itself a deployment. The accepted public artifact remains the exact artifact generated from source SHA `579c012cc9b31707409579da05b52a4d07efe61c`.
 
 ## Repository map
 
@@ -72,6 +72,7 @@ docs/ASSESSMENT_DIAGNOSIS_UK_SOURCE_MATRIX_v1.md UK source/jurisdiction matrix
 docs/RELATIONSHIPS_FAMILY_UK_v1.md   Relationships & family bounded coverage contract
 docs/RELATIONSHIPS_FAMILY_UK_SOURCE_MATRIX_v1.md Relationships & family source matrix
 docs/UK_BREADTH_CANDIDATE_v1.md      UK breadth candidate contract and acceptance gates
+docs/UK_REFERENCE_BASELINE_v1.md       Frozen UK Reference Baseline v1 content-state record
 docs/ORGANISATIONS_PEER_COMMUNITY_UK_v1.md Organisations & peer community UK v1 contract
 docs/ORGANISATIONS_PEER_COMMUNITY_UK_SOURCE_MATRIX_v1.md Organisations & peer community source/geography matrix
 contracts/organisations-peer-community-uk-v1.json Machine-readable leadership/access/moderation/privacy metadata
@@ -89,7 +90,8 @@ docs/CONTENT_NAVIGATION_v0.9.md      Historical accepted v0.9 navigation contrac
 docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
 docs/CONTENT_GAP_MAP_v1.4.md         Current need-led editorial coverage map
 docs/GAMES_DOWNTIME_FACETS_v1.md     Governed descriptive-facet contract for games and downtime
-docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md Current accepted deployment evidence
+docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md Current accepted deployment evidence
+docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md Previous accepted deployment evidence
 docs/PRODUCTION_STATE_2026-09-03.md  Previous same-day accepted deployment evidence
 docs/PRODUCTION_STATE_v0.8.md        Historical accepted v0.8 deployment evidence
 docs/PRODUCTION_STATE_v0.9.md        Historical accepted v0.9 deployment evidence
