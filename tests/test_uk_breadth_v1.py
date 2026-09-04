@@ -207,13 +207,13 @@ class UKBreadthV1Tests(unittest.TestCase):
                 self.assertIsNotNone(rank, f"{case['query']!r}: {routes}")
                 self.assertLessEqual(rank, case["max_rank"], f"{case['query']!r}: {routes}")
 
-    def test_accepted_production_truth_is_exact_verified_uk_baseline(self) -> None:
+    def test_current_production_extends_exact_verified_uk_baseline(self) -> None:
         current = json.loads((ROOT / "contracts" / "current-production.json").read_text(encoding="utf-8"))
-        self.assertEqual("579c012cc9b31707409579da05b52a4d07efe61c", current["source_sha"])
-        self.assertEqual(307, current["corpus"]["governed_objects"])
-        self.assertEqual(391, current["verification"]["canonical_routes_verified"])
+        self.assertEqual("10fe0a0bc1f1a075e420dd0bc432d0a69cc15197", current["source_sha"])
+        self.assertEqual(319, current["corpus"]["governed_objects"])
+        self.assertEqual(403, current["verification"]["canonical_routes_verified"])
         self.assertEqual(
-            "docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md",
+            "docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md",
             current["production_state_document"],
         )
 
