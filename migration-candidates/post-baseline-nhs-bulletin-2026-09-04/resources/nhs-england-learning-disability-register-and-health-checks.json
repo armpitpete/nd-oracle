@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.2",
+  "id": "nhs-england-learning-disability-register-and-health-checks",
+  "type": "resource",
+  "name": "NHS England — learning disability register and annual health checks",
+  "status": "reviewed",
+  "category": "service",
+  "description": "NHS England guidance for primary care on identifying people who should be included on the GP learning disability register, together with the NHS England annual health-check route.",
+  "intended_use": "Understand the England primary-care register, how clinically indicated identification can occur without specialist confirmation, and how the register supports proactive primary care such as annual health checks and reasonable adjustments.",
+  "audience_or_context": "People with or suspected to have a learning disability, families and carers, and primary-care teams in England.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.england.nhs.uk/long-read/guidance-for-general-practice-on-improving-identification-of-people-with-a-learning-disability/"
+    },
+    {
+      "type": "url",
+      "value": "https://www.england.nhs.uk/learning-disabilities/improving-health/annual-health-checks/"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "learning-disability"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "Inclusion on the GP learning disability register is identification for primary-care purposes and is not the same as a formal learning-disability diagnosis.",
+    "A primary-care decision still requires clinical indication; the guidance does not say that autism, ADHD, dyslexia or another specific learning difficulty automatically qualifies someone for the register.",
+    "Register inclusion does not by itself establish eligibility for specialist learning-disability services or other statutory support.",
+    "Annual health-check eligibility and service arrangements should be checked against current NHS England guidance; the current national programme is for people aged 14 and over who are on the GP learning disability register.",
+    "This resource describes England."
+  ],
+  "cost_or_access_notes": [
+    "The linked NHS England guidance is publicly accessible. Register decisions and delivery of annual health checks occur through NHS primary care."
+  ],
+  "conflicts_of_interest": [
+    "NHS England is the national commissioning and policy body whose primary-care guidance is being described; ND Oracle records the official rule without making an individual eligibility or diagnostic decision."
+  ],
+  "provenance": {
+    "created": "2026-09-04",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Post-baseline candidate derived from NHS England's 4 September 2026 MHLDNC bulletin and re-checked against NHS England's 1 September 2026 primary-care identification guidance and annual health-check information. Kept claimless until governed promotion.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-04"
+  }
+}
