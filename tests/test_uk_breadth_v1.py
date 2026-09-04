@@ -106,12 +106,12 @@ class UKBreadthV1Tests(unittest.TestCase):
         questions = build_site.load_questions()
         evidence = build_site.load_evidence()
         self.assertEqual(20, len(concepts))
-        self.assertEqual(125, len(resources))
-        self.assertEqual(135, len(questions))
+        self.assertEqual(136, len(resources))
+        self.assertEqual(147, len(questions))
         self.assertEqual(3, len(evidence))
-        self.assertEqual(283, len(concepts) + len(resources) + len(questions) + len(evidence))
-        self.assertEqual(367, build_site.V10_ROUTE_COUNT)
-        self.assertEqual(367, len(build_site.sitemap_paths(concepts, resources, questions)))
+        self.assertEqual(306, len(concepts) + len(resources) + len(questions) + len(evidence))
+        self.assertEqual(390, build_site.V10_ROUTE_COUNT)
+        self.assertEqual(390, len(build_site.sitemap_paths(concepts, resources, questions)))
 
     def test_all_new_questions_are_bounded_reviewed_governed_routes(self) -> None:
         valid_statuses = {"partially_resolved", "not_currently_answerable"}
