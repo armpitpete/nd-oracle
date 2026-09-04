@@ -1,0 +1,44 @@
+{
+  "schema_version": "0.2",
+  "id": "nhs-england-staying-safe-from-suicide",
+  "type": "resource",
+  "name": "NHS England — Staying Safe from Suicide",
+  "status": "reviewed",
+  "category": "practical_guide",
+  "description": "NHS England guidance for mental-health practitioners on person-centred suicide safety assessment, formulation, management and collaborative safety planning rather than simplistic risk prediction or static risk labels.",
+  "intended_use": "Understand NHS England's practice framing for relational, person-centred suicide safety work; not assess an individual's immediate risk or provide crisis care.",
+  "audience_or_context": "Mental-health practitioners in England and readers seeking to understand the NHS England policy/practice approach.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.england.nhs.uk/long-read/staying-safe-from-suicide/"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "uk-urgent-mental-health-help"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "This guidance is professional practice framing and is not an individual suicide-risk assessment tool.",
+    "ND Oracle must not use it to classify a person as low, medium or high risk, decide that somebody is safe, or provide crisis counselling.",
+    "Immediate or urgent safety concerns must continue to route to current human urgent and emergency services.",
+    "The guidance applies to mental-health practice in England; local service procedures and professional responsibilities still apply."
+  ],
+  "cost_or_access_notes": [
+    "The NHS England guidance is publicly accessible online."
+  ],
+  "conflicts_of_interest": [
+    "NHS England is the policy body whose guidance is being described. ND Oracle records the practice model without converting it into clinical authority."
+  ],
+  "provenance": {
+    "created": "2026-09-04",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Promoted into the active ND Oracle corpus on 2026-09-04 from the post-baseline NHS bulletin candidate merged in PR #147, after first-party source re-check and preservation of the candidate's clinical, jurisdiction and authority boundaries.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-04"
+  }
+}

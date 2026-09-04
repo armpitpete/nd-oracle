@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.2",
+  "id": "person-centred-suicide-safety-policy-england",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-04",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Promoted into the active ND Oracle corpus on 2026-09-04 from the post-baseline NHS bulletin candidate merged in PR #147, after first-party source re-check and preservation of the candidate's clinical, jurisdiction and authority boundaries.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-04"
+  },
+  "question": "What does NHS England mean by person-centred suicide safety work instead of relying on risk labels?",
+  "why_it_matters": "Static risk labels and simplistic prediction can create false reassurance or obscure the person's changing circumstances, while a policy explanation can help readers understand why NHS England emphasises collaborative, relational safety work.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "nhs-england-staying-safe-from-suicide"
+    },
+    {
+      "type": "resource",
+      "id": "uk-urgent-mental-health-help"
+    }
+  ],
+  "current_understanding": "NHS England's Staying Safe from Suicide guidance moves away from relying on simplistic prediction tools and static low, medium or high risk stratification. It emphasises therapeutic engagement, understanding the person's circumstances, shared biopsychosocial assessment and formulation, dynamic review, safety management and collaborative personalised safety planning. ND Oracle can explain that policy approach but does not assess an individual's suicide risk, decide that someone is safe, provide crisis counselling or replace urgent human services.",
+  "evidence_needed": [
+    "Ongoing review of NHS England suicide-safety guidance when national practice recommendations change.",
+    "Accessible evidence about how person-centred safety planning is adapted for people with learning disabilities, autistic people and people with different communication needs."
+  ],
+  "reopening_conditions": [
+    "NHS England materially revises or replaces Staying Safe from Suicide.",
+    "National guidance changes the recommended role of risk stratification or safety planning.",
+    "A governed evidence route is added for neurodevelopmental or communication-specific adaptations."
+  ],
+  "dissent": [
+    "Moving away from static risk labels does not mean that suicide risk is ignored; clinicians still need professional assessment, formulation, management and escalation using current services and local procedures."
+  ]
+}

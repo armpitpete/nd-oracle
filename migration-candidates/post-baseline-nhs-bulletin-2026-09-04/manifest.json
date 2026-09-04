@@ -1,7 +1,7 @@
 {
   "version": "1",
   "date": "2026-09-04",
-  "status": "candidate_ingest",
+  "status": "promotion_candidate_complete",
   "source": {
     "title": "Mental Health, Learning Disability and Neurodevelopmental Conditions bulletin",
     "edition": 157,
@@ -21,25 +21,27 @@
       "destination": "Oracle",
       "resource_id": "nhs-england-learning-disability-register-and-health-checks",
       "question_id": "learning-disability-register-and-annual-health-check-england",
-      "target_group": "Healthcare access"
+      "target_group": "Healthcare access",
+      "promotion_status": "promoted_to_active_candidate"
     },
     {
       "decision": "Autistic school-attendance guidance",
       "destination": "Oracle",
       "resource_id": "autism-central-school-attendance",
       "question_id": "autistic-school-attendance-support-england",
-      "target_group": "Education & study"
+      "target_group": "Education & study",
+      "promotion_status": "promoted_to_active_candidate"
     },
     {
       "decision": "Person-centred suicide-safety policy",
       "destination": "Oracle Mental wellbeing",
       "resource_id": "nhs-england-staying-safe-from-suicide",
       "question_id": "person-centred-suicide-safety-policy-england",
-      "target_group": "Mental wellbeing"
+      "target_group": "Mental wellbeing",
+      "promotion_status": "promoted_to_active_candidate"
     }
   ],
   "promotion_gates": [
-    "Resolve and re-check the exact current Autism Central school-attendance destination linked by the 4 September 2026 NHS England bulletin.",
     "Validate promoted objects against the active ND Oracle schemas and reciprocal evidence rules where claims are introduced.",
     "Hostile-review suicide-safety wording so it cannot become individual risk assessment, crisis counselling or a substitute for urgent human services.",
     "Preserve the distinction between learning-disability register identification and formal diagnosis or specialist-service eligibility.",
@@ -50,5 +52,18 @@
     "https://www.england.nhs.uk/learning-disabilities/improving-health/annual-health-checks/",
     "https://www.autismcentral.org.uk/",
     "https://www.england.nhs.uk/long-read/staying-safe-from-suicide/"
-  ]
+  ],
+  "active_promotion_candidate": {
+    "branch": "content/nhs-bulletin-active-promotion-v1",
+    "active_governed_objects": 325,
+    "active_canonical_routes": 409,
+    "accepted_production_unchanged": true,
+    "accepted_production_governed_objects": 319,
+    "accepted_production_canonical_routes": 403
+  },
+  "resolved_sources": {
+    "autism_central_education_hub": "https://www.autismcentral.nhs.uk/guidance/navigating-education",
+    "autism_central_school_attendance": "https://www.autismcentral.nhs.uk/guidance/school-anxiety",
+    "resolved_on": "2026-09-04"
+  }
 }

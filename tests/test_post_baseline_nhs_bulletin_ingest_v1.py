@@ -64,15 +64,23 @@ class PostBaselineNHSBulletinIngestV1Tests(unittest.TestCase):
         self.assertIn("does not establish eligibility for specialist", text)
         self.assertIn("aged 14+", text)
 
-    def test_attendance_candidate_keeps_possible_causes_and_locator_gate_explicit(self) -> None:
+    def test_attendance_candidate_keeps_possible_causes_and_records_resolved_source(self) -> None:
         item = load_json(PACK / "questions" / "autistic-school-attendance-support-england.json")
         text = item["current_understanding"].lower()
         for phrase in ("anxiety", "sensory overwhelm", "bullying", "masking", "senco", "curiosity rather than blame"):
             self.assertIn(phrase, text)
         manifest = load_json(PACK / "manifest.json")
-        self.assertTrue(any("exact current Autism Central school-attendance destination" in gate for gate in manifest["promotion_gates"]))
-        resource = load_json(PACK / "resources" / "autism-central-school-attendance.json")
-        self.assertTrue(any("exact current Autism Central attendance-page destination" in item for item in resource["limitations"]))
+        self.assertEqual("promotion_candidate_complete", manifest["status"])
+        self.assertFalse(any("exact current Autism Central school-attendance destination" in gate for gate in manifest["promotion_gates"]))
+        resolved = manifest["resolved_sources"]
+        self.assertEqual(
+            "https://www.autismcentral.nhs.uk/guidance/navigating-education",
+            resolved["autism_central_education_hub"],
+        )
+        self.assertEqual(
+            "https://www.autismcentral.nhs.uk/guidance/school-anxiety",
+            resolved["autism_central_school_attendance"],
+        )
 
     def test_suicide_policy_candidate_cannot_become_crisis_authority(self) -> None:
         item = load_json(PACK / "questions" / "person-centred-suicide-safety-policy-england.json")
