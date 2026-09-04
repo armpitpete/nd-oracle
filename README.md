@@ -73,6 +73,8 @@ docs/RELATIONSHIPS_FAMILY_UK_v1.md   Relationships & family bounded coverage con
 docs/RELATIONSHIPS_FAMILY_UK_SOURCE_MATRIX_v1.md Relationships & family source matrix
 docs/UK_BREADTH_CANDIDATE_v1.md      UK breadth candidate contract and acceptance gates
 docs/UK_REFERENCE_BASELINE_v1.md       Frozen UK Reference Baseline v1 content-state record
+docs/INTERNATIONAL_EXPANSION_ARCHITECTURE_v1.md International jurisdiction-package architecture and gates
+contracts/international-expansion-v1.json Machine-readable international expansion architecture contract
 docs/ORGANISATIONS_PEER_COMMUNITY_UK_v1.md Organisations & peer community UK v1 contract
 docs/ORGANISATIONS_PEER_COMMUNITY_UK_SOURCE_MATRIX_v1.md Organisations & peer community source/geography matrix
 contracts/organisations-peer-community-uk-v1.json Machine-readable leadership/access/moderation/privacy metadata
