@@ -74,6 +74,8 @@ docs/RELATIONSHIPS_FAMILY_UK_SOURCE_MATRIX_v1.md Relationships & family source m
 docs/UK_BREADTH_CANDIDATE_v1.md      UK breadth candidate contract and acceptance gates
 docs/UK_REFERENCE_BASELINE_v1.md       Frozen UK Reference Baseline v1 content-state record
 docs/INTERNATIONAL_EXPANSION_ARCHITECTURE_v1.md International jurisdiction-package architecture and gates
+docs/INTERNATIONAL_PILOT_IRELAND_READINESS_v1.md First non-UK pilot source-readiness decision
+contracts/international-pilot-ireland-readiness-v1.json Machine-readable Ireland pilot readiness contract
 contracts/international-expansion-v1.json Machine-readable international expansion architecture contract
 docs/ORGANISATIONS_PEER_COMMUNITY_UK_v1.md Organisations & peer community UK v1 contract
 docs/ORGANISATIONS_PEER_COMMUNITY_UK_SOURCE_MATRIX_v1.md Organisations & peer community source/geography matrix
