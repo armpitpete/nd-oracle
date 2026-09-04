@@ -13,14 +13,17 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current governed corpus contains exactly 208 objects, matching the accepted Relationships & family production corpus described under **Production state** below:
+The current repository candidate contains exactly 283 governed objects. It is the bounded `coverage/uk-breadth-v1` candidate and is **not accepted production**:
 
 - 20 reviewed Concept objects;
-- 99 reviewed Resource objects spanning tools/apps, accessibility and AAC, practical guides, games, work/study support, organisations, services, books and media;
-- 86 reviewed Question objects that route ordinary practical needs across governed Concepts and Resources;
-- 3 normalized v0.2 Evidence objects plus 57 accepted legacy v0.1 embedded source records, giving 60 governed source records across 49 governed Claims. Legacy source projections are not duplicated into new objects.
+- 125 reviewed Resource objects;
+- 135 reviewed Question objects;
+- 3 normalized v0.2 Evidence objects;
+- 367 canonical public routes in the candidate build contract.
 
-Relationships & family is now a strong bounded seed. The accepted release adds governed friendship, partner communication, boundaries/conflict, intimacy/consent, parenting-a-neurodivergent-child, disabled-parent access, family-event sensory/social load, domestic-abuse/safeguarding and explicit leave/stay no-authority routes while preserving existing clinical, jurisdiction, evidence, privacy and non-recommendation boundaries.
+The UK-breadth slice adds 49 reviewed Questions and 26 reviewed, claimless Resources across daily living, sensory needs, communication, work, education, money and administration, sleep, food and eating, healthcare access, mental wellbeing, mobility and travel, technology and accessibility, books and media, and organisations / peer community. The candidate preserves frozen discovery, jurisdiction, clinical, privacy, provenance, ranking and AI-authority boundaries.
+
+Accepted production remains the 2026-09-03 Relationships & family deployment: 208 governed objects and 292 canonical routes from exact source SHA `5c05d775a5d548c0f4ad92f78e25008febe40d69`. `contracts/current-production.json` remains the only current-production pointer until a separately protected deployment and fresh live verification succeed.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
 
@@ -68,6 +71,8 @@ docs/ASSESSMENT_DIAGNOSIS_UK_v1.md   UK assessment/diagnosis reference contract
 docs/ASSESSMENT_DIAGNOSIS_UK_SOURCE_MATRIX_v1.md UK source/jurisdiction matrix
 docs/RELATIONSHIPS_FAMILY_UK_v1.md   Relationships & family bounded coverage contract
 docs/RELATIONSHIPS_FAMILY_UK_SOURCE_MATRIX_v1.md Relationships & family source matrix
+docs/UK_BREADTH_CANDIDATE_v1.md      UK breadth candidate contract and acceptance gates
+benchmarks/uk-breadth-v1.json        UK breadth deterministic discovery/hostile benchmark
 scripts/build_site.py                Current self-contained static site generator
 scripts/discovery.py                 Deterministic governed discovery index/routing
 scripts/verify_live_site.py          Current production HTTP/content verifier
