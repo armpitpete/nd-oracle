@@ -1,0 +1,53 @@
+{
+  "version": "1",
+  "date": "2026-09-04",
+  "status": "candidate_ingest",
+  "source": {
+    "title": "Mental Health, Learning Disability and Neurodevelopmental Conditions bulletin",
+    "edition": 157,
+    "publisher": "NHS England",
+    "date": "2026-09-04"
+  },
+  "frozen_production_boundary": {
+    "governed_objects": 307,
+    "canonical_routes": 391,
+    "production_pointer": "contracts/current-production.json",
+    "must_not_change_during_ingest": true
+  },
+  "candidate_items": [
+    {
+      "decision": "LD register / annual health-check guidance",
+      "destination": "Oracle",
+      "resource_id": "nhs-england-learning-disability-register-and-health-checks",
+      "question_id": "learning-disability-register-and-annual-health-check-england",
+      "target_group": "Healthcare access"
+    },
+    {
+      "decision": "Autistic school-attendance guidance",
+      "destination": "Oracle",
+      "resource_id": "autism-central-school-attendance",
+      "question_id": "autistic-school-attendance-support-england",
+      "target_group": "Education & study"
+    },
+    {
+      "decision": "Person-centred suicide-safety policy",
+      "destination": "Oracle Mental wellbeing",
+      "resource_id": "nhs-england-staying-safe-from-suicide",
+      "question_id": "person-centred-suicide-safety-policy-england",
+      "target_group": "Mental wellbeing"
+    }
+  ],
+  "promotion_gates": [
+    "Resolve and re-check the exact current Autism Central school-attendance destination linked by the 4 September 2026 NHS England bulletin.",
+    "Validate promoted objects against the active ND Oracle schemas and reciprocal evidence rules where claims are introduced.",
+    "Hostile-review suicide-safety wording so it cannot become individual risk assessment, crisis counselling or a substitute for urgent human services.",
+    "Preserve the distinction between learning-disability register identification and formal diagnosis or specialist-service eligibility.",
+    "Preserve the frozen 307-object / 391-route production pointer until a separately governed promotion, merge and deployment sequence."
+  ],
+  "source_urls": [
+    "https://www.england.nhs.uk/long-read/guidance-for-general-practice-on-improving-identification-of-people-with-a-learning-disability/",
+    "https://www.england.nhs.uk/learning-disabilities/improving-health/annual-health-checks/",
+    "https://www.autismcentral.org.uk/",
+    "https://www.england.nhs.uk/long-read/staying-safe-from-suicide/"
+  ]
+}
