@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.2",
+  "id": "learning-disability-register-and-annual-health-check-england",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-04",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Post-baseline navigation candidate based on NHS England's September 2026 learning-disability register identification guidance and annual health-check route.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-04"
+  },
+  "question": "Can someone be added to the GP learning disability register before a formal specialist diagnosis, and what can the register help with in England?",
+  "why_it_matters": "People can miss proactive healthcare and reasonable adjustments if primary care incorrectly treats a completed specialist diagnosis as the only route to learning-disability register inclusion.",
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "learning-disability"
+    },
+    {
+      "type": "resource",
+      "id": "nhs-england-learning-disability-register-and-health-checks"
+    }
+  ],
+  "current_understanding": "NHS England's September 2026 guidance says a GP practice can add a person to the learning disability register where learning disability is clinically indicated, including after a patient or carer request, without requiring specialist confirmation or a completed formal diagnostic assessment. This is identification for primary-care purposes, not the same as a formal diagnosis, and it does not establish eligibility for specialist learning-disability services. The register helps practices identify people who may benefit from proactive care including annual health checks for eligible people aged 14+, vaccinations and reasonable adjustments.",
+  "evidence_needed": [
+    "Ongoing review of NHS England register-identification and annual health-check guidance when coding, eligibility or primary-care requirements change.",
+    "Clear local practice information where implementation differs despite the national guidance."
+  ],
+  "reopening_conditions": [
+    "NHS England materially changes the criteria or process for learning-disability register inclusion.",
+    "Annual health-check eligibility or delivery rules change.",
+    "A later national source changes the distinction between register identification, diagnosis and specialist-service eligibility."
+  ],
+  "dissent": [
+    "A person being clinically indicated for register inclusion is not equivalent to ND Oracle deciding that the person has a learning disability; that decision belongs to primary care and, where needed, formal assessment."
+  ]
+}
