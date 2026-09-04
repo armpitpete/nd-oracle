@@ -1,0 +1,92 @@
+{
+  "version": "1",
+  "date": "2026-09-04",
+  "status": "candidate",
+  "reference_implementation": {
+    "country": "United Kingdom",
+    "baseline": "docs/UK_REFERENCE_BASELINE_v1.md",
+    "assessment_contract": "docs/ASSESSMENT_DIAGNOSIS_UK_v1.md",
+    "assessment_discovery": "discovery/assessment-diagnosis-uk-v1.json"
+  },
+  "package_model": {
+    "name": "jurisdiction_package",
+    "hierarchy": [
+      "country",
+      "subdivision_if_material",
+      "service_region_if_material",
+      "local_service_if_material"
+    ],
+    "no_empty_country_shells": true,
+    "no_silent_scope_inheritance": true,
+    "default_first_domain": "assessment_and_diagnosis",
+    "core_schema_change_now": false,
+    "schema_reconsideration_after_real_country_packages": 3
+  },
+  "required_package_artifacts": [
+    "jurisdiction_identity",
+    "source_matrix",
+    "governed_questions",
+    "reviewed_resources_or_evidence",
+    "limitations_and_reopening_conditions",
+    "freshness_ownership",
+    "additive_discovery_scope",
+    "deterministic_hostile_benchmark"
+  ],
+  "source_preference": [
+    "national_government_or_public_service",
+    "national_clinical_or_professional_guidance",
+    "national_programme_or_service_guidance",
+    "subnational_public_authority",
+    "local_public_provider_or_service",
+    "professional_regulator_or_body",
+    "peer_reviewed_evidence",
+    "peer_or_community_context_within_scope"
+  ],
+  "lifecycle_states": [
+    "candidate",
+    "accepted",
+    "production",
+    "stale",
+    "paused",
+    "retired"
+  ],
+  "discovery_rules": {
+    "additive_only": true,
+    "must_not_replace_frozen_uk_bindings": true,
+    "exact_scope_binding_required": true,
+    "cross_jurisdiction_hostile_cases_required": true,
+    "no_global_uk_fallback": true
+  },
+  "translation_rules": {
+    "record_source_language": true,
+    "prefer_first_party_local_language": true,
+    "machine_translation_is_not_authoritative_provenance": true,
+    "published_translation_preserves_original_source": true,
+    "material_translation_uncertainty_must_be_visible": true
+  },
+  "acceptance_gates": [
+    "source_authority_and_geography_mapped",
+    "national_local_distinction_explicit",
+    "useful_user_journey_governed",
+    "serious_claims_have_evidence_and_uncertainty",
+    "local_examples_labelled_local",
+    "clinical_legal_medication_boundaries_preserved",
+    "discovery_scope_exact_and_additive",
+    "cross_jurisdiction_hostile_tests_pass",
+    "freshness_pass",
+    "full_regression_pass",
+    "hostile_diff_review_pass",
+    "protected_exact_head_merge_authority"
+  ],
+  "production_gates": [
+    "exact_main_deployment",
+    "artifact_identity_recorded",
+    "fresh_network_backed_verification",
+    "production_state_reconciled"
+  ],
+  "sequencing": {
+    "parallel_mass_country_expansion": false,
+    "max_new_country_packages_before_architecture_review": 3,
+    "next_action_after_acceptance": "single_country_source_readiness_probe"
+  }
+}
