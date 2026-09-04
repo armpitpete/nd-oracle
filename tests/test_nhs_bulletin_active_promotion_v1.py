@@ -21,12 +21,12 @@ class NHSBulletinActivePromotionV1Tests(unittest.TestCase):
         questions = build_site.load_questions()
         evidence = build_site.load_evidence()
         self.assertEqual(20, len(concepts))
-        self.assertEqual(146, len(resources))
-        self.assertEqual(154, len(questions))
+        self.assertEqual(147, len(resources))
+        self.assertEqual(155, len(questions))
         self.assertEqual(3, len(evidence))
-        self.assertEqual(323, len(concepts) + len(resources) + len(questions) + len(evidence))
-        self.assertEqual(407, build_site.V10_ROUTE_COUNT)
-        self.assertEqual(407, len(build_site.sitemap_paths(concepts, resources, questions)))
+        self.assertEqual(325, len(concepts) + len(resources) + len(questions) + len(evidence))
+        self.assertEqual(409, build_site.V10_ROUTE_COUNT)
+        self.assertEqual(409, len(build_site.sitemap_paths(concepts, resources, questions)))
 
     def test_learning_disability_register_promotion_is_bounded(self) -> None:
         resource = load_json(ROOT / "objects" / "resources" / "nhs-england-learning-disability-register-and-health-checks.json")
@@ -55,15 +55,17 @@ class NHSBulletinActivePromotionV1Tests(unittest.TestCase):
         self.assertIn("learning-disability-register-and-annual-health-check-england", groups["Healthcare access"])
         self.assertIn("person-centred-suicide-safety-policy-england", groups["Mental wellbeing"])
 
-    def test_school_attendance_remains_candidate_until_exact_source_resolves(self) -> None:
-        self.assertFalse((ROOT / "objects" / "resources" / "autism-central-school-attendance.json").exists())
-        self.assertFalse((ROOT / "objects" / "questions" / "autistic-school-attendance-support-england.json").exists())
-        self.assertTrue(
-            (ROOT / "migration-candidates" / "post-baseline-nhs-bulletin-2026-09-04" / "resources" / "autism-central-school-attendance.json").exists()
-        )
-        self.assertTrue(
-            (ROOT / "migration-candidates" / "post-baseline-nhs-bulletin-2026-09-04" / "questions" / "autistic-school-attendance-support-england.json").exists()
-        )
+    def test_school_attendance_is_promoted_with_exact_current_autism_central_routes(self) -> None:
+        resource = load_json(ROOT / "objects" / "resources" / "autism-central-school-attendance.json")
+        question = load_json(ROOT / "objects" / "questions" / "autistic-school-attendance-support-england.json")
+        locators = {item["value"] for item in resource["locators"]}
+        self.assertIn("https://www.autismcentral.nhs.uk/guidance/navigating-education", locators)
+        self.assertIn("https://www.autismcentral.nhs.uk/guidance/school-anxiety", locators)
+        text = question["current_understanding"].lower()
+        for phrase in ("anxiety", "sensory overwhelm", "bullying", "masking", "senco", "curiosity rather than blame"):
+            self.assertIn(phrase, text)
+        groups = {name: set(ids) for name, ids in build_site.QUESTION_GROUPS}
+        self.assertIn("autistic-school-attendance-support-england", groups["Education & study"])
 
 
 if __name__ == "__main__":
