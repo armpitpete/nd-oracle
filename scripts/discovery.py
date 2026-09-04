@@ -11,8 +11,10 @@ ROOT = Path(__file__).resolve().parents[1]
 OBJECTS = ROOT / "objects"
 POLICY_PATH = ROOT / "discovery" / "routing-policy-v1.1.json"
 ASSESSMENT_EXTENSION_PATH = ROOT / "discovery" / "assessment-diagnosis-uk-v1.json"
+IRELAND_ASSESSMENT_EXTENSION_PATH = ROOT / "discovery" / "assessment-diagnosis-ireland-v1.json"
 POLICY: dict[str, Any] = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
 ASSESSMENT_EXTENSION: dict[str, Any] = json.loads(ASSESSMENT_EXTENSION_PATH.read_text(encoding="utf-8"))
+IRELAND_ASSESSMENT_EXTENSION: dict[str, Any] = json.loads(IRELAND_ASSESSMENT_EXTENSION_PATH.read_text(encoding="utf-8"))
 
 _BASE_SCOPE_COUNT = len(POLICY["scope_provenance"]["routes"])
 if ASSESSMENT_EXTENSION.get("version") != "1":
@@ -31,7 +33,46 @@ if set(POLICY["scope_provenance"]["routes"]) & set(_extension_scopes):
     raise ValueError("Assessment discovery extension may not replace frozen v1.1 scope routes")
 POLICY["intent_phrases"].update(_extension_intents)
 POLICY["scope_provenance"]["routes"].update(_extension_scopes)
-EXPECTED_SCOPED_ROUTE_COUNT = _BASE_SCOPE_COUNT + len(_extension_scopes)
+_UK_SCOPED_ROUTE_COUNT = _BASE_SCOPE_COUNT + len(_extension_scopes)
+
+if IRELAND_ASSESSMENT_EXTENSION.get("version") != "1":
+    raise ValueError("Ireland assessment discovery extension must be v1")
+if IRELAND_ASSESSMENT_EXTENSION.get("base_policy") != "discovery/routing-policy-v1.1.json":
+    raise ValueError("Ireland assessment discovery extension must target frozen v1.1 policy")
+if IRELAND_ASSESSMENT_EXTENSION.get("base_scope_count") != 70 or _UK_SCOPED_ROUTE_COUNT != 70:
+    raise ValueError("Ireland assessment discovery extension must build on the accepted 70-route UK scope state")
+
+_ireland_jurisdiction = IRELAND_ASSESSMENT_EXTENSION.get("jurisdiction_extension", {})
+_ireland_intents = IRELAND_ASSESSMENT_EXTENSION.get("intent_phrases", {})
+_ireland_scopes = IRELAND_ASSESSMENT_EXTENSION.get("scope_provenance", {}).get("routes", {})
+if not isinstance(_ireland_jurisdiction, dict) or not isinstance(_ireland_intents, dict) or not isinstance(_ireland_scopes, dict):
+    raise ValueError("Malformed Ireland assessment discovery extension")
+if set(POLICY["intent_phrases"]) & set(_ireland_intents):
+    raise ValueError("Ireland assessment discovery extension may not replace existing intent routes")
+if set(POLICY["scope_provenance"]["routes"]) & set(_ireland_scopes):
+    raise ValueError("Ireland assessment discovery extension may not replace existing scope routes")
+
+_scope_sets = _ireland_jurisdiction.get("scope_sets", {})
+_order_append = _ireland_jurisdiction.get("canonical_order_append", [])
+_aliases_append = _ireland_jurisdiction.get("aliases", [])
+if _scope_sets != {"Republic of Ireland": ["Republic of Ireland"]}:
+    raise ValueError("Ireland jurisdiction extension must expose only Republic of Ireland")
+if _order_append != ["Republic of Ireland"]:
+    raise ValueError("Ireland jurisdiction canonical order extension is invalid")
+if _aliases_append != [
+    {"phrase": "republic of ireland", "scope": "Republic of Ireland"},
+    {"phrase": "ireland", "scope": "Republic of Ireland"},
+]:
+    raise ValueError("Ireland jurisdiction aliases are invalid")
+if "Republic of Ireland" in POLICY["jurisdiction"]["scope_sets"]:
+    raise ValueError("Ireland jurisdiction extension may not replace an existing scope set")
+
+POLICY["jurisdiction"]["scope_sets"].update(_scope_sets)
+POLICY["jurisdiction"]["canonical_order"].extend(_order_append)
+POLICY["jurisdiction"]["aliases"].extend(_aliases_append)
+POLICY["intent_phrases"].update(_ireland_intents)
+POLICY["scope_provenance"]["routes"].update(_ireland_scopes)
+EXPECTED_SCOPED_ROUTE_COUNT = _UK_SCOPED_ROUTE_COUNT + len(_ireland_scopes)
 
 # Assessment v1 adds only refusal-language coverage here. The frozen v1.1 policy
 # file is not rewritten; browser discovery receives the same merged POLICY in
@@ -157,11 +198,12 @@ def validate_policy(*, policy: dict[str, Any] | None = None, index: list[dict] |
         "Northern Ireland": {"Northern Ireland"}, "Great Britain": {"England", "Scotland", "Wales"},
         "England and Wales": {"England", "Wales"},
         "United Kingdom": {"England", "Scotland", "Wales", "Northern Ireland"},
+        "Republic of Ireland": {"Republic of Ireland"},
     }
     scopes = candidate["jurisdiction"]["scope_sets"]
     if {name: set(values) for name, values in scopes.items()} != expected_scopes:
         raise ValueError("Jurisdiction scope sets do not match frozen v1.1")
-    if candidate["jurisdiction"]["canonical_order"] != ["England", "Scotland", "Wales", "Northern Ireland"]:
+    if candidate["jurisdiction"]["canonical_order"] != ["England", "Scotland", "Wales", "Northern Ireland", "Republic of Ireland"]:
         raise ValueError("Jurisdiction canonical order is incomplete or unstable")
 
     provenance = candidate["scope_provenance"]
@@ -316,7 +358,7 @@ def requested_jurisdiction(query: str) -> tuple[list[str], bool]:
     normalized = _normalise(cleaned)
     if not normalized:
         return [], False
-    nation_pattern = r"(northern ireland|england|scotland|wales)"
+    nation_pattern = r"(northern ireland|republic of ireland|england|scotland|wales|ireland)"
     context_pattern = "|".join(re.escape(term) for term in cfg["context_terms"])
     forward = re.compile(rf"\b(?:{context_pattern})\b(?:\s+(?:in|to|from|within|the))?(?:\s+\w+){{0,4}}\s+{nation_pattern}\b")
     reverse = re.compile(rf"\b{nation_pattern}\b(?:\s+\w+){{0,4}}\s+\b(?:{context_pattern})\b")
