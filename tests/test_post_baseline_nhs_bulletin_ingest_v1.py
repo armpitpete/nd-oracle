@@ -15,20 +15,26 @@ def load_json(path: Path) -> dict:
 
 
 class PostBaselineNHSBulletinIngestV1Tests(unittest.TestCase):
-    def test_candidate_pack_does_not_rewrite_accepted_production(self) -> None:
+    def test_ingest_boundary_remains_frozen_after_promotion_and_deployment(self) -> None:
         manifest = load_json(PACK / "manifest.json")
         current = load_json(CURRENT)
         frozen = manifest["frozen_production_boundary"]
         self.assertTrue(frozen["must_not_change_during_ingest"])
-        self.assertEqual(frozen["governed_objects"], current["corpus"]["governed_objects"])
-        self.assertEqual(frozen["canonical_routes"], current["verification"]["canonical_routes_verified"])
-        self.assertEqual(frozen["production_state_document"], current["production_state_document"])
-        self.assertEqual(319, current["corpus"]["governed_objects"])
-        self.assertEqual(403, current["verification"]["canonical_routes_verified"])
+        self.assertEqual(319, frozen["governed_objects"])
+        self.assertEqual(403, frozen["canonical_routes"])
         self.assertEqual(
             "docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md",
+            frozen["production_state_document"],
+        )
+        self.assertEqual(325, current["corpus"]["governed_objects"])
+        self.assertEqual(409, current["verification"]["canonical_routes_verified"])
+        self.assertGreater(current["corpus"]["governed_objects"], frozen["governed_objects"])
+        self.assertGreater(current["verification"]["canonical_routes_verified"], frozen["canonical_routes"])
+        self.assertEqual(
+            "docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md",
             current["production_state_document"],
         )
+        self.assertNotEqual(frozen["production_state_document"], current["production_state_document"])
 
     def test_three_candidate_resources_are_claimless_and_reviewed(self) -> None:
         resource_dir = PACK / "resources"
@@ -70,7 +76,7 @@ class PostBaselineNHSBulletinIngestV1Tests(unittest.TestCase):
         for phrase in ("anxiety", "sensory overwhelm", "bullying", "masking", "senco", "curiosity rather than blame"):
             self.assertIn(phrase, text)
         manifest = load_json(PACK / "manifest.json")
-        self.assertEqual("promotion_candidate_complete", manifest["status"])
+        self.assertEqual("promoted_production_accepted", manifest["status"])
         self.assertFalse(any("exact current Autism Central school-attendance destination" in gate for gate in manifest["promotion_gates"]))
         resolved = manifest["resolved_sources"]
         self.assertEqual(
