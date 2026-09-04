@@ -1,14 +1,14 @@
 # Post-baseline NHS bulletin ingest — 4 September 2026
 
-Status: **partially promoted**
+Status: **promotion candidate complete**
 
 Promotion state on 4 September 2026:
 
 - learning-disability register / annual health checks: **promoted into the active-corpus candidate**;
 - person-centred suicide safety: **promoted into the active-corpus candidate**;
-- autistic school attendance: **held in the candidate layer until the exact current Autism Central destination is resolved**.
+- autistic school attendance: **promoted into the active-corpus candidate after resolving the current Autism Central NHS-domain education hub and school-attendance route**.
 
-Accepted production remains unchanged at 319 governed objects / 403 canonical routes. The active-corpus promotion candidate is 323 objects / 407 routes and requires its own protected merge before it reaches `main`.
+Accepted production remains unchanged at 319 governed objects / 403 canonical routes. The active-corpus promotion candidate is 325 objects / 409 routes and requires its own protected merge before it reaches `main`.
 
 This pack records three bounded ND Oracle additions selected from NHS England's 4 September 2026 Mental Health, Learning Disability and Neurodevelopmental Conditions bulletin.
 
