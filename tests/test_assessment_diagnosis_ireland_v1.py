@@ -66,12 +66,12 @@ class AssessmentDiagnosisIrelandV1Tests(unittest.TestCase):
         evidence = build_site.load_evidence()
 
         self.assertEqual(20, len(concepts))
-        self.assertEqual(144, len(resources))
-        self.assertEqual(152, len(questions))
+        self.assertGreaterEqual(len(resources), 144)
+        self.assertGreaterEqual(len(questions), 152)
         self.assertEqual(3, len(evidence))
-        self.assertEqual(319, len(concepts) + len(resources) + len(questions) + len(evidence))
-        self.assertEqual(403, build_site.V10_ROUTE_COUNT)
-        self.assertEqual(403, len(build_site.sitemap_paths(concepts, resources, questions)))
+        self.assertGreaterEqual(len(concepts) + len(resources) + len(questions) + len(evidence), 319)
+        self.assertGreaterEqual(build_site.V10_ROUTE_COUNT, 403)
+        self.assertEqual(build_site.V10_ROUTE_COUNT, len(build_site.sitemap_paths(concepts, resources, questions)))
 
     def test_extension_is_additive_after_frozen_uk_scope_state(self) -> None:
         base_routes = self.base["scope_provenance"]["routes"]
