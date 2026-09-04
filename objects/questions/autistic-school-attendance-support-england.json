@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.2",
+  "id": "autistic-school-attendance-support-england",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-04",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Promoted into the active ND Oracle corpus on 2026-09-04 from the post-baseline NHS bulletin candidate merged in PR #147, after resolving the current Autism Central NHS-domain education hub and school-attendance route.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-04"
+  },
+  "question": "An autistic child is struggling to attend school. What barriers and support steps are worth exploring?",
+  "why_it_matters": "Treating attendance difficulty as simple unwillingness can miss anxiety, sensory, communication, peer and masking-related barriers and can make support less responsive to the child's actual experience.",
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "autism"
+    },
+    {
+      "type": "resource",
+      "id": "autism-central-school-attendance"
+    }
+  ],
+  "current_understanding": "NHS England's 4 September 2026 bulletin says school attendance can be particularly difficult for autistic children and may reflect anxiety, sensory overwhelm, communication differences, bullying, difficult peer relationships or burnout from masking rather than unwillingness to attend. Its Autism Central signpost encourages looking for patterns and early signs, responding with curiosity rather than blame, working with the school's SENCo or pastoral lead, involving the child in decisions, using visual or written communication where useful, and considering smaller steps such as shorter days when full attendance is not yet manageable. These are possible barriers and support approaches, not a diagnosis or a claim that one cause explains every child's absence.",
+  "evidence_needed": [
+    "Ongoing review of Autism Central's current school-attendance and education guidance when the route or practical advice changes.",
+    "Current education/SEND guidance where a public route needs to explain statutory attendance, safeguarding or formal support processes."
+  ],
+  "reopening_conditions": [
+    "Autism Central materially changes or removes the attendance guidance.",
+    "NHS England or education authorities issue materially different guidance on autistic attendance difficulties.",
+    "The legal or SEND-support context changes in a way that affects the route."
+  ],
+  "dissent": [
+    "Attendance difficulty is not specific to autism and can arise from health, family, school, safeguarding, transport or other factors; a bounded Oracle route must not collapse those possibilities into one neurodevelopmental explanation."
+  ]
+}
