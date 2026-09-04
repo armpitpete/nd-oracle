@@ -139,7 +139,7 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
             current["deployment"]["cloudflare_deployment"],
         ):
             self.assertIn(value, text)
-        self.assertIn("319 governed objects", text)
+        self.assertIn("325 governed objects", text)
         self.assertIn("451-test regression suite", text)
         self.assertIn("409 canonical", text)
         self.assertIn("All 49 Claims remain evidence-covered", text)
