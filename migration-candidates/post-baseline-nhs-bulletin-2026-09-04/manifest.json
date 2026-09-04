@@ -1,7 +1,7 @@
 {
   "version": "1",
   "date": "2026-09-04",
-  "status": "partially_promoted",
+  "status": "promotion_candidate_complete",
   "source": {
     "title": "Mental Health, Learning Disability and Neurodevelopmental Conditions bulletin",
     "edition": 157,
@@ -30,7 +30,7 @@
       "resource_id": "autism-central-school-attendance",
       "question_id": "autistic-school-attendance-support-england",
       "target_group": "Education & study",
-      "promotion_status": "held_exact_source_locator_unresolved"
+      "promotion_status": "promoted_to_active_candidate"
     },
     {
       "decision": "Person-centred suicide-safety policy",
@@ -42,7 +42,6 @@
     }
   ],
   "promotion_gates": [
-    "Resolve and re-check the exact current Autism Central school-attendance destination linked by the 4 September 2026 NHS England bulletin.",
     "Validate promoted objects against the active ND Oracle schemas and reciprocal evidence rules where claims are introduced.",
     "Hostile-review suicide-safety wording so it cannot become individual risk assessment, crisis counselling or a substitute for urgent human services.",
     "Preserve the distinction between learning-disability register identification and formal diagnosis or specialist-service eligibility.",
@@ -56,10 +55,15 @@
   ],
   "active_promotion_candidate": {
     "branch": "content/nhs-bulletin-active-promotion-v1",
-    "active_governed_objects": 323,
-    "active_canonical_routes": 407,
+    "active_governed_objects": 325,
+    "active_canonical_routes": 409,
     "accepted_production_unchanged": true,
     "accepted_production_governed_objects": 319,
     "accepted_production_canonical_routes": 403
+  },
+  "resolved_sources": {
+    "autism_central_education_hub": "https://www.autismcentral.nhs.uk/guidance/navigating-education",
+    "autism_central_school_attendance": "https://www.autismcentral.nhs.uk/guidance/school-anxiety",
+    "resolved_on": "2026-09-04"
   }
 }
