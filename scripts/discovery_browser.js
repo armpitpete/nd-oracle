@@ -97,7 +97,7 @@
       const normalized = norm(cleaned);
       if (!normalized) return [[], false];
 
-      const nationPattern = "(northern ireland|england|scotland|wales)";
+      const nationPattern = "(northern ireland|republic of ireland|england|scotland|wales|ireland)";
       const contextPattern = cfg.context_terms.map(escapeRegex).join("|");
       const forward = new RegExp(
         `\\b(?:${contextPattern})\\b(?:\\s+(?:in|to|from|within|the))?(?:\\s+\\w+){0,4}\\s+${nationPattern}\\b`,

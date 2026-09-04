@@ -13,17 +13,17 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current repository and accepted production contain exactly **307 governed objects** as the frozen **UK Reference Baseline v1**:
+The current repository and accepted production contain exactly **319 governed objects**:
 
 - 20 reviewed Concept objects;
-- 136 reviewed Resource objects;
-- 148 reviewed Question objects;
+- 144 reviewed Resource objects;
+- 152 reviewed Question objects;
 - 3 normalized v0.2 Evidence objects;
-- **391 canonical public routes**.
+- **403 canonical public routes**.
 
-The baseline combines the accepted UK Assessment & diagnosis and Relationships & family work with the UK breadth expansion and Organisations & peer community UK v1 slice. The breadth work added 49 reviewed Questions and 26 reviewed, claimless Resources across the remaining need domains; Organisations & peer community adds 13 Questions and 11 reviewed Resources spanning peer/user-led governance, DPOs, autism, ADHD, dyslexia, dyspraxia/DCD, Tourette syndrome, learning-disability/self-advocacy, Northern Ireland peer networks and bounded cross-neurodivergent discovery. A tested metadata contract records geography, leadership, accessibility, moderation and privacy using explicit uncertainty states and no quality or safety score.
+The frozen **UK Reference Baseline v1** remains intact underneath the first accepted international package: **Republic of Ireland Assessment & diagnosis v1**. The Ireland package adds exactly 4 Questions and 8 reviewed, claimless HSE Resources covering adult autism, child autism, adult ADHD, and the distinction between HSE Assessment of Need and clinical diagnostic assessment. Child ADHD remains deliberately deferred because current first-party evidence does not yet justify a strong uniform national access route.
 
-Current accepted production is the 2026-09-04 UK Reference Baseline v1 deployment from exact source SHA `579c012cc9b31707409579da05b52a4d07efe61c`, with 307 governed objects and 391 canonical routes freshly verified at `https://ndoracle.org`. Frozen discovery, jurisdiction, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged.
+Current accepted production was generated from exact source SHA `10fe0a0bc1f1a075e420dd0bc432d0a69cc15197` and tree `bce34c6908a409daefce1ba24ce06349fa24cac2`, then freshly verified at `https://ndoracle.org`. Frozen UK discovery, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged; Ireland is added through a separate additive jurisdiction extension.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes; the claim-bearing pilot makes those routes visible without turning inclusion into an endorsement.
 
@@ -31,21 +31,21 @@ Question routes use the boundary **Relevant to inspect, not recommended**. They 
 
 Every v0.2 Resource requires at least one typed access locator. HTTPS URLs are enforced for web locators so a public catalogue entry cannot become an unreachable name with no governed route to the thing being described.
 
-The current accepted public contract contains 391 canonical routes. It preserves the v1.2 public-site builder identity, frozen discovery architecture, reading/navigation surface and privacy/static boundaries while exposing the full UK Reference Baseline v1 across all current need domains. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections.
+The current accepted public contract contains 403 canonical routes. It preserves the v1.2 public-site builder identity, frozen discovery architecture, reading/navigation surface and privacy/static boundaries while exposing the frozen UK Reference Baseline v1 plus the bounded Republic of Ireland Assessment & diagnosis v1 package. The Evidence Layer contributes `/evidence/` plus 60 deterministic Evidence detail projections.
 
-Assessment & diagnosis contains the adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus cross-cutting routes for private assessment, waiting/support, refusal or disagreement, after-assessment outcomes, communication/sensory adjustments, co-occurring autism/ADHD and other neurodevelopmental assessments. England-specific Right to Choose is contained to England; Scottish health-board variation, Welsh health-board/local-service variation and Northern Ireland Trust/service-development variation remain explicit. Fifteen assessment Resources are claimless service/guidance listings, not provider endorsements or diagnostic claims. Discovery adds 29 cryptographically scope-bound routes without replacing the frozen 41-route v1.1 scope registry, producing 70 governed scoped routes in current accepted production. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
+Assessment & diagnosis preserves the accepted adult/child × autism/ADHD × England/Scotland/Wales/Northern Ireland matrix plus its UK cross-cutting routes and now includes four accepted Republic-of-Ireland journeys. England-specific Right to Choose remains contained to England; Northern Ireland HSC/NHS and Republic-of-Ireland HSE routes are explicitly separate; HSE adult autism public/private access, adult ADHD regional rollout and Assessment-of-Need distinctions remain bounded. The Ireland slice adds 8 reviewed, claimless first-party HSE Resources. Discovery keeps the frozen 41-route v1.1 registry and 29-route UK Assessment extension unchanged, then adds 12 exact Republic-of-Ireland scope bindings for 82 governed scoped routes in accepted production. No schema, ranking-weight, clinical-decision, privacy/query-handling, analytics or AI-authority boundary is weakened.
 
 Relationships & family keeps parenting a neurodivergent child separate from support for a neurodivergent or disabled parent; ordinary relationship communication does not displace safeguarding where fear, control, violence or sexual pressure is present; consent remains explicit and revocable; ND Oracle does not diagnose a partner, decide who is right, or decide whether a relationship should continue; and disability-service access preserves the England/Scotland/Wales versus Northern Ireland legal split. The accepted 48-case benchmark was integrated without changing frozen ranking weights.
 
 ## Production state
 
-Current production is the accepted **2026-09-04 UK Reference Baseline v1** deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `579c012cc9b31707409579da05b52a4d07efe61c` and tree `5d9dd369a9ddb271d4949e9d6d3f3bd0928d1d84` by deployment workflow run `33880971901` (run #23). The generated artifact SHA-256 is `5357cc31658b37dc6c7d9f0ff4f0330894df8877a7869024ad6feefce8d4e0f4` and the Cloudflare deployment identity is `https://925a10c7.nd-oracle.pages.dev`.
+Current production is the accepted **UK Reference Baseline v1 + Republic of Ireland Assessment & diagnosis v1** deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `10fe0a0bc1f1a075e420dd0bc432d0a69cc15197` and tree `bce34c6908a409daefce1ba24ce06349fa24cac2` by deployment workflow run `33896144673` (run #24). The generated artifact SHA-256 is `4967f8a711aefeb8bf878de7dba5a18063cd57d0b1ca54e53d6022d9cfe5f033` and the Cloudflare deployment identity is `https://325a78a3.nd-oracle.pages.dev`.
 
-Fresh network-backed production verification ran against the canonical domain in workflow run `33881392179` (run #340), job `101050648620`, through temporary evidence PR #142 rooted directly in the deployed source. It revalidated all 307 governed objects, ran the complete 416-test deployed-source regression suite, and verified all 391 canonical live routes plus the governed discovery/evidence and frozen compatibility contracts. The same acceptance run proved 49/49 Claim coverage with 0 gaps, 60 governed source records with 0 overdue and 307 governed objects with 0 overdue.
+Fresh network-backed production verification ran against the canonical domain in workflow run `33896431576` (run #18), job `101100054619`. It revalidated all 319 governed objects, ran the complete 439-test deployed-source regression suite, and verified all 403 canonical live routes plus the governed discovery/evidence and frozen compatibility contracts. Exact-tree candidate acceptance also proved 49/49 Claim coverage with 0 gaps, 60 governed source records with 0 overdue and 319 governed objects with 0 overdue.
 
-`contracts/current-production.json` is the canonical machine-readable current-production pointer. It references `docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md`, the immutable human-readable evidence record for this accepted deployment. `docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md`, `docs/PRODUCTION_STATE_2026-09-03.md`, `docs/PRODUCTION_STATE_v1.2.md` and earlier production-state documents remain frozen historical evidence.
+`contracts/current-production.json` is the canonical machine-readable current-production pointer. It references `docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md`, the immutable human-readable evidence record for this deployment after reconciliation. `docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md`, `docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md`, `docs/PRODUCTION_STATE_2026-09-03.md`, `docs/PRODUCTION_STATE_v1.2.md` and earlier production-state documents remain frozen historical evidence.
 
-The administrative production-state reconciliation is not itself a deployment. The accepted public artifact remains the exact artifact generated from source SHA `579c012cc9b31707409579da05b52a4d07efe61c`.
+The administrative production-state reconciliation is not itself a deployment. The accepted public artifact remains the exact artifact generated from source SHA `10fe0a0bc1f1a075e420dd0bc432d0a69cc15197`.
 
 ## Repository map
 
@@ -59,6 +59,7 @@ schema/object-v0.2.json              v0.2 object dispatcher
 schema/types/                        v0.2 object-type contracts
 discovery/routing-policy-v1.1.json   Frozen deterministic v1.1 discovery policy
 discovery/assessment-diagnosis-uk-v1.json Additive UK assessment discovery extension
+discovery/assessment-diagnosis-ireland-v1.json Additive Republic-of-Ireland assessment discovery extension
 site/                                Static public site source
 scripts/validate.py                  Schema, governance-route, and graph checks
 scripts/check_content_freshness.py   Review-age/freshness gate, including Evidence source-kind cadence
@@ -69,6 +70,8 @@ contracts/current-production.json    Canonical machine-readable current-producti
 docs/EVIDENCE_LAYER_STATE_v1.md      Current Evidence-layer implementation state
 docs/ASSESSMENT_DIAGNOSIS_UK_v1.md   UK assessment/diagnosis reference contract
 docs/ASSESSMENT_DIAGNOSIS_UK_SOURCE_MATRIX_v1.md UK source/jurisdiction matrix
+docs/ASSESSMENT_DIAGNOSIS_IRELAND_v1.md Republic-of-Ireland assessment reference contract
+docs/ASSESSMENT_DIAGNOSIS_IRELAND_SOURCE_MATRIX_v1.md Republic-of-Ireland source/jurisdiction matrix
 docs/RELATIONSHIPS_FAMILY_UK_v1.md   Relationships & family bounded coverage contract
 docs/RELATIONSHIPS_FAMILY_UK_SOURCE_MATRIX_v1.md Relationships & family source matrix
 docs/UK_BREADTH_CANDIDATE_v1.md      UK breadth candidate contract and acceptance gates
@@ -94,7 +97,8 @@ docs/CONTENT_NAVIGATION_v0.9.md      Historical accepted v0.9 navigation contrac
 docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
 docs/CONTENT_GAP_MAP_v1.4.md         Current need-led editorial coverage map
 docs/GAMES_DOWNTIME_FACETS_v1.md     Governed descriptive-facet contract for games and downtime
-docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md Current accepted deployment evidence
+docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md Current accepted deployment evidence
+docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md Previous accepted UK-baseline deployment evidence
 docs/PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md Previous accepted deployment evidence
 docs/PRODUCTION_STATE_2026-09-03.md  Previous same-day accepted deployment evidence
 docs/PRODUCTION_STATE_v0.8.md        Historical accepted v0.8 deployment evidence
