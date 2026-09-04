@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.2",
+  "id": "autism-central-school-attendance",
+  "type": "resource",
+  "name": "Autism Central — school attendance difficulties",
+  "status": "reviewed",
+  "category": "practical_guide",
+  "description": "Autism Central school-attendance material highlighted by NHS England's 4 September 2026 MHLDNC bulletin, focused on understanding barriers to attendance and working with the child and school.",
+  "intended_use": "Use as a starting point for understanding possible barriers to school attendance for autistic children and for discussing support with school staff without treating absence as simple unwillingness or using the page as an individual assessment.",
+  "audience_or_context": "Autistic children and young people, parents and carers, and education staff in England.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.autismcentral.nhs.uk/guidance/navigating-education"
+    },
+    {
+      "type": "url",
+      "value": "https://www.autismcentral.nhs.uk/guidance/school-anxiety"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "autism"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "The detailed September 2026 wording is sourced from the NHS England bulletin; the current Autism Central education hub and school-anxiety page were re-checked on 2026-09-04 as the stable attendance route.",
+    "Attendance difficulty can have many causes. The resource must not be used to infer that every absence is caused by autism, anxiety, sensory overload, bullying or masking.",
+    "This is support and navigation material, not diagnostic, safeguarding or legal attendance advice.",
+    "Individual school plans, SEND support, safeguarding action and attendance duties depend on the child's circumstances and current local/national rules."
+  ],
+  "cost_or_access_notes": [
+    "Autism Central is an NHS-commissioned programme with publicly accessible online material."
+  ],
+  "conflicts_of_interest": [
+    "Autism Central is NHS commissioned. ND Oracle records the guidance route and its boundaries rather than treating it as independent evidence of effectiveness."
+  ],
+  "provenance": {
+    "created": "2026-09-04",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Promoted into the active ND Oracle corpus on 2026-09-04 from the post-baseline NHS bulletin candidate merged in PR #147, after resolving the current Autism Central NHS-domain education hub and school-attendance route and preserving the candidate's education, safeguarding and authority boundaries.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-04"
+  }
+}
