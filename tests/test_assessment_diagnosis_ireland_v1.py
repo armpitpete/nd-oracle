@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import dataclasses
 import hashlib
 import json
+import shutil
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -14,6 +17,7 @@ UK_EXTENSION = ROOT / "discovery" / "assessment-diagnosis-uk-v1.json"
 IRELAND_EXTENSION = ROOT / "discovery" / "assessment-diagnosis-ireland-v1.json"
 BENCHMARK = ROOT / "benchmarks" / "assessment-diagnosis-ireland-v1.json"
 CURRENT_PRODUCTION = ROOT / "contracts" / "current-production.json"
+BROWSER = ROOT / "scripts" / "discovery_browser.js"
 
 IRELAND_RESOURCE_IDS = (
     "hse-autism-assessment-republic-ireland",
@@ -146,6 +150,41 @@ class AssessmentDiagnosisIrelandV1Tests(unittest.TestCase):
             if leaked:
                 failures.append((case["query"], "forbidden routes leaked", leaked))
         self.assertEqual([], failures)
+
+    def test_ireland_python_and_browser_decision_traces_match_exactly(self) -> None:
+        node = shutil.which("node")
+        self.assertIsNotNone(node, "Node.js is required for Ireland browser decision-trace parity")
+
+        queries = [case["query"] for case in self.benchmark["cases"]]
+        queries.extend(case["query"] for case in self.benchmark["hostile_controls"])
+        queries.extend([
+            "support in Republic of Ireland",
+            "support in Ireland",
+            "support in Northern Ireland",
+            "I live in Northern Ireland but work in Ireland",
+        ])
+        queries = list(dict.fromkeys(queries))
+        payload = json.loads(discovery.browser_index_json())
+
+        python_outputs = []
+        for query in queries:
+            trace, results = discovery.evaluate(query, limit=5, index=self.index)
+            python_outputs.append({
+                "trace": trace,
+                "results": [dataclasses.asdict(result) for result in results],
+            })
+
+        completed = subprocess.run(
+            [node, str(BROWSER)],
+            input=json.dumps({"queries": queries, "payload": payload, "limit": 5}),
+            text=True,
+            capture_output=True,
+            check=False,
+            timeout=30,
+        )
+        self.assertEqual(0, completed.returncode, completed.stderr)
+        browser_outputs = json.loads(completed.stdout)
+        self.assertEqual(python_outputs, browser_outputs)
 
     def test_ireland_resources_are_reviewed_claimless_first_party_navigation(self) -> None:
         failures = []
