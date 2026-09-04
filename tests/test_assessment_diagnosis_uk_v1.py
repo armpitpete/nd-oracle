@@ -63,8 +63,9 @@ class AssessmentDiagnosisUKV1Tests(unittest.TestCase):
         self.assertEqual(41, len(base_routes))
         self.assertEqual(29, len(extension_routes))
         self.assertEqual(set(), set(base_routes) & set(extension_routes))
-        self.assertEqual(70, discovery.EXPECTED_SCOPED_ROUTE_COUNT)
-        self.assertEqual(70, len(discovery.POLICY["scope_provenance"]["routes"]))
+        self.assertEqual(70, len(base_routes) + len(extension_routes))
+        self.assertEqual(82, discovery.EXPECTED_SCOPED_ROUTE_COUNT)
+        self.assertEqual(82, len(discovery.POLICY["scope_provenance"]["routes"]))
         self.assertEqual(set(), set(self.base["intent_phrases"]) & set(self.extension["intent_phrases"]))
         discovery.validate_policy(index=self.index)
 
