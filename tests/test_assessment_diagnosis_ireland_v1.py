@@ -53,6 +53,22 @@ class AssessmentDiagnosisIrelandV1Tests(unittest.TestCase):
         cls.benchmark = json.loads(BENCHMARK.read_text(encoding="utf-8"))
         cls.index = discovery.build_index()
 
+    def test_exact_candidate_corpus_and_route_contract(self) -> None:
+        from scripts import build_site
+
+        concepts = build_site.load_concepts()
+        resources = build_site.load_resources()
+        questions = build_site.load_questions()
+        evidence = build_site.load_evidence()
+
+        self.assertEqual(20, len(concepts))
+        self.assertEqual(144, len(resources))
+        self.assertEqual(152, len(questions))
+        self.assertEqual(3, len(evidence))
+        self.assertEqual(319, len(concepts) + len(resources) + len(questions) + len(evidence))
+        self.assertEqual(403, build_site.V10_ROUTE_COUNT)
+        self.assertEqual(403, len(build_site.sitemap_paths(concepts, resources, questions)))
+
     def test_extension_is_additive_after_frozen_uk_scope_state(self) -> None:
         base_routes = self.base["scope_provenance"]["routes"]
         uk_routes = self.uk_extension["scope_provenance"]["routes"]
