@@ -4,7 +4,7 @@ Date: 2026-09-04
 
 ## Purpose
 
-This is the current need-led editorial coverage map. The UK Reference Baseline v1 remains the frozen UK content baseline, while accepted production now also contains the bounded Republic of Ireland Assessment & diagnosis v1 package. A strong section means the current corpus provides several useful governed routes; it does not mean the subject is exhausted or universally applicable.
+This is the current need-led editorial coverage map. The UK Reference Baseline v1 remains the frozen UK content baseline, while accepted production also contains the bounded Republic of Ireland Assessment & diagnosis v1 package and NHS bulletin promotion v1. A strong section means the current corpus provides several useful governed routes; it does not mean the subject is exhausted or universally applicable.
 
 ## Frozen UK Reference Baseline v1
 
@@ -17,7 +17,7 @@ This is the current need-led editorial coverage map. The UK Reference Baseline v
 
 ## Current accepted production
 
-Accepted production contains the frozen UK Reference Baseline v1 plus Republic of Ireland Assessment & diagnosis v1, with 319 governed objects and 403 canonical routes, generated from exact source SHA `10fe0a0bc1f1a075e420dd0bc432d0a69cc15197` and freshly verified at `https://ndoracle.org`. Production identity is resolved through `contracts/current-production.json` and recorded in `docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md`; the UK-baseline and earlier production-state documents remain immutable historical evidence.
+Accepted production contains the frozen UK Reference Baseline v1, Republic of Ireland Assessment & diagnosis v1, and NHS bulletin promotion v1, with **325 governed objects and 409 canonical routes**, generated from exact source SHA `94d1ab0d8df5699b1316e64d70c28fe11b25b7cf` and freshly verified at `https://ndoracle.org`. The latest promotion adds three reviewed, claimless Resources and three bounded Questions for learning-disability register / annual-health-check guidance, autistic school-attendance support, and person-centred suicide-safety policy. Production identity is resolved through `contracts/current-production.json` and recorded in `docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md`; the Ireland, UK-baseline and earlier production-state documents remain immutable historical evidence.
 
 ## Need-domain matrix
 
