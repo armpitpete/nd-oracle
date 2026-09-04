@@ -10,7 +10,8 @@ from scripts import build_site
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
 CURRENT_POINTER = ROOT / "contracts" / "current-production.json"
-CURRENT_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md"
+CURRENT_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md"
+PREVIOUS_IRELAND_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md"
 UK_BASELINE = ROOT / "docs" / "UK_REFERENCE_BASELINE_v1.md"
 PREVIOUS_UK_BASELINE_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md"
 PREVIOUS_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_2026-09-03_RELATIONSHIPS_FAMILY.md"
@@ -19,12 +20,15 @@ V12_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_v1.2.md"
 V11_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_v1.1.md"
 V10_PRODUCTION = ROOT / "docs" / "PRODUCTION_STATE_v1.0.md"
 
-CURRENT_RELEASE_SHA = "10fe0a0bc1f1a075e420dd0bc432d0a69cc15197"
-CURRENT_TREE_SHA = "bce34c6908a409daefce1ba24ce06349fa24cac2"
-CURRENT_ARTIFACT_SHA256 = "4967f8a711aefeb8bf878de7dba5a18063cd57d0b1ca54e53d6022d9cfe5f033"
-CURRENT_DEPLOYMENT_RUN = 33896144673
-CURRENT_VERIFICATION_RUN = 33896431576
-CURRENT_VERIFICATION_JOB = 101100054619
+CURRENT_RELEASE_SHA = "94d1ab0d8df5699b1316e64d70c28fe11b25b7cf"
+CURRENT_TREE_SHA = "9270919d26d3529889db498b202b8132bc3316b7"
+CURRENT_ARTIFACT_SHA256 = "2899f9c214f6eecded51c8cf64aa356fd76674b32bdd1b801dfa2ae5521aedbb"
+CURRENT_DEPLOYMENT_RUN = 33924992354
+CURRENT_VERIFICATION_RUN = 33925184354
+CURRENT_VERIFICATION_JOB = 101192042604
+
+PREVIOUS_IRELAND_RELEASE_SHA = "10fe0a0bc1f1a075e420dd0bc432d0a69cc15197"
+PREVIOUS_IRELAND_ARTIFACT_SHA256 = "4967f8a711aefeb8bf878de7dba5a18063cd57d0b1ca54e53d6022d9cfe5f033"
 
 PREVIOUS_UK_BASELINE_RELEASE_SHA = "579c012cc9b31707409579da05b52a4d07efe61c"
 PREVIOUS_UK_BASELINE_ARTIFACT_SHA256 = "5357cc31658b37dc6c7d9f0ff4f0330894df8877a7869024ad6feefce8d4e0f4"
@@ -55,7 +59,7 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
         self.assertEqual("https://ndoracle.org", current["canonical_site"])
         self.assertEqual("v1.2", current["builder_release"])
         self.assertEqual(
-            "docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md",
+            "docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md",
             current["production_state_document"],
         )
         self.assertEqual(CURRENT_RELEASE_SHA, current["source_sha"])
@@ -63,34 +67,34 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
 
         deployment = current["deployment"]
         self.assertEqual(CURRENT_DEPLOYMENT_RUN, deployment["workflow_run_id"])
-        self.assertEqual(24, deployment["workflow_run_number"])
-        self.assertEqual(101099134040, deployment["guard_job_id"])
-        self.assertEqual(101099176328, deployment["upload_job_id"])
+        self.assertEqual(25, deployment["workflow_run_number"])
+        self.assertEqual(101191460345, deployment["guard_job_id"])
+        self.assertEqual(101191493014, deployment["upload_job_id"])
         self.assertEqual(CURRENT_ARTIFACT_SHA256, deployment["artifact_sha256"])
-        self.assertEqual("https://325a78a3.nd-oracle.pages.dev", deployment["cloudflare_deployment"])
+        self.assertEqual("https://99fd62e1.nd-oracle.pages.dev", deployment["cloudflare_deployment"])
         self.assertEqual("nd-oracle", deployment["cloudflare_project"])
         self.assertEqual("main", deployment["production_branch"])
-        self.assertEqual(33896104483, deployment["dispatch_helper_run_id"])
-        self.assertEqual(101099001632, deployment["dispatch_helper_job_id"])
-        self.assertEqual("ec4e3bca4357b615d72f59f8616e32307bcf1214", deployment["dispatch_helper_commit"])
-        self.assertEqual("release/temp-dispatch-ireland-v1-production", deployment["dispatch_helper_branch"])
+        self.assertEqual(33924984240, deployment["dispatch_helper_run_id"])
+        self.assertEqual(101191432067, deployment["dispatch_helper_job_id"])
+        self.assertEqual("782097b26fcf11050c23b0670663390bdcee63f8", deployment["dispatch_helper_commit"])
+        self.assertEqual("release/temp-dispatch-nhs-bulletin-2026-09-04-production", deployment["dispatch_helper_branch"])
 
         verification = current["verification"]
         self.assertEqual(CURRENT_VERIFICATION_RUN, verification["workflow_run_id"])
-        self.assertEqual(18, verification["workflow_run_number"])
+        self.assertEqual(19, verification["workflow_run_number"])
         self.assertEqual(CURRENT_VERIFICATION_JOB, verification["job_id"])
-        self.assertEqual(33896422762, verification["dispatch_helper_run_id"])
-        self.assertEqual(101100013185, verification["dispatch_helper_job_id"])
-        self.assertEqual("7a9e8ae9927a738008f346347b37b52353fbdd61", verification["dispatch_helper_commit"])
-        self.assertEqual("release/temp-dispatch-ireland-v1-live-verify", verification["dispatch_helper_branch"])
-        self.assertEqual(403, verification["canonical_routes_verified"])
-        self.assertEqual(439, verification["regression_tests_passed"])
+        self.assertEqual(33925177269, verification["dispatch_helper_run_id"])
+        self.assertEqual(101192018186, verification["dispatch_helper_job_id"])
+        self.assertEqual("09a62940ab1e1dba917c89cd46f01954981d0adc", verification["dispatch_helper_commit"])
+        self.assertEqual("release/temp-dispatch-nhs-bulletin-2026-09-04-live-verify", verification["dispatch_helper_branch"])
+        self.assertEqual(409, verification["canonical_routes_verified"])
+        self.assertEqual(451, verification["regression_tests_passed"])
 
         corpus = current["corpus"]
-        self.assertEqual(319, corpus["governed_objects"])
+        self.assertEqual(325, corpus["governed_objects"])
         self.assertEqual(20, corpus["concepts"])
-        self.assertEqual(144, corpus["resources"])
-        self.assertEqual(152, corpus["questions"])
+        self.assertEqual(147, corpus["resources"])
+        self.assertEqual(155, corpus["questions"])
         self.assertEqual(3, corpus["evidence_objects"])
         self.assertEqual(60, corpus["governed_source_records"])
         self.assertEqual(49, corpus["governed_claims"])
@@ -113,9 +117,9 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
             "contracts/current-production.json",
         ):
             self.assertIn(value, text)
-        self.assertIn("Current production is the accepted **UK Reference Baseline v1 + Republic of Ireland Assessment & diagnosis v1** deployment", text)
-        self.assertIn("319 governed objects", text)
-        self.assertIn("403 canonical routes", text)
+        self.assertIn("Current production is the accepted **UK Reference Baseline v1 + Republic of Ireland Assessment & diagnosis v1 + NHS bulletin promotion v1** deployment", text)
+        self.assertIn("325 governed objects", text)
+        self.assertIn("409 canonical routes", text)
 
     def test_current_production_record_matches_pointer(self) -> None:
         current = load_current()
@@ -135,13 +139,13 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
             current["deployment"]["cloudflare_deployment"],
         ):
             self.assertIn(value, text)
-        self.assertIn("319 governed objects", text)
-        self.assertIn("439-test regression suite", text)
-        self.assertIn("403 canonical", text)
+        self.assertIn("325 governed objects", text)
+        self.assertIn("451-test regression suite", text)
+        self.assertIn("409 canonical", text)
         self.assertIn("All 49 Claims remain evidence-covered", text)
         self.assertIn("60 governed source records", text)
         self.assertIn("60 governed Evidence source records checked; 0 overdue", text)
-        self.assertIn("319 governed objects checked; 0 overdue", text)
+        self.assertIn("325 governed objects checked; 0 overdue", text)
 
     def test_accepted_production_remains_a_floor_while_repository_head_may_advance(self) -> None:
         current = load_current()
@@ -150,8 +154,8 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
             corpus["concepts"] + corpus["resources"] + corpus["questions"] + corpus["evidence_objects"],
             corpus["governed_objects"],
         )
-        self.assertEqual(319, corpus["governed_objects"])
-        self.assertEqual(403, current["verification"]["canonical_routes_verified"])
+        self.assertEqual(325, corpus["governed_objects"])
+        self.assertEqual(409, current["verification"]["canonical_routes_verified"])
         self.assertGreaterEqual(len(build_site.load_concepts()), corpus["concepts"])
         self.assertGreaterEqual(len(build_site.load_resources()), corpus["resources"])
         self.assertGreaterEqual(len(build_site.load_questions()), corpus["questions"])
@@ -178,6 +182,21 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
         self.assertIn("**307 governed objects**", text)
         self.assertIn("**391 canonical public routes**", text)
         self.assertIn("FROZEN CONTENT BASELINE", text)
+        self.assertNotIn(CURRENT_ARTIFACT_SHA256, text)
+
+    def test_previous_ireland_production_evidence_remains_frozen(self) -> None:
+        current = load_current()
+        self.assertNotEqual(
+            "docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md",
+            current["production_state_document"],
+        )
+        text = PREVIOUS_IRELAND_PRODUCTION.read_text(encoding="utf-8")
+        self.assertIn(PREVIOUS_IRELAND_RELEASE_SHA, text)
+        self.assertIn(PREVIOUS_IRELAND_ARTIFACT_SHA256, text)
+        self.assertIn("319 governed objects", text)
+        self.assertIn("439-test regression suite", text)
+        self.assertIn("403 canonical", text)
+        self.assertNotIn(CURRENT_RELEASE_SHA, text)
         self.assertNotIn(CURRENT_ARTIFACT_SHA256, text)
 
     def test_previous_uk_baseline_production_evidence_remains_frozen(self) -> None:

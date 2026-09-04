@@ -209,11 +209,11 @@ class UKBreadthV1Tests(unittest.TestCase):
 
     def test_current_production_extends_exact_verified_uk_baseline(self) -> None:
         current = json.loads((ROOT / "contracts" / "current-production.json").read_text(encoding="utf-8"))
-        self.assertEqual("10fe0a0bc1f1a075e420dd0bc432d0a69cc15197", current["source_sha"])
-        self.assertEqual(319, current["corpus"]["governed_objects"])
-        self.assertEqual(403, current["verification"]["canonical_routes_verified"])
+        self.assertEqual("94d1ab0d8df5699b1316e64d70c28fe11b25b7cf", current["source_sha"])
+        self.assertEqual(325, current["corpus"]["governed_objects"])
+        self.assertEqual(409, current["verification"]["canonical_routes_verified"])
         self.assertEqual(
-            "docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md",
+            "docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md",
             current["production_state_document"],
         )
 
