@@ -13,15 +13,15 @@ This repository is the system of record. The public site at `https://ndoracle.or
 
 ## Current repository state
 
-The current repository candidate contains exactly 306 governed objects. It extends the merged UK-breadth baseline with the bounded `coverage/organisations-peer-community-uk-v1` reference slice and is **not accepted production**:
+The current repository candidate contains exactly 307 governed objects. It extends the merged UK-breadth baseline with the bounded `coverage/organisations-peer-community-uk-v1` reference slice and is **not accepted production**:
 
 - 20 reviewed Concept objects;
 - 136 reviewed Resource objects;
-- 147 reviewed Question objects;
+- 148 reviewed Question objects;
 - 3 normalized v0.2 Evidence objects;
-- 390 canonical public routes in the candidate build contract.
+- 391 canonical public routes in the candidate build contract.
 
-The merged UK-breadth slice added 49 reviewed Questions and 26 reviewed, claimless Resources across the remaining breadth domains. This candidate adds a further 12 Organisations & peer community Questions and 11 reviewed Resources spanning autistic-led organisations, user-led self-advocacy, Welsh DPOs, dyslexia, dyspraxia/DCD, Tourette syndrome, Northern Ireland peer networks and a bounded cross-neurodivergent directory route. A separate tested metadata contract records geography, leadership, accessibility, moderation and privacy using explicit unknown/not-found semantics and no quality or safety score. Frozen discovery, jurisdiction, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged.
+The merged UK-breadth slice added 49 reviewed Questions and 26 reviewed, claimless Resources across the remaining breadth domains. This candidate adds a further 13 Organisations & peer community Questions and 11 reviewed Resources spanning autistic-led organisations, user-led self-advocacy, Welsh DPOs, dyslexia, dyspraxia/DCD, Tourette syndrome, Northern Ireland peer networks and a bounded cross-neurodivergent directory route. A separate tested metadata contract records geography, leadership, accessibility, moderation and privacy using explicit unknown/not-found semantics and no quality or safety score. Frozen discovery, jurisdiction, clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged.
 
 Accepted production remains the 2026-09-03 Relationships & family deployment: 208 governed objects and 292 canonical routes from exact source SHA `5c05d775a5d548c0f4ad92f78e25008febe40d69`. `contracts/current-production.json` remains the only current-production pointer until a separately protected deployment and fresh live verification succeed.
 

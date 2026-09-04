@@ -37,6 +37,7 @@ NEW_QUESTION_IDS = (
     "leave-change-peer-group-poor-fit",
     "peer-group-no-published-rules",
     "peer-support-outside-england",
+    "tourette-peer-support-online-or-local",
 )
 
 EXPECTED_GROUP = (
@@ -63,11 +64,11 @@ class OrganisationsPeerCommunityUKV1Tests(unittest.TestCase):
         evidence = build_site.load_evidence()
         self.assertEqual(20, len(concepts))
         self.assertEqual(136, len(resources))
-        self.assertEqual(147, len(questions))
+        self.assertEqual(148, len(questions))
         self.assertEqual(3, len(evidence))
-        self.assertEqual(306, len(concepts) + len(resources) + len(questions) + len(evidence))
-        self.assertEqual(390, build_site.V10_ROUTE_COUNT)
-        self.assertEqual(390, len(build_site.sitemap_paths(concepts, resources, questions)))
+        self.assertEqual(307, len(concepts) + len(resources) + len(questions) + len(evidence))
+        self.assertEqual(391, build_site.V10_ROUTE_COUNT)
+        self.assertEqual(391, len(build_site.sitemap_paths(concepts, resources, questions)))
 
     def test_new_resources_are_reviewed_reachable_and_claimless(self) -> None:
         self.assertEqual(11, len(NEW_RESOURCE_IDS))
@@ -83,7 +84,7 @@ class OrganisationsPeerCommunityUKV1Tests(unittest.TestCase):
             self.assertTrue(all(x["type"] == "url" and x["value"].startswith("https://") for x in item["locators"]))
 
     def test_new_questions_are_governed_and_public(self) -> None:
-        self.assertEqual(12, len(NEW_QUESTION_IDS))
+        self.assertEqual(13, len(NEW_QUESTION_IDS))
         paths = set(build_site.sitemap_paths(build_site.load_concepts(), build_site.load_resources(), build_site.load_questions()))
         for object_id in NEW_QUESTION_IDS:
             item = load_question(object_id)

@@ -10,10 +10,10 @@ This is the current need-led editorial coverage map for the repository candidate
 
 - 20 reviewed Concepts
 - 136 reviewed Resources
-- 147 reviewed practical Questions
+- 148 reviewed practical Questions
 - 3 governed Evidence objects
-- 306 governed objects total
-- 390 canonical public routes in the current candidate build contract
+- 307 governed objects total
+- 391 canonical public routes in the current candidate build contract
 
 ## Current accepted production
 
@@ -65,7 +65,7 @@ A 48-case deterministic benchmark covers the two original defects, friendship/pa
 
 ## Organisations & peer community acceptance boundary
 
-The current candidate contains 15 Organisations & peer community Questions: the three UK-breadth routes plus twelve new journeys covering peer/user-led governance, rural/no-local-group fallback, online-versus-in-person fit, accessibility, moderation, privacy, cross-neurodivergent discovery, awaiting-assessment eligibility, leaving poor-fit groups, missing-policy uncertainty and explicit Scotland/Wales/Northern-Ireland navigation.
+The current candidate contains 16 Organisations & peer community Questions: the three UK-breadth routes plus thirteen new journeys covering peer/user-led governance, rural/no-local-group fallback, online-versus-in-person fit, accessibility, moderation, privacy, cross-neurodivergent discovery, awaiting-assessment eligibility, leaving poor-fit groups, missing-policy uncertainty, explicit Scotland/Wales/Northern-Ireland navigation and a direct Tourette peer-support route.
 
 Eleven new Resources broaden the section beyond autism and ADHD to include dyslexia, dyspraxia/DCD, Tourette syndrome, learning-disability/self-advocacy and Disabled People's Organisation routes. AMASE and ARGH Scotland are recorded as autistic peer-controlled only because their own governance statements support that description; People First is recorded as user-led and Disability Wales full members are exposed through explicit DPO membership criteria. These labels are descriptive and never become quality or safety scores.
 
