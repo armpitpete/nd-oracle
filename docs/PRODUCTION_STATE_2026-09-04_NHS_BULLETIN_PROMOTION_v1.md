@@ -62,7 +62,11 @@ The promoted additions are:
 2. Autism Central school-attendance guidance — Education & study;
 3. NHS England person-centred suicide-safety policy — Mental wellbeing.
 
-The Evidence registry remains at 60 governed source records across 49 governed Claims. **All 49 Claims remain evidence-covered.** Exact-head acceptance run #359 proved **49/49 Claims covered**, **0 Evidence gaps**, **60 governed source records with 0 overdue**, and **325 governed objects with 0 overdue**.
+The Evidence registry remains at 60 governed source records across 49 governed Claims. **All 49 Claims remain evidence-covered.** Exact-head acceptance run #359 proved **49/49 Claims covered** and **0 Evidence gaps**.
+
+Freshness on the exact accepted tree:
+- 60 governed Evidence source records checked; 0 overdue;
+- 325 governed objects checked; 0 overdue.
 
 Resource inclusion remains **not endorsement**. Question routes retain the boundary **Relevant to inspect, not recommended**.
 
