@@ -18,11 +18,15 @@ class PostBaselineNHSBulletinIngestV1Tests(unittest.TestCase):
     def test_candidate_pack_does_not_rewrite_accepted_production(self) -> None:
         manifest = load_json(PACK / "manifest.json")
         current = load_json(CURRENT)
-        self.assertTrue(manifest["frozen_production_boundary"]["must_not_change_during_ingest"])
-        self.assertEqual(307, current["corpus"]["governed_objects"])
-        self.assertEqual(391, current["verification"]["canonical_routes_verified"])
+        frozen = manifest["frozen_production_boundary"]
+        self.assertTrue(frozen["must_not_change_during_ingest"])
+        self.assertEqual(frozen["governed_objects"], current["corpus"]["governed_objects"])
+        self.assertEqual(frozen["canonical_routes"], current["verification"]["canonical_routes_verified"])
+        self.assertEqual(frozen["production_state_document"], current["production_state_document"])
+        self.assertEqual(319, current["corpus"]["governed_objects"])
+        self.assertEqual(403, current["verification"]["canonical_routes_verified"])
         self.assertEqual(
-            "docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md",
+            "docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md",
             current["production_state_document"],
         )
 

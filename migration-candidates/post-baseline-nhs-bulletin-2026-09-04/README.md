@@ -4,7 +4,7 @@ Status: **candidate only**
 
 This pack records three bounded ND Oracle additions selected from NHS England's 4 September 2026 Mental Health, Learning Disability and Neurodevelopmental Conditions bulletin.
 
-It deliberately does **not** alter the frozen UK Reference Baseline v1, the accepted production pointer, active governed-object counts or the 391-route public contract.
+It deliberately does **not** alter accepted production. After PR #148, accepted production is the Ireland Assessment & diagnosis v1 release recorded by `contracts/current-production.json`: **319 governed objects and 403 canonical public routes**.
 
 ## Candidate additions
 

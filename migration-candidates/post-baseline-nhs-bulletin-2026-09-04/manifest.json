@@ -9,9 +9,10 @@
     "date": "2026-09-04"
   },
   "frozen_production_boundary": {
-    "governed_objects": 307,
-    "canonical_routes": 391,
+    "governed_objects": 319,
+    "canonical_routes": 403,
     "production_pointer": "contracts/current-production.json",
+    "production_state_document": "docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md",
     "must_not_change_during_ingest": true
   },
   "candidate_items": [
@@ -42,7 +43,7 @@
     "Validate promoted objects against the active ND Oracle schemas and reciprocal evidence rules where claims are introduced.",
     "Hostile-review suicide-safety wording so it cannot become individual risk assessment, crisis counselling or a substitute for urgent human services.",
     "Preserve the distinction between learning-disability register identification and formal diagnosis or specialist-service eligibility.",
-    "Preserve the frozen 307-object / 391-route production pointer until a separately governed promotion, merge and deployment sequence."
+    "Preserve the accepted 319-object / 403-route Ireland assessment production pointer until a separately governed promotion, merge and deployment sequence."
   ],
   "source_urls": [
     "https://www.england.nhs.uk/long-read/guidance-for-general-practice-on-improving-identification-of-people-with-a-learning-disability/",
