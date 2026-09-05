@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.2",
+  "id": "canada-autism-assessment",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed Public Health Agency of Canada autism assessment orientation on 2026-09-05; provincial service delivery remains separate.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "Government of Canada — autism assessment orientation",
+  "category": "practical_guide",
+  "description": "Federal public-health information about signs of autism, seeking assessment and specialist diagnosis.",
+  "intended_use": "Canada-wide orientation before checking province/territory-specific assessment and service pathways.",
+  "audience_or_context": "Canada; federal public-health orientation. Provincial and territorial health systems determine many access and service details.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.canada.ca/en/public-health/services/diseases/autism-spectrum-disorder-asd/signs-characteristics.html"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "autism"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "Federal guidance does not create one Canadian national diagnostic-service pathway.",
+    "ND Oracle cannot diagnose autism or infer provincial programme eligibility."
+  ],
+  "cost_or_access_notes": [
+    "Free public information; access/cost vary by province, territory and provider."
+  ],
+  "conflicts_of_interest": []
+}
