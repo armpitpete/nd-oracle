@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.2",
+  "id": "front-of-the-class",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Publisher identity and memoir scope reviewed on 2026-09-05; Tourette lived experience remains separate from clinical evidence.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "Front of the Class — Brad Cohen with Lisa Wysocky",
+  "category": "book",
+  "description": "Memoir about Brad Cohen's experience of Tourette syndrome and becoming a teacher.",
+  "intended_use": "Inspect a Tourette lived-experience and education/work perspective without treating one life story as a universal account.",
+  "audience_or_context": "International / not jurisdiction-specific; readers seeking memoir and lived experience about Tourette syndrome.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://us.macmillan.com/books/9780312571399/frontoftheclass/"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "tourette-syndrome"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "Memoir does not establish prevalence, prognosis or what Tourette syndrome looks like for every person.",
+    "The book is not diagnostic or treatment guidance."
+  ],
+  "cost_or_access_notes": [
+    "Commercial book; format, price and territorial availability vary."
+  ],
+  "conflicts_of_interest": [
+    "The authors and publisher have a commercial interest in the book."
+  ]
+}
