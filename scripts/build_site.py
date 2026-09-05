@@ -680,6 +680,14 @@ def validate_question_navigation(questions: list[dict]) -> None:
 def resource_scope(resource: dict) -> tuple[str, str]:
     audience = str(resource.get('audience_or_context', '')).casefold()
     whole = ' '.join([str(resource.get('description', '')), audience, *[str(item) for item in resource.get('limitations', [])]]).casefold()
+    if 'ontario' in audience and 'canada' in audience:
+        return ('Ontario, Canada', 'The reviewed scope is explicitly Ontario within Canada; it must not be promoted into a Canada-wide service rule.')
+    if 'australia' in audience:
+        return ('Australia', 'The reviewed scope identifies Australia; state and territory implementation may still vary.')
+    if 'republic of ireland' in audience:
+        return ('Republic of Ireland', 'The reviewed scope identifies the Republic of Ireland and does not include Northern Ireland.')
+    if 'canada' in audience:
+        return ('Canada', 'The reviewed scope identifies Canada-wide orientation; provincial and territorial implementation may still vary.')
     if 'great britain' in audience or 'england, scotland and wales' in audience:
         return ('Great Britain', 'The reviewed scope identifies Great Britain (England, Scotland and Wales); Northern Ireland may use a different system.')
     if ('england or wales' in audience or 'england and wales' in audience) and 'scotland' not in audience:
@@ -745,7 +753,7 @@ def render_places_index(resources: list[dict]) -> str:
         label, explanation = resource_scope(resource)
         grouped[label].append(resource)
         explanations[label] = explanation
-    order = ['United Kingdom', 'Great Britain', 'England and Wales', 'England', 'Scotland', 'Wales', 'Northern Ireland', 'International / not jurisdiction-specific']
+    order = ['United Kingdom', 'Great Britain', 'England and Wales', 'England', 'Scotland', 'Wales', 'Northern Ireland', 'Republic of Ireland', 'Australia', 'Canada', 'Ontario, Canada', 'International / not jurisdiction-specific']
     sections = []
     for label in order:
         items = sorted(grouped.get(label, []), key=lambda item: item['name'].casefold())
