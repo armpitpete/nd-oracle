@@ -19,6 +19,10 @@ AUSTRALIA_BENCHMARK = ROOT / "benchmarks" / "assessment-diagnosis-australia-v1.j
 CANADA_BENCHMARK = ROOT / "benchmarks" / "assessment-diagnosis-canada-v1.json"
 IRELAND_REVIEW = ROOT / "docs" / "IRELAND_POST_V1_READINESS_2026-09-05.md"
 ARCH_REVIEW = ROOT / "docs" / "INTERNATIONAL_THREE_PACKAGE_ARCHITECTURE_REVIEW_v1.md"
+AUSTRALIA_READINESS = ROOT / "docs" / "INTERNATIONAL_PILOT_AUSTRALIA_READINESS_v1.md"
+AUSTRALIA_SOURCE_MATRIX = ROOT / "docs" / "ASSESSMENT_DIAGNOSIS_AUSTRALIA_SOURCE_MATRIX_v1.md"
+CANADA_READINESS = ROOT / "docs" / "INTERNATIONAL_PILOT_CANADA_READINESS_v1.md"
+CANADA_SOURCE_MATRIX = ROOT / "docs" / "ASSESSMENT_DIAGNOSIS_CANADA_SOURCE_MATRIX_v1.md"
 BROWSER = ROOT / "scripts" / "discovery_browser.js"
 
 BOOK_MEDIA_RESOURCES = {
@@ -297,6 +301,21 @@ class ReferenceDepthInternationalCompletionV1Tests(unittest.TestCase):
         )
         self.assertEqual(0, completed.returncode, completed.stderr)
         self.assertEqual(python_outputs, json.loads(completed.stdout))
+
+    def test_australia_and_canada_have_required_readiness_and_source_matrix_artifacts(self) -> None:
+        for path in (
+            AUSTRALIA_READINESS,
+            AUSTRALIA_SOURCE_MATRIX,
+            CANADA_READINESS,
+            CANADA_SOURCE_MATRIX,
+        ):
+            self.assertTrue(path.is_file(), path)
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("2026-09-05", text)
+        self.assertIn("PASS", AUSTRALIA_READINESS.read_text(encoding="utf-8"))
+        self.assertIn("PASS", CANADA_READINESS.read_text(encoding="utf-8"))
+        self.assertIn("state/territory", AUSTRALIA_SOURCE_MATRIX.read_text(encoding="utf-8"))
+        self.assertIn("Federal/provincial", CANADA_SOURCE_MATRIX.read_text(encoding="utf-8"))
 
     def test_three_package_architecture_review_rejects_premature_schema_migration(self) -> None:
         text = ARCH_REVIEW.read_text(encoding="utf-8")
