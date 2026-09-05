@@ -768,7 +768,20 @@ button:hover {
 }
 
 #find-results li {
-  padding-block: 0.35rem;
+  padding-block: 0.5rem;
+}
+
+.result-metadata {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 0.35rem;
+}
+
+#find-results .semantic-badge,
+#find-results .scope-badge {
+  min-height: 1.55rem;
+  font-size: 0.7rem;
 }
 
 table {
