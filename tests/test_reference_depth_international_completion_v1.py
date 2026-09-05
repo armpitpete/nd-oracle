@@ -25,7 +25,7 @@ BOOK_MEDIA_RESOURCES = {
     "were-all-neurodiverse",
     "caged-in-chaos",
     "front-of-the-class",
-    "1800-seconds-on-autism",
+    "bbc-1800-seconds-on-autism",
     "inside-our-autistic-minds",
 }
 BOOK_MEDIA_QUESTIONS = {
@@ -169,7 +169,7 @@ class ReferenceDepthInternationalCompletionV1Tests(unittest.TestCase):
             object_id: load_json(ROOT / "objects" / "resources" / f"{object_id}.json")
             for object_id in BOOK_MEDIA_RESOURCES
         }
-        self.assertEqual("media", media["1800-seconds-on-autism"]["category"])
+        self.assertEqual("media", media["bbc-1800-seconds-on-autism"]["category"])
         self.assertEqual("media", media["inside-our-autistic-minds"]["category"])
         self.assertIn(
             {"type": "concept", "id": "developmental-coordination-disorder"},
