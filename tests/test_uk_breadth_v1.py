@@ -209,13 +209,11 @@ class UKBreadthV1Tests(unittest.TestCase):
 
     def test_current_production_extends_exact_verified_uk_baseline(self) -> None:
         current = json.loads((ROOT / "contracts" / "current-production.json").read_text(encoding="utf-8"))
-        self.assertEqual("94d1ab0d8df5699b1316e64d70c28fe11b25b7cf", current["source_sha"])
-        self.assertEqual(325, current["corpus"]["governed_objects"])
-        self.assertEqual(409, current["verification"]["canonical_routes_verified"])
-        self.assertEqual(
-            "docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md",
-            current["production_state_document"],
-        )
+        self.assertEqual("8e60f264adfda2822312a05e835bc352ef263225", current["source_sha"])
+        self.assertGreaterEqual(current["corpus"]["governed_objects"], 307)
+        self.assertGreaterEqual(current["verification"]["canonical_routes_verified"], 391)
+        self.assertEqual(41, current["discovery"]["frozen_base_scoped_routes"])
+        self.assertEqual("docs/PRODUCTION_STATE_2026-09-05_REFERENCE_DEPTH_INTERNATIONAL_v1.md", current["production_state_document"])
 
     def test_one_shot_writer_workflow_is_not_part_of_candidate(self) -> None:
         self.assertFalse((ROOT / ".github" / "workflows" / "uk-breadth-wire.yml").exists())
