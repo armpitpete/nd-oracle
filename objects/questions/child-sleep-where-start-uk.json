@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2",
+  "id": "child-sleep-where-start-uk",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Parent/carer child-sleep route added with routine-versus-clinical boundary and no medication authority.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "A child is having ongoing sleep difficulty. What can I inspect before assuming a diagnosis?",
+  "why_it_matters": "Sleep difficulty in children is common and can have many causes; ordinary routine support and clinical assessment should not be collapsed.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "nhs-young-children-sleep"
+    },
+    {
+      "type": "resource",
+      "id": "nhs-insomnia"
+    }
+  ],
+  "current_understanding": "Start with age-appropriate public sleep guidance and note duration, daytime impact and other symptoms. If the problem is persistent, severe or suggests another sleep/health condition, seek appropriate professional advice. ND Oracle does not diagnose a child or recommend melatonin, sedatives or doses.",
+  "evidence_needed": [
+    "Broader four-nation child-sleep navigation and stronger evidence on neurodevelopmental adaptations without overgeneralising."
+  ],
+  "reopening_conditions": [
+    "National child-sleep guidance changes or stable four-nation clinical pathways become available."
+  ],
+  "dissent": [
+    "Families differ in routines and values; a single behavioural sleep approach should not be presented as universally suitable."
+  ]
+}
