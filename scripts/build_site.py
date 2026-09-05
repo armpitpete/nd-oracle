@@ -651,7 +651,7 @@ def _compat09__render_resource(resource: dict, concept_map: dict[str, dict], que
     category = _compat06__RESOURCE_CATEGORY_LABELS.get(resource['category'], resource['category'].replace('_', ' ').title())
     section = f'''
 <section class="scope-panel" aria-labelledby="scope-heading">
-  <h2 id="scope-heading">Scope before you act</h2>
+  <h2 id="scope-heading">Scope for navigation</h2>
   <p><span class="scope-badge">{_compat06__esc(label)}</span> <span class="semantic-badge">{_compat06__esc(category)}</span></p>
   <p>{_compat06__esc(explanation)}</p>
   <p class="meta">This scope is for navigation. It is not an eligibility, legal or clinical determination.</p>
