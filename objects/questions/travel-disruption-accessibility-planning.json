@@ -20,10 +20,6 @@
     {
       "type": "resource",
       "id": "translink-accessibility-northern-ireland"
-    },
-    {
-      "type": "question",
-      "id": "travel-sensory-overload-preparation"
     }
   ],
   "current_understanding": "Before travel, inspect current operator/station accessibility information, assistance/contact routes, interchange details and disruption channels. Where possible, identify a fallback or place to ask for help. ND Oracle cannot guarantee a journey will run as planned or that every announced accessibility feature will be available.",
