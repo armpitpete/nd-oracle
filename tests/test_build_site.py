@@ -201,6 +201,10 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn("Local governed discovery.", page)
         self.assertIn("processed only in this page", page)
         self.assertIn('<script src="/find.js" defer></script>', page)
+        find_js = (self.output / "find.js").read_text(encoding="utf-8")
+        self.assertIn("recordsByRoute", find_js)
+        self.assertIn("record.scope.join", find_js)
+        self.assertIn('scope.className = "scope-badge"', find_js)
 
     def test_jurisdiction_scope_is_visible_before_actionable_content(self):
         question = self.page("/questions/workplace-support-great-britain/")
