@@ -8,7 +8,7 @@ Close the deliberately deferred Republic-of-Ireland follow-on tasks after Assess
 
 ## Child ADHD recheck
 
-**Decision: remain deliberately deferred.**
+**Decision: child ADHD remains deliberately deferred.**
 
 The current HSE CAMHS operational framework provides national operational guidance for CAMHS but does not, by itself, establish a sufficiently clear and uniform national paediatric ADHD assessment/access route that ND Oracle can safely publish as a Republic-of-Ireland pathway.
 
