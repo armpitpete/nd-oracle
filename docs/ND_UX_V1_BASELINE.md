@@ -77,6 +77,7 @@ The visual-evidence workflow captures the frozen baseline and candidate at deskt
 - Home;
 - Find;
 - Find no-result state using a local-only deterministic interaction fixture;
+- Find successful jurisdiction-scoped result state using a local-only deterministic interaction fixture;
 - Questions index;
 - representative Question;
 - representative Resource;
