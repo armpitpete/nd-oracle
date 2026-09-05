@@ -73,9 +73,6 @@ jobs:
             const button = document.getElementById("find-button");
             input.value = {query!r};
             button.click();
-            window.setTimeout(() => {{
-              document.getElementById("find-results").scrollIntoView({{block: "start"}});
-            }}, 0);
           }});
           </script>"""
                   target = root / route
@@ -139,9 +136,17 @@ jobs:
             for spec in "${ROUTES[@]}"; do
               name="${spec%%|*}"
               route="${spec#*|}"
+              effective_size="$size"
+              if [[ "$name" == "find-results" || "$name" == "find-no-result" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,1800"
+                else
+                  effective_size="390,1800"
+                fi
+              fi
               google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
                 --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
-                --window-size="$size" \
+                --window-size="$effective_size" \
                 --screenshot="ux-evidence/$label/$folder/$name.png" \
                 "http://127.0.0.1:$port$route"
               test -s "ux-evidence/$label/$folder/$name.png"
@@ -160,6 +165,7 @@ jobs:
             echo "evidence_detail=$EVIDENCE_DETAIL"
             echo "desktop=1440x1100"
             echo "narrow=390x844"
+            echo "find_state_capture_height=1800"
             echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
