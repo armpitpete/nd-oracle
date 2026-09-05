@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2",
+  "id": "rail-passenger-assistance-great-britain",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "GB rail Passenger Assist route using regulator information; station/operator variability preserved.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "How can I check passenger assistance for a train journey in Great Britain?",
+  "why_it_matters": "People may need help planning, boarding, changing platforms or navigating disruption, and operator policies should be inspectable.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "orr-passenger-assistance-gb"
+    },
+    {
+      "type": "resource",
+      "id": "govuk-disabled-transport-trains"
+    }
+  ],
+  "current_understanding": "Licensed train and station operators have Accessible Travel Policies, and Passenger Assist can support people who need help because of disability, temporary impairment or age. Advance booking and turn-up-and-go both exist, but actual support depends on the station, operator, staffing and conditions. Check the specific journey.",
+  "evidence_needed": [
+    "Stable operator-level cognitive/sensory accessibility metadata beyond physical-access fields."
+  ],
+  "reopening_conditions": [
+    "ORR Passenger Assist standards or operator-policy requirements materially change."
+  ],
+  "dissent": [
+    "Some travellers prefer not to pre-book; turn-up-and-go can increase flexibility but may be more dependent on conditions at the time."
+  ]
+}
