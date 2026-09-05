@@ -220,7 +220,7 @@ class WebsiteBuildTests(unittest.TestCase):
                 scoped_resources.append((resource, page))
         self.assertTrue(scoped_resources)
         resource, page = scoped_resources[0]
-        self.assertLess(page.index("Scope before you act"), page.index("What it is for"), resource["id"])
+        self.assertLess(page.index("Scope for navigation"), page.index("What it is for"), resource["id"])
         self.assertIn("not an eligibility, legal or clinical determination", page)
 
     def test_visual_system_keeps_focus_touch_reduced_motion_and_forced_colors_explicit(self):
