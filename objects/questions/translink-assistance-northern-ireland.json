@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.2",
+  "id": "translink-assistance-northern-ireland",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "NI operator-specific accessibility route; no GB law/service inheritance.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "How can I check accessibility or ask for help on Translink bus or rail services in Northern Ireland?",
+  "why_it_matters": "Northern Ireland uses a distinct transport/operator context and should not inherit Great Britain Passenger Assist or bus rules by assumption.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "translink-accessibility-northern-ireland"
+    }
+  ],
+  "current_understanding": "Translink publishes accessibility information for bus and rail and offers passenger assistance/journey advice. Check the specific service, stop/station and any advance-contact advice. ND Oracle does not treat Translink's own accessibility statements as an independent quality rating.",
+  "evidence_needed": [
+    "Independent accessibility-outcome evidence where it can be governed without turning into a provider score."
+  ],
+  "reopening_conditions": [
+    "Translink accessibility policy, fleet, station or assistance processes materially change."
+  ],
+  "dissent": [
+    "Operator self-description is necessary for current service facts but is not the same as independent evidence of reliability."
+  ]
+}
