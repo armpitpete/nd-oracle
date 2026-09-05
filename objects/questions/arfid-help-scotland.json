@@ -11,14 +11,14 @@
     "last_reviewed": "2026-09-05"
   },
   "question": "I am worried about restrictive eating or possible ARFID in Scotland. Where can I start?",
-  "why_it_matters": "ARFID can involve sensory, fear-based or low-interest restriction and may have significant health consequences, but a description is not a diagnosis.",
+  "why_it_matters": "ARFID can involve sensory, fear-based or low-interest restriction and may have significant health consequences; individual assessment is needed to understand what is happening.",
   "related_objects": [
     {
       "type": "resource",
       "id": "nhs-inform-arfid-scotland"
     }
   ],
-  "current_understanding": "NHS inform provides Scotland-specific ARFID information and describes multidisciplinary treatment context. Use it as a route to appropriate assessment rather than a self-diagnosis checklist. ND Oracle does not choose nutritional, psychological or exposure treatment.",
+  "current_understanding": "NHS inform describes ARFID in a Scotland-specific public-health context and outlines multidisciplinary treatment. Use it as a route to appropriate assessment; the page cannot determine whether ARFID is present for an individual. ND Oracle does not choose nutritional, psychological or exposure treatment.",
   "evidence_needed": [
     "Stable local Scottish service-access information where health-board variation materially affects navigation."
   ],
