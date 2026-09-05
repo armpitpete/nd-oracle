@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2",
+  "id": "nidirect-insomnia",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed nidirect insomnia information on 2026-09-05 and kept Northern Ireland separate from GB service assumptions.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "nidirect — insomnia (Northern Ireland)",
+  "category": "practical_guide",
+  "description": "Northern Ireland public information about insomnia, symptoms, causes and clinical help.",
+  "intended_use": "Northern Ireland-specific orientation when sleep problems are persistent or affecting daily life.",
+  "audience_or_context": "Northern Ireland; people seeking public information about insomnia and GP/health-service handoff.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.nidirect.gov.uk/conditions/insomnia"
+    }
+  ],
+  "related_objects": [],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "Northern Ireland service arrangements must not be inferred from England, Scotland or Wales.",
+    "ND Oracle cannot diagnose or prescribe sleep treatment."
+  ],
+  "cost_or_access_notes": [
+    "Free public information; current local service access varies."
+  ],
+  "conflicts_of_interest": []
+}
