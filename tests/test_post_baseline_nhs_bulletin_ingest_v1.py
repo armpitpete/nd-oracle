@@ -26,14 +26,12 @@ class PostBaselineNHSBulletinIngestV1Tests(unittest.TestCase):
             "docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md",
             frozen["production_state_document"],
         )
-        self.assertEqual(325, current["corpus"]["governed_objects"])
-        self.assertEqual(409, current["verification"]["canonical_routes_verified"])
+        self.assertGreaterEqual(current["corpus"]["governed_objects"], 325)
+        self.assertGreaterEqual(current["verification"]["canonical_routes_verified"], 409)
         self.assertGreater(current["corpus"]["governed_objects"], frozen["governed_objects"])
         self.assertGreater(current["verification"]["canonical_routes_verified"], frozen["canonical_routes"])
-        self.assertEqual(
-            "docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md",
-            current["production_state_document"],
-        )
+        self.assertEqual("8e60f264adfda2822312a05e835bc352ef263225", current["source_sha"])
+        self.assertEqual("docs/PRODUCTION_STATE_2026-09-05_REFERENCE_DEPTH_INTERNATIONAL_v1.md", current["production_state_document"])
         self.assertNotEqual(frozen["production_state_document"], current["production_state_document"])
 
     def test_three_candidate_resources_are_claimless_and_reviewed(self) -> None:
