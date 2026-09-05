@@ -53,24 +53,31 @@ jobs:
           (cd baseline && python scripts/build_site.py)
           (cd candidate && python scripts/build_site.py)
 
-      - name: Prepare deterministic visual-only Find no-result fixtures
+      - name: Prepare deterministic visual-only Find state fixtures
         run: |
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
+
+          probes = {
+              "find-no-result": "xyzzqvplm norktavex",
+              "find-results": "Where can I look for workplace support in Great Britain if disability or a health condition affects my work?",
+          }
+
           for root in (Path("baseline/dist"), Path("candidate/dist")):
               source = (root / "find" / "index.html").read_text(encoding="utf-8")
-              probe = """<script>
-          window.addEventListener("load", () => {
+              for route, query in probes.items():
+                  probe = f"""<script>
+          window.addEventListener("load", () => {{
             const input = document.getElementById("find-input");
             const button = document.getElementById("find-button");
-            input.value = "zzqv no governed route sentinel";
+            input.value = {query!r};
             button.click();
-          });
+          }});
           </script>"""
-              target = root / "find-no-result"
-              target.mkdir(parents=True, exist_ok=True)
-              (target / "index.html").write_text(source.replace("</body>", probe + "</body>", 1), encoding="utf-8")
+                  target = root / route
+                  target.mkdir(parents=True, exist_ok=True)
+                  (target / "index.html").write_text(source.replace("</body>", probe + "</body>", 1), encoding="utf-8")
           PY
 
       - name: Capture frozen baseline and exact candidate screenshots
@@ -89,10 +96,26 @@ jobs:
           EVIDENCE_DETAIL="$(find candidate/dist/evidence -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | LC_ALL=C sort | head -n1)"
           test -n "$EVIDENCE_DETAIL"
 
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200 --dump-dom \
+            "http://127.0.0.1:8765/find-no-result/" > /tmp/baseline-find-no-result.html
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200 --dump-dom \
+            "http://127.0.0.1:8766/find-no-result/" > /tmp/candidate-find-no-result.html
+          grep -q "No governed answer yet" /tmp/baseline-find-no-result.html
+          grep -q "No governed answer yet" /tmp/candidate-find-no-result.html
+
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200 --dump-dom \
+            "http://127.0.0.1:8765/find-results/" > /tmp/baseline-find-results.html
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200 --dump-dom \
+            "http://127.0.0.1:8766/find-results/" > /tmp/candidate-find-results.html
+          grep -q "Governed routes to inspect" /tmp/baseline-find-results.html
+          grep -q "Governed routes to inspect" /tmp/candidate-find-results.html
+          grep -q 'class="scope-badge"' /tmp/candidate-find-results.html
+
           ROUTES=(
             "home|/"
             "find|/find/"
             "find-no-result|/find-no-result/"
+            "find-results|/find-results/"
             "questions-index|/questions/"
             "question-workplace-gb|/questions/workplace-support-great-britain/"
             "resource-goblin-tools|/resources/goblin-tools/"
@@ -138,8 +161,8 @@ jobs:
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 24
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 24
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 26
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 26
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
