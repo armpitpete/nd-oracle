@@ -1,0 +1,39 @@
+{
+  "schema_version": "0.2",
+  "id": "neurodiversity-intro-media-where-start",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Completion route for introductory Books & media selection using explicit purpose and perspective instead of a hidden best-item ranking.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "I want an introductory book or media route about neurodiversity. Where can I start without treating one item as the definitive answer?",
+  "why_it_matters": "A simple starting route is useful, but popularity and accessibility are different from clinical authority or universal representativeness.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "were-all-neurodiverse"
+    },
+    {
+      "type": "resource",
+      "id": "1800-seconds-on-autism"
+    },
+    {
+      "type": "resource",
+      "id": "inside-our-autistic-minds"
+    }
+  ],
+  "current_understanding": "Choose the format and purpose first: introductory framework, lived experience, podcast discussion or documentary representation. Inspect authorship, scope, limitations and format. ND Oracle does not convert one accessible starting item into a universal recommendation or clinical source.",
+  "evidence_needed": [
+    "Broader reviewed introductory material for learning disability, DLD and specific learning differences where stable public routes exist."
+  ],
+  "reopening_conditions": [
+    "A materially stronger cross-neurodivergent introductory resource appears or current access changes."
+  ],
+  "dissent": [
+    "Some readers prefer one short starting shortlist; that can be useful only when the selection dimensions remain explicit."
+  ]
+}
