@@ -1,0 +1,36 @@
+{
+  "schema_version": "0.2",
+  "id": "orr-passenger-assistance-gb",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed ORR passenger-assistance and Accessible Travel Policy information on 2026-09-05.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "Office of Rail and Road — passenger assistance",
+  "category": "service",
+  "description": "Rail-regulator information about Accessible Travel Policies, Passenger Assist and support expected from licensed train/station operators.",
+  "intended_use": "Inspect Great Britain rail assistance arrangements, including advance booking and turn-up-and-go context.",
+  "audience_or_context": "Great Britain mainline rail passengers who may need disability, temporary-impairment or age-related assistance.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.orr.gov.uk/monitoring-regulation/rail/passengers/passenger-assistance/passengers-disabilities"
+    }
+  ],
+  "related_objects": [],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "Assistance details and station accessibility still vary by operator, station, staffing and disruption.",
+    "The regulator route does not guarantee that every requested assistance event will occur exactly as planned.",
+    "Northern Ireland rail is outside this GB operator regime."
+  ],
+  "cost_or_access_notes": [
+    "Public regulator information; Passenger Assist itself is described as free."
+  ],
+  "conflicts_of_interest": []
+}
