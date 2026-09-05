@@ -1,0 +1,47 @@
+{
+  "schema_version": "0.2",
+  "id": "inside-our-autistic-minds",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "BBC/Open University programme identity and purpose reviewed on 2026-09-05; listed as documentary/lived-experience media, not assessment.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "Inside Our Autistic Minds — BBC / Open University",
+  "category": "media",
+  "description": "Documentary series in which autistic people work with Chris Packham to communicate aspects of their lived experience through film.",
+  "intended_use": "Inspect documentary representations of autistic lived experience and communication without treating the programme as a clinical model.",
+  "audience_or_context": "Primarily UK-origin media with international informational relevance; availability depends on broadcaster/platform rights.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://connect.open.ac.uk/health-wellbeing-and-sports/inside-the-autistic-mind/"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "autism"
+    },
+    {
+      "type": "concept",
+      "id": "communication-differences"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "A documentary selects particular people and stories and is not representative of every autistic person.",
+    "Programme availability may vary by territory and rights window.",
+    "The programme cannot diagnose autism."
+  ],
+  "cost_or_access_notes": [
+    "Viewing availability depends on broadcaster/platform and territory; the Open University page provides programme context."
+  ],
+  "conflicts_of_interest": [
+    "BBC and the Open University co-produced/supported the programme; ND Oracle lists it as media rather than independent efficacy evidence."
+  ]
+}
