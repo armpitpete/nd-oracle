@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2",
+  "id": "swallowing-difficulty-food-safety",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Safety boundary route separating dysphagia from sensory eating and ARFID.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "Eating is difficult because I cough, choke or feel food sticking. Is that the same as sensory eating or ARFID?",
+  "why_it_matters": "Swallowing problems can carry choking, dehydration and chest-infection risks and should not be misclassified as preference or executive-function difficulty.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "nhs-dysphagia"
+    },
+    {
+      "type": "resource",
+      "id": "nidirect-dysphagia"
+    }
+  ],
+  "current_understanding": "No. Coughing or choking while eating/drinking, food feeling stuck, a wet/gurgly voice or similar symptoms can indicate a swallowing problem and need appropriate clinical assessment. Dysphagia, ARFID and sensory food preference are different categories even though they can coexist.",
+  "evidence_needed": [
+    "Equivalent nation-specific swallowing-service navigation where it changes the practical route."
+  ],
+  "reopening_conditions": [
+    "National urgent-care guidance or specialist referral responsibilities change materially."
+  ],
+  "dissent": [
+    "Some eating difficulty has multiple interacting causes; separation of categories should not prevent multidisciplinary assessment."
+  ]
+}
