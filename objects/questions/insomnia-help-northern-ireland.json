@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.2",
+  "id": "insomnia-help-northern-ireland",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Northern Ireland insomnia route from nidirect, preserving HSC/NI separation from GB.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "My sleep problems are persistent and I live in Northern Ireland. Where can I start?",
+  "why_it_matters": "Northern Ireland has a distinct health system and should not inherit GB service assumptions.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "nidirect-insomnia"
+    }
+  ],
+  "current_understanding": "nidirect provides public insomnia information and advises appropriate clinical help. ND Oracle does not infer a diagnosis, medication need or a uniform specialist pathway from that information.",
+  "evidence_needed": [
+    "Trust-level sleep-service routes where stable and useful to real user journeys."
+  ],
+  "reopening_conditions": [
+    "nidirect or HSC sleep-service guidance changes materially."
+  ],
+  "dissent": [
+    "Trust-level detail can improve navigation but can become stale quickly and therefore needs shorter review cadence."
+  ]
+}
