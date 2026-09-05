@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2",
+  "id": "neurodivergent-authorship-beyond-autism-adhd",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Authorship-breadth route added to prevent Books & media from remaining autism/ADHD-only.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "Where can I inspect lived-experience books beyond autism and ADHD?",
+  "why_it_matters": "A catalogue centred only on autism and ADHD can erase other neurodevelopmental perspectives.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "caged-in-chaos"
+    },
+    {
+      "type": "resource",
+      "id": "front-of-the-class"
+    }
+  ],
+  "current_understanding": "The catalogue now includes bounded lived-experience routes for dyspraxia/DCD and Tourette syndrome as well as autism and ADHD. These are perspectives, not substitutes for condition guidance or evidence about everyone with the condition.",
+  "evidence_needed": [
+    "Stable lived-experience book/media routes for DLD, dyslexia and learning disability that meet the same provenance and accessibility threshold."
+  ],
+  "reopening_conditions": [
+    "New reviewed authorship broadens the catalogue or a current resource becomes unavailable."
+  ],
+  "dissent": [
+    "Condition-specific memoir can provide recognition while still overrepresenting people able and willing to publish; absence from publishing is not absence of lived experience."
+  ]
+}
