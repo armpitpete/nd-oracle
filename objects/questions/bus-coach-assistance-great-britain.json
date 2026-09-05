@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2",
+  "id": "bus-coach-assistance-great-britain",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Mode-specific GB bus/coach accessibility route separating statutory assistance from concessions and operator practice.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "What disability-related help and accessible information should I check for a bus or coach journey in Great Britain?",
+  "why_it_matters": "Vehicle accessibility, driver assistance, onboard information and concessionary fares are different things.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "govuk-bus-coach-disabled-help-gb"
+    },
+    {
+      "type": "resource",
+      "id": "govuk-bus-coach-accessible-information-gb"
+    }
+  ],
+  "current_understanding": "For in-scope bus/coach services in England, Scotland and Wales, government guidance sets accessibility/help requirements and increasingly requires audible/visible route information. Check the operator and journey because exemptions, fleet differences and disruptions remain material. Separate these rights/features from concessionary-pass eligibility.",
+  "evidence_needed": [
+    "Operator-level accessible-information implementation where it materially affects a real journey."
+  ],
+  "reopening_conditions": [
+    "GB bus/coach accessibility regulations or implementation deadlines materially change."
+  ],
+  "dissent": [
+    "Formal accessibility compliance does not necessarily capture cognitive or sensory usability for an individual."
+  ]
+}
