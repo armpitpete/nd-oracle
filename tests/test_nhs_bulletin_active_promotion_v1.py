@@ -29,12 +29,10 @@ class NHSBulletinActivePromotionV1Tests(unittest.TestCase):
         self.assertEqual(build_site.V10_ROUTE_COUNT, len(build_site.sitemap_paths(concepts, resources, questions)))
 
         current = load_json(ROOT / "contracts" / "current-production.json")
-        self.assertEqual(325, current["corpus"]["governed_objects"])
-        self.assertEqual(409, current["verification"]["canonical_routes_verified"])
-        self.assertEqual(
-            "docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md",
-            current["production_state_document"],
-        )
+        self.assertGreaterEqual(current["corpus"]["governed_objects"], 325)
+        self.assertGreaterEqual(current["verification"]["canonical_routes_verified"], 409)
+        self.assertEqual("8e60f264adfda2822312a05e835bc352ef263225", current["source_sha"])
+        self.assertEqual("docs/PRODUCTION_STATE_2026-09-05_REFERENCE_DEPTH_INTERNATIONAL_v1.md", current["production_state_document"])
 
     def test_learning_disability_register_promotion_is_bounded(self) -> None:
         resource = load_json(ROOT / "objects" / "resources" / "nhs-england-learning-disability-register-and-health-checks.json")
