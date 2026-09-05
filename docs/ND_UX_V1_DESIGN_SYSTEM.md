@@ -95,6 +95,7 @@ Not every page needs every layer. Missing governed data is not invented to fill 
 - controls retain visible `:focus-visible`;
 - primary navigation and Find controls use explicit touch-friendly minimum heights;
 - Find stays local/same-origin and retains deterministic governed routing;
+- successful Find results show governed result type and route scope when a scope is already present in the static discovery index;
 - no motion is required for comprehension;
 - smooth scrolling is enabled only when reduced motion is not requested;
 - forced-colour mode retains visible structural borders.
