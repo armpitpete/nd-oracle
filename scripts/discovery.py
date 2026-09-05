@@ -12,9 +12,13 @@ OBJECTS = ROOT / "objects"
 POLICY_PATH = ROOT / "discovery" / "routing-policy-v1.1.json"
 ASSESSMENT_EXTENSION_PATH = ROOT / "discovery" / "assessment-diagnosis-uk-v1.json"
 IRELAND_ASSESSMENT_EXTENSION_PATH = ROOT / "discovery" / "assessment-diagnosis-ireland-v1.json"
+AUSTRALIA_ASSESSMENT_EXTENSION_PATH = ROOT / "discovery" / "assessment-diagnosis-australia-v1.json"
+CANADA_ASSESSMENT_EXTENSION_PATH = ROOT / "discovery" / "assessment-diagnosis-canada-v1.json"
 POLICY: dict[str, Any] = json.loads(POLICY_PATH.read_text(encoding="utf-8"))
 ASSESSMENT_EXTENSION: dict[str, Any] = json.loads(ASSESSMENT_EXTENSION_PATH.read_text(encoding="utf-8"))
 IRELAND_ASSESSMENT_EXTENSION: dict[str, Any] = json.loads(IRELAND_ASSESSMENT_EXTENSION_PATH.read_text(encoding="utf-8"))
+AUSTRALIA_ASSESSMENT_EXTENSION: dict[str, Any] = json.loads(AUSTRALIA_ASSESSMENT_EXTENSION_PATH.read_text(encoding="utf-8"))
+CANADA_ASSESSMENT_EXTENSION: dict[str, Any] = json.loads(CANADA_ASSESSMENT_EXTENSION_PATH.read_text(encoding="utf-8"))
 
 _BASE_SCOPE_COUNT = len(POLICY["scope_provenance"]["routes"])
 if ASSESSMENT_EXTENSION.get("version") != "1":
@@ -72,7 +76,68 @@ POLICY["jurisdiction"]["canonical_order"].extend(_order_append)
 POLICY["jurisdiction"]["aliases"].extend(_aliases_append)
 POLICY["intent_phrases"].update(_ireland_intents)
 POLICY["scope_provenance"]["routes"].update(_ireland_scopes)
-EXPECTED_SCOPED_ROUTE_COUNT = _UK_SCOPED_ROUTE_COUNT + len(_ireland_scopes)
+_IRELAND_SCOPED_ROUTE_COUNT = _UK_SCOPED_ROUTE_COUNT + len(_ireland_scopes)
+
+if AUSTRALIA_ASSESSMENT_EXTENSION.get("version") != "1":
+    raise ValueError("Australia assessment discovery extension must be v1")
+if AUSTRALIA_ASSESSMENT_EXTENSION.get("base_policy") != "discovery/routing-policy-v1.1.json":
+    raise ValueError("Australia assessment discovery extension must target frozen v1.1 policy")
+if AUSTRALIA_ASSESSMENT_EXTENSION.get("base_scope_count") != 82 or _IRELAND_SCOPED_ROUTE_COUNT != 82:
+    raise ValueError("Australia assessment discovery extension must build on the accepted 82-route Ireland scope state")
+
+_australia_jurisdiction = AUSTRALIA_ASSESSMENT_EXTENSION.get("jurisdiction_extension", {})
+_australia_intents = AUSTRALIA_ASSESSMENT_EXTENSION.get("intent_phrases", {})
+_australia_scopes = AUSTRALIA_ASSESSMENT_EXTENSION.get("scope_provenance", {}).get("routes", {})
+if _australia_jurisdiction.get("scope_sets") != {"Australia": ["Australia"]}:
+    raise ValueError("Australia jurisdiction extension must expose only Australia")
+if _australia_jurisdiction.get("canonical_order_append") != ["Australia"]:
+    raise ValueError("Australia jurisdiction canonical order extension is invalid")
+if _australia_jurisdiction.get("aliases") != [{"phrase": "australia", "scope": "Australia"}]:
+    raise ValueError("Australia jurisdiction aliases are invalid")
+if set(POLICY["intent_phrases"]) & set(_australia_intents):
+    raise ValueError("Australia assessment discovery extension may not replace existing intent routes")
+if set(POLICY["scope_provenance"]["routes"]) & set(_australia_scopes):
+    raise ValueError("Australia assessment discovery extension may not replace existing scope routes")
+if "Australia" in POLICY["jurisdiction"]["scope_sets"]:
+    raise ValueError("Australia jurisdiction extension may not replace an existing scope set")
+POLICY["jurisdiction"]["scope_sets"].update(_australia_jurisdiction["scope_sets"])
+POLICY["jurisdiction"]["canonical_order"].extend(_australia_jurisdiction["canonical_order_append"])
+POLICY["jurisdiction"]["aliases"].extend(_australia_jurisdiction["aliases"])
+POLICY["intent_phrases"].update(_australia_intents)
+POLICY["scope_provenance"]["routes"].update(_australia_scopes)
+_AUSTRALIA_SCOPED_ROUTE_COUNT = _IRELAND_SCOPED_ROUTE_COUNT + len(_australia_scopes)
+
+if CANADA_ASSESSMENT_EXTENSION.get("version") != "1":
+    raise ValueError("Canada assessment discovery extension must be v1")
+if CANADA_ASSESSMENT_EXTENSION.get("base_policy") != "discovery/routing-policy-v1.1.json":
+    raise ValueError("Canada assessment discovery extension must target frozen v1.1 policy")
+if CANADA_ASSESSMENT_EXTENSION.get("base_scope_count") != 86 or _AUSTRALIA_SCOPED_ROUTE_COUNT != 86:
+    raise ValueError("Canada assessment discovery extension must build on the accepted 86-route Australia scope state")
+
+_canada_jurisdiction = CANADA_ASSESSMENT_EXTENSION.get("jurisdiction_extension", {})
+_canada_intents = CANADA_ASSESSMENT_EXTENSION.get("intent_phrases", {})
+_canada_scopes = CANADA_ASSESSMENT_EXTENSION.get("scope_provenance", {}).get("routes", {})
+if _canada_jurisdiction.get("scope_sets") != {"Canada": ["Canada"], "Ontario": ["Canada", "Ontario"]}:
+    raise ValueError("Canada jurisdiction extension must expose Canada and Ontario only")
+if _canada_jurisdiction.get("canonical_order_append") != ["Canada", "Ontario"]:
+    raise ValueError("Canada jurisdiction canonical order extension is invalid")
+if _canada_jurisdiction.get("aliases") != [
+    {"phrase": "ontario", "scope": "Ontario"},
+    {"phrase": "canada", "scope": "Canada"},
+]:
+    raise ValueError("Canada jurisdiction aliases are invalid")
+if set(POLICY["intent_phrases"]) & set(_canada_intents):
+    raise ValueError("Canada assessment discovery extension may not replace existing intent routes")
+if set(POLICY["scope_provenance"]["routes"]) & set(_canada_scopes):
+    raise ValueError("Canada assessment discovery extension may not replace existing scope routes")
+if {"Canada", "Ontario"} & set(POLICY["jurisdiction"]["scope_sets"]):
+    raise ValueError("Canada jurisdiction extension may not replace an existing scope set")
+POLICY["jurisdiction"]["scope_sets"].update(_canada_jurisdiction["scope_sets"])
+POLICY["jurisdiction"]["canonical_order"].extend(_canada_jurisdiction["canonical_order_append"])
+POLICY["jurisdiction"]["aliases"].extend(_canada_jurisdiction["aliases"])
+POLICY["intent_phrases"].update(_canada_intents)
+POLICY["scope_provenance"]["routes"].update(_canada_scopes)
+EXPECTED_SCOPED_ROUTE_COUNT = _AUSTRALIA_SCOPED_ROUTE_COUNT + len(_canada_scopes)
 
 # Assessment v1 adds only refusal-language coverage here. The frozen v1.1 policy
 # file is not rewritten; browser discovery receives the same merged POLICY in
@@ -199,12 +264,18 @@ def validate_policy(*, policy: dict[str, Any] | None = None, index: list[dict] |
         "England and Wales": {"England", "Wales"},
         "United Kingdom": {"England", "Scotland", "Wales", "Northern Ireland"},
         "Republic of Ireland": {"Republic of Ireland"},
+        "Australia": {"Australia"},
+        "Canada": {"Canada"},
+        "Ontario": {"Canada", "Ontario"},
     }
     scopes = candidate["jurisdiction"]["scope_sets"]
     if {name: set(values) for name, values in scopes.items()} != expected_scopes:
-        raise ValueError("Jurisdiction scope sets do not match frozen v1.1")
-    if candidate["jurisdiction"]["canonical_order"] != ["England", "Scotland", "Wales", "Northern Ireland", "Republic of Ireland"]:
-        raise ValueError("Jurisdiction canonical order is incomplete or unstable")
+        raise ValueError("Merged jurisdiction scope sets do not match frozen base plus accepted additive extensions")
+    if candidate["jurisdiction"]["canonical_order"] != [
+        "England", "Scotland", "Wales", "Northern Ireland",
+        "Republic of Ireland", "Australia", "Canada", "Ontario",
+    ]:
+        raise ValueError("Merged jurisdiction canonical order is incomplete or unstable")
 
     provenance = candidate["scope_provenance"]
     if provenance.get("basis") != "exact governed field value; any basis-value drift invalidates routing scope":
@@ -358,7 +429,7 @@ def requested_jurisdiction(query: str) -> tuple[list[str], bool]:
     normalized = _normalise(cleaned)
     if not normalized:
         return [], False
-    nation_pattern = r"(northern ireland|republic of ireland|england|scotland|wales|ireland)"
+    nation_pattern = r"(northern ireland|republic of ireland|england|scotland|wales|ireland|australia|ontario|canada)"
     context_pattern = "|".join(re.escape(term) for term in cfg["context_terms"])
     forward = re.compile(rf"\b(?:{context_pattern})\b(?:\s+(?:in|to|from|within|the))?(?:\s+\w+){{0,4}}\s+{nation_pattern}\b")
     reverse = re.compile(rf"\b{nation_pattern}\b(?:\s+\w+){{0,4}}\s+\b(?:{context_pattern})\b")

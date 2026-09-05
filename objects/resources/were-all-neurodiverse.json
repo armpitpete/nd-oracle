@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.2",
+  "id": "were-all-neurodiverse",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Publisher identity, authorship, formats and stated scope reviewed on 2026-09-05; listed as perspective/introduction, not clinical authority.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "We're All Neurodiverse — Sonny Jane Wise",
+  "category": "book",
+  "description": "Neurodivergent-authored introduction to the neurodiversity paradigm, disability and intersections of neurodivergence with social systems.",
+  "intended_use": "Inspect an explicitly neurodivergent-authored introductory perspective on neurodiversity without treating it as a clinical guideline.",
+  "audience_or_context": "International / not jurisdiction-specific; adults and supporters seeking an introductory neurodiversity perspective.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.hachette.co.uk/titles/sonny-jane-wise/were-all-neurodiverse/9781839975783/"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "neurodiversity"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "The author's framework and community narratives are perspectives, not a universal definition of every neurodivergent person's experience.",
+    "The book is not diagnostic or clinical guidance."
+  ],
+  "cost_or_access_notes": [
+    "Commercial book; publisher lists paperback, ebook and downloadable audiobook formats, with price and territorial availability subject to change."
+  ],
+  "conflicts_of_interest": [
+    "The author and publisher have a commercial interest in the book; ND Oracle does not treat sales or endorsements as evidence."
+  ]
+}

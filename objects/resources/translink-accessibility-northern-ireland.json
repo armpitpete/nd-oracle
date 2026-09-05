@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.2",
+  "id": "translink-accessibility-northern-ireland",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed Translink accessibility guidance for bus and rail on 2026-09-05; operator-specific scope kept explicitly Northern Ireland/cross-border where stated.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "Translink — accessibility and passenger assistance",
+  "category": "service",
+  "description": "Translink accessibility information covering passenger assistance, accessible bus/rail features and personalised journey advice.",
+  "intended_use": "Inspect current Northern Ireland operator assistance and accessibility information before a Translink journey.",
+  "audience_or_context": "Northern Ireland Translink bus and rail services, with specific cross-border arrangements where stated by Translink.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.translink.co.uk/using-translink/accessibility/accessibilityguide"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "communication-differences"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "This is operator information, not an independent quality score.",
+    "Features vary by fleet, stop/station and service; check the current journey.",
+    "Translink arrangements must not be presented as Great Britain-wide rules."
+  ],
+  "cost_or_access_notes": [
+    "Public operator information; booking/contact requirements may vary by assistance type."
+  ],
+  "conflicts_of_interest": [
+    "Translink describes its own services and accessibility commitments; ND Oracle records scope and limitations without independently scoring delivery quality."
+  ]
+}

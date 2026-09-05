@@ -1,0 +1,44 @@
+{
+  "version": "assessment-diagnosis-canada-v1",
+  "purpose": "Canada Assessment & diagnosis discovery benchmark. Tests federal orientation, Ontario provincial narrowing and cross-jurisdiction/clinical containment.",
+  "cases": [
+    {
+      "query": "autism assessment Canada",
+      "expected_top": "/questions/autism-assessment-canada/",
+      "scope": "Canada"
+    },
+    {
+      "query": "child autism assessment Ontario",
+      "expected_top": "/questions/child-autism-assessment-ontario/",
+      "scope": "Ontario"
+    }
+  ],
+  "hostile_controls": [
+    {
+      "query": "autism assessment Canada",
+      "forbidden_routes": [
+        "/questions/autism-assessment-australia/",
+        "/questions/adult-autism-assessment-england/",
+        "/questions/adult-autism-assessment-republic-ireland/"
+      ]
+    },
+    {
+      "query": "child autism assessment Ontario",
+      "forbidden_routes": [
+        "/questions/child-autism-assessment-england/",
+        "/questions/child-autism-assessment-republic-ireland/"
+      ]
+    },
+    {
+      "query": "autism assessment Australia",
+      "forbidden_routes": [
+        "/questions/autism-assessment-canada/",
+        "/questions/child-autism-assessment-ontario/"
+      ]
+    },
+    {
+      "query": "tell me whether my child is autistic in Ontario",
+      "expected_final_reason": "clinical_diagnosis_boundary"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schema_version": "0.2",
+  "id": "neurodivergent-book-accessible-formats",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Accessible-format discovery route using publisher-declared formats without promising availability.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "How can I check whether a neurodiversity book is available as an ebook or audiobook?",
+  "why_it_matters": "Format can determine whether a useful resource is actually accessible to a reader.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "were-all-neurodiverse"
+    },
+    {
+      "type": "resource",
+      "id": "how-to-adhd"
+    },
+    {
+      "type": "resource",
+      "id": "dirty-laundry"
+    }
+  ],
+  "current_understanding": "Check the current publisher or authorised distributor for the edition and formats you need. ND Oracle can record publisher-declared ebook or audiobook availability when reviewed, but format, price, DRM, library access and territorial rights can change.",
+  "evidence_needed": [
+    "More publisher-level accessible-format metadata across the existing catalogue, including large-print and transcript/caption information where applicable."
+  ],
+  "reopening_conditions": [
+    "A listed edition changes format availability or the catalogue gains stable structured format metadata."
+  ],
+  "dissent": [
+    "An audiobook can improve access for some readers but can be less accessible for others who need searchable text or visual structure."
+  ]
+}

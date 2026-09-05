@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2",
+  "id": "nhs-111-wales-insomnia",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed current NHS 111 Wales insomnia information on 2026-09-05.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "NHS 111 Wales — insomnia",
+  "category": "practical_guide",
+  "description": "NHS 111 Wales information about insomnia, duration, possible causes and help routes.",
+  "intended_use": "Wales-specific public clinical orientation for persistent sleep difficulty.",
+  "audience_or_context": "Wales; people seeking NHS information about insomnia and when to seek help.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://111.wales.nhs.uk/insomnia/"
+    }
+  ],
+  "related_objects": [],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "The information does not create a diagnosis or guarantee a specific local specialist service.",
+    "ND Oracle does not choose treatment or medication."
+  ],
+  "cost_or_access_notes": [
+    "Free public NHS Wales information; local service pathways vary."
+  ],
+  "conflicts_of_interest": []
+}

@@ -84,8 +84,10 @@ class AssessmentDiagnosisIrelandV1Tests(unittest.TestCase):
         self.assertEqual(70, self.extension["base_scope_count"])
         self.assertEqual(set(), set(base_routes) & set(ireland_routes))
         self.assertEqual(set(), set(uk_routes) & set(ireland_routes))
-        self.assertEqual(82, discovery.EXPECTED_SCOPED_ROUTE_COUNT)
-        self.assertEqual(82, len(discovery.POLICY["scope_provenance"]["routes"]))
+        self.assertEqual(82, 41 + 29 + 12)
+        self.assertEqual(90, discovery.EXPECTED_SCOPED_ROUTE_COUNT)
+        self.assertEqual(90, len(discovery.POLICY["scope_provenance"]["routes"]))
+        self.assertTrue(set(ireland_routes) <= set(discovery.POLICY["scope_provenance"]["routes"]))
         discovery.validate_policy(index=self.index)
 
     def test_ireland_scope_fingerprints_match_committed_objects(self) -> None:

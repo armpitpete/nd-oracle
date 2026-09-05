@@ -1,0 +1,63 @@
+{
+  "version": "1",
+  "base_policy": "discovery/routing-policy-v1.1.json",
+  "base_scope_count": 82,
+  "jurisdiction_extension": {
+    "canonical_order_append": [
+      "Australia"
+    ],
+    "scope_sets": {
+      "Australia": [
+        "Australia"
+      ]
+    },
+    "aliases": [
+      {
+        "phrase": "australia",
+        "scope": "Australia"
+      }
+    ]
+  },
+  "intent_phrases": {
+    "/questions/autism-assessment-australia/": [
+      "autism assessment australia",
+      "adult autism assessment australia",
+      "child autism assessment australia",
+      "autism diagnosis australia"
+    ],
+    "/questions/adhd-assessment-australia/": [
+      "adhd assessment australia",
+      "adult adhd assessment australia",
+      "child adhd assessment australia",
+      "adhd diagnosis australia"
+    ]
+  },
+  "scope_provenance": {
+    "routes": {
+      "/questions/autism-assessment-australia/": {
+        "scope": "Australia",
+        "basis_path": "/question",
+        "basis_sha256": "a88a6138e3b3ca3fd39d06c60acec31988bfa2d1cab3e87cb7f758ca43de4838",
+        "binding_sha256": "ccdd66aa8a8c0730e9315000fda5f33887ee4aada88eb5c8f13f7f59f1fd249f"
+      },
+      "/questions/adhd-assessment-australia/": {
+        "scope": "Australia",
+        "basis_path": "/question",
+        "basis_sha256": "ea0375a15ccf2482939adae24da576d9d3c3308baef4b373fab7fd0ca60a8acb",
+        "binding_sha256": "00b5c1da0d6b6c9de22caf189ebab45366eaad85c5c9d543162d0f78c70b09d3"
+      },
+      "/resources/healthdirect-autism-australia/": {
+        "scope": "Australia",
+        "basis_path": "/audience_or_context",
+        "basis_sha256": "012d596392e4b6e3f69a4c97d4511e867d80e9afb48224df52d847b384a67f6c",
+        "binding_sha256": "a820d5a6bb7a890e427a9b51849997bd2ee789726e3ee35ccd6fa776fc012ce9"
+      },
+      "/resources/healthdirect-adhd-australia/": {
+        "scope": "Australia",
+        "basis_path": "/audience_or_context",
+        "basis_sha256": "381976b894338a5e856b432a830b82f94d617a49b637ca28d84e83ff5f07dcca",
+        "binding_sha256": "303c2ed7def4717f7d18bdf1f52b08a0e60a1a40a56d83e503cfef962c60c1a8"
+      }
+    }
+  }
+}

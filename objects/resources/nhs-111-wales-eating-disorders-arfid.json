@@ -1,0 +1,41 @@
+{
+  "schema_version": "0.2",
+  "id": "nhs-111-wales-eating-disorders-arfid",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed current NHS 111 Wales eating-disorder overview including ARFID on 2026-09-05.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "NHS 111 Wales — eating disorders and ARFID",
+  "category": "practical_guide",
+  "description": "NHS Wales overview of eating disorders including ARFID, with public information about restrictive eating and help routes.",
+  "intended_use": "Wales-specific starting point for eating-disorder/ARFID information without self-diagnosis.",
+  "audience_or_context": "Wales; people seeking public information about ARFID or other eating-disorder concerns.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://111.wales.nhs.uk/eatingdisorders/"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "sensory-processing"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "The overview cannot determine whether a person has ARFID or another eating disorder.",
+    "Local assessment and treatment routes vary.",
+    "ND Oracle does not provide individual nutrition or treatment advice."
+  ],
+  "cost_or_access_notes": [
+    "Free NHS Wales public information."
+  ],
+  "conflicts_of_interest": []
+}

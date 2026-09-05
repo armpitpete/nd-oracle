@@ -1,0 +1,42 @@
+{
+  "schema_version": "0.2",
+  "id": "caged-in-chaos",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Bibliographic identity and lived-experience scope reviewed on 2026-09-05; listed as dyspraxic perspective rather than clinical evidence.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "Caged in Chaos — Victoria Biggs",
+  "category": "book",
+  "description": "Lived-experience and practical book written from a dyspraxic young person's perspective, covering school, organisation, social experience and everyday life.",
+  "intended_use": "Inspect a dyspraxic/DCD lived-experience perspective beyond the catalogue's autism and ADHD material.",
+  "audience_or_context": "International / not jurisdiction-specific; teenagers, young adults, families and supporters interested in dyspraxia/DCD lived experience.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://books.google.com/books/about/Caged_in_Chaos.html?id=zCaPAwAAQBAJ"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "developmental-coordination-disorder"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "One author's account cannot represent every person with DCD/dyspraxia.",
+    "Practical suggestions in a memoir/guide are not clinical treatment recommendations."
+  ],
+  "cost_or_access_notes": [
+    "Commercial book; edition, format, library and retailer availability vary."
+  ],
+  "conflicts_of_interest": [
+    "The author and publisher have a commercial interest in the book."
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.2",
+  "id": "nidirect-dysphagia",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed Northern Ireland dysphagia information on 2026-09-05 and preserved NI service-system separation.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "nidirect — swallowing problems (dysphagia)",
+  "category": "practical_guide",
+  "description": "Northern Ireland public information about swallowing difficulty, signs, complications and seeking GP help.",
+  "intended_use": "Northern Ireland clinical handoff when eating/drinking difficulty may be a swallowing problem.",
+  "audience_or_context": "Northern Ireland; people with swallowing difficulty or carers seeking public health information.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.nidirect.gov.uk/conditions/swallowing-problems-dysphagia"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "learning-disability"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "ND Oracle cannot diagnose a swallowing disorder or prescribe texture modification.",
+    "Northern Ireland service pathways must not be inferred from GB guidance."
+  ],
+  "cost_or_access_notes": [
+    "Free public information."
+  ],
+  "conflicts_of_interest": []
+}

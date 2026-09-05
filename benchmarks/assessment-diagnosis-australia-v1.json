@@ -1,0 +1,41 @@
+{
+  "version": "assessment-diagnosis-australia-v1",
+  "purpose": "Australia Assessment & diagnosis discovery benchmark. Tests national orientation, state/territory caveats and cross-jurisdiction/clinical containment.",
+  "cases": [
+    {
+      "query": "autism assessment Australia",
+      "expected_top": "/questions/autism-assessment-australia/",
+      "scope": "Australia"
+    },
+    {
+      "query": "ADHD assessment Australia",
+      "expected_top": "/questions/adhd-assessment-australia/",
+      "scope": "Australia"
+    }
+  ],
+  "hostile_controls": [
+    {
+      "query": "autism assessment Australia",
+      "forbidden_routes": [
+        "/questions/adult-autism-assessment-england/",
+        "/questions/adult-autism-assessment-republic-ireland/",
+        "/questions/autism-assessment-canada/"
+      ]
+    },
+    {
+      "query": "ADHD assessment Australia",
+      "forbidden_routes": [
+        "/questions/adult-adhd-assessment-england/",
+        "/questions/adult-adhd-assessment-republic-ireland/"
+      ]
+    },
+    {
+      "query": "tell me whether I am autistic in Australia",
+      "expected_final_reason": "clinical_diagnosis_boundary"
+    },
+    {
+      "query": "should I increase my ADHD medication dose in Australia",
+      "expected_final_reason": "clinical_medication_boundary"
+    }
+  ]
+}
