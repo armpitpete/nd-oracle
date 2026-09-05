@@ -323,16 +323,17 @@ class ReferenceDepthInternationalCompletionV1Tests(unittest.TestCase):
         self.assertIn("Do not change the core object schema", text)
         self.assertIn("Do not begin mass-country expansion", text)
 
-    def test_accepted_production_pointer_remains_frozen_until_protected_deployment(self) -> None:
+    def test_accepted_production_pointer_matches_verified_reference_depth_deployment(self) -> None:
         current = load_json(CURRENT)
         self.assertEqual("accepted", current["status"])
-        self.assertEqual("94d1ab0d8df5699b1316e64d70c28fe11b25b7cf", current["source_sha"])
-        self.assertEqual(325, current["corpus"]["governed_objects"])
-        self.assertEqual(409, current["verification"]["canonical_routes_verified"])
-        self.assertEqual(
-            "docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md",
-            current["production_state_document"],
-        )
+        self.assertEqual("8e60f264adfda2822312a05e835bc352ef263225", current["source_sha"])
+        self.assertEqual(366, current["corpus"]["governed_objects"])
+        self.assertEqual(168, current["corpus"]["resources"])
+        self.assertEqual(175, current["corpus"]["questions"])
+        self.assertEqual(450, current["verification"]["canonical_routes_verified"])
+        self.assertEqual(467, current["verification"]["regression_tests_passed"])
+        self.assertEqual(90, current["discovery"]["total_scoped_routes"])
+        self.assertEqual("docs/PRODUCTION_STATE_2026-09-05_REFERENCE_DEPTH_INTERNATIONAL_v1.md", current["production_state_document"])
 
 
 if __name__ == "__main__":
