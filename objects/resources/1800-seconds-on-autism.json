@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.2",
+  "id": "1800-seconds-on-autism",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Podcast identity, hosts and format reviewed on 2026-09-05 from BBC-linked distribution metadata; listed as lived-experience media.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "1800 Seconds on Autism — BBC Sounds",
+  "category": "media",
+  "description": "Podcast hosted by autistic presenters Robyn Steward and Jamie Knight with guests discussing everyday autistic life, relationships, interests and lived experience.",
+  "intended_use": "Inspect autistic-hosted audio media and lived experience without treating podcast discussion as clinical evidence.",
+  "audience_or_context": "International / not jurisdiction-specific; listeners seeking autistic-hosted discussion in audio format.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://podcasts.apple.com/gb/podcast/1800-seconds-on-autism/id1444057570"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "autism"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "Episodes and guests express perspectives rather than universal autism facts.",
+    "Podcast availability and platform access can change.",
+    "The programme is not a diagnostic or treatment service."
+  ],
+  "cost_or_access_notes": [
+    "Podcast access depends on distribution platform and territory; individual episode availability can change."
+  ],
+  "conflicts_of_interest": [
+    "BBC produces the programme; distribution platforms may have their own commercial terms."
+  ]
+}
