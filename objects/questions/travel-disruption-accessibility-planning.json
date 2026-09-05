@@ -1,0 +1,39 @@
+{
+  "schema_version": "0.2",
+  "id": "travel-disruption-accessibility-planning",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Practical disruption-planning route added across mobility/sensory/communication needs without guaranteeing operator support.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "Changes, delays and platform or stop changes make travel hard. What can I check before a journey?",
+  "why_it_matters": "Predictability, communication and contingency planning can matter as much as physical access for some neurodivergent and disabled travellers.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "orr-passenger-assistance-gb"
+    },
+    {
+      "type": "resource",
+      "id": "translink-accessibility-northern-ireland"
+    },
+    {
+      "type": "question",
+      "id": "travel-sensory-overload-preparation"
+    }
+  ],
+  "current_understanding": "Before travel, inspect current operator/station accessibility information, assistance/contact routes, interchange details and disruption channels. Where possible, identify a fallback or place to ask for help. ND Oracle cannot guarantee a journey will run as planned or that every announced accessibility feature will be available.",
+  "evidence_needed": [
+    "More operator-published non-phone contact, sensory/cognitive information and disruption accessibility metadata."
+  ],
+  "reopening_conditions": [
+    "Operators publish stable structured accessibility/disruption metadata that supports a richer governed comparison."
+  ],
+  "dissent": [
+    "More planning can reduce uncertainty for some people but increase cognitive load for others; the route should support choice rather than prescribe a single strategy."
+  ]
+}
