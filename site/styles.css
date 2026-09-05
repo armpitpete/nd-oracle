@@ -190,9 +190,9 @@ main {
 .page-context {
   display: flex;
   align-items: center;
-  gap: 0.5rem 0.8rem;
+  gap: var(--space-2) var(--space-3);
   flex-wrap: wrap;
-  margin-bottom: 0.8rem;
+  margin-bottom: var(--space-3);
 }
 
 .page-kind,
@@ -201,7 +201,7 @@ main {
   display: inline-flex;
   align-items: center;
   min-height: 1.75rem;
-  padding: 0.18rem 0.55rem;
+  padding: 0.18rem var(--space-2);
   border: 1px solid var(--border-strong);
   border-radius: 999px;
   color: var(--text-soft);
@@ -302,8 +302,8 @@ ul {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1.15rem 1.3rem;
-  margin: 1.5rem 0;
+  padding: var(--space-4);
+  margin: var(--space-5) 0;
 }
 
 .notice {
@@ -321,7 +321,7 @@ ul {
 }
 
 .scope-panel .scope-badge {
-  margin-right: 0.45rem;
+  margin-right: var(--space-2);
   border-color: var(--scope);
   color: var(--scope);
   background: var(--surface);
@@ -640,8 +640,8 @@ li + li {
 
 .claim-card,
 .evidence-card {
-  margin: 1rem 0;
-  padding: 1.1rem 1.2rem;
+  margin: var(--space-3) 0;
+  padding: var(--space-4);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -708,7 +708,7 @@ li + li {
 
 label {
   display: block;
-  margin-bottom: 0.45rem;
+  margin-bottom: var(--space-1);
   font-weight: 700;
 }
 
@@ -742,7 +742,7 @@ button:hover {
 .find-control {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.75rem;
+  gap: var(--space-3);
   align-items: end;
 }
 
@@ -752,11 +752,11 @@ button:hover {
 
 #find-results {
   min-height: 7rem;
-  margin-top: 1.5rem;
-  padding: 1.1rem 1.2rem;
+  margin-top: var(--space-5);
+  padding: var(--space-4);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
 }
 
 #find-results h2 {
@@ -773,9 +773,9 @@ button:hover {
 
 .result-metadata {
   display: flex;
-  gap: 0.35rem;
+  gap: var(--space-1);
   flex-wrap: wrap;
-  margin-top: 0.35rem;
+  margin-top: var(--space-1);
 }
 
 #find-results .semantic-badge,
@@ -836,7 +836,7 @@ th {
 
   .primary-nav {
     width: 100%;
-    gap: 0.2rem 0.45rem;
+    gap: var(--space-1) var(--space-2);
   }
 
   .primary-nav a {
