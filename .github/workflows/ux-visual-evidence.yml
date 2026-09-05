@@ -1,0 +1,150 @@
+name: ND Oracle UX visual evidence
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "site/**"
+      - "scripts/build_site.py"
+      - "scripts/evidence_public.py"
+      - "scripts/discovery_browser.js"
+      - "tests/**"
+      - "docs/ND_UX_V1_*.md"
+      - ".github/workflows/ux-visual-evidence.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  visual-evidence:
+    name: visual-evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out frozen UX baseline
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: 185582736ea6df097c742c0f592feee1f21538c9
+          path: baseline
+          persist-credentials: false
+
+      - name: Check out exact candidate head
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: candidate
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: candidate/requirements-dev.txt
+
+      - name: Install build dependency
+        run: python -m pip install --requirement candidate/requirements-dev.txt
+
+      - name: Build baseline and candidate
+        run: |
+          set -euo pipefail
+          (cd baseline && python scripts/build_site.py)
+          (cd candidate && python scripts/build_site.py)
+
+      - name: Prepare deterministic visual-only Find no-result fixtures
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          for root in (Path("baseline/dist"), Path("candidate/dist")):
+              source = (root / "find" / "index.html").read_text(encoding="utf-8")
+              probe = """<script>
+          window.addEventListener("load", () => {
+            const input = document.getElementById("find-input");
+            const button = document.getElementById("find-button");
+            input.value = "zzqv no governed route sentinel";
+            button.click();
+          });
+          </script>"""
+              target = root / "find-no-result"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(source.replace("</body>", probe + "</body>", 1), encoding="utf-8")
+          PY
+
+      - name: Capture frozen baseline and exact candidate screenshots
+        run: |
+          set -euo pipefail
+          command -v google-chrome
+          mkdir -p ux-evidence/baseline/{desktop,narrow} ux-evidence/candidate/{desktop,narrow}
+
+          python -m http.server 8765 --directory baseline/dist >/tmp/nd-baseline-http.log 2>&1 &
+          BASE_PID=$!
+          python -m http.server 8766 --directory candidate/dist >/tmp/nd-candidate-http.log 2>&1 &
+          CANDIDATE_PID=$!
+          trap 'kill "$BASE_PID" "$CANDIDATE_PID" 2>/dev/null || true' EXIT
+          sleep 1
+
+          EVIDENCE_DETAIL="$(find candidate/dist/evidence -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | LC_ALL=C sort | head -n1)"
+          test -n "$EVIDENCE_DETAIL"
+
+          ROUTES=(
+            "home|/"
+            "find|/find/"
+            "find-no-result|/find-no-result/"
+            "questions-index|/questions/"
+            "question-workplace-gb|/questions/workplace-support-great-britain/"
+            "resource-goblin-tools|/resources/goblin-tools/"
+            "concept-autism|/understand/autism/"
+            "evidence-index|/evidence/"
+            "evidence-detail|/evidence/$EVIDENCE_DETAIL/"
+            "places|/places/"
+            "about|/about/"
+            "not-found|/404.html"
+          )
+
+          capture() {
+            local label="$1"
+            local port="$2"
+            local size="$3"
+            local folder="$4"
+            local spec name route
+            for spec in "${ROUTES[@]}"; do
+              name="${spec%%|*}"
+              route="${spec#*|}"
+              google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+                --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
+                --window-size="$size" \
+                --screenshot="ux-evidence/$label/$folder/$name.png" \
+                "http://127.0.0.1:$port$route"
+              test -s "ux-evidence/$label/$folder/$name.png"
+            done
+          }
+
+          capture baseline 8765 1440,1100 desktop
+          capture baseline 8765 390,844 narrow
+          capture candidate 8766 1440,1100 desktop
+          capture candidate 8766 390,844 narrow
+
+          {
+            echo "contract=ND-UX-V1-ACCEPTANCE"
+            echo "baseline_sha=185582736ea6df097c742c0f592feee1f21538c9"
+            echo "candidate_sha=${{ github.event.pull_request.head.sha }}"
+            echo "evidence_detail=$EVIDENCE_DETAIL"
+            echo "desktop=1440x1100"
+            echo "narrow=390x844"
+            echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
+            echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
+          } > ux-evidence/manifest.txt
+
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 24
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 24
+
+      - name: Upload UX evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: nd-ux-v1-visual-evidence-${{ github.event.pull_request.head.sha }}
+          path: ux-evidence/
+          if-no-files-found: error
+          retention-days: 30
