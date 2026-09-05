@@ -178,5 +178,70 @@ class WebsiteBuildTests(unittest.TestCase):
         for value in ("javascript:alert(1)", "data:text/html,bad", "not-a-url"): self.assertIsNone(build_site.safe_http_url(value))
 
 
+    def test_core_page_types_expose_semantic_identity(self):
+        cases = [
+            ("/", "page--home", ">ND Oracle</span>"),
+            ("/find/", "page--find", ">Find</span>"),
+            ("/questions/workplace-support-great-britain/", "page--question", ">Question</span>"),
+            ("/resources/goblin-tools/", "page--resource", ">Resource</span>"),
+            ("/understand/autism/", "page--concept", ">Concept</span>"),
+            ("/evidence/", "page--evidence", ">Evidence</span>"),
+        ]
+        for route, body_class, label in cases:
+            page = self.page(route)
+            self.assertIn(body_class, page, route)
+            self.assertIn('class="page-kind"', page, route)
+            self.assertIn(label, page, route)
+
+    def test_find_is_primary_navigation_and_has_accessible_local_controls(self):
+        page = self.page("/find/")
+        self.assertIn('href="/find/" aria-current="page">Find</a>', page)
+        self.assertIn('aria-describedby="find-help"', page)
+        self.assertIn('role="region" aria-label="Find results"', page)
+        self.assertIn("Local governed discovery.", page)
+        self.assertIn("processed only in this page", page)
+        self.assertIn('<script src="/find.js" defer></script>', page)
+
+    def test_jurisdiction_scope_is_visible_before_actionable_content(self):
+        question = self.page("/questions/workplace-support-great-britain/")
+        self.assertIn('class="scope-panel"', question)
+        self.assertIn('class="scope-badge">Great Britain</span>', question)
+        self.assertLess(question.index("Scope before you act"), question.index("Current understanding"))
+        self.assertIn("not an eligibility, legal or clinical determination", question)
+
+        scoped_resources = []
+        for resource in self.resources:
+            page = self.page(f'/resources/{resource["id"]}/')
+            if 'class="scope-panel"' in page and 'International / not jurisdiction-specific' not in page:
+                scoped_resources.append((resource, page))
+        self.assertTrue(scoped_resources)
+        resource, page = scoped_resources[0]
+        self.assertLess(page.index("Scope before you act"), page.index("What it is for"), resource["id"])
+        self.assertIn("not an eligibility, legal or clinical determination", page)
+
+    def test_visual_system_keeps_focus_touch_reduced_motion_and_forced_colors_explicit(self):
+        css = (self.output / "styles.css").read_text(encoding="utf-8")
+        for marker in (
+            "--scope:",
+            "--boundary:",
+            ".page-kind",
+            ".scope-panel",
+            ".boundary-panel",
+            "min-height: 2.75rem",
+            'input[type="search"]',
+            "@media (prefers-reduced-motion: no-preference)",
+            "@media (forced-colors: active)",
+        ):
+            self.assertIn(marker, css)
+        self.assertIn(":focus-visible", css)
+        self.assertNotIn("@keyframes", css)
+
+    def test_footer_exposes_evidence_governance_route(self):
+        page = self.page("/")
+        self.assertIn('aria-label="Footer"', page)
+        self.assertIn('href="/evidence/">Evidence</a>', page)
+        self.assertIn('href="/privacy/">Privacy</a>', page)
+
+
 if __name__ == "__main__":
     unittest.main()
