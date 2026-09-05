@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.2",
+  "id": "insomnia-help-wales",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Wales insomnia navigation route from NHS 111 Wales; no local specialist entitlement inferred.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "My sleep problems are persistent and I live in Wales. Where can I start?",
+  "why_it_matters": "A Wales-specific route avoids silently substituting England service assumptions.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "nhs-111-wales-insomnia"
+    }
+  ],
+  "current_understanding": "NHS 111 Wales provides insomnia information and clinical help orientation. ND Oracle can point to that route but cannot determine the cause, diagnose a sleep disorder or promise a particular local sleep-clinic pathway.",
+  "evidence_needed": [
+    "Current health-board-specific specialist sleep pathways where they are stable enough to govern."
+  ],
+  "reopening_conditions": [
+    "NHS Wales guidance or local referral structures materially change."
+  ],
+  "dissent": [
+    "A national information page may be enough for orientation but not for resolving local referral detail."
+  ]
+}
