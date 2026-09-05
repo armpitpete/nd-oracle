@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.2",
+  "id": "ontario-autism-assessment",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed Ontario government child autism assessment/diagnostic-hub information updated 2026; kept explicitly provincial.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "Ontario — autism assessment and diagnosis",
+  "category": "service",
+  "description": "Ontario government information about child autism diagnostic assessment, qualified professionals and provincial diagnostic hubs.",
+  "intended_use": "Ontario-specific child autism assessment navigation, explicitly narrower than Canada-wide orientation.",
+  "audience_or_context": "Ontario, Canada; children/youth and families seeking provincial autism diagnostic-assessment information.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.ontario.ca/page/autism-assessment-diagnosis"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "autism"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "Ontario diagnostic hubs and programme rules are provincial and must not be presented as Canadian national services.",
+    "A service listing does not guarantee individual eligibility, wait time or outcome."
+  ],
+  "cost_or_access_notes": [
+    "Provincial public information; current hub access and programme rules should be checked directly."
+  ],
+  "conflicts_of_interest": []
+}
