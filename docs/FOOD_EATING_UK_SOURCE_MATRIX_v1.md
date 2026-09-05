@@ -12,6 +12,16 @@ Reviewed: 2026-09-05
 | Dysphagia | NHS 111 Wales | Wales | https://111.wales.nhs.uk/Dysphagia/ | Wales clinical information and urgent handoff. |
 | Dysphagia | nidirect | Northern Ireland | https://www.nidirect.gov.uk/conditions/swallowing-problems-dysphagia | NI clinical information; separate from GB service assumptions. |
 
+## Deliberate evidence-threshold decisions
+
+### Pica
+
+A dedicated national pica navigation route is **not promoted in this candidate**. The official material located in this pass supports pica as a possible clinical sign/symptom in broader health contexts but does not provide a sufficiently strong, stable four-nation pica pathway to justify manufacturing a standalone ND Oracle route. Pica therefore remains a clinical assessment/reopening item rather than being mislabeled as sensory preference.
+
+### Dietetic access
+
+Dietetic and speech-and-language roles are recorded where the cited ARFID/dysphagia guidance explicitly supports them. ND Oracle does not manufacture one UK-wide direct-access dietetic pathway because referral and service organisation can be local. A nation/local route should be added only when a real journey and maintainable first-party source justify it.
+
 ## Boundary
 
 Sensory eating, ARFID, pica and dysphagia are not interchangeable. ND Oracle must not turn texture/smell preference into an eating-disorder or swallowing diagnosis. Swallowing difficulty, choking, dehydration, repeated chest infection or other medical concerns require human clinical assessment.
