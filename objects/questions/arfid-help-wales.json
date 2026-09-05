@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.2",
+  "id": "arfid-help-wales",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Wales ARFID information route preserving local-service uncertainty.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "I am worried about restrictive eating or possible ARFID in Wales. Where can I start?",
+  "why_it_matters": "A Wales-specific public route avoids silently using England service assumptions.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "nhs-111-wales-eating-disorders-arfid"
+    }
+  ],
+  "current_understanding": "NHS 111 Wales provides ARFID/eating-disorder information. That can support recognition of reasons to seek help, but only an appropriate professional assessment can determine diagnosis and treatment. Local pathways can vary.",
+  "evidence_needed": [
+    "Current health-board ARFID/eating-disorder service navigation where stable enough to maintain."
+  ],
+  "reopening_conditions": [
+    "NHS Wales guidance or regional pathways materially change."
+  ],
+  "dissent": [
+    "ARFID may overlap with sensory or gastrointestinal difficulties; the correct assessment route depends on the person's presentation."
+  ]
+}
