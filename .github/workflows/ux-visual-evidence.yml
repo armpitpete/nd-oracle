@@ -73,6 +73,9 @@ jobs:
             const button = document.getElementById("find-button");
             input.value = {query!r};
             button.click();
+            window.setTimeout(() => {{
+              document.getElementById("find-results").scrollIntoView({{block: "start"}});
+            }}, 0);
           }});
           </script>"""
                   target = root / route
