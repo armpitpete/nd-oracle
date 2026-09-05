@@ -1,0 +1,41 @@
+{
+  "schema_version": "0.2",
+  "id": "nhs-inform-arfid-scotland",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed NHS inform/Scottish Government ARFID information on 2026-09-05; retained clinical and nutritional boundaries.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "NHS inform — ARFID (Scotland)",
+  "category": "practical_guide",
+  "description": "Scotland public health information about avoidant/restrictive food intake disorder (ARFID), possible presentations, complications and treatment context.",
+  "intended_use": "Scotland-specific clinical information route when restrictive eating may need assessment rather than self-diagnosis.",
+  "audience_or_context": "Scotland; people seeking public information about ARFID and appropriate clinical support.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.nhsinform.scot/illnesses-and-conditions/mental-health/eating-disorders/avoidant-restrictive-food-intake-disorder-arfid/"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "sensory-processing"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "Reading an ARFID description cannot establish a diagnosis.",
+    "Treatment can involve multiple disciplines; ND Oracle does not choose exposure, nutritional, psychological or medication treatment.",
+    "Sensory food preference alone is not automatically ARFID."
+  ],
+  "cost_or_access_notes": [
+    "Free public information; local service access varies."
+  ],
+  "conflicts_of_interest": []
+}
