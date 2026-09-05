@@ -264,12 +264,18 @@ def validate_policy(*, policy: dict[str, Any] | None = None, index: list[dict] |
         "England and Wales": {"England", "Wales"},
         "United Kingdom": {"England", "Scotland", "Wales", "Northern Ireland"},
         "Republic of Ireland": {"Republic of Ireland"},
+        "Australia": {"Australia"},
+        "Canada": {"Canada"},
+        "Ontario": {"Canada", "Ontario"},
     }
     scopes = candidate["jurisdiction"]["scope_sets"]
     if {name: set(values) for name, values in scopes.items()} != expected_scopes:
-        raise ValueError("Jurisdiction scope sets do not match frozen v1.1")
-    if candidate["jurisdiction"]["canonical_order"] != ["England", "Scotland", "Wales", "Northern Ireland", "Republic of Ireland"]:
-        raise ValueError("Jurisdiction canonical order is incomplete or unstable")
+        raise ValueError("Merged jurisdiction scope sets do not match frozen base plus accepted additive extensions")
+    if candidate["jurisdiction"]["canonical_order"] != [
+        "England", "Scotland", "Wales", "Northern Ireland",
+        "Republic of Ireland", "Australia", "Canada", "Ontario",
+    ]:
+        raise ValueError("Merged jurisdiction canonical order is incomplete or unstable")
 
     provenance = candidate["scope_provenance"]
     if provenance.get("basis") != "exact governed field value; any basis-value drift invalidates routing scope":
