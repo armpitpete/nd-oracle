@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.2",
+  "id": "govuk-bus-coach-accessible-information-gb",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed DfT accessible-information regulations guidance on 2026-09-05; implementation/exemptions retained.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "DfT — accessible information on local bus and coach services",
+  "category": "practical_guide",
+  "description": "Government guidance on audible and visible information requirements for local bus and coach services.",
+  "intended_use": "Inspect onboard accessible-information requirements relevant to planning travel when spoken/visual stop information matters.",
+  "audience_or_context": "Great Britain — England, Scotland and Wales; local bus/coach services subject to Accessible Information Regulations, with exemptions and implementation conditions.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.gov.uk/government/publications/providing-accessible-information-onboard-local-bus-and-coach-services"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "communication-differences"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "Not every vehicle/service is covered identically and exemptions/timescales matter.",
+    "A legal requirement does not prove a specific vehicle will be functioning correctly on a particular journey."
+  ],
+  "cost_or_access_notes": [
+    "Free government information."
+  ],
+  "conflicts_of_interest": []
+}

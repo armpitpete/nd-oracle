@@ -20,13 +20,21 @@ class NHSBulletinActivePromotionV1Tests(unittest.TestCase):
         resources = build_site.load_resources()
         questions = build_site.load_questions()
         evidence = build_site.load_evidence()
-        self.assertEqual(20, len(concepts))
-        self.assertEqual(147, len(resources))
-        self.assertEqual(155, len(questions))
+        self.assertGreaterEqual(len(concepts), 20)
+        self.assertGreaterEqual(len(resources), 147)
+        self.assertGreaterEqual(len(questions), 155)
         self.assertEqual(3, len(evidence))
-        self.assertEqual(325, len(concepts) + len(resources) + len(questions) + len(evidence))
-        self.assertEqual(409, build_site.V10_ROUTE_COUNT)
-        self.assertEqual(409, len(build_site.sitemap_paths(concepts, resources, questions)))
+        self.assertGreaterEqual(len(concepts) + len(resources) + len(questions) + len(evidence), 325)
+        self.assertGreaterEqual(build_site.V10_ROUTE_COUNT, 409)
+        self.assertEqual(build_site.V10_ROUTE_COUNT, len(build_site.sitemap_paths(concepts, resources, questions)))
+
+        current = load_json(ROOT / "contracts" / "current-production.json")
+        self.assertEqual(325, current["corpus"]["governed_objects"])
+        self.assertEqual(409, current["verification"]["canonical_routes_verified"])
+        self.assertEqual(
+            "docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md",
+            current["production_state_document"],
+        )
 
     def test_learning_disability_register_promotion_is_bounded(self) -> None:
         resource = load_json(ROOT / "objects" / "resources" / "nhs-england-learning-disability-register-and-health-checks.json")

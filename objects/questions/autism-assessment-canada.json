@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.2",
+  "id": "autism-assessment-canada",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Canada federal-orientation Question with explicit provincial/territorial handoff.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "How do I start looking into an autism assessment in Canada?",
+  "why_it_matters": "Canada-wide health information can orient a reader, but provinces and territories deliver health services differently.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "canada-autism-assessment"
+    }
+  ],
+  "current_understanding": "The Government of Canada advises speaking with a healthcare provider about assessment concerns and notes that specialists may be involved. Use this only as national orientation; the practical access route depends on the relevant province or territory. ND Oracle does not diagnose autism.",
+  "evidence_needed": [
+    "Province/territory assessment routes selected by real user need rather than placeholder coverage."
+  ],
+  "reopening_conditions": [
+    "Federal assessment information changes or additional provincial packages are accepted."
+  ],
+  "dissent": [
+    "A federal orientation route can be useful even though it deliberately cannot answer local wait-time or service-access questions."
+  ]
+}

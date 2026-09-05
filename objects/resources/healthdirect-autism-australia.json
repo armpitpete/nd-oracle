@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.2",
+  "id": "healthdirect-autism-australia",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed Healthdirect Australia autism assessment/diagnosis information on 2026-09-05; national orientation only.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "Healthdirect Australia — autism",
+  "category": "practical_guide",
+  "description": "Australian national health information about autism signs, seeking assessment and specialist diagnosis.",
+  "intended_use": "National orientation for autism assessment in Australia before checking state/territory or local implementation.",
+  "audience_or_context": "Australia; national public health information. Actual service access and professional availability can vary by state, territory and locality.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.healthdirect.gov.au/autism"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "autism"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "National information does not establish one uniform public assessment pathway in every state or territory.",
+    "ND Oracle cannot diagnose autism or recommend a provider."
+  ],
+  "cost_or_access_notes": [
+    "Free public health information; assessment cost and access vary."
+  ],
+  "conflicts_of_interest": []
+}

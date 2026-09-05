@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2",
+  "id": "nhs-inform-insomnia-scotland",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed current NHS inform insomnia guidance and Scotland clinical handoff on 2026-09-05.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "NHS inform — insomnia (Scotland)",
+  "category": "practical_guide",
+  "description": "NHS inform guidance on insomnia symptoms, possible causes, CBT-I/self-help context and when to contact a GP practice.",
+  "intended_use": "Scotland-specific public clinical starting point for persistent or impactful sleep difficulty.",
+  "audience_or_context": "Scotland; people seeking NHS information about insomnia and routes to appropriate clinical help.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.nhsinform.scot/illnesses-and-conditions/mental-health/insomnia"
+    }
+  ],
+  "related_objects": [],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "ND Oracle cannot diagnose insomnia or another sleep disorder.",
+    "Medication decisions remain clinician/pharmacist-led and are outside ND Oracle authority."
+  ],
+  "cost_or_access_notes": [
+    "Free public NHS information; local treatment/service availability varies."
+  ],
+  "conflicts_of_interest": []
+}

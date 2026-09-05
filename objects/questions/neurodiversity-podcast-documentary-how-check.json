@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2",
+  "id": "neurodiversity-podcast-documentary-how-check",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Media-literacy route for podcast/documentary formats added during Books & media completion.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "How should I use a neurodiversity podcast or documentary without treating it as clinical evidence?",
+  "why_it_matters": "Audio and film can communicate lived experience well, but production choices and individual stories do not create diagnostic authority.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "bbc-1800-seconds-on-autism"
+    },
+    {
+      "type": "resource",
+      "id": "inside-our-autistic-minds"
+    }
+  ],
+  "current_understanding": "Use podcasts and documentaries as perspectives and communication formats. Ask who is speaking, what has been selected or edited, whose experiences are absent, and whether any serious factual or treatment claim has an independent evidence route. ND Oracle does not turn broadcaster status into clinical authority.",
+  "evidence_needed": [
+    "Broader reviewed podcast/documentary coverage across neurodivergent conditions and stable transcript/caption accessibility metadata."
+  ],
+  "reopening_conditions": [
+    "A programme's availability or editorial context changes materially, or the catalogue develops enough media entries for comparative facets."
+  ],
+  "dissent": [
+    "A well-produced documentary may include experts and research, but the programme as a whole still should not replace governed source-level evidence."
+  ]
+}

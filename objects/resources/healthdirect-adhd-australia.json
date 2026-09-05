@@ -1,0 +1,40 @@
+{
+  "schema_version": "0.2",
+  "id": "healthdirect-adhd-australia",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed Healthdirect Australia ADHD diagnosis information and state/territory prescribing caveat on 2026-09-05.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "Healthdirect Australia — ADHD",
+  "category": "practical_guide",
+  "description": "Australian national health information about ADHD, assessment, diagnosis and specialist roles.",
+  "intended_use": "National orientation for ADHD assessment in Australia while keeping state/territory implementation and prescribing rules separate.",
+  "audience_or_context": "Australia; national public health information. State and territory rules differ for ADHD medicine prescribing and local service access.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.healthdirect.gov.au/attention-deficit-disorder-add-or-adhd"
+    }
+  ],
+  "related_objects": [
+    {
+      "type": "concept",
+      "id": "adhd"
+    }
+  ],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "Healthdirect orientation does not create uniform state/territory assessment access.",
+    "Diagnosis is separate from medication prescribing; ND Oracle does not advise medicine or dose."
+  ],
+  "cost_or_access_notes": [
+    "Free public information; specialist and assessment costs/access vary."
+  ],
+  "conflicts_of_interest": []
+}

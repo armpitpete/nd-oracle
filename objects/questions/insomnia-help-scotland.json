@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.2",
+  "id": "insomnia-help-scotland",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Scotland insomnia navigation route from current NHS inform material; diagnosis and medication authority excluded.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "My sleep problems are persistent and I live in Scotland. Where can I start?",
+  "why_it_matters": "Persistent sleep difficulty can affect daily functioning, but the appropriate route depends on cause and individual circumstances.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "nhs-inform-insomnia-scotland"
+    }
+  ],
+  "current_understanding": "NHS inform advises contacting a GP practice when improving sleep habits has not helped or poor sleep is affecting daily life. Different causes need different assessment and treatment. ND Oracle cannot diagnose insomnia, sleep apnoea, a circadian disorder or another sleep condition.",
+  "evidence_needed": [
+    "More stable Scotland-wide first-party mapping of specialist sleep-service referral where it materially differs by condition or board."
+  ],
+  "reopening_conditions": [
+    "NHS Scotland sleep pathways or referral arrangements change materially."
+  ],
+  "dissent": [
+    "Some people prefer self-management first; persistent or impairing symptoms can still warrant clinical review."
+  ]
+}

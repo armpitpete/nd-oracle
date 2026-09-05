@@ -1,0 +1,36 @@
+{
+  "schema_version": "0.2",
+  "id": "govuk-bus-coach-disabled-help-gb",
+  "type": "resource",
+  "status": "reviewed",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Reviewed DVSA/GOV.UK bus and coach accessibility/help guidance on 2026-09-05; GB statutory scope kept separate from local concessions.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "name": "GOV.UK — buses and coaches: features and help for disabled people",
+  "category": "practical_guide",
+  "description": "Government guidance on accessibility features and assistance requirements for in-scope buses and coaches.",
+  "intended_use": "Inspect Great Britain statutory accessibility/help expectations without confusing them with local concessionary eligibility.",
+  "audience_or_context": "Great Britain — England, Scotland and Wales; in-scope bus and coach services under the cited regulations.",
+  "locators": [
+    {
+      "type": "url",
+      "value": "https://www.gov.uk/government/publications/buses-and-coaches-features-and-help-for-disabled-people/buses-and-coaches-features-and-help-for-disabled-people"
+    }
+  ],
+  "related_objects": [],
+  "claims": [],
+  "experience_ids": [],
+  "limitations": [
+    "The rules do not cover every vehicle/service and contain exemptions.",
+    "This Resource does not determine an individual's concessionary-pass eligibility.",
+    "Northern Ireland uses separate arrangements."
+  ],
+  "cost_or_access_notes": [
+    "Free government information."
+  ],
+  "conflicts_of_interest": []
+}

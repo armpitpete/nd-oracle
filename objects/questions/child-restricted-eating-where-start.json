@@ -1,0 +1,39 @@
+{
+  "schema_version": "0.2",
+  "id": "child-restricted-eating-where-start",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Child/parent restricted-eating route added without automatic ARFID diagnosis or behavioural prescription.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "A child eats a very restricted range of foods. Where can I start without assuming ARFID?",
+  "why_it_matters": "Children can restrict food for sensory, developmental, gastrointestinal, anxiety, swallowing or other reasons; diagnosis should not be inferred from range alone.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "nhs-eating-disorders-arfid"
+    },
+    {
+      "type": "resource",
+      "id": "nhs-dysphagia"
+    },
+    {
+      "type": "concept",
+      "id": "sensory-processing"
+    }
+  ],
+  "current_understanding": "Record what is happening, including nutrition/hydration concerns, sensory triggers, fear, appetite and any swallowing or choking signs. Use appropriate health guidance and seek professional assessment when restriction is persistent, worsening or affecting health. ND Oracle does not diagnose ARFID or prescribe exposure, supplements or diet changes.",
+  "evidence_needed": [
+    "Four-nation paediatric dietetic/eating-service access routes that are stable enough for national or clearly local governance."
+  ],
+  "reopening_conditions": [
+    "National child eating/ARFID guidance or referral pathways materially change."
+  ],
+  "dissent": [
+    "Some families need practical sensory accommodations before or alongside diagnostic assessment; that does not make the cause known."
+  ]
+}

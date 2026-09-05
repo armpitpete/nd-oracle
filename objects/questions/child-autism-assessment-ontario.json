@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2",
+  "id": "child-autism-assessment-ontario",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Ontario provincial implementation Question used to prove subnational non-inheritance in the Canada package.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "How can I look into an autism assessment for a child in Ontario?",
+  "why_it_matters": "Ontario has a specific provincial assessment/hub route that should not be silently generalised to all of Canada.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "ontario-autism-assessment"
+    },
+    {
+      "type": "resource",
+      "id": "canada-autism-assessment"
+    }
+  ],
+  "current_understanding": "Ontario publishes information about qualified professionals and provincial diagnostic hubs for child/youth autism assessment. Those hubs are Ontario services, not a Canadian national pathway. Check the current provincial route and local hub details directly.",
+  "evidence_needed": [
+    "Comparable provincial routes only where real user demand and maintainable first-party sources justify them."
+  ],
+  "reopening_conditions": [
+    "Ontario diagnostic-hub or Autism Program rules materially change."
+  ],
+  "dissent": [
+    "Families may also use assessment routes outside provincial hubs; listing the government route is navigation, not endorsement of one provider pathway."
+  ]
+}

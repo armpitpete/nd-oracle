@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.2",
+  "id": "autism-assessment-australia",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "First Australia jurisdiction-package Question using national Healthdirect orientation with explicit state/local uncertainty.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "How do I start looking into an autism assessment in Australia?",
+  "why_it_matters": "Australia has national health information but assessment access and professional availability can vary by state, territory and locality.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "healthdirect-autism-australia"
+    }
+  ],
+  "current_understanding": "Healthdirect advises speaking with a doctor or health professional about concerns and describes specialist assessment/diagnosis. Use that as national orientation, then check the relevant state/territory and local service context. ND Oracle cannot decide whether you are autistic or recommend a provider.",
+  "evidence_needed": [
+    "State/territory public assessment pathways where they are stable enough to govern without implying national uniformity."
+  ],
+  "reopening_conditions": [
+    "Healthdirect guidance or state/territory assessment systems materially change."
+  ],
+  "dissent": [
+    "Private and public access may coexist differently across Australia; national orientation cannot answer every local access question."
+  ]
+}

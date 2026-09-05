@@ -1,0 +1,69 @@
+{
+  "version": "1",
+  "base_policy": "discovery/routing-policy-v1.1.json",
+  "base_scope_count": 86,
+  "jurisdiction_extension": {
+    "canonical_order_append": [
+      "Canada",
+      "Ontario"
+    ],
+    "scope_sets": {
+      "Canada": [
+        "Canada"
+      ],
+      "Ontario": [
+        "Canada",
+        "Ontario"
+      ]
+    },
+    "aliases": [
+      {
+        "phrase": "ontario",
+        "scope": "Ontario"
+      },
+      {
+        "phrase": "canada",
+        "scope": "Canada"
+      }
+    ]
+  },
+  "intent_phrases": {
+    "/questions/autism-assessment-canada/": [
+      "autism assessment canada",
+      "autism diagnosis canada"
+    ],
+    "/questions/child-autism-assessment-ontario/": [
+      "child autism assessment ontario",
+      "autism diagnosis child ontario",
+      "ontario autism diagnostic hub"
+    ]
+  },
+  "scope_provenance": {
+    "routes": {
+      "/questions/autism-assessment-canada/": {
+        "scope": "Canada",
+        "basis_path": "/question",
+        "basis_sha256": "0bd98cf0daac8f42772b3b302274728980d7c5993a4e54a3799552f26941c412",
+        "binding_sha256": "7c1fd69b4760516b9eb0734e8e63886b6af294b68ac7b313436fb6dc143b2ce4"
+      },
+      "/questions/child-autism-assessment-ontario/": {
+        "scope": "Ontario",
+        "basis_path": "/question",
+        "basis_sha256": "c7872fa7bb36846fdf865a8a34334d4d784585a498aaf1cf022862eae1a39d00",
+        "binding_sha256": "5c91c7800804c470b133e19373b692910adc6ed357eb9fc041643db9bc625037"
+      },
+      "/resources/canada-autism-assessment/": {
+        "scope": "Canada",
+        "basis_path": "/audience_or_context",
+        "basis_sha256": "95150049e89363e076606e2a71605832f96982bc5b7a4ff5cfa9c595deae309d",
+        "binding_sha256": "c68d9c5e8ebf83ef70f54ae4cb011605139703c8d509f5c0e7ee4ff507e40705"
+      },
+      "/resources/ontario-autism-assessment/": {
+        "scope": "Ontario",
+        "basis_path": "/audience_or_context",
+        "basis_sha256": "366fdd24645b8c6e5a80b210263df5bad4122cf54548d078dd86c6694319af37",
+        "binding_sha256": "5eacda1416d5b5971004524cbd42dc279df29dd687674b8619a5ef779d059feb"
+      }
+    }
+  }
+}

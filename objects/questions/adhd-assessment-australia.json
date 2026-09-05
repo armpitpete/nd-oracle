@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.2",
+  "id": "adhd-assessment-australia",
+  "type": "question",
+  "status": "partially_resolved",
+  "provenance": {
+    "created": "2026-09-05",
+    "created_by": "ND Oracle project-controlled curation",
+    "method": "Australia ADHD assessment Question preserving state/territory and medication separation.",
+    "review_state": "editor_reviewed",
+    "last_reviewed": "2026-09-05"
+  },
+  "question": "How do I start looking into an ADHD assessment in Australia?",
+  "why_it_matters": "ADHD assessment is clinical, while specialist access and medicine-prescribing rules can differ across Australian states and territories.",
+  "related_objects": [
+    {
+      "type": "resource",
+      "id": "healthdirect-adhd-australia"
+    }
+  ],
+  "current_understanding": "Healthdirect advises seeing a doctor when persistent symptoms interfere with daily life and describes clinical assessment and specialist roles. State/territory rules and local access can differ. ND Oracle does not diagnose ADHD or advise medication.",
+  "evidence_needed": [
+    "Stable state/territory access pathways that can be added as explicitly narrower routes."
+  ],
+  "reopening_conditions": [
+    "National guidance or state/territory assessment/prescribing arrangements materially change."
+  ],
+  "dissent": [
+    "Professional roles can differ in practice and by jurisdiction; a national summary should not erase those differences."
+  ]
+}
