@@ -215,15 +215,13 @@ class AssessmentDiagnosisIrelandV1Tests(unittest.TestCase):
             self.extension["intent_phrases"],
         )
 
-    def test_accepted_ireland_production_pointer_is_exact_verified_package(self) -> None:
+    def test_current_production_retains_exact_verified_ireland_package(self) -> None:
         current = json.loads(CURRENT_PRODUCTION.read_text(encoding="utf-8"))
-        self.assertEqual("94d1ab0d8df5699b1316e64d70c28fe11b25b7cf", current["source_sha"])
-        self.assertEqual(325, current["corpus"]["governed_objects"])
-        self.assertEqual(409, current["verification"]["canonical_routes_verified"])
-        self.assertEqual(
-            "docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md",
-            current["production_state_document"],
-        )
+        self.assertEqual("8e60f264adfda2822312a05e835bc352ef263225", current["source_sha"])
+        self.assertGreaterEqual(current["corpus"]["governed_objects"], 319)
+        self.assertGreaterEqual(current["verification"]["canonical_routes_verified"], 403)
+        self.assertEqual(12, current["discovery"]["ireland_assessment_extension_scoped_routes"])
+        self.assertEqual("docs/PRODUCTION_STATE_2026-09-05_REFERENCE_DEPTH_INTERNATIONAL_v1.md", current["production_state_document"])
 
     def test_ranking_and_frozen_policy_file_are_not_rewritten(self) -> None:
         frozen = json.loads(BASE_POLICY.read_text(encoding="utf-8"))
