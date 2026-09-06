@@ -365,6 +365,7 @@
         note.textContent = "Ranked locally from reviewed ND Oracle content. Relevance is not recommendation.";
         output.appendChild(note);
 
+        const recordsByRoute = new Map(payload.index.map(record => [record.route, record]));
         const list = document.createElement("ol");
         results.forEach(result => {
           const item = document.createElement("li");
@@ -373,10 +374,23 @@
           link.textContent = result.title;
           item.appendChild(link);
 
-          const meta = document.createElement("span");
-          meta.className = "meta";
-          meta.textContent = ` ${result.kind}`;
-          item.appendChild(meta);
+          const metadata = document.createElement("span");
+          metadata.className = "result-metadata";
+
+          const kind = document.createElement("span");
+          kind.className = "semantic-badge";
+          kind.textContent = result.kind;
+          metadata.appendChild(kind);
+
+          const record = recordsByRoute.get(result.route);
+          if (record && Array.isArray(record.scope) && record.scope.length) {
+            const scope = document.createElement("span");
+            scope.className = "scope-badge";
+            scope.textContent = record.scope.join(", ");
+            metadata.appendChild(scope);
+          }
+
+          item.appendChild(metadata);
           list.appendChild(item);
         });
         output.appendChild(list);

@@ -85,13 +85,83 @@ def _compat06__nav(current: str | None=None) -> str:
         current_attr = ' aria-current="page"' if slug == current else ''
         links.append(f'<a href="/{slug}/"{current_attr}>{_compat06__esc(label)}</a>')
     return '<nav class="primary-nav" aria-label="Primary">' + ''.join(links) + '</nav>'
+
+def _ux_page_kind(path: str | None) -> tuple[str, str]:
+    if path == '/':
+        return ('home', 'ND Oracle')
+    if not path:
+        return ('browse', 'Navigation')
+    parts = [part for part in path.strip('/').split('/') if part]
+    if parts[:1] == ['questions']:
+        return ('question' if len(parts) > 1 else 'browse', 'Question' if len(parts) > 1 else 'Questions')
+    if parts[:1] == ['resources']:
+        return ('resource' if len(parts) > 1 else 'browse', 'Resource' if len(parts) > 1 else 'Resources')
+    if parts[:1] == ['understand']:
+        return ('concept' if len(parts) > 1 else 'browse', 'Concept' if len(parts) > 1 else 'Topics')
+    if parts[:1] == ['evidence']:
+        return ('evidence', 'Evidence record' if len(parts) > 1 else 'Evidence')
+    if parts[:1] == ['find']:
+        return ('find', 'Find')
+    if parts[:1] == ['places']:
+        return ('browse', 'Jurisdiction browse')
+    if parts[:1] in (['needs'], ['types'], ['a-z'], ['tools'], ['games'], ['community'], ['books-media']):
+        return ('browse', 'Browse')
+    return ('information', 'ND Oracle')
+
+
 def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | None=None, path: str | None=None, indexable: bool=True) -> str:
     canonical = ''
     if path is not None:
         canonical_url = _compat06__PUBLIC_ORIGIN + path
         canonical = f'  <link rel="canonical" href="{_compat06__esc(canonical_url)}">\n'
     robots = '' if indexable else '  <meta name="robots" content="noindex, follow">\n'
-    return f'<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <meta name="color-scheme" content="light">\n  <meta name="theme-color" content="#f4f1ea">\n  <meta name="description" content="{_compat06__esc(intro)}">\n{robots}{canonical}  <title>{_compat06__esc(title)} · The Neurodiverse Oracle</title>\n  <link rel="stylesheet" href="/styles.css">\n</head>\n<body>\n<a class="skip-link" href="#main">Skip to content</a>\n<header class="site-header">\n  <div class="site-shell header-row">\n    <a class="site-name" href="/">The Neurodiverse Oracle</a>\n    {_compat06__nav(current)}\n  </div>\n</header>\n<main id="main" class="site-shell reading-column">\n  <header class="page-heading">\n    <h1>{_compat06__esc(title)}</h1>\n    <p class="lede">{_compat06__esc(intro)}</p>\n  </header>\n  {body}\n</main>\n<footer class="site-footer">\n  <div class="site-shell footer-row">\n    <span>Useful first. Evidence when you want it.</span>\n    <nav aria-label="Footer">\n      <a href="/resources/">Explore</a>\n      <a href="/how-it-works/">How it works</a>\n      <a href="/accessibility/">Accessibility</a>\n      <a href="/feedback/">Feedback</a>\n      <a href="/privacy/">Privacy</a>\n    </nav>\n  </div>\n</footer>\n</body>\n</html>\n'
+    page_kind, page_label = _ux_page_kind(path)
+    return f'''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f4f1ea">
+  <meta name="description" content="{_compat06__esc(intro)}">
+{robots}{canonical}  <title>{_compat06__esc(title)} · The Neurodiverse Oracle</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="page page--{_compat06__esc(page_kind)}">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-shell header-row">
+    <div class="site-identity">
+      <a class="site-name" href="/">The Neurodiverse Oracle</a>
+      <span class="site-purpose">Evidence-aware neurodiversity navigation</span>
+    </div>
+    {_compat06__nav(current)}
+  </div>
+</header>
+<main id="main" class="site-shell reading-column">
+  <header class="page-heading">
+    <div class="page-context"><span class="page-kind">{_compat06__esc(page_label)}</span></div>
+    <h1>{_compat06__esc(title)}</h1>
+    <p class="lede">{_compat06__esc(intro)}</p>
+  </header>
+  {body}
+</main>
+<footer class="site-footer">
+  <div class="site-shell footer-row">
+    <span>Useful first. Evidence when you want it.</span>
+    <nav aria-label="Footer">
+      <a href="/resources/">Resources</a>
+      <a href="/evidence/">Evidence</a>
+      <a href="/how-it-works/">How it works</a>
+      <a href="/accessibility/">Accessibility</a>
+      <a href="/feedback/">Feedback</a>
+      <a href="/privacy/">Privacy</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
+'''
 def _compat06__topic_link(concept: dict) -> str:
     return f"""<article class="topic-row">\n  <h2><a href="/understand/{_compat06__esc(concept['id'])}/">{_compat06__esc(concept['name'])}</a></h2>\n  <p>{_compat06__esc(_compat06__reader_intro(concept))}</p>\n</article>"""
 def _compat06__resource_link(resource: dict) -> str:
@@ -248,7 +318,7 @@ def _compat06__build(output_dir: Path=_compat06__DEFAULT_OUTPUT_DIR) -> Path:
 if __package__ in {None, ''}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 _compat08__QUESTIONS_DIR = _compat06__ROOT / 'objects' / 'questions'
-_compat08__PRIMARY_NAV = [('questions', 'Questions'), ('understand', 'Topics'), ('resources', 'Resources'), ('how-it-works', 'How it works'), ('about', 'About')]
+_compat08__PRIMARY_NAV = [('find', 'Find'), ('questions', 'Questions'), ('understand', 'Topics'), ('resources', 'Resources'), ('how-it-works', 'How it works'), ('about', 'About')]
 _compat06__PRIMARY_NAV = _compat08__PRIMARY_NAV
 if not '_compat06___V08_ORIGINAL_PAGE_SHELL' in globals():
     _compat06___V08_ORIGINAL_PAGE_SHELL = _compat06__page_shell
@@ -347,11 +417,79 @@ def _compat08___related_question_items(question: dict, concept_map: dict[str, di
         else:
             raise ValueError(f"{question['id']}: public question renderer does not yet support related {object_type} objects")
     return '<ul>' + ''.join(items) + '</ul>'
+
+def _ux_question_scope(question: dict) -> tuple[str | None, str | None]:
+    text = ' '.join((
+        str(question.get('id', '')),
+        str(question.get('question', '')),
+    )).casefold()
+    checks = (
+        ('Ontario, Canada', ('ontario',)),
+        ('Republic of Ireland', ('republic of ireland',)),
+        ('Australia', ('australia',)),
+        ('Canada', ('canada',)),
+        ('Great Britain', ('great britain',)),
+        ('England and Wales', ('england and wales', 'england or wales')),
+        ('Northern Ireland', ('northern ireland',)),
+        ('Scotland', ('scotland',)),
+        ('Wales', ('wales',)),
+        ('England', ('england',)),
+        ('United Kingdom', ('united kingdom', 'uk-wide', ' uk ')),
+    )
+    padded = f' {text} '
+    for label, signals in checks:
+        if any(signal in padded for signal in signals):
+            return (
+                label,
+                'This scope signal is derived from the governed question wording for orientation only. It is not an eligibility, legal or clinical determination.',
+            )
+    return (None, None)
+
+
 def _compat08__render_question(question: dict, concept_map: dict[str, dict], resource_map: dict[str, dict]) -> str:
     reviewed = _compat06__human_date(question['provenance'].get('last_reviewed'))
     status = question['status'].replace('_', ' ').capitalize()
     related = _compat08___related_question_items(question, concept_map, resource_map)
-    body = f"""\n<p class="back-link"><a href="/questions/">← All questions</a></p>\n<p class="review-meta">Last reviewed: <strong>{_compat06__esc(reviewed)}</strong> · Status: <strong>{_compat06__esc(status)}</strong></p>\n<section class="notice">\n  <strong>Relevant to inspect, not recommended.</strong> This is a bounded synthesis of the current governed catalogue, not a personalised recommendation or proof that a listed resource will work for you.\n</section>\n<section aria-labelledby="current-understanding-heading">\n  <h2 id="current-understanding-heading">Current understanding</h2>\n  <p>{_compat06__esc(question['current_understanding'])}</p>\n</section>\n<section aria-labelledby="related-things-heading">\n  <h2 id="related-things-heading">Related things to inspect</h2>\n  {related}\n</section>\n<section aria-labelledby="evidence-needed-heading">\n  <h2 id="evidence-needed-heading">What evidence is still needed</h2>\n  {_compat06__list_items(question['evidence_needed'])}\n</section>\n<section aria-labelledby="dissent-heading">\n  <h2 id="dissent-heading">Where people may disagree</h2>\n  {_compat06__list_items(question.get('dissent', []))}\n</section>\n<section aria-labelledby="reopen-heading">\n  <h2 id="reopen-heading">When this answer should be revisited</h2>\n  {_compat06__list_items(question['reopening_conditions'])}\n</section>\n<details class="provenance"><summary>Question provenance and review state</summary>\n  <p>{_compat06__esc(question['provenance']['method'])}</p>\n  <div class="meta">Created {_compat06__esc(question['provenance']['created'])} · last reviewed {_compat06__esc(reviewed)} · review state {_compat06__esc(question['provenance']['review_state'])}</div>\n</details>\n"""
+    scope_label, scope_explanation = _ux_question_scope(question)
+    scope = ''
+    if scope_label:
+        scope = f'''
+<section class="scope-panel" aria-labelledby="question-scope-heading">
+  <h2 id="question-scope-heading">Scope before you act</h2>
+  <p><span class="scope-badge">{_compat06__esc(scope_label)}</span> {_compat06__esc(scope_explanation)}</p>
+</section>
+'''
+    body = f'''\n<p class="back-link"><a href="/questions/">← All questions</a></p>
+<p class="review-meta">Last reviewed: <strong>{_compat06__esc(reviewed)}</strong> · Status: <strong>{_compat06__esc(status)}</strong></p>
+{scope}
+<section class="notice">
+  <strong>Relevant to inspect, not recommended.</strong> This is a bounded synthesis of the current governed catalogue, not a personalised recommendation or proof that a listed resource will work for you.
+</section>
+<section aria-labelledby="current-understanding-heading">
+  <h2 id="current-understanding-heading">Current understanding</h2>
+  <p>{_compat06__esc(question['current_understanding'])}</p>
+</section>
+<section aria-labelledby="related-things-heading">
+  <h2 id="related-things-heading">Related things to inspect</h2>
+  {related}
+</section>
+<section aria-labelledby="evidence-needed-heading">
+  <h2 id="evidence-needed-heading">What evidence is still needed</h2>
+  {_compat06__list_items(question['evidence_needed'])}
+</section>
+<section aria-labelledby="dissent-heading">
+  <h2 id="dissent-heading">Where people may disagree</h2>
+  {_compat06__list_items(question.get('dissent', []))}
+</section>
+<section aria-labelledby="reopen-heading">
+  <h2 id="reopen-heading">When this answer should be revisited</h2>
+  {_compat06__list_items(question['reopening_conditions'])}
+</section>
+<details class="provenance"><summary>Question provenance and review state</summary>
+  <p>{_compat06__esc(question['provenance']['method'])}</p>
+  <div class="meta">Created {_compat06__esc(question['provenance']['created'])} · last reviewed {_compat06__esc(reviewed)} · review state {_compat06__esc(question['provenance']['review_state'])}</div>
+</details>
+'''
     return _compat08__page_shell(question['question'], question['why_it_matters'], body, current='questions', path=f"/questions/{question['id']}/")
 def _compat08___question_uses_ref(question: dict, object_type: str, object_id: str) -> bool:
     return any((ref.get('type') == object_type and ref.get('id') == object_id for ref in question.get('related_objects', [])))
@@ -506,14 +644,23 @@ def _compat09__resource_scope(resource: dict) -> tuple[str, str]:
     if 'united kingdom' in audience or ' uk ' in f' {audience} ' or 'uk-wide' in whole:
         return ('United Kingdom', 'The reviewed listing describes a UK-wide or United Kingdom audience/scope.')
     return ('International / not jurisdiction-specific', 'No narrower UK jurisdiction is asserted by the reviewed audience text; check the resource itself for local availability and eligibility.')
+
 def _compat09__render_resource(resource: dict, concept_map: dict[str, dict], questions: list[dict]) -> str:
     page = _compat08__render_resource(resource, concept_map, questions)
     label, explanation = _compat09__resource_scope(resource)
     category = _compat06__RESOURCE_CATEGORY_LABELS.get(resource['category'], resource['category'].replace('_', ' ').title())
-    section = f'\n<section aria-labelledby="scope-heading">\n  <h2 id="scope-heading">Scope for navigation</h2>\n  <p><strong>{_compat06__esc(label)}</strong> · {_compat06__esc(category)}</p>\n  <p class="meta">{_compat06__esc(explanation)} This label helps navigation; it is not an eligibility or legal determination.</p>\n  <p><a href="/places/">Browse resources by place</a> · <a href="/types/">Browse by content type</a></p>\n</section>\n'
-    marker = '<section aria-labelledby="limits-heading">'
+    section = f'''
+<section class="scope-panel" aria-labelledby="scope-heading">
+  <h2 id="scope-heading">Scope for navigation</h2>
+  <p><span class="scope-badge">{_compat06__esc(label)}</span> <span class="semantic-badge">{_compat06__esc(category)}</span></p>
+  <p>{_compat06__esc(explanation)}</p>
+  <p class="meta">This scope is for navigation. It is not an eligibility, legal or clinical determination.</p>
+  <p><a href="/places/">Browse resources by place</a> · <a href="/types/">Browse by content type</a></p>
+</section>
+'''
+    marker = '<section aria-labelledby="use-heading">'
     if marker not in page:
-        raise ValueError(f"{resource['id']}: cannot locate limitations section")
+        raise ValueError(f"{resource['id']}: cannot locate intended-use section")
     return page.replace(marker, section + marker, 1)
 def _compat09__render_resources_index(resources: list[dict]) -> str:
     page = _compat08__render_resources_index(resources)
@@ -746,6 +893,7 @@ def render_resource(resource: dict, concept_map: dict[str, dict], questions: lis
             raise ValueError(f"{resource['id']}: cannot locate limits section for governed claims")
         page = page.replace(marker, claims + marker, 1)
     return page
+
 def render_places_index(resources: list[dict]) -> str:
     grouped: dict[str, list[dict]] = defaultdict(list)
     explanations: dict[str, str] = {}
@@ -760,14 +908,32 @@ def render_places_index(resources: list[dict]) -> str:
         if not items:
             continue
         links = ''.join((f"""<li><a href="/resources/{_compat06__esc(item['id'])}/">{_compat06__esc(item['name'])}</a></li>""" for item in items))
-        sections.append(f'<section><h2>{_compat06__esc(label)}</h2><p class="meta">{_compat06__esc(explanations[label])}</p><ul>{links}</ul></section>')
-    body = '<section class="notice"><strong>Navigation scope, not eligibility.</strong> These groups come from reviewed audience/scope text. UK-wide, Great Britain, England and Wales, England, Scotland, Wales and Northern Ireland are kept distinct where the governed material supports that distinction.</section>' + ''.join(sections)
-    return _compat08__page_shell('Browse by geographic scope', 'Distinguish national and jurisdiction-specific support instead of treating every UK route as interchangeable.', body, current='resources', path='/places/')
+        sections.append(f'<section class="scope-group"><h2>{_compat06__esc(label)}</h2><p class="meta">{_compat06__esc(explanations[label])}</p><ul>{links}</ul></section>')
+    body = '<section class="scope-panel"><h2>Scope is part of the information</h2><p><strong>Navigation scope, not eligibility.</strong> Governed material keeps UK-wide, Great Britain, individual UK nations, Republic of Ireland, Australia, Canada, Ontario and cross-jurisdiction material distinct where the reviewed text supports that distinction.</p></section>' + ''.join(sections)
+    return _compat08__page_shell('Browse by geographic scope', 'See which governed resources are general and which depend on a particular country or jurisdiction before acting on them.', body, current='resources', path='/places/')
 FIND_JS = '(() => {\n  "use strict";\n  const input = document.getElementById("find-input");\n  const button = document.getElementById("find-button");\n  const output = document.getElementById("find-results");\n  const raw = document.getElementById("search-index").content.textContent;\n  const index = JSON.parse(raw);\n  const stop = new Set(["a","an","and","are","can","do","for","i","in","is","it","me","my","of","on","or","the","to","what","with","you","your"]);\n  const refusals = ["diagnose me","am i autistic","do i have autism","do i have adhd","what medication dose","what dose should i take","stop my medication","which medication should i take","tell me if i am autistic","tell me if i have adhd"];\n  const norm = s => (s || "").toLowerCase().match(/[a-z0-9]+/g)?.join(" ") || "";\n  const tokens = s => norm(s).split(" ").filter(t => t.length > 1 && !stop.has(t));\n  function score(query, record) {\n    const qn = norm(query); const qt = new Set(tokens(query));\n    const tn = norm(record.title); const bn = norm(record.body); let s = 0;\n    if (qn === tn) s += 120; else if (tn.includes(qn)) s += 55;\n    if (bn.includes(qn)) s += 20;\n    const tt = new Set(tokens(record.title)); const bt = new Set(tokens(record.body));\n    qt.forEach(t => { if (tt.has(t)) s += 12; if (bt.has(t)) s += 3; });\n    (record.intent || []).forEach(p => { const pn = norm(p); const pt = new Set(tokens(p));\n      if (qn === pn) s += 100; else if (pn.includes(qn) || qn.includes(pn)) s += 45;\n      qt.forEach(t => { if (pt.has(t)) s += 9; });\n    });\n    return s;\n  }\n  function run() {\n    const query = input.value.trim(); output.replaceChildren();\n    if (!query) { output.textContent = "Type a problem or question first."; return; }\n    const qn = norm(query);\n    if (refusals.some(p => qn.includes(p))) {\n      output.innerHTML = \'<h2>No governed answer</h2><p>ND Oracle cannot diagnose you, choose medication or make an individual clinical decision. Try browsing <a href="/questions/">Questions</a> or <a href="/needs/">needs</a> instead.</p>\';\n      return;\n    }\n    const ranked = index.map(r => [score(query,r),r]).filter(x => x[0] >= 12)\n      .sort((a,b) => b[0]-a[0] || a[1].kind.localeCompare(b[1].kind) || a[1].title.localeCompare(b[1].title)).slice(0,5);\n    if (!ranked.length) {\n      output.innerHTML = \'<h2>No governed answer yet</h2><p>The current catalogue does not have a strong enough route for that wording. Your query is not stored or sent to a search service. Try <a href="/needs/">browse by need</a>, <a href="/a-z/">A–Z</a>, or report a non-private content gap through <a href="/feedback/">feedback</a>.</p>\';\n      return;\n    }\n    const h = document.createElement("h2"); h.textContent = "Governed routes to inspect"; output.appendChild(h);\n    const note = document.createElement("p"); note.className="meta"; note.textContent="Ranked locally from reviewed ND Oracle content. Relevance is not recommendation."; output.appendChild(note);\n    const list = document.createElement("ol");\n    ranked.forEach(([s,r]) => { const li=document.createElement("li"); const a=document.createElement("a"); a.href=r.route; a.textContent=r.title; li.appendChild(a); const m=document.createElement("span"); m.className="meta"; m.textContent=` ${r.kind}`; li.appendChild(m); list.appendChild(li); });\n    output.appendChild(list);\n  }\n  button.addEventListener("click", run);\n  input.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); run(); } });\n})();\n'
 def render_find_page() -> str:
     index_json = html.escape(discovery.browser_index_json())
-    body = f'\n<section class="notice"><strong>Local governed discovery.</strong> Your words stay in this browser page. ND Oracle does not submit the query to a server, AI model, analytics system or search provider.</section>\n<section aria-labelledby="find-heading">\n  <h2 id="find-heading">Describe the problem in your own words</h2>\n  <label for="find-input">Problem or question</label>\n  <input id="find-input" type="search" autocomplete="off" spellcheck="true" maxlength="500">\n  <button id="find-button" type="button">Find governed routes</button>\n  <p class="meta">Examples: “work is too noisy”, “I keep putting off paperwork”, “phone calls are hard”.</p>\n</section>\n<section id="find-results" aria-live="polite" aria-atomic="false"><p>Results will appear here. Relevance means worth inspecting, not recommended.</p></section>\n<noscript><section><h2>Discovery needs JavaScript</h2><p>The rest of ND Oracle works without JavaScript. Use <a href="/questions/">Questions</a>, <a href="/needs/">browse by need</a> or the <a href="/a-z/">A–Z</a> instead.</p></section></noscript>\n<template id="search-index">{index_json}</template>\n<script src="/find.js" defer></script>\n'
-    return _compat08__page_shell('Find a governed route', 'Start with ordinary language. Matching happens locally in your browser and points only to governed ND Oracle pages.', body, current=None, path='/find/')
+    body = f'''
+<section class="notice"><strong>Local governed discovery.</strong> Your words stay in this browser page. ND Oracle does not submit the query to a server, AI model, analytics system or search provider.</section>
+<section aria-labelledby="find-heading">
+  <h2 id="find-heading">Describe the problem in your own words</h2>
+  <p class="section-intro">You do not need to know the diagnosis, topic name or service name. Results are governed routes to inspect, not recommendations.</p>
+  <div class="find-control">
+    <div class="find-field">
+      <label for="find-input">Problem or question</label>
+      <input id="find-input" type="search" autocomplete="off" spellcheck="true" maxlength="500" aria-describedby="find-help">
+    </div>
+    <button id="find-button" type="button">Find governed routes</button>
+  </div>
+  <p id="find-help" class="meta">Examples: “work is too noisy”, “I keep putting off paperwork”, “phone calls are hard”. Your query is processed only in this page.</p>
+</section>
+<section id="find-results" role="region" aria-label="Find results" aria-live="polite" aria-atomic="false"><p>Results will appear here. Relevance means worth inspecting, not recommended.</p></section>
+<noscript><section class="boundary-panel"><h2>Discovery needs JavaScript</h2><p>The rest of ND Oracle works without JavaScript. Use <a href="/questions/">Questions</a>, <a href="/needs/">browse by need</a> or the <a href="/a-z/">A–Z</a> instead.</p></section></noscript>
+<template id="search-index">{index_json}</template>
+<script src="/find.js" defer></script>
+'''
+    return _compat08__page_shell('Find a governed route', 'Start with ordinary language. Matching happens locally in your browser and points only to governed ND Oracle pages.', body, current='find', path='/find/')
 def _append_before_main_end(page: str, section: str) -> str:
     if '</main>' not in page:
         raise ValueError('Cannot locate main element')
