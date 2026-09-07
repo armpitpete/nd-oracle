@@ -220,6 +220,7 @@ class WebsiteBuildTests(unittest.TestCase):
 
         self.assertEqual(len(build_site.QUESTION_GROUPS), page.count('<details class="question-group"'))
         self.assertNotIn('<details class="question-group" open', page)
+        self.assertEqual(len(build_site.QUESTION_DISCOVERY_CLUSTERS), page.count('href="#question-areas">Back to areas ↑</a>'))
         self.assertEqual(len(self.questions), page.count('<article class="topic-row">'))
         for question in self.questions:
             self.assertIn(
