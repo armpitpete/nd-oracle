@@ -27,7 +27,7 @@ jobs:
       - name: Check out frozen UX baseline
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: a758a49bcf4215673a5e1b2349164bd1efa5d894
+          ref: b165ebb88141a2ce4e0f92a1ca5b64537b6aae49
           path: baseline
           persist-credentials: false
 
@@ -281,6 +281,15 @@ jobs:
           grep -q 'Check what applies where I live' candidate/dist/resources/index.html
           grep -q 'Browse by kind of resource' candidate/dist/resources/index.html
 
+          grep -q 'Start with what you notice' candidate/dist/understand/index.html
+          grep -q 'New word? Break it down' candidate/dist/understand/index.html
+          grep -q 'class="topic-group-grid"' candidate/dist/understand/index.html
+          grep -q 'class="recognition-list"' candidate/dist/understand/index.html
+          grep -q 'class="word-guide"' candidate/dist/understand/monotropism/index.html
+          grep -q 'class="word-part">mono</strong>' candidate/dist/understand/monotropism/index.html
+          grep -q 'class="word-part">trop</strong>' candidate/dist/understand/monotropism/index.html
+          grep -q 'class="word-part">ism</strong>' candidate/dist/understand/monotropism/index.html
+
           grep -q 'Choose how to start' candidate/dist/questions/index.html
           test "$(grep -o 'question-start-card' candidate/dist/questions/index.html | wc -l)" -eq 3
           test "$(grep -o '<details class="question-group"' candidate/dist/questions/index.html | wc -l)" -eq 19
@@ -368,28 +377,26 @@ jobs:
 
           measurements = []
           for name, baseline_path, candidate_path, max_ratio, hard_limit in (
-              ("Home", "/tmp/baseline-home-measure.html", "/tmp/candidate-home-measure.html", 0.55, 7000),
-              ("Needs index", "/tmp/baseline-needs-measure.html", "/tmp/candidate-needs-measure.html", 0.50, 7000),
+              ("Home", "/tmp/baseline-home-measure.html", "/tmp/candidate-home-measure.html", 1.05, 7000),
+              ("Needs index", "/tmp/baseline-needs-measure.html", "/tmp/candidate-needs-measure.html", 1.05, 7000),
           ):
               baseline = height(baseline_path)
               candidate = height(candidate_path)
               ratio = candidate / baseline
               print(f"{name} narrow full-page height: baseline={baseline}px candidate={candidate}px ratio={ratio:.4f}")
-              if candidate >= baseline:
-                  raise SystemExit(f"V2.3 {name} did not reduce whole-page height")
               if ratio > max_ratio:
                   raise SystemExit(
-                      f"V2.3 {name} reduction is too small: {candidate}px vs baseline {baseline}px"
+                      f"V2.4 materially regressed {name} narrow page height: {candidate}px vs baseline {baseline}px"
                   )
               if candidate > hard_limit:
-                  raise SystemExit(f"V2.3 {name} exceeds {hard_limit}px: {candidate}px")
+                  raise SystemExit(f"V2.4 {name} exceeds {hard_limit}px: {candidate}px")
               measurements.append(
                   f"{name.lower().replace(' ', '_')}_baseline={baseline}\n"
                   f"{name.lower().replace(' ', '_')}_candidate={candidate}\n"
                   f"{name.lower().replace(' ', '_')}_ratio={ratio:.4f}\n"
               )
 
-          Path("ux-evidence/v2-3-height.txt").write_text(
+          Path("ux-evidence/v2-4-height.txt").write_text(
               "".join(measurements),
               encoding="utf-8",
           )
@@ -414,6 +421,7 @@ jobs:
             "resource-goblin-tools|/resources/goblin-tools/"
             "topics-index|/understand/"
             "concept-autism|/understand/autism/"
+            "concept-monotropism|/understand/monotropism/"
             "evidence-index|/evidence/"
             "evidence-detail|/evidence/$EVIDENCE_DETAIL/"
             "places|/places/"
@@ -497,6 +505,18 @@ jobs:
                 else
                   effective_size="390,2800"
                 fi
+              elif [[ "$name" == "topics-index" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,3600"
+                else
+                  effective_size="390,5600"
+                fi
+              elif [[ "$name" == "concept-monotropism" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,2600"
+                else
+                  effective_size="390,4200"
+                fi
               fi
               google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
                 --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
@@ -513,8 +533,8 @@ jobs:
           capture candidate 8766 390,844 narrow
 
           {
-            echo "contract=ND-UX-V2-HOME-NEEDS"
-            echo "baseline_sha=a758a49bcf4215673a5e1b2349164bd1efa5d894"
+            echo "contract=ND-UX-V2-4-COMPOSITION-LANGUAGE"
+            echo "baseline_sha=b165ebb88141a2ce4e0f92a1ca5b64537b6aae49"
             echo "candidate_sha=${{ github.event.pull_request.head.sha }}"
             echo "evidence_detail=$EVIDENCE_DETAIL"
             echo "desktop=1440x1100"
@@ -529,17 +549,19 @@ jobs:
             echo "questions_open_capture=1440x2600,390x3000"
             echo "resources_default_capture=1440x3200,390x6200"
             echo "resources_open_capture=1440x2400,390x2800"
+            echo "topics_index_capture=1440x3600,390x5600"
+            echo "concept_monotropism_capture=1440x2600,390x4200"
             echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 46
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 46
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 48
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 48
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: nd-ux-v2-3-visual-evidence-${{ github.event.pull_request.head.sha }}
+          name: nd-ux-v2-4-visual-evidence-${{ github.event.pull_request.head.sha }}
           path: ux-evidence/
           if-no-files-found: error
           retention-days: 30
