@@ -176,6 +176,19 @@ jobs:
               target = root / "need-communication-open"
               target.mkdir(parents=True, exist_ok=True)
               (target / "index.html").write_text(communication_open, encoding="utf-8")
+
+              layout_probe = """<script>
+          window.addEventListener("load", () => {
+            document.body.dataset.layoutScrollWidth = String(document.documentElement.scrollWidth);
+            document.body.dataset.layoutClientWidth = String(document.documentElement.clientWidth);
+          });
+          </script>"""
+              target = root / "need-communication-layout"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(
+                  communication.replace("</body>", layout_probe + "</body>", 1),
+                  encoding="utf-8",
+              )
           PY
 
       - name: Capture frozen baseline and exact candidate screenshots
@@ -232,6 +245,24 @@ jobs:
           grep -q 'need-hub--health' candidate/dist/needs/health-wellbeing/index.html
           test "$(grep -o '<details class="need-disclosure' candidate/dist/needs/communication/index.html | wc -l)" -eq 3
           ! grep -q '<details class="need-disclosure need-disclosure--questions" open' candidate/dist/needs/communication/index.html
+
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/need-communication-layout/" > /tmp/candidate-need-communication-layout.html
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path("/tmp/candidate-need-communication-layout.html").read_text(encoding="utf-8")
+          sw = re.search(r'data-layout-scroll-width="(\d+)"', text)
+          cw = re.search(r'data-layout-client-width="(\d+)"', text)
+          if not sw or not cw:
+              raise SystemExit("Missing V2.3 narrow-layout width probe")
+          scroll_width = int(sw.group(1))
+          client_width = int(cw.group(1))
+          print(f"Need communication narrow width: scroll={scroll_width}px client={client_width}px")
+          if scroll_width > client_width:
+              raise SystemExit(
+                  f"V2.3 need-hub horizontal overflow: scroll={scroll_width}px client={client_width}px"
+              )
+          PY
 
           google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8765/questions-measure/" > /tmp/baseline-questions-measure.html
           google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/questions-measure/" > /tmp/candidate-questions-measure.html
