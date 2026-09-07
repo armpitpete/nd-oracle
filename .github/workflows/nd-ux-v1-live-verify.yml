@@ -1,0 +1,233 @@
+name: ND-UX-V1 live production UX evidence
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/nd-ux-v1-live-verify.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  live-production-ux:
+    name: Read-only live UX verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Verify live production UX contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p live-ux-evidence/{desktop,narrow}
+
+          python - <<'PY'
+          from __future__ import annotations
+
+          import html
+          import json
+          import re
+          import urllib.error
+          import urllib.request
+          from pathlib import Path
+
+          ORIGIN = "https://ndoracle.org"
+          HEADERS = {
+              "User-Agent": "nd-ux-v1-live-verifier/1.0",
+              "Accept": "text/html,*/*",
+              "Cache-Control": "no-cache",
+              "Pragma": "no-cache",
+          }
+
+          def fetch(path: str) -> tuple[int, str]:
+              req = urllib.request.Request(ORIGIN + path, headers=HEADERS)
+              try:
+                  with urllib.request.urlopen(req, timeout=30) as response:
+                      return response.status, response.read().decode("utf-8", errors="replace")
+              except urllib.error.HTTPError as exc:
+                  return exc.code, exc.read().decode("utf-8", errors="replace")
+
+          checks = {
+              "/": (
+                  '<body class="page page--home">',
+                  "Evidence-aware neurodiversity navigation",
+                  'href="/find/">Find</a>',
+                  'href="/evidence/">Evidence</a>',
+              ),
+              "/find/": (
+                  '<body class="page page--find">',
+                  'href="/find/" aria-current="page">Find</a>',
+                  'aria-describedby="find-help"',
+                  'role="region" aria-label="Find results"',
+                  "Local governed discovery.",
+              ),
+              "/questions/workplace-support-great-britain/": (
+                  '<body class="page page--question">',
+                  '>Question</span>',
+                  '<span class="scope-badge">Great Britain</span>',
+                  "Scope before you act",
+                  "not an eligibility, legal or clinical determination",
+              ),
+              "/resources/goblin-tools/": (
+                  '<body class="page page--resource">',
+                  '>Resource</span>',
+                  "Scope for navigation",
+                  '<span class="scope-badge">International / not jurisdiction-specific</span>',
+                  "not an eligibility, legal or clinical determination",
+              ),
+              "/understand/autism/": (
+                  '<body class="page page--concept">',
+                  '>Concept</span>',
+              ),
+              "/evidence/": (
+                  '<body class="page page--evidence">',
+                  '>Evidence</span>',
+              ),
+              "/evidence/acas-reasonable-adjustments-2025/": (
+                  '<body class="page page--evidence">',
+                  '>Evidence record</span>',
+                  "A source is not a conclusion.",
+              ),
+              "/places/": (
+                  '<body class="page page--browse">',
+                  '>Jurisdiction browse</span>',
+                  "Scope is part of the information",
+                  "Navigation scope, not eligibility.",
+              ),
+          }
+
+          pages: dict[str, str] = {}
+          for path, markers in checks.items():
+              status, body = fetch(path)
+              if status != 200:
+                  raise SystemExit(f"{path}: expected HTTP 200, got {status}")
+              for marker in markers:
+                  if marker not in body:
+                      raise SystemExit(f"{path}: missing live UX marker {marker!r}")
+              pages[path] = body
+              print(f"PASS live UX markers {path}")
+
+          question = pages["/questions/workplace-support-great-britain/"]
+          if question.index("Scope before you act") > question.index("Current understanding"):
+              raise SystemExit("Question scope panel appears after Current understanding")
+          print("PASS Question scope ordering")
+
+          resource = pages["/resources/goblin-tools/"]
+          if resource.index("Scope for navigation") > resource.index("What it is for"):
+              raise SystemExit("Resource scope panel appears after intended-use content")
+          print("PASS Resource scope ordering")
+
+          status, css = fetch("/styles.css")
+          if status != 200:
+              raise SystemExit(f"/styles.css: expected HTTP 200, got {status}")
+          for marker in (
+              "--scope:",
+              "--boundary:",
+              ".scope-panel",
+              ".boundary-panel",
+              "min-height: 2.75rem",
+              '@media (max-width: 28rem)',
+              '@media (forced-colors: active)',
+              '@media (prefers-reduced-motion: no-preference)',
+          ):
+              if marker not in css:
+                  raise SystemExit(f"/styles.css: missing UX/accessibility marker {marker!r}")
+          print("PASS live CSS UX/accessibility markers")
+
+          status, missing = fetch("/__nd_ux_v1_live_missing_route__/")
+          if status != 404:
+              raise SystemExit(f"404 probe: expected HTTP 404, got {status}")
+          if "<h1>Page not found</h1>" not in missing:
+              raise SystemExit("404 probe: recovery page marker missing")
+          if 'href="/find/"' not in missing:
+              raise SystemExit("404 probe: Find recovery link missing")
+          print("PASS live 404 recovery")
+
+          places = pages["/places/"]
+          jurisdiction_labels = (
+              "England",
+              "Scotland",
+              "Wales",
+              "Northern Ireland",
+              "Republic of Ireland",
+              "Australia",
+              "Canada",
+              "Ontario, Canada",
+          )
+          jurisdiction_routes: dict[str, str] = {}
+          for label in jurisdiction_labels:
+              escaped = re.escape(html.escape(label))
+              match = re.search(
+                  rf'<section class="scope-group"><h2>{escaped}</h2>.*?<a href="(/resources/[^"]+/)">',
+                  places,
+                  flags=re.S,
+              )
+              if not match:
+                  raise SystemExit(f"/places/: no representative resource route found for {label}")
+              route = match.group(1)
+              status, body = fetch(route)
+              if status != 200:
+                  raise SystemExit(f"{label}: representative route {route} returned {status}")
+              expected_badge = f'<span class="scope-badge">{html.escape(label)}</span>'
+              if expected_badge not in body:
+                  raise SystemExit(f"{label}: representative route {route} missing scope badge")
+              jurisdiction_routes[label] = route
+              print(f"PASS jurisdiction {label}: {route}")
+
+          manifest = {
+              "contract": "ND-UX-V1-ACCEPTANCE",
+              "deployed_main_sha": "33677f8fbe110c95adeedb9e90dd62c503d8c15c",
+              "origin": ORIGIN,
+              "core_routes": list(checks),
+              "jurisdiction_routes": jurisdiction_routes,
+              "not_found_status": status,
+              "desktop": "1440x1100",
+              "narrow": "390x844",
+          }
+          Path("live-ux-evidence/manifest.json").write_text(
+              json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+          command -v google-chrome
+
+          ROUTES=(
+            "home|/"
+            "find|/find/"
+            "question-workplace-gb|/questions/workplace-support-great-britain/"
+            "resource-goblin-tools|/resources/goblin-tools/"
+            "concept-autism|/understand/autism/"
+            "evidence-index|/evidence/"
+            "evidence-detail|/evidence/acas-reasonable-adjustments-2025/"
+            "places|/places/"
+            "not-found|/__nd_ux_v1_live_missing_route__/"
+          )
+
+          capture() {
+            local folder="$1"
+            local size="$2"
+            local spec name route
+            for spec in "${ROUTES[@]}"; do
+              name="${spec%%|*}"
+              route="${spec#*|}"
+              google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars                 --disable-application-cache --run-all-compositor-stages-before-draw                 --virtual-time-budget=1200 --window-size="$size"                 --screenshot="live-ux-evidence/$folder/$name.png"                 "https://ndoracle.org$route"
+              test -s "live-ux-evidence/$folder/$name.png"
+            done
+          }
+
+          capture desktop 1440,1100
+          capture narrow 390,844
+
+          test "$(find live-ux-evidence/desktop -name '*.png' | wc -l)" -eq 9
+          test "$(find live-ux-evidence/narrow -name '*.png' | wc -l)" -eq 9
+
+      - name: Upload live UX evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: nd-ux-v1-live-production-evidence
+          path: live-ux-evidence/
+          if-no-files-found: error
+          retention-days: 30
