@@ -1136,6 +1136,11 @@ li + li {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.page--need-hub {
+  --need-accent: var(--accent);
+  --need-soft: var(--accent-soft);
+}
+
 .home-need-card,
 .need-index-card {
   --need-accent: var(--accent);
@@ -1147,56 +1152,64 @@ li + li {
 
 .home-need-card--daily-life,
 .need-index-card--daily-life,
-.need-hub--daily-life {
+.need-hub--daily-life,
+.page--need-daily-life {
   --need-accent: var(--wayfind-blue);
   --need-soft: var(--wayfind-blue-soft);
 }
 
 .home-need-card--sensory,
 .need-index-card--sensory,
-.need-hub--sensory {
+.need-hub--sensory,
+.page--need-sensory {
   --need-accent: var(--wayfind-cyan);
   --need-soft: var(--wayfind-cyan-soft);
 }
 
 .home-need-card--communication,
 .need-index-card--communication,
-.need-hub--communication {
+.need-hub--communication,
+.page--need-communication {
   --need-accent: var(--wayfind-violet);
   --need-soft: var(--wayfind-violet-soft);
 }
 
 .home-need-card--work,
 .need-index-card--work,
-.need-hub--work {
+.need-hub--work,
+.page--need-work {
   --need-accent: var(--wayfind-green);
   --need-soft: var(--wayfind-green-soft);
 }
 
 .home-need-card--education,
 .need-index-card--education,
-.need-hub--education {
+.need-hub--education,
+.page--need-education {
   --need-accent: var(--wayfind-amber);
   --need-soft: var(--wayfind-amber-soft);
 }
 
 .home-need-card--assessment,
 .need-index-card--assessment,
-.need-hub--assessment {
+.need-hub--assessment,
+.page--need-assessment {
   --need-accent: var(--wayfind-rose);
   --need-soft: var(--wayfind-rose-soft);
 }
 
 .home-need-card--health,
 .need-index-card--health,
-.need-hub--health {
+.need-hub--health,
+.page--need-health {
   --need-accent: var(--wayfind-orange);
   --need-soft: var(--wayfind-orange-soft);
 }
 
 .home-need-card--relationships,
 .need-index-card--relationships,
-.need-hub--relationships {
+.need-hub--relationships,
+.page--need-relationships {
   --need-accent: var(--wayfind-slate);
   --need-soft: var(--wayfind-slate-soft);
 }
@@ -1265,13 +1278,11 @@ li + li {
 }
 
 .page--need-hub .page-heading {
-  background: #f7f7f4;
-  border-top-color: var(--accent);
+  background: var(--need-soft);
+  border-top-color: var(--need-accent);
 }
 
 .need-hub {
-  --need-accent: var(--accent);
-  --need-soft: var(--accent-soft);
   margin: var(--space-5) 0 var(--space-6);
   padding: clamp(1rem, 3vw, 1.5rem);
   background: var(--need-soft);
