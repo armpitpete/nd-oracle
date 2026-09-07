@@ -86,16 +86,28 @@ jobs:
                   '<details class="resource-catalogue" open>',
                   1,
               )
-              catalogue_focus = """<script>
-          window.addEventListener("load", () => {
-            const target = document.querySelector(".resource-catalogue") || document.querySelector(".resource-list");
-            if (target) target.scrollIntoView({ block: "start" });
-          });
-          </script>"""
+              catalogue_focus = """<style>
+          .site-header,
+          .site-footer,
+          .page-heading,
+          .notice,
+          .resource-subnav,
+          #resource-list-heading,
+          .resource-start,
+          .resource-boundary,
+          .resource-needs,
+          .resource-families,
+          .resource-complete > :not(.resource-catalogue) {
+            display: none !important;
+          }
+          main { padding-top: 1rem !important; }
+          .resource-complete { margin: 0 !important; }
+          .resource-catalogue { margin-top: 0 !important; }
+          </style>"""
               target = root / "resources-open"
               target.mkdir(parents=True, exist_ok=True)
               (target / "index.html").write_text(
-                  open_state.replace("</body>", catalogue_focus + "</body>", 1),
+                  open_state.replace("</head>", catalogue_focus + "</head>", 1),
                   encoding="utf-8",
               )
 
