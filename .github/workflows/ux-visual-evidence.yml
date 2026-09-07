@@ -249,19 +249,18 @@ jobs:
 
           baseline = height("/tmp/baseline-questions-measure.html")
           candidate = height("/tmp/candidate-questions-measure.html")
-          print(f"Questions narrow full-page height: baseline={baseline}px candidate={candidate}px")
-          if candidate >= baseline:
-              raise SystemExit("V2.2 Questions page did not reduce whole-page height")
-          if candidate > baseline * 0.45:
+          ratio = candidate / baseline
+          print(f"Questions narrow non-regression height: baseline={baseline}px candidate={candidate}px ratio={ratio:.4f}")
+          if candidate > baseline * 1.03:
               raise SystemExit(
-                  f"V2.2 Questions page reduction is too small: {candidate}px vs baseline {baseline}px"
+                  f"V2.3 materially regressed the accepted Questions page height: {candidate}px vs baseline {baseline}px"
               )
           if candidate > 9000:
-              raise SystemExit(f"V2.2 Questions default narrow page exceeds 9000px: {candidate}px")
+              raise SystemExit(f"Accepted Questions default narrow page exceeds 9000px: {candidate}px")
           Path("ux-evidence/questions-height.txt").write_text(
               f"baseline_narrow_scroll_height={baseline}\n"
               f"candidate_narrow_scroll_height={candidate}\n"
-              f"ratio={candidate / baseline:.4f}\n",
+              f"ratio={ratio:.4f}\n",
               encoding="utf-8",
           )
           PY
