@@ -1272,6 +1272,20 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
     if questions is None:
         questions = _compat08__load_questions()
     validate_question_navigation(questions)
+    question_map = {item['id']: item for item in questions}
+    concept_ids = {item['id'] for item in concepts}
+    common_targets = [target for _question, target in _compat06__COMMON_QUESTIONS]
+    if concept_ids != set(common_targets) or len(common_targets) != len(set(common_targets)):
+        raise ValueError('V2.3 Home compatibility shortcuts must cover each current Concept exactly once')
+
+    practical_shortcuts = ''.join((
+        f'''<li><a href="/questions/{_compat06__esc(question_id)}/">{_compat06__esc(question_map[question_id]['question'])}</a></li>'''
+        for question_id in _compat09__V07_HOMEPAGE_COMPAT_QUESTION_IDS
+    ))
+    topic_shortcuts = ''.join((
+        f'''<li><a href="/understand/{_compat06__esc(target)}/">{_compat06__esc(question)}</a></li>'''
+        for question, target in _compat06__COMMON_QUESTIONS
+    ))
 
     primary = (
         ('/find/', 'Describe what is happening', 'Use your own words when you do not know the topic or service name.', 'Find a route', 'find'),
@@ -1311,9 +1325,24 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
   <h2 id="home-orientation-heading">Need another way in?</h2>
   <div class="home-route-grid">
     <a href="/places/"><strong>Browse by place</strong><span>Check geographic scope before you act.</span></a>
+    <a href="/tools/"><strong>Tools &amp; practical help</strong><span>Go straight to practical tools, apps and guides.</span></a>
     <a href="/a-z/"><strong>Open the complete A–Z</strong><span>Use this when you already know what you are looking for.</span></a>
     <a href="/how-it-works/"><strong>How ND Oracle works</strong><span>See how evidence, uncertainty and resource listings are handled.</span></a>
   </div>
+</section>
+<section class="home-compatibility" aria-labelledby="home-more-shortcuts-heading">
+  <h2 id="home-more-shortcuts-heading">More question shortcuts</h2>
+  <p class="section-intro">These older entry points remain available without making the homepage show every shortcut at once.</p>
+  <details class="home-shortcuts">
+    <summary>Show more question shortcuts</summary>
+    <div class="home-shortcut-content">
+      <h3>Start with something you need to do</h3>
+      <ul>{practical_shortcuts}</ul>
+      <h3>Start with a question</h3>
+      <p>{len(concepts)} evidence-linked topics are available now.</p>
+      <ul>{topic_shortcuts}</ul>
+    </div>
+  </details>
 </section>
 '''
     return _compat08__page_shell(
@@ -1325,6 +1354,7 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
 
 def render_needs_index_v23(questions: list[dict]) -> str:
     validate_question_navigation(questions)
+    question_map = {item['id']: item for item in questions}
     cards = []
     for route, title, intro, groups, tone in V23_HUB_DEFINITIONS:
         count = len(_compat09___questions_for_groups(questions, groups))
@@ -1335,6 +1365,16 @@ def render_needs_index_v23(questions: list[dict]) -> str:
   <span class="question-count">{count} practical questions</span>
 </a>'''
         )
+    full_groups = []
+    for group, ids in QUESTION_GROUPS:
+        links = ''.join((
+            f'''<li><a href="/questions/{_compat06__esc(question_id)}/">{_compat06__esc(question_map[question_id]['question'])}</a></li>'''
+            for question_id in ids
+        ))
+        full_groups.append(
+            f'''<section class="needs-complete-group"><h3>{_compat06__esc(group)}</h3><ul>{links}</ul></section>'''
+        )
+
     body = f'''
 <section class="notice">
   <strong>Start with the need, not the label.</strong> These are navigation areas, not diagnoses or recommendations.
@@ -1352,6 +1392,13 @@ def render_needs_index_v23(questions: list[dict]) -> str:
     <a href="/resources/"><strong>Browse Resources</strong><span>Find tools, services, organisations and practical help.</span></a>
     <a href="/a-z/"><strong>Complete A–Z</strong><span>See the whole governed knowledge base.</span></a>
   </div>
+</section>
+<section class="home-compatibility" aria-labelledby="needs-complete-heading">
+  <h2 id="needs-complete-heading">Need every practical question?</h2>
+  <details class="needs-complete-index">
+    <summary>Show all {len(questions)} governed Questions</summary>
+    <div class="needs-complete-body">{''.join(full_groups)}</div>
+  </details>
 </section>
 '''
     return _compat08__page_shell(
