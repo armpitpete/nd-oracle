@@ -137,6 +137,7 @@ jobs:
           print("PASS live CSS UX/accessibility markers")
 
           status, missing = fetch("/__nd_ux_v1_live_missing_route__/")
+          not_found_status = status
           if status != 404:
               raise SystemExit(f"404 probe: expected HTTP 404, got {status}")
           if "<h1>Page not found</h1>" not in missing:
@@ -182,7 +183,7 @@ jobs:
               "origin": ORIGIN,
               "core_routes": list(checks),
               "jurisdiction_routes": jurisdiction_routes,
-              "not_found_status": status,
+              "not_found_status": not_found_status,
               "desktop": "1440x1100",
               "narrow": "390x844",
           }
