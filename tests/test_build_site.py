@@ -50,13 +50,13 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertEqual(build_site.V10_ROUTE_COUNT, len(build_site.sitemap_paths(self.concepts, self.resources, self.questions)))
 
     def test_shared_stylesheet_reference_is_content_versioned(self):
-        expected = f'/styles.css?v={build_site._compat06__STYLE_REV}'
+        expected = f'/styles.css?v={build_site._compat06__style_revision()}'
         for page_path in self.html_pages():
             page = page_path.read_text(encoding="utf-8")
             self.assertIn(f'href="{expected}"', page, page_path)
         css = (self.output / "styles.css").read_bytes()
         import hashlib
-        self.assertEqual(hashlib.sha256(css).hexdigest()[:12], build_site._compat06__STYLE_REV)
+        self.assertEqual(hashlib.sha256(css).hexdigest()[:12], build_site._compat06__style_revision())
 
     def test_primary_navigation_contains_only_active_destinations(self):
         page = self.page("/")
