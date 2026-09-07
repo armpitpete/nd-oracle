@@ -238,6 +238,7 @@ jobs:
             "resources-index|/resources/"
             "resources-open|/resources-open/"
             "resource-goblin-tools|/resources/goblin-tools/"
+            "topics-index|/understand/"
             "concept-autism|/understand/autism/"
             "evidence-index|/evidence/"
             "evidence-detail|/evidence/$EVIDENCE_DETAIL/"
@@ -317,8 +318,8 @@ jobs:
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 32
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 32
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 34
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 34
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
