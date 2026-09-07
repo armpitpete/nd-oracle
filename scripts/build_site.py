@@ -319,7 +319,7 @@ def _compat06__build(output_dir: Path=_compat06__DEFAULT_OUTPUT_DIR) -> Path:
 if __package__ in {None, ''}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 _compat08__QUESTIONS_DIR = _compat06__ROOT / 'objects' / 'questions'
-_compat08__PRIMARY_NAV = [('find', 'Find'), ('questions', 'Questions'), ('understand', 'Topics'), ('resources', 'Resources'), ('how-it-works', 'How it works')]
+_compat08__PRIMARY_NAV = [('find', 'Find'), ('questions', 'Questions'), ('understand', 'Topics'), ('resources', 'Resources')]
 _compat06__PRIMARY_NAV = _compat08__PRIMARY_NAV
 if not '_compat06___V08_ORIGINAL_PAGE_SHELL' in globals():
     _compat06___V08_ORIGINAL_PAGE_SHELL = _compat06__page_shell
@@ -666,9 +666,9 @@ def _compat09__render_resource(resource: dict, concept_map: dict[str, dict], que
 def _compat09__render_resources_index(resources: list[dict]) -> str:
     rows = ''.join((_compat06__resource_link(resource) for resource in resources))
     primary_choices = (
-        ('/find/', 'Describe what you need', 'Use ordinary words. Find searches the governed catalogue on this device.', 'Open Find'),
+        ('/find/', 'Describe what you need', 'Type what you need in your own words. Results come from the reviewed ND Oracle catalogue.', 'Open Find'),
         ('/needs/', 'Start from a life problem', 'Choose an area such as daily life, communication, work, education or wellbeing.', 'Browse needs'),
-        ('/places/', 'Check what applies where I live', 'Keep UK-wide, national and international resource scope distinct before you act.', 'Browse by place'),
+        ('/places/', 'Check what applies where I live', 'Check whether information is UK-wide, for one nation, or international before you act.', 'Browse by place'),
         ('/types/', 'Browse by kind of resource', 'Choose services, organisations, tools, apps, games, books, guides and other content types.', 'Browse types'),
     )
     primary_cards = ''.join((
@@ -714,17 +714,17 @@ def _compat09__render_resources_index(resources: list[dict]) -> str:
   <div class="section-heading-row">
     <div>
       <h2 id="resource-start-heading">Choose how to start</h2>
-      <p class="section-intro">You do not need to know a diagnosis, service name or ND Oracle category. Pick the route closest to what you already know.</p>
+      <p class="section-intro">You do not need to know a diagnosis or service name. Pick the route closest to what you already know.</p>
     </div>
   </div>
   <div class="choice-grid choice-grid--primary">{primary_cards}</div>
 </section>
 <section class="notice resource-boundary">
-  <strong>Listed, not endorsed.</strong> ND Oracle helps you inspect resources; a listing is not proof that something works or that it is right for you.
+  <strong>Listed, not endorsed.</strong> A listing means we have checked and described the resource. It does not mean we have proved it works or that it is right for you.
 </section>
 <section class="resource-needs" aria-labelledby="resource-needs-heading">
   <h2 id="resource-needs-heading">Common needs</h2>
-  <p class="section-intro">Start with the situation you are dealing with. These routes lead into already governed questions, topics and resources.</p>
+  <p class="section-intro">Start with the situation you are dealing with. These routes take you to reviewed questions, topics and resources.</p>
   <div class="choice-grid choice-grid--needs">{need_cards}</div>
 </section>
 <section class="resource-families" aria-labelledby="resource-families-heading">
@@ -744,7 +744,7 @@ def _compat09__render_resources_index(resources: list[dict]) -> str:
 '''
     return _compat08__page_shell(
         'Resources',
-        'Find a useful starting point without scanning the whole catalogue. Browse by what you need, place, resource type or ordinary words.',
+        'Find a useful starting point without scanning the whole catalogue. Start with what you need, where you live, the kind of resource, or your own words.',
         body,
         current='resources',
         path='/resources/',
