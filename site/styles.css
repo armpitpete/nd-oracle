@@ -755,26 +755,56 @@ li + li {
   display: flex;
   min-height: 3.5rem;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-3);
   padding: var(--space-4);
   font-weight: 700;
+}
+
+.resource-catalogue summary::before {
+  content: "+";
+  display: inline-grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  flex: 0 0 1.65rem;
+  place-items: center;
+  color: var(--surface);
+  background: var(--accent-strong);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.resource-catalogue[open] summary::before {
+  content: "−";
 }
 
 .resource-catalogue[open] summary {
   border-bottom: 1px solid var(--border);
 }
 
-.resource-catalogue .summary-meta {
-  flex: 0 0 auto;
-  color: var(--text-soft);
-  font-size: 0.86rem;
-  font-weight: 600;
+.resource-catalogue-body {
+  padding: 0 var(--space-4) var(--space-5);
 }
 
-.resource-catalogue .resource-list {
+.resource-alpha-group {
+  margin-top: var(--space-6);
+}
+
+.resource-alpha-group h3 {
+  display: flex;
+  width: 2.4rem;
+  height: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 var(--space-2);
+  color: var(--surface);
+  background: var(--accent-strong);
+  border-radius: 50%;
+  font-size: 1rem;
+}
+
+.resource-alpha-group .resource-list {
   margin: 0;
-  padding: 0 var(--space-4) var(--space-4);
 }
 
 .resource-subnav {
@@ -1090,7 +1120,9 @@ th {
     border: 1px solid CanvasText;
   }
 
-  .standalone-action {
+  .standalone-action,
+  .resource-catalogue summary::before,
+  .resource-alpha-group h3 {
     color: ButtonText;
     background: ButtonFace;
     border: 2px solid ButtonText;
@@ -1110,5 +1142,5 @@ th {
   .choice-card--primary,
   .choice-card--need,
   .choice-card--family { min-height: 0; }
-  .resource-catalogue summary { align-items: flex-start; flex-direction: column; }
+  .resource-catalogue summary { align-items: center; }
 }
