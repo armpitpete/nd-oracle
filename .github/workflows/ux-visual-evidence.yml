@@ -113,8 +113,8 @@ jobs:
 
               questions = (root / "questions" / "index.html").read_text(encoding="utf-8")
               question_open = questions.replace(
-                  '<details class="question-group">',
-                  '<details class="question-group" open>',
+                  '<details class="question-group"',
+                  '<details class="question-group" open',
               )
               question_focus = """<style>
           .site-header,
