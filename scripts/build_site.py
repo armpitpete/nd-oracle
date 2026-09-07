@@ -133,7 +133,7 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
   <div class="site-shell header-row">
     <div class="site-identity">
       <a class="site-name" href="/">The Neurodiverse Oracle</a>
-      <span class="site-purpose">Evidence-aware neurodiversity navigation</span>
+      <span class="site-purpose">Neurodiversity information, resources and evidence</span>
     </div>
     {_compat06__nav(current)}
   </div>
@@ -153,6 +153,7 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
       <a href="/resources/">Resources</a>
       <a href="/evidence/">Evidence</a>
       <a href="/how-it-works/">How it works</a>
+      <a href="/about/">About</a>
       <a href="/accessibility/">Accessibility</a>
       <a href="/feedback/">Feedback</a>
       <a href="/privacy/">Privacy</a>
@@ -318,7 +319,7 @@ def _compat06__build(output_dir: Path=_compat06__DEFAULT_OUTPUT_DIR) -> Path:
 if __package__ in {None, ''}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 _compat08__QUESTIONS_DIR = _compat06__ROOT / 'objects' / 'questions'
-_compat08__PRIMARY_NAV = [('find', 'Find'), ('questions', 'Questions'), ('understand', 'Topics'), ('resources', 'Resources'), ('how-it-works', 'How it works'), ('about', 'About')]
+_compat08__PRIMARY_NAV = [('find', 'Find'), ('questions', 'Questions'), ('understand', 'Topics'), ('resources', 'Resources'), ('how-it-works', 'How it works')]
 _compat06__PRIMARY_NAV = _compat08__PRIMARY_NAV
 if not '_compat06___V08_ORIGINAL_PAGE_SHELL' in globals():
     _compat06___V08_ORIGINAL_PAGE_SHELL = _compat06__page_shell
