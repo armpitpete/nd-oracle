@@ -1924,3 +1924,559 @@ th {
     border-left-width: 5px;
   }
 }
+
+
+/* ND-UX-V2.4: page-first composition, wider discovery, directional anchors */
+
+/*
+ * Reading pages keep a controlled measure. Discovery/index pages use the
+ * available desktop viewport so their structure can be seen rather than
+ * stretched into a phone-width vertical tower.
+ */
+.page--home .reading-column,
+.page--browse .reading-column,
+.page--needs-index .reading-column,
+.page--need-hub .reading-column,
+.page--questions-index .reading-column,
+.page--resources-index .reading-column,
+.page--topics-index .reading-column,
+.page--find .reading-column {
+  max-width: min(var(--content-wide), 100%);
+}
+
+/* A page heading is an orientation marker, not a hero card. */
+.page .page-heading {
+  margin-bottom: clamp(2.2rem, 5vw, 3.5rem);
+  padding: 0.2rem 0 0.2rem 1.25rem;
+  background: transparent;
+  border: 0;
+  border-left: 0.55rem solid var(--accent);
+  border-radius: 0;
+}
+
+.page--questions-index .page-heading,
+.page--question .page-heading {
+  border-left-color: var(--wayfind-blue);
+}
+
+.page--resources-index .page-heading,
+.page--resource .page-heading {
+  border-left-color: var(--wayfind-green);
+}
+
+.page--topics-index .page-heading,
+.page--concept .page-heading {
+  border-left-color: var(--wayfind-violet);
+}
+
+.page--find .page-heading {
+  border-left-color: var(--wayfind-amber);
+}
+
+.page--need-hub .page-heading {
+  border-left-color: var(--need-accent);
+}
+
+.page .page-kind {
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+}
+
+/* Directional information blocks replace rounded panels where possible. */
+.notice,
+.reading-guide,
+.at-a-glance,
+.scope-panel,
+.boundary-panel {
+  padding: 0.45rem 0 0.45rem 1.15rem;
+  background: transparent;
+  border: 0;
+  border-left: 0.32rem solid var(--accent);
+  border-radius: 0;
+}
+
+.scope-panel {
+  border-left-color: var(--scope);
+}
+
+.boundary-panel {
+  border-left-color: var(--boundary);
+}
+
+.resource-start,
+.question-start,
+.home-start,
+.home-needs,
+.resource-needs,
+.question-area-overview,
+.need-hub {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.need-hub {
+  padding-left: 1.1rem;
+  border-left: 0.4rem solid var(--need-accent);
+}
+
+.resource-families,
+.resource-complete,
+.question-complete,
+.home-orientation,
+.home-compatibility {
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-strong);
+}
+
+/* Route choices are links with strong starting edges, not cards. */
+.choice-card {
+  min-height: 0;
+  padding: 0.75rem 0.95rem;
+  background: transparent;
+  border: 0;
+  border-left: 0.3rem solid var(--accent);
+  border-radius: 0;
+}
+
+.choice-card:hover {
+  background: transparent;
+  border-color: var(--accent);
+}
+
+.choice-card--primary,
+.choice-card--need,
+.choice-card--family,
+.question-start-card,
+.question-area-card,
+.home-start-card,
+.home-need-card,
+.need-index-card {
+  min-height: 0;
+  background: transparent;
+  border-top: 0;
+}
+
+.home-start-card {
+  border-left-color: var(--home-accent);
+}
+
+.home-need-card,
+.need-index-card {
+  border-left-color: var(--need-accent);
+}
+
+.question-area-card {
+  border-left-color: var(--area-accent);
+}
+
+.choice-grid--question-start .question-start-card:nth-child(1) {
+  background: transparent;
+  border-left-color: var(--wayfind-amber);
+}
+.choice-grid--question-start .question-start-card:nth-child(2) {
+  background: transparent;
+  border-left-color: var(--wayfind-blue);
+}
+.choice-grid--question-start .question-start-card:nth-child(3) {
+  background: transparent;
+  border-left-color: var(--wayfind-green);
+}
+
+.resource-start .choice-card--primary:nth-child(1) { border-left-color: var(--wayfind-amber); }
+.resource-start .choice-card--primary:nth-child(2) { border-left-color: var(--wayfind-blue); }
+.resource-start .choice-card--primary:nth-child(3) { border-left-color: var(--wayfind-cyan); }
+.resource-start .choice-card--primary:nth-child(4) { border-left-color: var(--wayfind-green); }
+
+.resource-needs .choice-card--need:nth-child(1) { border-left-color: var(--wayfind-blue); }
+.resource-needs .choice-card--need:nth-child(2) { border-left-color: var(--wayfind-cyan); }
+.resource-needs .choice-card--need:nth-child(3) { border-left-color: var(--wayfind-violet); }
+.resource-needs .choice-card--need:nth-child(4) { border-left-color: var(--wayfind-green); }
+.resource-needs .choice-card--need:nth-child(5) { border-left-color: var(--wayfind-amber); }
+.resource-needs .choice-card--need:nth-child(6) { border-left-color: var(--wayfind-rose); }
+.resource-needs .choice-card--need:nth-child(7) { border-left-color: var(--wayfind-orange); }
+.resource-needs .choice-card--need:nth-child(8) { border-left-color: var(--wayfind-slate); }
+
+.resource-families .choice-card--family:nth-child(1) { border-left-color: var(--wayfind-green); }
+.resource-families .choice-card--family:nth-child(2) { border-left-color: var(--wayfind-blue); }
+.resource-families .choice-card--family:nth-child(3) { border-left-color: var(--wayfind-amber); }
+.resource-families .choice-card--family:nth-child(4) { border-left-color: var(--wayfind-rose); }
+
+.choice-card strong {
+  text-decoration-thickness: 1px;
+}
+
+.choice-card-action {
+  padding-top: 0.25rem;
+}
+
+/* Desktop is composed as desktop, not as a narrow stack with larger margins. */
+.choice-grid--home-start,
+.choice-grid--home-needs,
+.choice-grid--needs-index,
+.choice-grid--primary,
+.choice-grid--needs,
+.choice-grid--families {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.choice-grid--question-start,
+.choice-grid--question-areas {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.home-route-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.home-route-grid a {
+  min-height: 0;
+  padding: 0.75rem 0.95rem;
+  background: transparent;
+  border: 0;
+  border-left: 0.3rem solid var(--accent);
+  border-radius: 0;
+}
+
+.home-route-grid a:hover {
+  background: transparent;
+  border-color: var(--accent-strong);
+}
+
+/* Question groups use the horizontal desktop field and simple rows. */
+.question-cluster-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--space-7) var(--space-6);
+}
+
+.question-cluster {
+  padding: 0 0 0 1rem;
+  background: transparent;
+  border: 0;
+  border-left: 0.38rem solid var(--cluster-accent);
+  border-radius: 0;
+}
+
+.question-group {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.question-group:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.question-group summary {
+  padding: 0.85rem 0;
+}
+
+.question-group[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.question-group summary::before,
+.need-disclosure summary::before,
+.home-shortcuts summary::before,
+.needs-complete-index summary::before,
+.resource-catalogue summary::before {
+  border-radius: 0.15rem;
+}
+
+/* Disclosures remain obvious without becoming enclosing cards. */
+.need-disclosure,
+.home-shortcuts,
+.needs-complete-index,
+.resource-catalogue {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  border-bottom: 1px solid var(--border-strong);
+  border-radius: 0;
+}
+
+.need-disclosure--questions {
+  border-top: 0.28rem solid var(--need-accent, var(--accent));
+}
+
+.need-disclosure summary,
+.home-shortcuts summary,
+.needs-complete-index summary,
+.resource-catalogue summary {
+  padding-inline: 0;
+}
+
+.need-secondary-grid {
+  gap: var(--space-6);
+}
+
+/* Find gets room to work; its result region is not a large empty card. */
+.find-control {
+  max-width: 64rem;
+}
+
+#find-results {
+  max-width: 68rem;
+  min-height: 4rem;
+  padding: var(--space-4) 0 0;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  border-radius: 0;
+}
+
+/* V2.4 Topics: recognition first, then grouped browse, then the complete A–Z. */
+.topic-word-example,
+.word-guide {
+  margin-block: var(--space-6);
+  padding: 0.4rem 0 0.4rem 1.2rem;
+  border-left: 0.42rem solid var(--wayfind-violet);
+}
+
+.topic-word-example h2,
+.word-guide h2 {
+  margin-top: 0;
+}
+
+.word-example-line,
+.word-guide-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  flex-wrap: wrap;
+}
+
+.word-build {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.word-part {
+  display: inline-block;
+  padding: 0.18rem 0.48rem;
+  color: #ffffff;
+  background: var(--wayfind-violet);
+  border: 1px solid var(--wayfind-violet);
+  border-radius: 0.12rem;
+  line-height: 1.35;
+}
+
+.word-part-separator {
+  color: var(--text-soft);
+  font-weight: 700;
+}
+
+.word-meanings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.6rem 1.4rem;
+  margin-block: 1rem;
+}
+
+.word-meanings div {
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--border);
+}
+
+.word-meanings dt {
+  color: var(--wayfind-violet);
+  font-weight: 800;
+}
+
+.word-meanings dd {
+  margin: 0.15rem 0 0;
+  color: var(--text-soft);
+}
+
+.topic-recognition,
+.topic-groups,
+.topic-complete {
+  margin-block: var(--space-7);
+}
+
+.recognition-list,
+.topic-group-links {
+  list-style: none;
+  padding: 0;
+}
+
+.recognition-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3) var(--space-6);
+  margin-top: var(--space-5);
+}
+
+.recognition-list li {
+  margin: 0;
+  padding: 0.65rem 0 0.65rem 0.9rem;
+  border-left: 0.28rem solid var(--wayfind-violet);
+}
+
+.recognition-list a {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.recognition-list span {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--text-soft);
+  font-size: 0.86rem;
+}
+
+.topic-find-route {
+  margin-top: var(--space-5);
+}
+
+.topic-group-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-5);
+}
+
+.topic-group {
+  padding-top: var(--space-3);
+  border-top: 0.22rem solid var(--wayfind-violet);
+}
+
+.topic-group h3 {
+  color: var(--wayfind-violet);
+}
+
+.topic-group > p {
+  color: var(--text-soft);
+}
+
+.topic-group-links li {
+  margin: 0;
+  padding-block: 0.65rem;
+  border-top: 1px solid var(--border);
+}
+
+.topic-group-links li:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.topic-group-links a {
+  display: inline-block;
+  font-weight: 700;
+}
+
+.topic-group-links span {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--text-soft);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.topic-index-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--space-7);
+}
+
+.topic-index-list .topic-row {
+  min-width: 0;
+}
+
+.topic-index-list .topic-row p {
+  max-width: 54ch;
+}
+
+/* Wide screens show more of the landscape; mid-width screens simplify to two columns. */
+@media (max-width: 68rem) {
+  .choice-grid--home-start,
+  .choice-grid--home-needs,
+  .choice-grid--needs-index,
+  .choice-grid--primary,
+  .choice-grid--needs,
+  .choice-grid--families,
+  .home-route-grid,
+  .topic-group-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .question-cluster-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 48rem) {
+  .page .page-heading {
+    padding-left: 0.9rem;
+    border-left-width: 0.38rem;
+  }
+
+  .choice-grid--home-start,
+  .choice-grid--home-needs,
+  .choice-grid--needs-index,
+  .choice-grid--primary,
+  .choice-grid--needs,
+  .choice-grid--families,
+  .choice-grid--question-start,
+  .choice-grid--question-areas,
+  .home-route-grid,
+  .need-secondary-grid,
+  .recognition-list,
+  .topic-group-grid,
+  .topic-index-list {
+    grid-template-columns: 1fr;
+  }
+
+  .question-cluster {
+    padding-left: 0.8rem;
+    border-left-width: 0.3rem;
+  }
+
+  .word-meanings {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (forced-colors: active) {
+  .page .page-heading,
+  .notice,
+  .reading-guide,
+  .at-a-glance,
+  .scope-panel,
+  .boundary-panel,
+  .choice-card,
+  .home-route-grid a,
+  .question-cluster,
+  .need-hub,
+  .topic-word-example,
+  .word-guide,
+  .recognition-list li {
+    border: 0;
+    border-left: 4px solid CanvasText;
+  }
+
+  .question-group,
+  .need-disclosure,
+  .home-shortcuts,
+  .needs-complete-index,
+  .resource-catalogue {
+    border: 0;
+    border-block: 1px solid CanvasText;
+  }
+
+  .word-part {
+    color: ButtonText;
+    background: ButtonFace;
+    border: 1px solid ButtonText;
+  }
+}
