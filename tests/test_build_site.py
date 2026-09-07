@@ -189,6 +189,67 @@ class WebsiteBuildTests(unittest.TestCase):
             for marker in ("Relevant to inspect, not recommended.", "Current understanding", "Related things to inspect", "Related questions", "What evidence is still needed", "Where people may disagree", "When this answer should be revisited", "Question provenance and review state"):
                 self.assertIn(marker, page)
 
+    def test_questions_index_reduces_first_choice_load_without_hiding_questions(self):
+        page = self.page("/questions/")
+        self.assertIn("Choose how to start", page)
+        self.assertEqual(3, page.count("question-start-card"))
+        for href, label in (
+            ("/find/", "Describe the problem"),
+            ("#question-areas", "Browse by area of life"),
+            ("/a-z/", "I know what I am looking for"),
+        ):
+            self.assertIn(f'href="{href}"', page)
+            self.assertIn(label, page)
+
+        self.assertIn("Relevant to inspect, not recommended.", page)
+        self.assertLess(page.index("Choose how to start"), page.index("Relevant to inspect, not recommended."))
+        self.assertIn("Choose an area of life", page)
+        self.assertIn("Need the complete index?", page)
+        self.assertIn('href="/a-z/"', page)
+
+        source_groups = [name for name, _ids in build_site.QUESTION_GROUPS]
+        clustered_groups = [
+            name
+            for _slug, _title, _description, names in build_site.QUESTION_DISCOVERY_CLUSTERS
+            for name in names
+        ]
+        self.assertEqual(len(source_groups), len(clustered_groups))
+        self.assertEqual(set(source_groups), set(clustered_groups))
+        self.assertEqual(len(clustered_groups), len(set(clustered_groups)))
+
+        self.assertEqual(len(build_site.QUESTION_GROUPS), page.count('<details class="question-group"'))
+        self.assertNotIn('<details class="question-group" open', page)
+        self.assertEqual(len(self.questions), page.count('<article class="topic-row">'))
+        for question in self.questions:
+            self.assertIn(
+                f'href="/questions/{question["id"]}/"',
+                page,
+            )
+
+    def test_questions_v2_task_journeys_have_short_routes(self):
+        page = self.page("/questions/")
+
+        journeys = (
+            ("Communication", "/questions/phone-calls-are-difficult/"),
+            ("Education &amp; study", "/questions/organising-study-and-assignments/"),
+            ("Work", "/questions/workplace-support-great-britain/"),
+            ("Assessment &amp; diagnosis", "/questions/adult-autism-assessment-england/"),
+            ("Money &amp; administration", "/questions/forms-official-paperwork-overwhelming/"),
+            ("Mental wellbeing", "/questions/low-mood-depression-where-start/"),
+        )
+        for group_label, route in journeys:
+            self.assertIn(group_label, page)
+            self.assertIn(f'href="{route}"', page)
+
+        self.assertIn('href="/a-z/"', page)
+        self.assertIn("Open the complete A–Z index", page)
+
+        _boundary, phone_results = discovery.search("phone calls are difficult", limit=10)
+        self.assertIn(
+            "/questions/phone-calls-are-difficult/",
+            [result.route for result in phone_results],
+        )
+
     def test_every_indexable_page_has_accessibility_metadata_and_canonical_url(self):
         paths = build_site.sitemap_paths(self.concepts, self.resources, self.questions)
         for route in paths:
