@@ -790,7 +790,7 @@ li + li {
   margin-top: var(--space-6);
 }
 
-.resource-alpha-group h3 {
+.resource-alpha-group > h3 {
   display: flex;
   width: 2.4rem;
   height: 2.4rem;
@@ -1122,7 +1122,7 @@ th {
 
   .standalone-action,
   .resource-catalogue summary::before,
-  .resource-alpha-group h3 {
+  .resource-alpha-group > h3 {
     color: ButtonText;
     background: ButtonFace;
     border: 2px solid ButtonText;
