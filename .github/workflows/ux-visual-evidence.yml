@@ -156,11 +156,62 @@ jobs:
                   encoding="utf-8",
               )
 
+              home_shortcuts_open = home.replace(
+                  '<details class="home-shortcuts">',
+                  '<details class="home-shortcuts" open>',
+                  1,
+              )
+              home_shortcuts_focus = """<style>
+          .site-header,
+          .site-footer,
+          .page-heading,
+          .home-start,
+          .home-needs,
+          .home-orientation,
+          .home-compatibility > :not(.home-shortcuts) {
+            display: none !important;
+          }
+          main { padding-top: 1rem !important; }
+          .home-compatibility { margin: 0 !important; padding: 0 !important; border: 0 !important; }
+          </style>"""
+              target = root / "home-shortcuts-open"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(
+                  home_shortcuts_open.replace("</head>", home_shortcuts_focus + "</head>", 1),
+                  encoding="utf-8",
+              )
+
               needs = (root / "needs" / "index.html").read_text(encoding="utf-8")
               target = root / "needs-measure"
               target.mkdir(parents=True, exist_ok=True)
               (target / "index.html").write_text(
                   needs.replace("</body>", measure + "</body>", 1),
+                  encoding="utf-8",
+              )
+
+              needs_complete_open = needs.replace(
+                  '<details class="needs-complete-index">',
+                  '<details class="needs-complete-index" open>',
+                  1,
+              )
+              needs_complete_focus = """<style>
+          .site-header,
+          .site-footer,
+          .page-heading,
+          .notice,
+          .needs-overview,
+          #needs-other-heading,
+          .home-orientation,
+          .home-compatibility > :not(.needs-complete-index) {
+            display: none !important;
+          }
+          main { padding-top: 1rem !important; }
+          .home-compatibility { margin: 0 !important; padding: 0 !important; border: 0 !important; }
+          </style>"""
+              target = root / "needs-complete-open"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(
+                  needs_complete_open.replace("</head>", needs_complete_focus + "</head>", 1),
                   encoding="utf-8",
               )
 
@@ -243,6 +294,9 @@ jobs:
           ! grep -q '<article class="topic-row">' candidate/dist/needs/index.html
           grep -q 'need-hub--communication' candidate/dist/needs/communication/index.html
           grep -q 'need-hub--health' candidate/dist/needs/health-wellbeing/index.html
+          grep -q '<details class="home-shortcuts" open>' candidate/dist/home-shortcuts-open/index.html
+          grep -q '<details class="needs-complete-index" open>' candidate/dist/needs-complete-open/index.html
+          test "$(grep -o 'href="/questions/' candidate/dist/needs-complete-open/index.html | wc -l)" -ge 175
           test "$(grep -o '<details class="need-disclosure' candidate/dist/needs/communication/index.html | wc -l)" -eq 3
           ! grep -q '<details class="need-disclosure need-disclosure--questions" open' candidate/dist/needs/communication/index.html
 
@@ -343,7 +397,9 @@ jobs:
 
           ROUTES=(
             "home|/"
+            "home-shortcuts-open|/home-shortcuts-open/"
             "needs-index|/needs/"
+            "needs-complete-open|/needs-complete-open/"
             "need-communication|/needs/communication/"
             "need-health|/needs/health-wellbeing/"
             "need-communication-open|/need-communication-open/"
@@ -375,7 +431,19 @@ jobs:
               name="${spec%%|*}"
               route="${spec#*|}"
               effective_size="$size"
-              if [[ "$name" == "home" ]]; then
+              if [[ "$name" == "home-shortcuts-open" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,3200"
+                else
+                  effective_size="390,5200"
+                fi
+              elif [[ "$name" == "needs-complete-open" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,4200"
+                else
+                  effective_size="390,6200"
+                fi
+              elif [[ "$name" == "home" ]]; then
                 if [[ "$folder" == "desktop" ]]; then
                   effective_size="1440,6000"
                 else
@@ -453,6 +521,8 @@ jobs:
             echo "narrow=390x844"
             echo "find_state_capture_height=1800"
             echo "home_capture=1440x6000,390x9000"
+            echo "home_shortcuts_open_capture=1440x3200,390x5200"
+            echo "needs_complete_open_capture=1440x4200,390x6200"
             echo "needs_index_capture=1440x4200,390x7000"
             echo "need_hub_capture=1440x3000,390x5000"
             echo "questions_default_capture=1440x5200,390x9000"
@@ -463,8 +533,8 @@ jobs:
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 42
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 42
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 46
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 46
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
