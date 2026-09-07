@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import html
+import re
 import tempfile
 import unittest
 from html.parser import HTMLParser
@@ -368,6 +369,10 @@ class WebsiteBuildTests(unittest.TestCase):
             ".page-kind",
             ".scope-panel",
             ".boundary-panel",
+            "--wayfind-blue:",
+            "--wayfind-violet:",
+            ".question-cluster",
+            ".question-area-card",
             "min-height: 2.75rem",
             'input[type="search"]',
             "@media (prefers-reduced-motion: no-preference)",
@@ -379,6 +384,47 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn(".resource-catalogue", css)
         self.assertNotIn("ui-serif", css)
         self.assertNotIn("@keyframes", css)
+
+    def test_visual_wayfinding_palette_is_accessible_and_redundant(self):
+        css = (self.output / "styles.css").read_text(encoding="utf-8")
+        tokens = dict(re.findall(r"--([a-z0-9-]+):\s*(#[0-9a-fA-F]{6});", css))
+
+        def luminance(value: str) -> float:
+            channels = [int(value[index:index + 2], 16) / 255 for index in (1, 3, 5)]
+            linear = [
+                channel / 12.92 if channel <= 0.03928 else ((channel + 0.055) / 1.055) ** 2.4
+                for channel in channels
+            ]
+            return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+        def contrast(foreground: str, background: str) -> float:
+            high, low = sorted((luminance(foreground), luminance(background)), reverse=True)
+            return (high + 0.05) / (low + 0.05)
+
+        pairs = (
+            ("wayfind-blue", "wayfind-blue-soft"),
+            ("wayfind-green", "wayfind-green-soft"),
+            ("wayfind-violet", "wayfind-violet-soft"),
+            ("wayfind-amber", "wayfind-amber-soft"),
+            ("wayfind-rose", "wayfind-rose-soft"),
+            ("wayfind-cyan", "wayfind-cyan-soft"),
+        )
+        for accent, soft in pairs:
+            self.assertIn(accent, tokens)
+            self.assertIn(soft, tokens)
+            self.assertGreaterEqual(contrast(tokens[accent], tokens[soft]), 4.5, accent)
+
+        questions = self.page("/questions/")
+        for slug, title, _description, _groups in build_site.QUESTION_DISCOVERY_CLUSTERS:
+            self.assertIn(f"question-area-card--{slug}", questions)
+            self.assertIn(f"question-cluster--{slug}", questions)
+            self.assertIn(html.escape(title, quote=True), questions)
+
+        self.assertIn("page--questions-index", questions)
+        self.assertIn("page--resources-index", self.page("/resources/"))
+        self.assertIn("page--topics-index", self.page("/understand/"))
+        self.assertIn("background: var(--accent-soft)", css)
+        self.assertIn('.primary-nav a[aria-current="page"]', css)
 
     def test_footer_exposes_evidence_governance_route(self):
         page = self.page("/")
