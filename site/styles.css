@@ -1084,8 +1084,16 @@ th {
   .boundary-panel,
   .claim-card,
   .evidence-card,
-  .entry-card {
+  .entry-card,
+  .choice-card,
+  .resource-catalogue {
     border: 1px solid CanvasText;
+  }
+
+  .standalone-action {
+    color: ButtonText;
+    background: ButtonFace;
+    border: 2px solid ButtonText;
   }
 
   .page-kind,
