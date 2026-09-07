@@ -100,6 +100,29 @@ class WebsiteBuildTests(unittest.TestCase):
             if resource["category"] in build_site.TOOL_CATEGORIES: self.assertIn(name, tools)
             if resource["category"] in build_site.COMMUNITY_CATEGORIES: self.assertIn(name, community)
 
+    def test_resources_index_reduces_first_choice_load_without_hiding_catalogue(self):
+        page = self.page("/resources/")
+        self.assertIn("Choose how to start", page)
+        self.assertEqual(4, page.count("choice-card choice-card--primary"))
+        for href, label in (
+            ("/find/", "Describe what you need"),
+            ("/needs/", "Start from a life problem"),
+            ("/places/", "Check what applies where I live"),
+            ("/types/", "Browse by kind of resource"),
+        ):
+            self.assertIn(f'href="{href}"', page)
+            self.assertIn(label, page)
+        self.assertLess(page.index("Choose how to start"), page.index("Listed, not endorsed"))
+        self.assertLess(page.index('href="/find/"'), page.index("Show every resource A–Z on this page"))
+        self.assertIn('<details class="resource-catalogue">', page)
+        self.assertNotIn('<details class="resource-catalogue" open', page)
+        self.assertIn(f"{len(self.resources)} reviewed resources", page)
+        for route, title, _intro, _groups in build_site.HUB_DEFINITIONS:
+            self.assertIn(f'href="/{route}/"', page)
+            self.assertIn(html.escape(title, quote=True), page)
+        for href in ("/tools/", "/games/", "/books-media/", "/community/", "/a-z/"):
+            self.assertIn(f'href="{href}"', page)
+
     def test_every_resource_page_exposes_access_limits_scope_costs_conflicts_and_correct_claim_boundary(self):
         for resource in self.resources:
             page = self.page(f'/resources/{resource["id"]}/')
@@ -238,6 +261,9 @@ class WebsiteBuildTests(unittest.TestCase):
         ):
             self.assertIn(marker, css)
         self.assertIn(":focus-visible", css)
+        self.assertIn(".choice-card", css)
+        self.assertIn(".resource-catalogue", css)
+        self.assertNotIn("ui-serif", css)
         self.assertNotIn("@keyframes", css)
 
     def test_footer_exposes_evidence_governance_route(self):
