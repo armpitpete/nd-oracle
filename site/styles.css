@@ -227,6 +227,11 @@ main {
   border-top-color: var(--wayfind-amber);
 }
 
+.page--home .page-heading {
+  background: #edf3ee;
+  border-top-color: var(--accent);
+}
+
 .page--questions-index .page-kind {
   color: var(--wayfind-blue);
   border-color: var(--wayfind-blue);
@@ -792,7 +797,7 @@ li + li {
   min-height: 2.75rem;
   padding: 0.72rem 1rem;
   color: #fbfaf7;
-  background: var(--cluster-accent, var(--accent-strong));
+  background: var(--accent-strong);
   border: 2px solid var(--accent-strong);
   border-radius: var(--radius-sm);
   font-weight: 700;
@@ -826,6 +831,22 @@ li + li {
 
 .question-start-card {
   min-height: 9.5rem;
+  border-top: 5px solid var(--accent);
+}
+
+.choice-grid--question-start .question-start-card:nth-child(1) {
+  background: var(--wayfind-amber-soft);
+  border-top-color: var(--wayfind-amber);
+}
+
+.choice-grid--question-start .question-start-card:nth-child(2) {
+  background: var(--wayfind-blue-soft);
+  border-top-color: var(--wayfind-blue);
+}
+
+.choice-grid--question-start .question-start-card:nth-child(3) {
+  background: var(--wayfind-green-soft);
+  border-top-color: var(--wayfind-green);
 }
 
 .question-boundary {
@@ -986,7 +1007,7 @@ li + li {
   flex: 0 0 1.65rem;
   place-items: center;
   color: var(--surface);
-  background: var(--accent-strong);
+  background: var(--cluster-accent);
   border-radius: 50%;
   font-size: 1.2rem;
   line-height: 1;
