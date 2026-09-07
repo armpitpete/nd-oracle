@@ -7,6 +7,18 @@
   --surface-cool: #edf3f1;
   --surface-blue: #edf2f6;
   --surface-warm: #f5efe8;
+  --wayfind-blue: #2f5f88;
+  --wayfind-blue-soft: #e4eef7;
+  --wayfind-green: #2e604c;
+  --wayfind-green-soft: #e5f0e9;
+  --wayfind-violet: #654d7a;
+  --wayfind-violet-soft: #eee8f4;
+  --wayfind-amber: #76581f;
+  --wayfind-amber-soft: #f5ecd7;
+  --wayfind-rose: #7a4b55;
+  --wayfind-rose-soft: #f4e7e9;
+  --wayfind-cyan: #35656a;
+  --wayfind-cyan-soft: #e4f0f1;
   --uncertainty: #edf1ed;
   --text: #252a27;
   --text-soft: #5c645f;
@@ -175,9 +187,11 @@ summary:focus-visible {
 }
 
 .primary-nav a[aria-current="page"] {
-  color: var(--text);
-  font-weight: 700;
-  text-decoration-color: var(--border-strong);
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+  border: 1px solid #bfd2c8;
+  font-weight: 750;
+  text-decoration-color: transparent;
 }
 
 main {
@@ -186,8 +200,55 @@ main {
 
 .page-heading {
   margin-bottom: clamp(2.4rem, 6vw, 4rem);
-  padding-bottom: clamp(1.5rem, 4vw, 2.2rem);
-  border-bottom: 1px solid var(--border);
+  padding: clamp(1.35rem, 4vw, 2rem);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-top: 6px solid var(--accent);
+  border-radius: var(--radius-lg);
+}
+
+.page--questions-index .page-heading {
+  background: var(--wayfind-blue-soft);
+  border-top-color: var(--wayfind-blue);
+}
+
+.page--resources-index .page-heading {
+  background: var(--wayfind-green-soft);
+  border-top-color: var(--wayfind-green);
+}
+
+.page--topics-index .page-heading {
+  background: var(--wayfind-violet-soft);
+  border-top-color: var(--wayfind-violet);
+}
+
+.page--find .page-heading {
+  background: var(--wayfind-amber-soft);
+  border-top-color: var(--wayfind-amber);
+}
+
+.page--questions-index .page-kind {
+  color: var(--wayfind-blue);
+  border-color: var(--wayfind-blue);
+  background: #f8fbfd;
+}
+
+.page--resources-index .page-kind {
+  color: var(--wayfind-green);
+  border-color: var(--wayfind-green);
+  background: #f7fbf8;
+}
+
+.page--topics-index .page-kind {
+  color: var(--wayfind-violet);
+  border-color: var(--wayfind-violet);
+  background: #fbf9fd;
+}
+
+.page--find .page-kind {
+  color: var(--wayfind-amber);
+  border-color: var(--wayfind-amber);
+  background: #fffdf7;
 }
 
 .page-context {
@@ -731,7 +792,7 @@ li + li {
   min-height: 2.75rem;
   padding: 0.72rem 1rem;
   color: #fbfaf7;
-  background: var(--accent-strong);
+  background: var(--cluster-accent, var(--accent-strong));
   border: 2px solid var(--accent-strong);
   border-radius: var(--radius-sm);
   font-weight: 700;
@@ -774,8 +835,8 @@ li + li {
 .question-area-overview {
   margin-block: var(--space-7);
   padding: clamp(1.1rem, 3vw, 1.7rem);
-  background: var(--surface-blue);
-  border: 1px solid #cbd8e0;
+  background: #f8f9f7;
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-lg);
   scroll-margin-top: var(--space-5);
 }
@@ -785,14 +846,59 @@ li + li {
 }
 
 .question-area-card {
+  --area-accent: var(--accent);
+  --area-soft: var(--accent-soft);
   min-height: 8.5rem;
+  background: var(--area-soft);
+  border-top: 5px solid var(--area-accent);
 }
 
-.question-count {
+.question-area-card:hover {
+  background: #ffffff;
+  border-color: var(--area-accent);
+}
+
+.question-area-card .question-count {
+  display: inline-flex;
+  width: fit-content;
   margin-top: auto;
-  color: var(--accent-strong) !important;
-  font-size: 0.88rem;
-  font-weight: 700;
+  padding: 0.25rem 0.55rem;
+  color: var(--area-accent) !important;
+  background: #ffffffb8;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.question-area-card--everyday-access {
+  --area-accent: var(--wayfind-blue);
+  --area-soft: var(--wayfind-blue-soft);
+}
+
+.question-area-card--work-study-money {
+  --area-accent: var(--wayfind-green);
+  --area-soft: var(--wayfind-green-soft);
+}
+
+.question-area-card--assessment-health {
+  --area-accent: var(--wayfind-violet);
+  --area-soft: var(--wayfind-violet-soft);
+}
+
+.question-area-card--relationships-community {
+  --area-accent: var(--wayfind-rose);
+  --area-soft: var(--wayfind-rose-soft);
+}
+
+.question-area-card--information-media {
+  --area-accent: var(--wayfind-amber);
+  --area-soft: var(--wayfind-amber-soft);
+}
+
+.question-area-card--games-downtime {
+  --area-accent: var(--wayfind-cyan);
+  --area-soft: var(--wayfind-cyan-soft);
 }
 
 .question-cluster-list {
@@ -801,12 +907,52 @@ li + li {
 }
 
 .question-cluster {
+  --cluster-accent: var(--accent);
+  --cluster-soft: var(--accent-soft);
+  padding: clamp(1rem, 3vw, 1.6rem);
+  background: var(--cluster-soft);
+  border: 1px solid var(--border-strong);
+  border-left: 7px solid var(--cluster-accent);
+  border-radius: var(--radius-lg);
   scroll-margin-top: var(--space-5);
 }
 
+.question-cluster > h2 {
+  color: var(--cluster-accent);
+}
+
+.question-cluster--everyday-access {
+  --cluster-accent: var(--wayfind-blue);
+  --cluster-soft: var(--wayfind-blue-soft);
+}
+
+.question-cluster--work-study-money {
+  --cluster-accent: var(--wayfind-green);
+  --cluster-soft: var(--wayfind-green-soft);
+}
+
+.question-cluster--assessment-health {
+  --cluster-accent: var(--wayfind-violet);
+  --cluster-soft: var(--wayfind-violet-soft);
+}
+
+.question-cluster--relationships-community {
+  --cluster-accent: var(--wayfind-rose);
+  --cluster-soft: var(--wayfind-rose-soft);
+}
+
+.question-cluster--information-media {
+  --cluster-accent: var(--wayfind-amber);
+  --cluster-soft: var(--wayfind-amber-soft);
+}
+
+.question-cluster--games-downtime {
+  --cluster-accent: var(--wayfind-cyan);
+  --cluster-soft: var(--wayfind-cyan-soft);
+}
+
 .question-cluster + .question-cluster {
-  padding-top: var(--space-6);
-  border-top: 1px solid var(--border-strong);
+  margin-top: 0;
 }
 
 .question-group-stack {
@@ -816,9 +962,10 @@ li + li {
 }
 
 .question-group {
-  background: var(--surface);
-  border: 1px solid var(--border-strong);
+  background: #fffefb;
+  border: 1px solid #cfd1cc;
   border-radius: var(--radius);
+  box-shadow: 0 1px 0 rgba(37, 42, 39, 0.04);
 }
 
 .question-group summary {
@@ -855,6 +1002,12 @@ li + li {
 
 .question-group summary > span:first-child {
   margin-right: auto;
+  color: var(--cluster-accent);
+  font-size: 1rem;
+}
+
+.question-group summary:hover {
+  background: #ffffff;
 }
 
 .question-group .summary-meta {
@@ -1281,4 +1434,19 @@ th {
   .question-area-card { min-height: 0; }
   .resource-catalogue summary,
   .question-group summary { align-items: center; }
+}
+
+@media (max-width: 48rem) {
+  .question-cluster {
+    padding: 1rem;
+    border-left-width: 5px;
+  }
+
+  .question-area-card {
+    min-height: 0;
+  }
+
+  .page-heading {
+    padding: 1.15rem;
+  }
 }
