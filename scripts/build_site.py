@@ -9,6 +9,7 @@ if __package__ in {None, ''}:
 # Generated once from the accepted historical builder layers.
 # The current runtime is intentionally a single module with no executable
 # historical builder import chain and no cross-module global mutation.
+import hashlib
 import html
 import json
 import shutil
@@ -26,6 +27,8 @@ _compat06__ROOT = Path(__file__).resolve().parents[1]
 _compat06__OBJECTS_DIR = _compat06__ROOT / 'objects' / 'concepts'
 _compat06__RESOURCES_DIR = _compat06__ROOT / 'objects' / 'resources'
 _compat06__SITE_DIR = _compat06__ROOT / 'site'
+def _compat06__style_revision() -> str:
+    return hashlib.sha256((_compat06__SITE_DIR / 'styles.css').read_bytes()).hexdigest()[:12]
 _compat06__DEFAULT_OUTPUT_DIR = _compat06__ROOT / 'dist'
 _compat06__OUTPUT_MARKER = 'nd-oracle-site-v0.2\n'
 _compat06__PUBLIC_ORIGIN = 'https://ndoracle.org'
@@ -140,7 +143,7 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
   <meta name="theme-color" content="#f4f1ea">
   <meta name="description" content="{_compat06__esc(intro)}">
 {robots}{canonical}  <title>{_compat06__esc(title)} · The Neurodiverse Oracle</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/styles.css?v={_compat06__style_revision()}">
 </head>
 <body class="page page--{_compat06__esc(page_kind)}">
 <a class="skip-link" href="#main">Skip to content</a>
