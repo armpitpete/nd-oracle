@@ -104,7 +104,9 @@ def _ux_page_kind(path: str | None) -> tuple[str, str]:
         return ('find', 'Find')
     if parts[:1] == ['places']:
         return ('browse', 'Jurisdiction browse')
-    if parts[:1] in (['needs'], ['types'], ['a-z'], ['tools'], ['games'], ['community'], ['books-media']):
+    if parts[:1] == ['needs']:
+        return ('need-hub' if len(parts) > 1 else 'needs-index', 'Area of life' if len(parts) > 1 else 'Areas of life')
+    if parts[:1] in (['types'], ['a-z'], ['tools'], ['games'], ['community'], ['books-media']):
         return ('browse', 'Browse')
     return ('information', 'ND Oracle')
 
