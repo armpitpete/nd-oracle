@@ -13,7 +13,7 @@ permissions:
 jobs:
   verify-live-production:
     name: Verify production HTTP contract
-    runs-on: ubuntu-24.04
+    runs-on: [self-hosted, Linux]
     timeout-minutes: 10
 
     steps:
