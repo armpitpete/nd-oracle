@@ -105,7 +105,20 @@ def _ux_page_kind(path: str | None) -> tuple[str, str]:
     if parts[:1] == ['places']:
         return ('browse', 'Jurisdiction browse')
     if parts[:1] == ['needs']:
-        return ('need-hub' if len(parts) > 1 else 'needs-index', 'Area of life' if len(parts) > 1 else 'Areas of life')
+        if len(parts) == 1:
+            return ('needs-index', 'Areas of life')
+        tone_by_slug = {
+            'daily-life': 'daily-life',
+            'sensory-environment': 'sensory',
+            'communication': 'communication',
+            'work': 'work',
+            'education-study': 'education',
+            'assessment-diagnosis': 'assessment',
+            'health-wellbeing': 'health',
+            'relationships-family': 'relationships',
+        }
+        tone = tone_by_slug.get(parts[1], 'daily-life')
+        return (f'need-hub page--need-{tone}', 'Area of life')
     if parts[:1] in (['types'], ['a-z'], ['tools'], ['games'], ['community'], ['books-media']):
         return ('browse', 'Browse')
     return ('information', 'ND Oracle')
