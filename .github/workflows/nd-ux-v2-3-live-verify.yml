@@ -281,7 +281,7 @@ jobs:
           for spec in             "home|/"             "needs-index|/needs/"             "communication|/needs/communication/"             "health|/needs/health-wellbeing/"             "communication-open|/communication-questions-open/"             "home-shortcuts-open|/home-shortcuts-open/"             "needs-complete-open|/needs-complete-open/"
           do
             name="${spec%%|*}"
-            route="${spec#*}"
+            route="${spec#*|}"
             if [[ "$name" == "home" ]]; then
               capture desktop 1440 5200 "$name" "$route"
               capture narrow 390 5000 "$name" "$route"
