@@ -86,9 +86,18 @@ jobs:
                   '<details class="resource-catalogue" open>',
                   1,
               )
+              catalogue_focus = """<script>
+          window.addEventListener("load", () => {
+            const target = document.querySelector(".resource-catalogue") || document.querySelector(".resource-list");
+            if (target) target.scrollIntoView({ block: "start" });
+          });
+          </script>"""
               target = root / "resources-open"
               target.mkdir(parents=True, exist_ok=True)
-              (target / "index.html").write_text(open_state, encoding="utf-8")
+              (target / "index.html").write_text(
+                  open_state.replace("</body>", catalogue_focus + "</body>", 1),
+                  encoding="utf-8",
+              )
 
               measure = """<script>
           window.addEventListener("load", () => {
