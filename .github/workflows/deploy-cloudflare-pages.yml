@@ -21,7 +21,7 @@ concurrency:
 jobs:
   guard:
     name: Verify exact protected main
-    runs-on: ubuntu-24.04
+    runs-on: [self-hosted, Linux]
     timeout-minutes: 5
     outputs:
       release_sha: ${{ steps.verify.outputs.release_sha }}
@@ -140,7 +140,7 @@ jobs:
   deploy:
     name: Direct Upload exact main
     needs: guard
-    runs-on: ubuntu-24.04
+    runs-on: [self-hosted, Linux]
     timeout-minutes: 20
     environment:
       name: cloudflare-pages-production
