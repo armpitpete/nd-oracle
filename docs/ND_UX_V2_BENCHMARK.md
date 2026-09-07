@@ -152,6 +152,22 @@ Useful:
 ND Oracle transfer:
 **progressive disclosure, plain-language-first labels, and eventual alternative reading depth rather than forcing all detail into the first view.**
 
+### Ambitious about Autism — young-person routing
+
+Sources:
+https://www.ambitiousaboutautism.org.uk/
+https://www.ambitiousaboutautism.org.uk/what-we-do/services/i-am-an-autistic-young-person
+
+Useful:
+
+- the home/services architecture offers explicit audience routes such as “I am autistic” rather than making young people infer that the organisation is for them;
+- the young-person page states age range and purpose immediately;
+- opportunities are chunked into recognisable tasks such as community, employment and wellbeing;
+- the organisation explicitly says autistic young people are involved in shaping its work.
+
+ND Oracle transfer:
+**later V2 young-person testing should ask whether a young person can recognise “this is for me” and reach school/college, wellbeing and community routes without knowing service-system vocabulary.** This is a content/navigation problem, not a reason to add juvenile decoration.
+
 ### British Dyslexia Association resource library
 
 Source:
