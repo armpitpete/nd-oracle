@@ -272,8 +272,12 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn(html.escape(title, quote=True), page)
 
         self.assertNotIn("Browse current topics", page)
-        self.assertNotIn("Start with something you need to do", page)
         self.assertNotIn('<article class="topic-row">', page)
+        self.assertIn('<details class="home-shortcuts">', page)
+        self.assertNotIn('<details class="home-shortcuts" open', page)
+        self.assertIn("Start with something you need to do", page)
+        self.assertIn("Start with a question", page)
+        self.assertIn(f"{len(self.concepts)} evidence-linked topics are available now", page)
         self.assertIn("Need another way in?", page)
         self.assertIn('href="/places/"', page)
         self.assertIn('href="/a-z/"', page)
@@ -285,6 +289,11 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("choice-card need-index-card"))
         self.assertNotIn('<article class="topic-row">', page)
         self.assertNotIn('<details class="need-disclosure"', page)
+        self.assertIn('<details class="needs-complete-index">', page)
+        self.assertNotIn('<details class="needs-complete-index" open', page)
+        self.assertIn(f"Show all {len(self.questions)} governed Questions", page)
+        for question in self.questions:
+            self.assertIn(f'href="/questions/{question["id"]}/"', page)
         for route, title, _intro, groups, tone in build_site.V23_HUB_DEFINITIONS:
             ids = [
                 question_id
