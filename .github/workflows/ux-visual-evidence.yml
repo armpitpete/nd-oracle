@@ -168,7 +168,7 @@ jobs:
                 if [[ "$folder" == "desktop" ]]; then
                   effective_size="1440,3200"
                 else
-                  effective_size="390,3600"
+                  effective_size="390,6200"
                 fi
               elif [[ "$name" == "resources-open" ]]; then
                 if [[ "$folder" == "desktop" ]]; then
@@ -199,7 +199,7 @@ jobs:
             echo "desktop=1440x1100"
             echo "narrow=390x844"
             echo "find_state_capture_height=1800"
-            echo "resources_default_capture=1440x3200,390x3600"
+            echo "resources_default_capture=1440x3200,390x6200"
             echo "resources_open_capture=1440x2400,390x2800"
             echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
