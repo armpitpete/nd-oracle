@@ -664,7 +664,18 @@ def _compat09__render_resource(resource: dict, concept_map: dict[str, dict], que
         raise ValueError(f"{resource['id']}: cannot locate intended-use section")
     return page.replace(marker, section + marker, 1)
 def _compat09__render_resources_index(resources: list[dict]) -> str:
-    rows = ''.join((_compat06__resource_link(resource) for resource in resources))
+    alpha_rows: dict[str, list[str]] = {}
+    for resource in resources:
+        first = resource['name'].strip()[:1].upper()
+        letter = first if first.isalnum() else '#'
+        alpha_rows.setdefault(letter, []).append(_compat06__resource_link(resource))
+    catalogue_groups = ''.join((
+        f'''<section class="resource-alpha-group" aria-labelledby="resource-letter-{_compat06__esc(letter.lower() if letter != '#' else 'other')}">
+  <h3 id="resource-letter-{_compat06__esc(letter.lower() if letter != '#' else 'other')}">{_compat06__esc(letter)}</h3>
+  <div class="resource-list">{''.join(rows)}</div>
+</section>'''
+        for letter, rows in alpha_rows.items()
+    ))
     primary_choices = (
         ('/find/', 'Describe what you need', 'Type what you need in your own words. Results come from the reviewed ND Oracle catalogue.', 'Open Find'),
         ('/needs/', 'Start from a life problem', 'Choose an area such as daily life, communication, work, education or wellbeing.', 'Browse needs'),
@@ -737,8 +748,8 @@ def _compat09__render_resources_index(resources: list[dict]) -> str:
   <p class="section-intro">Nothing has been removed. The complete alphabetical catalogue is still available when you want it, without making everyone scan it first.</p>
   <p><a class="standalone-action" href="/a-z/">Open the complete A–Z index</a></p>
   <details class="resource-catalogue">
-    <summary><span>Show every resource A–Z on this page</span><span class="summary-meta">{len(resources)} reviewed resources</span></summary>
-    <div class="resource-list">{rows}</div>
+    <summary><span>Show all {len(resources)} resources A–Z on this page</span></summary>
+    <div class="resource-catalogue-body">{catalogue_groups}</div>
   </details>
 </section>
 '''
