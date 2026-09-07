@@ -252,6 +252,95 @@ class WebsiteBuildTests(unittest.TestCase):
             [result.route for result in phone_results],
         )
 
+    def test_home_is_orientation_first_not_inventory_first(self):
+        page = self.page("/")
+        self.assertIn("What do you need right now?", page)
+        self.assertEqual(4, page.count("home-start-card"))
+        for href, label in (
+            ("/find/", "Describe what is happening"),
+            ("/questions/", "I know what I need help with"),
+            ("/resources/", "I want something practical"),
+            ("/understand/", "I want to understand something"),
+        ):
+            self.assertIn(f'href="{href}"', page)
+            self.assertIn(label, page)
+
+        self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("home-need-card"))
+        for route, title, _intro, _groups, tone in build_site.V23_HUB_DEFINITIONS:
+            self.assertIn(f'href="/{route}/"', page)
+            self.assertIn(f"home-need-card--{tone}", page)
+            self.assertIn(html.escape(title, quote=True), page)
+
+        self.assertNotIn("Browse current topics", page)
+        self.assertNotIn("Start with something you need to do", page)
+        self.assertNotIn('<article class="topic-row">', page)
+        self.assertIn("Need another way in?", page)
+        self.assertIn('href="/places/"', page)
+        self.assertIn('href="/a-z/"', page)
+        self.assertIn('href="/how-it-works/"', page)
+
+    def test_needs_index_is_eight_clear_areas_not_a_question_wall(self):
+        page = self.page("/needs/")
+        self.assertIn("Choose an area of life", page)
+        self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("need-index-card"))
+        self.assertNotIn('<article class="topic-row">', page)
+        self.assertNotIn('<details class="need-disclosure"', page)
+        for route, title, _intro, groups, tone in build_site.V23_HUB_DEFINITIONS:
+            ids = [
+                question_id
+                for group, group_ids in build_site.QUESTION_GROUPS
+                if group in groups
+                for question_id in group_ids
+            ]
+            self.assertIn(f'href="/{route}/"', page)
+            self.assertIn(f"need-index-card--{tone}", page)
+            self.assertIn(f"{len(ids)} practical questions", page)
+            self.assertIn(html.escape(title, quote=True), page)
+
+    def test_need_hubs_put_questions_first_and_secondary_material_behind_disclosure(self):
+        question_map = {question["id"]: question for question in self.questions}
+        for route, _title, _intro, groups, tone in build_site.V23_HUB_DEFINITIONS:
+            page = self.page(f"/{route}/")
+            ids = [
+                question_id
+                for group, group_ids in build_site.QUESTION_GROUPS
+                if group in groups
+                for question_id in group_ids
+            ]
+            self.assertIn(f"need-hub--{tone}", page)
+            self.assertIn("Start here", page)
+            self.assertIn("Relevant to inspect, not recommended.", page)
+            self.assertIn(f"Show {len(ids)} practical questions", page)
+            self.assertIn('<details class="need-disclosure need-disclosure--questions">', page)
+            self.assertNotIn('<details class="need-disclosure need-disclosure--questions" open', page)
+            self.assertIn("More context when you want it", page)
+            self.assertEqual(3, page.count('<details class="need-disclosure'))
+            self.assertLess(page.index("Practical questions"), page.index("More context when you want it"))
+            self.assertEqual(2, page.count('href="/needs/">'))
+            for question_id in ids:
+                self.assertIn(f'href="/questions/{question_id}/"', page)
+                self.assertIn(html.escape(question_map[question_id]["question"], quote=True), page)
+
+    def test_home_and_need_hub_task_journeys_are_short(self):
+        home = self.page("/")
+        journeys = (
+            ("needs/communication", "/questions/phone-calls-are-difficult/"),
+            ("needs/education-study", "/questions/organising-study-and-assignments/"),
+            ("needs/work", "/questions/workplace-support-great-britain/"),
+            ("needs/assessment-diagnosis", "/questions/adult-autism-assessment-england/"),
+            ("needs/sensory-environment", "/questions/sensory-overload-what-can-i-change/"),
+            ("needs/health-wellbeing", "/questions/low-mood-depression-where-start/"),
+            ("needs/relationships-family", "/questions/communication-needs-in-relationships/"),
+        )
+        for hub_route, question_route in journeys:
+            self.assertIn(f'href="/{hub_route}/"', home)
+            hub = self.page(f"/{hub_route}/")
+            self.assertIn(f'href="{question_route}"', hub)
+
+        self.assertIn('href="/a-z/"', home)
+        self.assertIn('href="/questions/"', home)
+        self.assertIn('href="/resources/"', home)
+
     def test_every_indexable_page_has_accessibility_metadata_and_canonical_url(self):
         paths = build_site.sitemap_paths(self.concepts, self.resources, self.questions)
         for route in paths:
@@ -409,6 +498,8 @@ class WebsiteBuildTests(unittest.TestCase):
             ("wayfind-amber", "wayfind-amber-soft"),
             ("wayfind-rose", "wayfind-rose-soft"),
             ("wayfind-cyan", "wayfind-cyan-soft"),
+            ("wayfind-orange", "wayfind-orange-soft"),
+            ("wayfind-slate", "wayfind-slate-soft"),
         )
         for accent, soft in pairs:
             self.assertIn(accent, tokens)
@@ -424,6 +515,11 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn("page--questions-index", questions)
         self.assertIn("page--resources-index", self.page("/resources/"))
         self.assertIn("page--topics-index", self.page("/understand/"))
+        self.assertIn("page--needs-index", self.page("/needs/"))
+        self.assertIn("page--need-hub", self.page("/needs/communication/"))
+        for _route, _title, _intro, _groups, tone in build_site.V23_HUB_DEFINITIONS:
+            self.assertIn(f".need-hub--{tone}", css)
+            self.assertIn(f".need-index-card--{tone}", css)
         self.assertIn("background: var(--accent-soft)", css)
         self.assertIn('.primary-nav a[aria-current="page"]', css)
 
