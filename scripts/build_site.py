@@ -734,8 +734,8 @@ def _compat09__render_resources_index(resources: list[dict]) -> str:
   <strong>Listed, not endorsed.</strong> A listing means we have checked and described the resource. It does not mean we have proved it works or that it is right for you.
 </section>
 <section class="resource-needs" aria-labelledby="resource-needs-heading">
-  <h2 id="resource-needs-heading">Common needs</h2>
-  <p class="section-intro">Start with the situation you are dealing with. These routes take you to reviewed questions, topics and resources.</p>
+  <h2 id="resource-needs-heading">Browse by area of life</h2>
+  <p class="section-intro">Choose the part of life closest to what you are dealing with. These routes take you to reviewed questions, topics and resources.</p>
   <div class="choice-grid choice-grid--needs">{need_cards}</div>
 </section>
 <section class="resource-families" aria-labelledby="resource-families-heading">
