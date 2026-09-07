@@ -317,6 +317,7 @@ class WebsiteBuildTests(unittest.TestCase):
                 for question_id in group_ids
             ]
             self.assertIn(f"need-hub--{tone}", page)
+            self.assertIn(f"page--need-{tone}", page)
             self.assertIn("Start here", page)
             self.assertIn("Relevant to inspect, not recommended.", page)
             self.assertIn(f"Show {len(ids)} practical questions", page)
@@ -529,6 +530,7 @@ class WebsiteBuildTests(unittest.TestCase):
         for _route, _title, _intro, _groups, tone in build_site.V23_HUB_DEFINITIONS:
             self.assertIn(f".need-hub--{tone}", css)
             self.assertIn(f".need-index-card--{tone}", css)
+            self.assertIn(f".page--need-{tone}", css)
         self.assertIn("background: var(--accent-soft)", css)
         self.assertIn('.primary-nav a[aria-current="page"]', css)
 
