@@ -1181,6 +1181,243 @@ def render_questions_index_v2(questions: list[dict]) -> str:
 # corpus, Question pages, grouping ownership and discovery policy remain unchanged.
 _compat09__render_questions_index = render_questions_index_v2
 
+# ---- ND-UX-V2.3 Home + need-hub projection ----
+
+V23_HUB_DEFINITIONS = [
+    (
+        'needs/daily-life',
+        'Daily life',
+        'Planning, routines, paperwork, technology and low-pressure downtime.',
+        {'Daily life & technology', 'Money & administration', 'Technology & accessibility', 'Games & downtime'},
+        'daily-life',
+    ),
+    (
+        'needs/sensory-environment',
+        'Sensory & environment',
+        'Noise, light, touch, overload, travel and making environments easier to use.',
+        {'Sensory & environment', 'Mobility & travel'},
+        'sensory',
+    ),
+    (
+        'needs/communication',
+        'Communication',
+        'Phone calls, processing time, AAC, written communication and mixed communication needs.',
+        {'Communication'},
+        'communication',
+    ),
+    (
+        'needs/work',
+        'Work',
+        'Adjustments, disclosure, interviews, job-search support and staying in work.',
+        {'Work'},
+        'work',
+    ),
+    (
+        'needs/education-study',
+        'Education & study',
+        'Organisation, study support, exams, school or college access and transitions.',
+        {'Education & study'},
+        'education',
+    ),
+    (
+        'needs/assessment-diagnosis',
+        'Assessment & diagnosis',
+        'Assessment routes, waiting, private options, next steps and condition-specific information.',
+        {'Assessment & diagnosis', 'Information & support'},
+        'assessment',
+    ),
+    (
+        'needs/health-wellbeing',
+        'Health & wellbeing',
+        'Mental wellbeing, healthcare access, sleep, food, burnout and everyday health support.',
+        {'Health & wellbeing', 'Mental wellbeing', 'Healthcare access', 'Sleep', 'Food & eating'},
+        'health',
+    ),
+    (
+        'needs/relationships-family',
+        'Relationships & community',
+        'Partners, family, parenting, peer support, organisations and community participation.',
+        {'Relationships & family', 'Organisations & peer community'},
+        'relationships',
+    ),
+]
+
+def _v23_validate_hubs() -> None:
+    available = {name for name, _ids in QUESTION_GROUPS}
+    used: list[str] = []
+    for _route, _title, _intro, groups, _tone in V23_HUB_DEFINITIONS:
+        unknown = groups - available
+        if unknown:
+            raise ValueError(f'V2.3 need hub references unknown Question groups: {sorted(unknown)}')
+        used.extend(sorted(groups))
+    duplicates = sorted({name for name in used if used.count(name) > 1})
+    if duplicates:
+        raise ValueError(f'V2.3 need hubs duplicate Question groups: {duplicates}')
+
+_v23_validate_hubs()
+_compat09__HUB_DEFINITIONS = [
+    (route, title, intro, groups)
+    for route, title, intro, groups, _tone in V23_HUB_DEFINITIONS
+]
+
+def _v23_hub_tone(route: str) -> str:
+    for candidate, _title, _intro, _groups, tone in V23_HUB_DEFINITIONS:
+        if candidate == route:
+            return tone
+    return 'daily-life'
+
+def render_home_v23(concepts: list[dict], resources: list[dict], questions: list[dict] | None=None) -> str:
+    if questions is None:
+        questions = _compat08__load_questions()
+    validate_question_navigation(questions)
+
+    primary = (
+        ('/find/', 'Describe what is happening', 'Use your own words when you do not know the topic or service name.', 'Find a route', 'find'),
+        ('/questions/', 'I know what I need help with', 'Browse practical Questions by area of life without scanning the full catalogue.', 'Browse Questions', 'questions'),
+        ('/resources/', 'I want something practical', 'Browse tools, services, organisations, games, books and practical help.', 'Browse Resources', 'resources'),
+        ('/understand/', 'I want to understand something', 'Read plain-language Topics with evidence and uncertainty available when you want it.', 'Browse Topics', 'topics'),
+    )
+    primary_cards = ''.join((
+        f'''<a class="choice-card home-start-card home-start-card--{_compat06__esc(tone)}" href="{_compat06__esc(href)}">
+  <strong>{_compat06__esc(title)}</strong>
+  <span>{_compat06__esc(description)}</span>
+  <span class="choice-card-action">{_compat06__esc(action)} →</span>
+</a>'''
+        for href, title, description, action, tone in primary
+    ))
+
+    need_cards = ''.join((
+        f'''<a class="choice-card home-need-card home-need-card--{_compat06__esc(tone)}" href="/{_compat06__esc(route)}/">
+  <strong>{_compat06__esc(title)}</strong>
+  <span>{_compat06__esc(intro)}</span>
+</a>'''
+        for route, title, intro, _groups, tone in V23_HUB_DEFINITIONS
+    ))
+
+    body = f'''
+<section class="home-start" aria-labelledby="home-start-heading">
+  <h2 id="home-start-heading">What do you need right now?</h2>
+  <p class="section-intro">Pick the closest starting point. You can change route at any time; nothing here diagnoses you or chooses support for you.</p>
+  <div class="choice-grid choice-grid--home-start">{primary_cards}</div>
+</section>
+<section class="home-needs" aria-labelledby="home-needs-heading">
+  <h2 id="home-needs-heading">Or start with an area of life</h2>
+  <p class="section-intro">Use these when the problem is easier to describe by where it shows up in everyday life.</p>
+  <div class="choice-grid choice-grid--home-needs">{need_cards}</div>
+</section>
+<section class="home-orientation" aria-labelledby="home-orientation-heading">
+  <h2 id="home-orientation-heading">Need another way in?</h2>
+  <div class="home-route-grid">
+    <a href="/places/"><strong>Browse by place</strong><span>Check geographic scope before you act.</span></a>
+    <a href="/a-z/"><strong>Open the complete A–Z</strong><span>Use this when you already know what you are looking for.</span></a>
+    <a href="/how-it-works/"><strong>How ND Oracle works</strong><span>See how evidence, uncertainty and resource listings are handled.</span></a>
+  </div>
+</section>
+'''
+    return _compat08__page_shell(
+        'Understand neurodivergence without doing all the digging yourself',
+        'Start with what you need to do, find practical resources, or understand a topic without scanning the whole knowledge base.',
+        body,
+        path='/',
+    )
+
+def render_needs_index_v23(questions: list[dict]) -> str:
+    validate_question_navigation(questions)
+    cards = []
+    for route, title, intro, groups, tone in V23_HUB_DEFINITIONS:
+        count = len(_compat09___questions_for_groups(questions, groups))
+        cards.append(
+            f'''<a class="choice-card need-index-card need-index-card--{_compat06__esc(tone)}" href="/{_compat06__esc(route)}/">
+  <strong>{_compat06__esc(title)}</strong>
+  <span>{_compat06__esc(intro)}</span>
+  <span class="question-count">{count} practical questions</span>
+</a>'''
+        )
+    body = f'''
+<section class="notice">
+  <strong>Start with the need, not the label.</strong> These are navigation areas, not diagnoses or recommendations.
+</section>
+<section class="needs-overview" aria-labelledby="needs-overview-heading">
+  <h2 id="needs-overview-heading">Choose an area of life</h2>
+  <p class="section-intro">Open one area first. The full Questions, Resources and A–Z indexes remain available if you want everything.</p>
+  <div class="choice-grid choice-grid--needs-index">{''.join(cards)}</div>
+</section>
+<section class="home-orientation" aria-labelledby="needs-other-heading">
+  <h2 id="needs-other-heading">Other ways to browse</h2>
+  <div class="home-route-grid">
+    <a href="/find/"><strong>Describe the problem</strong><span>Use your own words.</span></a>
+    <a href="/questions/"><strong>Browse Questions</strong><span>See all governed practical Questions by area.</span></a>
+    <a href="/resources/"><strong>Browse Resources</strong><span>Find tools, services, organisations and practical help.</span></a>
+    <a href="/a-z/"><strong>Complete A–Z</strong><span>See the whole governed knowledge base.</span></a>
+  </div>
+</section>
+'''
+    return _compat08__page_shell(
+        'Browse by area of life',
+        'Start from the part of life where the difficulty shows up, then open only the Questions or secondary material you need.',
+        body,
+        current='questions',
+        path='/needs/',
+    )
+
+def render_need_hub_v23(route: str, title: str, intro: str, group_names: set[str], questions: list[dict], concept_map: dict[str, dict], resource_map: dict[str, dict]) -> str:
+    selected = _compat09___questions_for_groups(questions, group_names)
+    concepts, resources = _compat09___linked_content_from_questions(selected, concept_map, resource_map)
+    tone = _v23_hub_tone(route)
+    question_rows = ''.join((_compat08__question_link(question) for question in selected))
+    concept_items = ''.join((
+        f'''<li><a href="/understand/{_compat06__esc(item['id'])}/">{_compat06__esc(item['name'])}</a></li>'''
+        for item in concepts
+    )) or '<li>No related Topic is recorded yet.</li>'
+    resource_items = ''.join((
+        f'''<li><a href="/resources/{_compat06__esc(item['id'])}/">{_compat06__esc(item['name'])}</a></li>'''
+        for item in resources
+    )) or '<li>No related Resource is recorded yet.</li>'
+
+    body = f'''
+<p class="back-link"><a href="/needs/">← All areas of life</a></p>
+<section class="need-hub need-hub--{_compat06__esc(tone)}" aria-labelledby="need-hub-start-heading">
+  <h2 id="need-hub-start-heading">Start here</h2>
+  <p>Open the practical Questions first. Topics and Resources are secondary routes for when you want more context or something to inspect.</p>
+  <p><a class="quiet-link" href="/find/">Not sure which question fits? Describe the problem instead →</a></p>
+</section>
+<section class="notice">
+  <strong>Relevant to inspect, not recommended.</strong> This page groups reviewed routes. It does not infer a diagnosis, eligibility or the right support for an individual.
+</section>
+<section class="need-primary" aria-labelledby="need-questions-heading">
+  <h2 id="need-questions-heading">Practical questions</h2>
+  <details class="need-disclosure need-disclosure--questions">
+    <summary><span>Show {len(selected)} practical questions</span><span class="summary-meta">Start here</span></summary>
+    <div class="topic-list">{question_rows}</div>
+  </details>
+</section>
+<section class="need-secondary" aria-labelledby="need-secondary-heading">
+  <h2 id="need-secondary-heading">More context when you want it</h2>
+  <div class="need-secondary-grid">
+    <details class="need-disclosure">
+      <summary><span>Related topics</span><span class="summary-meta">{len(concepts)}</span></summary>
+      <ul>{concept_items}</ul>
+    </details>
+    <details class="need-disclosure">
+      <summary><span>Related resources</span><span class="summary-meta">{len(resources)}</span></summary>
+      <ul>{resource_items}</ul>
+    </details>
+  </div>
+</section>
+<p class="back-link need-return"><a href="/needs/">← Back to all areas of life</a></p>
+'''
+    return _compat08__page_shell(
+        title,
+        intro,
+        body,
+        current='questions',
+        path=f'/{route}/',
+    )
+
+_compat09__render_index = render_home_v23
+_compat09__render_needs_index = render_needs_index_v23
+_compat09__render_need_hub = render_need_hub_v23
+
 def _append_before_main_end(page: str, section: str) -> str:
     if '</main>' not in page:
         raise ValueError('Cannot locate main element')
@@ -1215,8 +1452,9 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
     _compat06__write_route(destination, 'find', render_find_page())
     (destination / 'find.js').write_text((_compat06__ROOT / 'scripts' / 'discovery_browser.js').read_text(encoding='utf-8'), encoding='utf-8')
     home = (destination / 'index.html').read_text(encoding='utf-8')
-    find_section = '<section class="start-section" aria-labelledby="find-oracle-heading"><h2 id="find-oracle-heading">Describe the problem in your own words</h2><p>Use local governed discovery when you do not know the name of the Topic, Question or Resource you need.</p><p><a href="/find/">Find a governed route →</a></p></section>'
-    (destination / 'index.html').write_text(_append_before_main_end(home, find_section), encoding='utf-8')
+    if 'class="home-start"' not in home:
+        find_section = '<section class="start-section" aria-labelledby="find-oracle-heading"><h2 id="find-oracle-heading">Describe the problem in your own words</h2><p>Use local governed discovery when you do not know the name of the Topic, Question or Resource you need.</p><p><a href="/find/">Find a governed route →</a></p></section>'
+        (destination / 'index.html').write_text(_append_before_main_end(home, find_section), encoding='utf-8')
     for route, section in {'privacy': '<section><h2>Local discovery privacy</h2><p>The /find/ tool ranks the static governed catalogue in your browser. Query text is not submitted in a URL, sent to an AI or search service, stored by ND Oracle, or used for analytics. The page itself and its local script are served like other static site files.</p></section>', 'how-it-works': '<section><h2>Governed discovery</h2><p>The /find/ tool uses deterministic local text and editorial-intent matching. It can rank governed routes, but it cannot create a new fact, diagnose a person or convert relevance into a recommendation. If no route clears the threshold, it says that the catalogue does not have a governed answer yet.</p></section>'}.items():
         path = destination / route / 'index.html'
         path.write_text(_append_before_main_end(path.read_text(encoding='utf-8'), section), encoding='utf-8')
