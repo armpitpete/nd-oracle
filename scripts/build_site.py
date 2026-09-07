@@ -1137,7 +1137,10 @@ def render_questions_index_v2(questions: list[dict]) -> str:
             )
         cluster_sections.append(
             f'''<section class="question-cluster question-cluster--{_compat06__esc(slug)}" id="question-cluster-{_compat06__esc(slug)}" aria-labelledby="question-cluster-{_compat06__esc(slug)}-heading">
-  <h2 id="question-cluster-{_compat06__esc(slug)}-heading">{_compat06__esc(title)}</h2>
+  <div class="question-cluster-heading">
+    <h2 id="question-cluster-{_compat06__esc(slug)}-heading">{_compat06__esc(title)}</h2>
+    <a class="quiet-link" href="#question-areas">Back to areas ↑</a>
+  </div>
   <p class="section-intro">{_compat06__esc(description)}</p>
   <div class="question-group-stack">{''.join(group_details)}</div>
 </section>'''
