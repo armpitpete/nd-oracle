@@ -11,6 +11,7 @@ on:
       - "scripts/discovery_browser.js"
       - "tests/**"
       - "docs/ND_UX_V1_*.md"
+      - "docs/ND_UX_V2_*.md"
       - ".github/workflows/ux-visual-evidence.yml"
 
 permissions:
@@ -26,7 +27,7 @@ jobs:
       - name: Check out frozen UX baseline
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: 185582736ea6df097c742c0f592feee1f21538c9
+          ref: 33677f8fbe110c95adeedb9e90dd62c503d8c15c
           path: baseline
           persist-credentials: false
 
@@ -78,6 +79,16 @@ jobs:
                   target = root / route
                   target.mkdir(parents=True, exist_ok=True)
                   (target / "index.html").write_text(source.replace("</body>", probe + "</body>", 1), encoding="utf-8")
+
+              resources = (root / "resources" / "index.html").read_text(encoding="utf-8")
+              open_state = resources.replace(
+                  '<details class="resource-catalogue">',
+                  '<details class="resource-catalogue" open>',
+                  1,
+              )
+              target = root / "resources-open"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(open_state, encoding="utf-8")
           PY
 
       - name: Capture frozen baseline and exact candidate screenshots
@@ -111,6 +122,14 @@ jobs:
           grep -q "Governed routes to inspect" /tmp/candidate-find-results.html
           grep -q 'class="scope-badge"' /tmp/candidate-find-results.html
 
+          grep -q 'class="resource-catalogue"' candidate/dist/resources/index.html
+          ! grep -q 'class="resource-catalogue" open' candidate/dist/resources/index.html
+          test "$(grep -o 'choice-card choice-card--primary' candidate/dist/resources/index.html | wc -l)" -eq 4
+          grep -q 'Describe what you need' candidate/dist/resources/index.html
+          grep -q 'Start from a life problem' candidate/dist/resources/index.html
+          grep -q 'Check what applies where I live' candidate/dist/resources/index.html
+          grep -q 'Browse by kind of resource' candidate/dist/resources/index.html
+
           ROUTES=(
             "home|/"
             "find|/find/"
@@ -118,6 +137,8 @@ jobs:
             "find-results|/find-results/"
             "questions-index|/questions/"
             "question-workplace-gb|/questions/workplace-support-great-britain/"
+            "resources-index|/resources/"
+            "resources-open|/resources-open/"
             "resource-goblin-tools|/resources/goblin-tools/"
             "concept-autism|/understand/autism/"
             "evidence-index|/evidence/"
@@ -143,6 +164,18 @@ jobs:
                 else
                   effective_size="390,1800"
                 fi
+              elif [[ "$name" == "resources-index" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,3200"
+                else
+                  effective_size="390,3600"
+                fi
+              elif [[ "$name" == "resources-open" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,2400"
+                else
+                  effective_size="390,2800"
+                fi
               fi
               google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
                 --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
@@ -159,24 +192,26 @@ jobs:
           capture candidate 8766 390,844 narrow
 
           {
-            echo "contract=ND-UX-V1-ACCEPTANCE"
-            echo "baseline_sha=185582736ea6df097c742c0f592feee1f21538c9"
+            echo "contract=ND-UX-V2-RESOURCES"
+            echo "baseline_sha=33677f8fbe110c95adeedb9e90dd62c503d8c15c"
             echo "candidate_sha=${{ github.event.pull_request.head.sha }}"
             echo "evidence_detail=$EVIDENCE_DETAIL"
             echo "desktop=1440x1100"
             echo "narrow=390x844"
             echo "find_state_capture_height=1800"
+            echo "resources_default_capture=1440x3200,390x3600"
+            echo "resources_open_capture=1440x2400,390x2800"
             echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 26
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 26
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 30
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 30
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: nd-ux-v1-visual-evidence-${{ github.event.pull_request.head.sha }}
+          name: nd-ux-v2-visual-evidence-${{ github.event.pull_request.head.sha }}
           path: ux-evidence/
           if-no-files-found: error
           retention-days: 30
