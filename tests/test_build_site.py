@@ -216,6 +216,21 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn('class="page-kind"', page, route)
             self.assertIn(label, page, route)
 
+    def test_primary_navigation_is_bounded_and_find_first(self):
+        page = self.page("/")
+        start = page.index('<nav class="primary-nav" aria-label="Primary">')
+        end = page.index("</nav>", start)
+        nav = page[start:end]
+        self.assertEqual(4, nav.count("<a "))
+        self.assertLess(nav.index('href="/find/"'), nav.index('href="/questions/"'))
+        for href in ("/find/", "/questions/", "/understand/", "/resources/"):
+            self.assertIn(f'href="{href}"', nav)
+        self.assertNotIn('href="/about/"', nav)
+        self.assertNotIn('href="/how-it-works/"', nav)
+        footer = page[page.index('aria-label="Footer"'):]
+        self.assertIn('href="/about/"', footer)
+        self.assertIn('href="/how-it-works/"', footer)
+
     def test_find_is_primary_navigation_and_has_accessible_local_controls(self):
         page = self.page("/find/")
         self.assertIn('href="/find/" aria-current="page">Find</a>', page)
