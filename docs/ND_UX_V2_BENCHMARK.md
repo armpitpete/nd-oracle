@@ -271,3 +271,22 @@ V2 therefore aims for:
 - and real user testing.
 
 It must not claim “neurodivergent-friendly” merely because a checklist passes.
+
+## V2.4 design-method correction
+
+The V2.1–V2.3 implementation exposed a weakness in this benchmark: it over-weighted bounded cards and separation while under-weighting whole-page composition, desktop overview and the cognitive cost of repeated containers.
+
+The earlier recommendation for “clear, equally sized, visibly clickable cards” is therefore **superseded as a default**. Cards remain available only when an item is genuinely independent and benefits from an enclosing boundary.
+
+From V2.4 onward:
+
+- page composition is decided before component selection;
+- long-form reading keeps a controlled measure, while discovery/index pages use the desktop viewport for overview;
+- typography, spacing, rules and directional left-edge colour markers are preferred to hero panels and card grids;
+- responsive design means recomposition, not merely stacking;
+- ordinary-language recognition routes come before specialist taxonomy;
+- unfamiliar specialist words may be split into meaningful parts as a learning aid, followed by the whole plain-language meaning;
+- colour must be paired with text, position or structure and never be the only signal;
+- every candidate receives a full-page hostile design review for viewport use, scrolling, container necessity, recognition load and subtraction opportunities.
+
+The detailed governing correction is recorded in `docs/ND_UX_V2_4_DESIGN_CORRECTION.md`.

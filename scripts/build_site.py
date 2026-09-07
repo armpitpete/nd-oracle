@@ -1480,6 +1480,306 @@ _compat09__render_index = render_home_v23
 _compat09__render_needs_index = render_needs_index_v23
 _compat09__render_need_hub = render_need_hub_v23
 
+# ---- ND-UX-V2.4 composition + language learning ----
+#
+# V2.4 corrects the discovery design method as well as the Topics page.
+# Discovery surfaces use recognition before taxonomy, while unfamiliar terms
+# can expose a word-part learning aid without pretending that morphology is a
+# formal definition or diagnosis.
+
+V24_TOPIC_GROUPS = [
+    (
+        'conditions-neurotypes',
+        'Conditions & neurotypes',
+        'Names used for diagnoses, neurotypes and developmental conditions.',
+        (
+            'adhd',
+            'autism',
+            'dyslexia',
+            'dyscalculia',
+            'developmental-coordination-disorder',
+            'developmental-language-disorder',
+            'learning-disability',
+            'tourette-syndrome',
+        ),
+    ),
+    (
+        'attention-doing',
+        'Attention, focus & getting started',
+        'Ways attention, planning and starting actions can work.',
+        ('executive-function', 'task-initiation', 'monotropism'),
+    ),
+    (
+        'sensory-body',
+        'Sensory & body signals',
+        'How sensory input and signals from inside the body can be noticed and handled.',
+        ('sensory-processing', 'sensory-overload', 'interoception', 'stimming'),
+    ),
+    (
+        'communication-feelings',
+        'Communication, feelings & social effort',
+        'Understanding communication, emotions, social adaptation and exhaustion.',
+        ('communication-differences', 'alexithymia', 'masking', 'autistic-burnout'),
+    ),
+    (
+        'big-picture',
+        'Big-picture language',
+        'A wider idea used to talk about neurological variation and society.',
+        ('neurodiversity',),
+    ),
+]
+
+V24_RECOGNITION_ROUTES = [
+    ('I cannot get started even when I want to', 'task-initiation'),
+    ('Noise, light or touch becomes too much', 'sensory-overload'),
+    ('I do not notice hunger, thirst or other body signals', 'interoception'),
+    ('I change or hide how I act to fit in', 'masking'),
+    ('My attention locks strongly onto a small number of things', 'monotropism'),
+    ('I find it hard to identify or describe what I am feeling', 'alexithymia'),
+]
+
+V24_TERM_GUIDES = {
+    'neurodiversity': (
+        ('neuro', 'brain and nervous system'),
+        ('diversity', 'variation or difference'),
+    ),
+    'executive-function': (
+        ('executive', 'directing or carrying out actions'),
+        ('function', 'what something does'),
+    ),
+    'sensory-processing': (
+        ('sensory', 'information from the senses'),
+        ('processing', 'taking in, organising and responding to information'),
+    ),
+    'dyslexia': (
+        ('dys', 'difficulty or impairment'),
+        ('lexia', 'words or reading'),
+    ),
+    'developmental-coordination-disorder': (
+        ('developmental', 'connected with development over time'),
+        ('co-ordination', 'different movements working together'),
+        ('disorder', 'a condition causing significant difficulty'),
+    ),
+    'learning-disability': (
+        ('learning', 'acquiring or understanding information'),
+        ('disability', 'a lasting impairment or barrier affecting everyday life'),
+    ),
+    'developmental-language-disorder': (
+        ('developmental', 'connected with development over time'),
+        ('language', 'understanding and using language'),
+        ('disorder', 'a condition causing significant difficulty'),
+    ),
+    'dyscalculia': (
+        ('dys', 'difficulty or impairment'),
+        ('calculia', 'calculation or number work'),
+    ),
+    'masking': (
+        ('masking', 'hiding or changing visible parts of yourself'),
+        ('camouflaging', 'blending in or making differences less visible'),
+    ),
+    'autistic-burnout': (
+        ('autistic', 'connected with autistic experience'),
+        ('burnout', 'severe, lasting exhaustion and reduced capacity in this context'),
+    ),
+    'monotropism': (
+        ('mono', 'one or single'),
+        ('trop', 'turning, direction or orientation'),
+        ('ism', 'a concept, system or theory name'),
+    ),
+    'interoception': (
+        ('intero', 'inside or internal'),
+        ('ception', 'sensing or perceiving'),
+    ),
+    'alexithymia': (
+        ('a', 'without or lacking'),
+        ('lexi', 'words'),
+        ('thymia', 'emotion or feeling'),
+    ),
+    'stimming': (
+        ('stim', 'stimulation'),
+        ('ing', 'an activity or process'),
+    ),
+    'communication-differences': (
+        ('communication', 'sharing or understanding information'),
+        ('differences', 'ways something varies between people'),
+    ),
+    'task-initiation': (
+        ('task', 'something you intend or need to do'),
+        ('initiation', 'the act of beginning'),
+    ),
+    'sensory-overload': (
+        ('sensory', 'information from the senses'),
+        ('overload', 'more input than can be comfortably handled'),
+    ),
+}
+
+
+def _v24_validate_topics(concepts: list[dict]) -> None:
+    concept_ids = {concept['id'] for concept in concepts}
+    grouped = [
+        concept_id
+        for _slug, _title, _description, ids in V24_TOPIC_GROUPS
+        for concept_id in ids
+    ]
+    if len(grouped) != len(set(grouped)):
+        duplicates = sorted({item for item in grouped if grouped.count(item) > 1})
+        raise ValueError(f'V2.4 Topic groups contain duplicates: {duplicates}')
+    if set(grouped) != concept_ids:
+        raise ValueError(
+            'V2.4 Topic groups must exactly cover the governed Concept corpus: '
+            f'missing={sorted(concept_ids - set(grouped))}; '
+            f'unexpected={sorted(set(grouped) - concept_ids)}'
+        )
+    recognition_targets = {target for _label, target in V24_RECOGNITION_ROUTES}
+    if not recognition_targets <= concept_ids:
+        raise ValueError(
+            f'V2.4 recognition routes contain unknown Topics: '
+            f'{sorted(recognition_targets - concept_ids)}'
+        )
+    guide_targets = set(V24_TERM_GUIDES)
+    if not guide_targets <= concept_ids:
+        raise ValueError(
+            f'V2.4 term guides contain unknown Topics: '
+            f'{sorted(guide_targets - concept_ids)}'
+        )
+
+
+def _v24_topic_group_link(concept: dict) -> str:
+    return (
+        f'<li><a href="/understand/{_compat06__esc(concept["id"])}/">'
+        f'{_compat06__esc(concept["name"])}</a>'
+        f'<span>{_compat06__esc(_compat06__reader_intro(concept))}</span></li>'
+    )
+
+
+def _v24_word_build(parts: tuple[tuple[str, str], ...]) -> str:
+    return '<span class="word-build">' + '<span class="word-part-separator"> – </span>'.join(
+        f'<strong class="word-part">{_compat06__esc(part)}</strong>'
+        for part, _meaning in parts
+    ) + '</span>'
+
+
+def _v24_word_meanings(parts: tuple[tuple[str, str], ...]) -> str:
+    return '<dl class="word-meanings">' + ''.join(
+        f'<div><dt>{_compat06__esc(part)}</dt><dd>{_compat06__esc(meaning)}</dd></div>'
+        for part, meaning in parts
+    ) + '</dl>'
+
+
+def render_understand_index_v24(concepts: list[dict]) -> str:
+    _v24_validate_topics(concepts)
+    concept_map = {concept['id']: concept for concept in concepts}
+
+    recognition = ''.join(
+        f'<li><a href="/understand/{_compat06__esc(target)}/">'
+        f'{_compat06__esc(label)}</a>'
+        f'<span>{_compat06__esc(concept_map[target]["name"])}</span></li>'
+        for label, target in V24_RECOGNITION_ROUTES
+    )
+
+    groups = []
+    for slug, title, description, ids in V24_TOPIC_GROUPS:
+        links = ''.join(_v24_topic_group_link(concept_map[concept_id]) for concept_id in ids)
+        groups.append(
+            f'''<section class="topic-group topic-group--{_compat06__esc(slug)}"
+    aria-labelledby="topic-group-{_compat06__esc(slug)}">
+  <h3 id="topic-group-{_compat06__esc(slug)}">{_compat06__esc(title)}</h3>
+  <p>{_compat06__esc(description)}</p>
+  <ul class="topic-group-links">{links}</ul>
+</section>'''
+        )
+
+    topics = ''.join(_compat06__topic_link(concept) for concept in concepts)
+    mono_parts = V24_TERM_GUIDES['monotropism']
+    body = f'''
+<section class="notice topic-orientation">
+  <strong>Orientation, not diagnosis.</strong> These pages explain concepts and preserve their evidence routes. They do not diagnose individuals or replace appropriate professional judgement.
+</section>
+
+<section class="topic-word-example" aria-labelledby="topic-word-example-heading">
+  <h2 id="topic-word-example-heading">New word? Break it down</h2>
+  <p>Unfamiliar words do not have to stay opaque. A word can be split into useful parts, then connected back to its full meaning.</p>
+  <p class="word-example-line"><strong>Monotropism</strong> {_v24_word_build(mono_parts)}</p>
+  {_v24_word_meanings(mono_parts)}
+  <p class="meta">Word parts are a learning and memory aid, not the formal definition. Historical word roots and modern meanings do not always match exactly.</p>
+</section>
+
+<section class="topic-recognition" aria-labelledby="topic-recognition-heading">
+  <h2 id="topic-recognition-heading">Start with what you notice</h2>
+  <p class="section-intro">You do not need to know the technical term. Choose a description that sounds close to what you are trying to understand.</p>
+  <ul class="recognition-list">{recognition}</ul>
+  <p class="topic-find-route"><a href="/find/">Or describe it in your own words with Find →</a></p>
+</section>
+
+<section class="topic-groups" aria-labelledby="topic-groups-heading">
+  <h2 id="topic-groups-heading">Browse by kind of topic</h2>
+  <p class="section-intro">These groups are for navigation. Some ideas overlap; the grouping does not create a diagnostic boundary.</p>
+  <div class="topic-group-grid">{''.join(groups)}</div>
+</section>
+
+<section class="topic-complete" aria-labelledby="concepts-heading">
+  <h2 id="concepts-heading">All topics A–Z</h2>
+  <p class="section-intro">All {len(concepts)} reviewed Topics remain visible here when you already know the term or want the complete index.</p>
+  <div class="topic-list topic-index-list">{topics}</div>
+</section>
+'''
+    return _compat08__page_shell(
+        'Understand',
+        'Plain-language explanations of neurodivergence, experiences and concepts, with evidence and uncertainty available when you want them.',
+        body,
+        current='understand',
+        path='/understand/',
+    )
+
+
+def _v24_term_guide(concept: dict) -> str:
+    parts = V24_TERM_GUIDES.get(concept['id'])
+    if not parts:
+        return ''
+    return f'''
+<section class="word-guide" aria-labelledby="word-guide-heading">
+  <h2 id="word-guide-heading">Break the term down</h2>
+  <p class="word-guide-title"><strong>{_compat06__esc(concept["name"])}</strong> {_v24_word_build(parts)}</p>
+  {_v24_word_meanings(parts)}
+  <p class="word-guide-meaning"><strong>Whole meaning:</strong> {_compat06__esc(_compat06__reader_intro(concept))}</p>
+  <p class="meta">This breakdown is a learning aid, not a diagnostic rule or a formal definition. Word history and present-day meaning can differ.</p>
+</section>
+'''
+
+
+_V24_CONCEPT_BASE = _compat08__render_concept
+
+
+def render_concept_v24(
+    concept: dict,
+    concept_map: dict[str, dict],
+    resources: list[dict],
+    questions: list[dict],
+) -> str:
+    page = _V24_CONCEPT_BASE(concept, concept_map, resources, questions)
+    guide = _v24_term_guide(concept)
+    if not guide:
+        return page
+    marker = '<details class="technical-summary">'
+    if marker not in page:
+        raise ValueError(f'{concept["id"]}: cannot locate precise-description disclosure for V2.4 term guide')
+    return page.replace(marker, guide + marker, 1)
+
+
+# V2.4 replaces only public Topic projections. Canonical Concept objects,
+# evidence, relations, Questions, Resources and discovery authority are unchanged.
+_compat06__render_understand_index = render_understand_index_v24
+_compat08__render_concept = render_concept_v24
+
+_V24_ACCESSIBILITY_GUIDANCE = (
+    '<section><h2>Language, overview and orientation</h2>'
+    '<p>Long-form reading pages keep a controlled line length. Discovery and index pages use more of the desktop viewport so people can see relationships without unnecessary scrolling.</p>'
+    '<p>Unfamiliar terms may be broken into meaningful word parts as a learning aid. Colour is used with headings, position and text labels rather than as the only signal.</p>'
+    '</section>'
+)
+if _V24_ACCESSIBILITY_GUIDANCE not in _compat06__STATIC_PAGES['accessibility']['body']:
+    _compat06__STATIC_PAGES['accessibility']['body'] += _V24_ACCESSIBILITY_GUIDANCE
+
 def _append_before_main_end(page: str, section: str) -> str:
     if '</main>' not in page:
         raise ValueError('Cannot locate main element')
