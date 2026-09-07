@@ -7,7 +7,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from scripts import build_site
+from scripts import build_site, discovery
 
 
 class LinkCollector(HTMLParser):
@@ -99,6 +99,67 @@ class WebsiteBuildTests(unittest.TestCase):
             if resource["category"] == "game": self.assertIn(name, games)
             if resource["category"] in build_site.TOOL_CATEGORIES: self.assertIn(name, tools)
             if resource["category"] in build_site.COMMUNITY_CATEGORIES: self.assertIn(name, community)
+
+    def test_resources_index_reduces_first_choice_load_without_hiding_catalogue(self):
+        page = self.page("/resources/")
+        self.assertIn("Choose how to start", page)
+        self.assertEqual(4, page.count("choice-card choice-card--primary"))
+        for href, label in (
+            ("/find/", "Describe what you need"),
+            ("/needs/", "Start from a life problem"),
+            ("/places/", "Check what applies where I live"),
+            ("/types/", "Browse by kind of resource"),
+        ):
+            self.assertIn(f'href="{href}"', page)
+            self.assertIn(label, page)
+        self.assertLess(page.index("Choose how to start"), page.index("Listed, not endorsed"))
+        self.assertLess(page.index('href="/find/"'), page.index(f"Show all {len(self.resources)} resources A–Z on this page"))
+        self.assertIn('<details class="resource-catalogue">', page)
+        self.assertNotIn('<details class="resource-catalogue" open', page)
+        self.assertIn(f"Show all {len(self.resources)} resources A–Z on this page", page)
+        details_start = page.index('<details class="resource-catalogue">')
+        self.assertEqual(len(self.resources), page[details_start:].count('<article class="resource-row">'))
+        self.assertIn('class="resource-alpha-group"', page[details_start:])
+        for route, title, _intro, _groups in build_site.HUB_DEFINITIONS:
+            self.assertIn(f'href="/{route}/"', page)
+            self.assertIn(html.escape(title, quote=True), page)
+        for href in ("/tools/", "/games/", "/books-media/", "/community/", "/a-z/"):
+            self.assertIn(f'href="{href}"', page)
+
+    def test_resources_v2_task_journeys_have_short_routes(self):
+        resources_page = self.page("/resources/")
+
+        # 1. School/college organisation: one visible need route, then a governed question.
+        self.assertIn('href="/needs/education-study/"', resources_page)
+        education = self.page("/needs/education-study/")
+        self.assertIn('href="/questions/organising-study-and-assignments/"', education)
+
+        # 2. Wales applicability: place is a first-screen choice and Wales is a visible scope group.
+        self.assertIn('href="/places/"', resources_page)
+        places = self.page("/places/")
+        self.assertIn("<h2>Wales</h2>", places)
+
+        # 3. Difficult phone calls: communication is visible and the governed question is one step on.
+        self.assertIn('href="/needs/communication/"', resources_page)
+        communication = self.page("/needs/communication/")
+        self.assertIn('href="/questions/phone-calls-are-difficult/"', communication)
+
+        # 4. Low-pressure games: ordinary-language Find reaches the governed question.
+        _boundary, game_results = discovery.search(
+            "I want a game with little or no time pressure",
+            limit=10,
+        )
+        self.assertIn(
+            "/questions/low-time-pressure-games/",
+            [result.route for result in game_results],
+        )
+
+        # 5. A reader who wants everything still has both a complete index and inline A-Z disclosure.
+        self.assertIn('href="/a-z/"', resources_page)
+        self.assertIn(
+            f"Show all {len(self.resources)} resources A–Z on this page",
+            resources_page,
+        )
 
     def test_every_resource_page_exposes_access_limits_scope_costs_conflicts_and_correct_claim_boundary(self):
         for resource in self.resources:
@@ -193,6 +254,21 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn('class="page-kind"', page, route)
             self.assertIn(label, page, route)
 
+    def test_primary_navigation_is_bounded_and_find_first(self):
+        page = self.page("/")
+        start = page.index('<nav class="primary-nav" aria-label="Primary">')
+        end = page.index("</nav>", start)
+        nav = page[start:end]
+        self.assertEqual(4, nav.count("<a "))
+        self.assertLess(nav.index('href="/find/"'), nav.index('href="/questions/"'))
+        for href in ("/find/", "/questions/", "/understand/", "/resources/"):
+            self.assertIn(f'href="{href}"', nav)
+        self.assertNotIn('href="/about/"', nav)
+        self.assertNotIn('href="/how-it-works/"', nav)
+        footer = page[page.index('aria-label="Footer"'):]
+        self.assertIn('href="/about/"', footer)
+        self.assertIn('href="/how-it-works/"', footer)
+
     def test_find_is_primary_navigation_and_has_accessible_local_controls(self):
         page = self.page("/find/")
         self.assertIn('href="/find/" aria-current="page">Find</a>', page)
@@ -238,6 +314,9 @@ class WebsiteBuildTests(unittest.TestCase):
         ):
             self.assertIn(marker, css)
         self.assertIn(":focus-visible", css)
+        self.assertIn(".choice-card", css)
+        self.assertIn(".resource-catalogue", css)
+        self.assertNotIn("ui-serif", css)
         self.assertNotIn("@keyframes", css)
 
     def test_footer_exposes_evidence_governance_route(self):

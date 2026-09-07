@@ -133,7 +133,7 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
   <div class="site-shell header-row">
     <div class="site-identity">
       <a class="site-name" href="/">The Neurodiverse Oracle</a>
-      <span class="site-purpose">Evidence-aware neurodiversity navigation</span>
+      <span class="site-purpose">Neurodiversity information, resources and evidence</span>
     </div>
     {_compat06__nav(current)}
   </div>
@@ -153,6 +153,7 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
       <a href="/resources/">Resources</a>
       <a href="/evidence/">Evidence</a>
       <a href="/how-it-works/">How it works</a>
+      <a href="/about/">About</a>
       <a href="/accessibility/">Accessibility</a>
       <a href="/feedback/">Feedback</a>
       <a href="/privacy/">Privacy</a>
@@ -318,7 +319,7 @@ def _compat06__build(output_dir: Path=_compat06__DEFAULT_OUTPUT_DIR) -> Path:
 if __package__ in {None, ''}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 _compat08__QUESTIONS_DIR = _compat06__ROOT / 'objects' / 'questions'
-_compat08__PRIMARY_NAV = [('find', 'Find'), ('questions', 'Questions'), ('understand', 'Topics'), ('resources', 'Resources'), ('how-it-works', 'How it works'), ('about', 'About')]
+_compat08__PRIMARY_NAV = [('find', 'Find'), ('questions', 'Questions'), ('understand', 'Topics'), ('resources', 'Resources')]
 _compat06__PRIMARY_NAV = _compat08__PRIMARY_NAV
 if not '_compat06___V08_ORIGINAL_PAGE_SHELL' in globals():
     _compat06___V08_ORIGINAL_PAGE_SHELL = _compat06__page_shell
@@ -663,9 +664,102 @@ def _compat09__render_resource(resource: dict, concept_map: dict[str, dict], que
         raise ValueError(f"{resource['id']}: cannot locate intended-use section")
     return page.replace(marker, section + marker, 1)
 def _compat09__render_resources_index(resources: list[dict]) -> str:
-    page = _compat08__render_resources_index(resources)
-    section = '\n<section aria-labelledby="resource-browse-heading">\n  <h2 id="resource-browse-heading">Browse the catalogue</h2>\n  <p><a href="/types/">By content type</a> · <a href="/places/">By geographic scope</a> · <a href="/a-z/">A–Z</a></p>\n</section>\n'
-    return _compat09___append_before_main_end(page, section)
+    alpha_rows: dict[str, list[str]] = {}
+    for resource in resources:
+        first = resource['name'].strip()[:1].upper()
+        letter = first if first.isalnum() else '#'
+        alpha_rows.setdefault(letter, []).append(_compat06__resource_link(resource))
+    catalogue_groups = ''.join((
+        f'''<section class="resource-alpha-group" aria-labelledby="resource-letter-{_compat06__esc(letter.lower() if letter != '#' else 'other')}">
+  <h3 id="resource-letter-{_compat06__esc(letter.lower() if letter != '#' else 'other')}">{_compat06__esc(letter)}</h3>
+  <div class="resource-list">{''.join(rows)}</div>
+</section>'''
+        for letter, rows in alpha_rows.items()
+    ))
+    primary_choices = (
+        ('/find/', 'Describe what you need', 'Type what you need in your own words. Results come from the reviewed ND Oracle catalogue.', 'Open Find'),
+        ('/needs/', 'Start from a life problem', 'Choose an area such as daily life, communication, work, education or wellbeing.', 'Browse needs'),
+        ('/places/', 'Check what applies where I live', 'Check whether information is UK-wide, for one nation, or international before you act.', 'Browse by place'),
+        ('/types/', 'Browse by kind of resource', 'Choose services, organisations, tools, apps, games, books, guides and other content types.', 'Browse types'),
+    )
+    primary_cards = ''.join((
+        f'''<a class="choice-card choice-card--primary" href="{_compat06__esc(href)}">
+  <strong>{_compat06__esc(title)}</strong>
+  <span>{_compat06__esc(description)}</span>
+  <span class="choice-card-action">{_compat06__esc(action)} →</span>
+</a>'''
+        for href, title, description, action in primary_choices
+    ))
+    need_copy = {
+        'needs/daily-life': 'Planning, routines, getting started, technology and everyday tasks.',
+        'needs/sensory-environment': 'Noise, light, touch, overload and changing the environment around you.',
+        'needs/communication': 'Phone calls, processing time, speaking, AAC and written communication.',
+        'needs/work': 'Adjustments, interviews, disclosure, job-search support and staying in work.',
+        'needs/education-study': 'Organisation, study support, exams and school or college access.',
+        'needs/assessment-diagnosis': 'Assessment routes, waiting, private options and what happens next.',
+        'needs/health-wellbeing': 'Sleep, food, burnout, anxiety and healthcare access.',
+        'needs/relationships-family': 'Parenting, boundaries, family life and relationship communication.',
+    }
+    need_cards = ''.join((
+        f'''<a class="choice-card choice-card--need" href="/{_compat06__esc(route)}/">
+  <strong>{_compat06__esc(title)}</strong>
+  <span>{_compat06__esc(need_copy[route])}</span>
+</a>'''
+        for route, title, _intro, _groups in _compat09__HUB_DEFINITIONS
+    ))
+    resource_families = (
+        ('/tools/', 'Tools & practical help', 'Apps, tools, guides and practical products.'),
+        ('/games/', 'Games', 'Browse by play characteristics and possible poor fit, not as treatment.'),
+        ('/books-media/', 'Books & media', 'Books, podcasts and media with context and limitations visible.'),
+        ('/community/', 'Support & organisations', 'Services, organisations and communities with scope kept visible.'),
+    )
+    family_cards = ''.join((
+        f'''<a class="choice-card choice-card--family" href="{_compat06__esc(href)}">
+  <strong>{_compat06__esc(title)}</strong>
+  <span>{_compat06__esc(description)}</span>
+</a>'''
+        for href, title, description in resource_families
+    ))
+    body = f'''
+<section class="resource-start" aria-labelledby="resource-start-heading">
+  <div class="section-heading-row">
+    <div>
+      <h2 id="resource-start-heading">Choose how to start</h2>
+      <p class="section-intro">You do not need to know a diagnosis or service name. Pick the route closest to what you already know.</p>
+    </div>
+  </div>
+  <div class="choice-grid choice-grid--primary">{primary_cards}</div>
+</section>
+<section class="notice resource-boundary">
+  <strong>Listed, not endorsed.</strong> A listing means we have checked and described the resource. It does not mean we have proved it works or that it is right for you.
+</section>
+<section class="resource-needs" aria-labelledby="resource-needs-heading">
+  <h2 id="resource-needs-heading">Browse by area of life</h2>
+  <p class="section-intro">Choose the part of life closest to what you are dealing with. These routes take you to reviewed questions, topics and resources.</p>
+  <div class="choice-grid choice-grid--needs">{need_cards}</div>
+</section>
+<section class="resource-families" aria-labelledby="resource-families-heading">
+  <h2 id="resource-families-heading">Or browse a resource family</h2>
+  <p class="section-intro">Use this when you already know the kind of thing you want to inspect.</p>
+  <div class="choice-grid choice-grid--families">{family_cards}</div>
+</section>
+<section class="resource-complete" aria-labelledby="resource-complete-heading">
+  <h2 id="resource-complete-heading">Need the complete catalogue?</h2>
+  <p class="section-intro">Nothing has been removed. The complete alphabetical catalogue is still available when you want it, without making everyone scan it first.</p>
+  <p><a class="standalone-action" href="/a-z/">Open the complete A–Z index</a></p>
+  <details class="resource-catalogue">
+    <summary><span>Show all {len(resources)} resources A–Z on this page</span></summary>
+    <div class="resource-catalogue-body">{catalogue_groups}</div>
+  </details>
+</section>
+'''
+    return _compat08__page_shell(
+        'Resources',
+        'Find a useful starting point without scanning the whole catalogue. Start with what you need, where you live, the kind of resource, or your own words.',
+        body,
+        current='resources',
+        path='/resources/',
+    )
 def _compat09___question_map(questions: list[dict]) -> dict[str, dict]:
     return {question['id']: question for question in questions}
 def _compat09___questions_for_groups(questions: list[dict], group_names: set[str]) -> list[dict]:
