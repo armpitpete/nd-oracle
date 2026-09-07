@@ -1285,6 +1285,11 @@ li + li {
   color: var(--need-accent);
 }
 
+.need-hub .quiet-link {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .need-primary {
   margin-block: var(--space-6);
 }
