@@ -1368,6 +1368,96 @@ li + li {
   margin-top: var(--space-7);
 }
 
+.home-compatibility {
+  margin-top: var(--space-7);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-strong);
+}
+
+.home-compatibility h2 {
+  margin-top: 0;
+}
+
+.home-shortcuts,
+.needs-complete-index {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+.home-shortcuts summary,
+.needs-complete-index summary {
+  display: flex;
+  min-height: 3.6rem;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  color: var(--accent-strong);
+  font-weight: 750;
+}
+
+.home-shortcuts summary::before,
+.needs-complete-index summary::before {
+  content: "+";
+  display: inline-grid;
+  width: 1.65rem;
+  height: 1.65rem;
+  flex: 0 0 1.65rem;
+  place-items: center;
+  color: #ffffff;
+  background: var(--accent-strong);
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.home-shortcuts[open] summary::before,
+.needs-complete-index[open] summary::before {
+  content: "−";
+}
+
+.home-shortcuts[open] summary,
+.needs-complete-index[open] summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.home-shortcut-content,
+.needs-complete-body {
+  padding: var(--space-4);
+}
+
+.home-shortcut-content h3 {
+  margin-top: var(--space-5);
+}
+
+.home-shortcut-content h3:first-child {
+  margin-top: 0;
+}
+
+.home-shortcut-content ul,
+.needs-complete-group ul {
+  padding-left: 1.25rem;
+}
+
+.needs-complete-body {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.needs-complete-group {
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.needs-complete-group:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.needs-complete-group h3 {
+  color: var(--accent-strong);
+}
+
 .resource-catalogue {
   margin-top: var(--space-5);
   background: var(--surface);
@@ -1744,7 +1834,9 @@ th {
   .question-group,
   .home-route-grid a,
   .need-disclosure,
-  .need-hub {
+  .need-hub,
+  .home-shortcuts,
+  .needs-complete-index {
     border: 1px solid CanvasText;
   }
 
@@ -1752,7 +1844,9 @@ th {
   .resource-catalogue summary::before,
   .resource-alpha-group > h3,
   .question-group summary::before,
-  .need-disclosure summary::before {
+  .need-disclosure summary::before,
+  .home-shortcuts summary::before,
+  .needs-complete-index summary::before {
     color: ButtonText;
     background: ButtonFace;
     border: 2px solid ButtonText;
