@@ -89,6 +89,18 @@ jobs:
               target = root / "resources-open"
               target.mkdir(parents=True, exist_ok=True)
               (target / "index.html").write_text(open_state, encoding="utf-8")
+
+              measure = """<script>
+          window.addEventListener("load", () => {
+            document.body.dataset.scrollHeight = String(document.documentElement.scrollHeight);
+          });
+          </script>"""
+              target = root / "resources-measure"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(
+                  resources.replace("</body>", measure + "</body>", 1),
+                  encoding="utf-8",
+              )
           PY
 
       - name: Capture frozen baseline and exact candidate screenshots
@@ -129,6 +141,39 @@ jobs:
           grep -q 'Start from a life problem' candidate/dist/resources/index.html
           grep -q 'Check what applies where I live' candidate/dist/resources/index.html
           grep -q 'Browse by kind of resource' candidate/dist/resources/index.html
+
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8765/resources-measure/" > /tmp/baseline-resources-measure.html
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/resources-measure/" > /tmp/candidate-resources-measure.html
+
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          def height(path):
+              text = Path(path).read_text(encoding="utf-8")
+              match = re.search(r'data-scroll-height="(\d+)"', text)
+              if not match:
+                  raise SystemExit(f"Missing scroll-height measurement in {path}")
+              return int(match.group(1))
+
+          baseline = height("/tmp/baseline-resources-measure.html")
+          candidate = height("/tmp/candidate-resources-measure.html")
+          print(f"Resources narrow full-page height: baseline={baseline}px candidate={candidate}px")
+          if candidate >= baseline:
+              raise SystemExit("V2 Resources page did not reduce whole-page height")
+          if candidate > baseline * 0.45:
+              raise SystemExit(
+                  f"V2 Resources page reduction is too small: {candidate}px vs baseline {baseline}px"
+              )
+          if candidate > 6200:
+              raise SystemExit(f"V2 Resources default narrow page exceeds 6200px: {candidate}px")
+          Path("ux-evidence/resources-height.txt").write_text(
+              f"baseline_narrow_scroll_height={baseline}\n"
+              f"candidate_narrow_scroll_height={candidate}\n"
+              f"ratio={candidate / baseline:.4f}\n",
+              encoding="utf-8",
+          )
+          PY
 
           ROUTES=(
             "home|/"
