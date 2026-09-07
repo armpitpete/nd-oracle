@@ -255,7 +255,7 @@ class WebsiteBuildTests(unittest.TestCase):
     def test_home_is_orientation_first_not_inventory_first(self):
         page = self.page("/")
         self.assertIn("What do you need right now?", page)
-        self.assertEqual(4, page.count("home-start-card"))
+        self.assertEqual(4, page.count("choice-card home-start-card"))
         for href, label in (
             ("/find/", "Describe what is happening"),
             ("/questions/", "I know what I need help with"),
@@ -265,7 +265,7 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn(f'href="{href}"', page)
             self.assertIn(label, page)
 
-        self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("home-need-card"))
+        self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("choice-card home-need-card"))
         for route, title, _intro, _groups, tone in build_site.V23_HUB_DEFINITIONS:
             self.assertIn(f'href="/{route}/"', page)
             self.assertIn(f"home-need-card--{tone}", page)
@@ -282,7 +282,7 @@ class WebsiteBuildTests(unittest.TestCase):
     def test_needs_index_is_eight_clear_areas_not_a_question_wall(self):
         page = self.page("/needs/")
         self.assertIn("Choose an area of life", page)
-        self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("need-index-card"))
+        self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("choice-card need-index-card"))
         self.assertNotIn('<article class="topic-row">', page)
         self.assertNotIn('<details class="need-disclosure"', page)
         for route, title, _intro, groups, tone in build_site.V23_HUB_DEFINITIONS:
