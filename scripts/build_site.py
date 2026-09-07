@@ -93,11 +93,11 @@ def _ux_page_kind(path: str | None) -> tuple[str, str]:
         return ('browse', 'Navigation')
     parts = [part for part in path.strip('/').split('/') if part]
     if parts[:1] == ['questions']:
-        return ('question' if len(parts) > 1 else 'browse', 'Question' if len(parts) > 1 else 'Questions')
+        return ('question' if len(parts) > 1 else 'questions-index', 'Question' if len(parts) > 1 else 'Questions')
     if parts[:1] == ['resources']:
-        return ('resource' if len(parts) > 1 else 'browse', 'Resource' if len(parts) > 1 else 'Resources')
+        return ('resource' if len(parts) > 1 else 'resources-index', 'Resource' if len(parts) > 1 else 'Resources')
     if parts[:1] == ['understand']:
-        return ('concept' if len(parts) > 1 else 'browse', 'Concept' if len(parts) > 1 else 'Topics')
+        return ('concept' if len(parts) > 1 else 'topics-index', 'Concept' if len(parts) > 1 else 'Topics')
     if parts[:1] == ['evidence']:
         return ('evidence', 'Evidence record' if len(parts) > 1 else 'Evidence')
     if parts[:1] == ['find']:
@@ -1117,7 +1117,7 @@ def render_questions_index_v2(questions: list[dict]) -> str:
     for slug, title, description, group_names in QUESTION_DISCOVERY_CLUSTERS:
         total = sum(len(group_map[name]) for name in group_names)
         area_cards.append(
-            f'''<a class="choice-card question-area-card" href="#question-cluster-{_compat06__esc(slug)}">
+            f'''<a class="choice-card question-area-card question-area-card--{_compat06__esc(slug)}" href="#question-cluster-{_compat06__esc(slug)}">
   <strong>{_compat06__esc(title)}</strong>
   <span>{_compat06__esc(description)}</span>
   <span class="question-count">{total} questions</span>
@@ -1136,7 +1136,7 @@ def render_questions_index_v2(questions: list[dict]) -> str:
 </details>'''
             )
         cluster_sections.append(
-            f'''<section class="question-cluster" id="question-cluster-{_compat06__esc(slug)}" aria-labelledby="question-cluster-{_compat06__esc(slug)}-heading">
+            f'''<section class="question-cluster question-cluster--{_compat06__esc(slug)}" id="question-cluster-{_compat06__esc(slug)}" aria-labelledby="question-cluster-{_compat06__esc(slug)}-heading">
   <h2 id="question-cluster-{_compat06__esc(slug)}-heading">{_compat06__esc(title)}</h2>
   <p class="section-intro">{_compat06__esc(description)}</p>
   <div class="question-group-stack">{''.join(group_details)}</div>
