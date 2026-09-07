@@ -93,11 +93,11 @@ def _ux_page_kind(path: str | None) -> tuple[str, str]:
         return ('browse', 'Navigation')
     parts = [part for part in path.strip('/').split('/') if part]
     if parts[:1] == ['questions']:
-        return ('question' if len(parts) > 1 else 'browse', 'Question' if len(parts) > 1 else 'Questions')
+        return ('question' if len(parts) > 1 else 'questions-index', 'Question' if len(parts) > 1 else 'Questions')
     if parts[:1] == ['resources']:
-        return ('resource' if len(parts) > 1 else 'browse', 'Resource' if len(parts) > 1 else 'Resources')
+        return ('resource' if len(parts) > 1 else 'resources-index', 'Resource' if len(parts) > 1 else 'Resources')
     if parts[:1] == ['understand']:
-        return ('concept' if len(parts) > 1 else 'browse', 'Concept' if len(parts) > 1 else 'Topics')
+        return ('concept' if len(parts) > 1 else 'topics-index', 'Concept' if len(parts) > 1 else 'Topics')
     if parts[:1] == ['evidence']:
         return ('evidence', 'Evidence record' if len(parts) > 1 else 'Evidence')
     if parts[:1] == ['find']:
@@ -1028,6 +1028,159 @@ def render_find_page() -> str:
 <script src="/find.js" defer></script>
 '''
     return _compat08__page_shell('Find a governed route', 'Start with ordinary language. Matching happens locally in your browser and points only to governed ND Oracle pages.', body, current='find', path='/find/')
+
+QUESTION_DISCOVERY_CLUSTERS = [
+    (
+        'everyday-access',
+        'Everyday life & access',
+        'Planning, sensory needs, communication, technology and getting around.',
+        ('Daily life & technology', 'Sensory & environment', 'Communication', 'Technology & accessibility', 'Mobility & travel'),
+    ),
+    (
+        'work-study-money',
+        'Work, study & money',
+        'Workplace support, education, paperwork, benefits and everyday administration.',
+        ('Work', 'Education & study', 'Money & administration'),
+    ),
+    (
+        'assessment-health',
+        'Assessment, health & wellbeing',
+        'Assessment routes, healthcare access, sleep, food, mental wellbeing and related support.',
+        ('Assessment & diagnosis', 'Health & wellbeing', 'Healthcare access', 'Sleep', 'Food & eating', 'Mental wellbeing'),
+    ),
+    (
+        'relationships-community',
+        'Relationships & community',
+        'Family, partners, peer groups, organisations and community participation.',
+        ('Relationships & family', 'Organisations & peer community'),
+    ),
+    (
+        'information-media',
+        'Information, books & media',
+        'Condition-specific information, introductory material, lived experience, books and media.',
+        ('Information & support', 'Books & media'),
+    ),
+    (
+        'games-downtime',
+        'Games & downtime',
+        'Questions about pace, controls, sensory load, interruption, social pressure and accessibility.',
+        ('Games & downtime',),
+    ),
+]
+
+def render_questions_index_v2(questions: list[dict]) -> str:
+    validate_question_navigation(questions)
+    question_map = {question['id']: question for question in questions}
+    group_map = {name: ids for name, ids in QUESTION_GROUPS}
+
+    clustered = [name for _slug, _title, _description, names in QUESTION_DISCOVERY_CLUSTERS for name in names]
+    if len(clustered) != len(set(clustered)):
+        raise ValueError('V2 Question discovery clusters contain duplicate source groups')
+    if set(clustered) != set(group_map):
+        raise ValueError(
+            f'V2 Question discovery clusters must exactly cover Question groups: '
+            f'missing={sorted(set(group_map) - set(clustered))}; '
+            f'unexpected={sorted(set(clustered) - set(group_map))}'
+        )
+
+    primary_choices = (
+        (
+            '/find/',
+            'Describe the problem',
+            'Use your own words when you do not know the name of the question or topic.',
+            'Open Find',
+        ),
+        (
+            '#question-areas',
+            'Browse by area of life',
+            'Start with the part of life closest to what you are dealing with.',
+            'Choose an area',
+        ),
+        (
+            '/a-z/',
+            'I know what I am looking for',
+            'Use the complete A–Z when you already know the wording or subject.',
+            'Open A–Z',
+        ),
+    )
+    primary_cards = ''.join((
+        f'''<a class="choice-card choice-card--primary question-start-card" href="{_compat06__esc(href)}">
+  <strong>{_compat06__esc(title)}</strong>
+  <span>{_compat06__esc(description)}</span>
+  <span class="choice-card-action">{_compat06__esc(action)} →</span>
+</a>'''
+        for href, title, description, action in primary_choices
+    ))
+
+    area_cards = []
+    cluster_sections = []
+    for slug, title, description, group_names in QUESTION_DISCOVERY_CLUSTERS:
+        total = sum(len(group_map[name]) for name in group_names)
+        area_cards.append(
+            f'''<a class="choice-card question-area-card question-area-card--{_compat06__esc(slug)}" href="#question-cluster-{_compat06__esc(slug)}">
+  <strong>{_compat06__esc(title)}</strong>
+  <span>{_compat06__esc(description)}</span>
+  <span class="question-count">{total} questions</span>
+</a>'''
+        )
+
+        group_details = []
+        for group_name in group_names:
+            ids = group_map[group_name]
+            group_slug = group_name.lower().replace(' ', '-').replace('&', 'and')
+            rows = ''.join((_compat08__question_link(question_map[question_id]) for question_id in ids))
+            group_details.append(
+                f'''<details class="question-group" id="question-group-{_compat06__esc(group_slug)}">
+  <summary><span>{_compat06__esc(group_name)}</span><span class="summary-meta">{len(ids)} questions</span></summary>
+  <div class="topic-list">{rows}</div>
+</details>'''
+            )
+        cluster_sections.append(
+            f'''<section class="question-cluster question-cluster--{_compat06__esc(slug)}" id="question-cluster-{_compat06__esc(slug)}" aria-labelledby="question-cluster-{_compat06__esc(slug)}-heading">
+  <div class="question-cluster-heading">
+    <h2 id="question-cluster-{_compat06__esc(slug)}-heading">{_compat06__esc(title)}</h2>
+    <a class="quiet-link" href="#question-areas">Back to areas ↑</a>
+  </div>
+  <p class="section-intro">{_compat06__esc(description)}</p>
+  <div class="question-group-stack">{''.join(group_details)}</div>
+</section>'''
+        )
+
+    body = f'''
+<section class="question-start" aria-labelledby="question-start-heading">
+  <h2 id="question-start-heading">Choose how to start</h2>
+  <p class="section-intro">You do not need to scan all {len(questions)} questions. Start with the route closest to what you already know.</p>
+  <div class="choice-grid choice-grid--question-start">{primary_cards}</div>
+</section>
+<section class="notice question-boundary">
+  <strong>Relevant to inspect, not recommended.</strong> These pages route ordinary needs through reviewed ND Oracle material. They do not diagnose you, choose for you or turn a resource listing into proof that it works.
+</section>
+<section class="question-area-overview" id="question-areas" aria-labelledby="question-areas-heading">
+  <h2 id="question-areas-heading">Choose an area of life</h2>
+  <p class="section-intro">Each area contains smaller groups. Open only the group you need; all governed Questions remain available.</p>
+  <div class="choice-grid choice-grid--question-areas">{''.join(area_cards)}</div>
+</section>
+<section class="question-cluster-list" aria-label="Questions grouped by area of life">
+  {''.join(cluster_sections)}
+</section>
+<section class="question-complete" aria-labelledby="question-complete-heading">
+  <h2 id="question-complete-heading">Need the complete index?</h2>
+  <p class="section-intro">Nothing has been removed. Use the A–Z when you want to scan the full governed knowledge base rather than browse by area.</p>
+  <p><a class="standalone-action" href="/a-z/">Open the complete A–Z index</a></p>
+</section>
+'''
+    return _compat08__page_shell(
+        'Questions',
+        'Start with an everyday problem and follow a reviewed route to relevant topics, tools, games, services or organisations.',
+        body,
+        current='questions',
+        path='/questions/',
+    )
+
+# V2.2 replaces only the Questions landing-page projection. The governed Question
+# corpus, Question pages, grouping ownership and discovery policy remain unchanged.
+_compat09__render_questions_index = render_questions_index_v2
+
 def _append_before_main_end(page: str, section: str) -> str:
     if '</main>' not in page:
         raise ValueError('Cannot locate main element')

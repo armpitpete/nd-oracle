@@ -27,7 +27,7 @@ jobs:
       - name: Check out frozen UX baseline
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: 33677f8fbe110c95adeedb9e90dd62c503d8c15c
+          ref: 70692634e052cf4bdbdd29073d323f132f7e1624
           path: baseline
           persist-credentials: false
 
@@ -111,15 +111,40 @@ jobs:
                   encoding="utf-8",
               )
 
+              questions = (root / "questions" / "index.html").read_text(encoding="utf-8")
+              question_open = questions.replace(
+                  '<details class="question-group"',
+                  '<details class="question-group" open',
+              )
+              question_focus = """<style>
+          .site-header,
+          .site-footer,
+          .page-heading,
+          .question-start,
+          .question-boundary,
+          .question-area-overview,
+          .question-complete {
+            display: none !important;
+          }
+          main { padding-top: 1rem !important; }
+          .question-cluster-list { gap: 2rem !important; }
+          </style>"""
+              target = root / "questions-open"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(
+                  question_open.replace("</head>", question_focus + "</head>", 1),
+                  encoding="utf-8",
+              )
+
               measure = """<script>
           window.addEventListener("load", () => {
             document.body.dataset.scrollHeight = String(document.documentElement.scrollHeight);
           });
           </script>"""
-              target = root / "resources-measure"
+              target = root / "questions-measure"
               target.mkdir(parents=True, exist_ok=True)
               (target / "index.html").write_text(
-                  resources.replace("</body>", measure + "</body>", 1),
+                  questions.replace("</body>", measure + "</body>", 1),
                   encoding="utf-8",
               )
           PY
@@ -163,8 +188,14 @@ jobs:
           grep -q 'Check what applies where I live' candidate/dist/resources/index.html
           grep -q 'Browse by kind of resource' candidate/dist/resources/index.html
 
-          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8765/resources-measure/" > /tmp/baseline-resources-measure.html
-          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/resources-measure/" > /tmp/candidate-resources-measure.html
+          grep -q 'Choose how to start' candidate/dist/questions/index.html
+          test "$(grep -o 'question-start-card' candidate/dist/questions/index.html | wc -l)" -eq 3
+          test "$(grep -o '<details class="question-group"' candidate/dist/questions/index.html | wc -l)" -eq 19
+          ! grep -q '<details class="question-group" open' candidate/dist/questions/index.html
+          test "$(grep -o '<article class="topic-row">' candidate/dist/questions/index.html | wc -l)" -eq 175
+
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8765/questions-measure/" > /tmp/baseline-questions-measure.html
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/questions-measure/" > /tmp/candidate-questions-measure.html
 
           python - <<'PY'
           import re
@@ -177,18 +208,18 @@ jobs:
                   raise SystemExit(f"Missing scroll-height measurement in {path}")
               return int(match.group(1))
 
-          baseline = height("/tmp/baseline-resources-measure.html")
-          candidate = height("/tmp/candidate-resources-measure.html")
-          print(f"Resources narrow full-page height: baseline={baseline}px candidate={candidate}px")
+          baseline = height("/tmp/baseline-questions-measure.html")
+          candidate = height("/tmp/candidate-questions-measure.html")
+          print(f"Questions narrow full-page height: baseline={baseline}px candidate={candidate}px")
           if candidate >= baseline:
-              raise SystemExit("V2 Resources page did not reduce whole-page height")
+              raise SystemExit("V2.2 Questions page did not reduce whole-page height")
           if candidate > baseline * 0.45:
               raise SystemExit(
-                  f"V2 Resources page reduction is too small: {candidate}px vs baseline {baseline}px"
+                  f"V2.2 Questions page reduction is too small: {candidate}px vs baseline {baseline}px"
               )
-          if candidate > 6200:
-              raise SystemExit(f"V2 Resources default narrow page exceeds 6200px: {candidate}px")
-          Path("ux-evidence/resources-height.txt").write_text(
+          if candidate > 9000:
+              raise SystemExit(f"V2.2 Questions default narrow page exceeds 9000px: {candidate}px")
+          Path("ux-evidence/questions-height.txt").write_text(
               f"baseline_narrow_scroll_height={baseline}\n"
               f"candidate_narrow_scroll_height={candidate}\n"
               f"ratio={candidate / baseline:.4f}\n",
@@ -202,10 +233,12 @@ jobs:
             "find-no-result|/find-no-result/"
             "find-results|/find-results/"
             "questions-index|/questions/"
+            "questions-open|/questions-open/"
             "question-workplace-gb|/questions/workplace-support-great-britain/"
             "resources-index|/resources/"
             "resources-open|/resources-open/"
             "resource-goblin-tools|/resources/goblin-tools/"
+            "topics-index|/understand/"
             "concept-autism|/understand/autism/"
             "evidence-index|/evidence/"
             "evidence-detail|/evidence/$EVIDENCE_DETAIL/"
@@ -229,6 +262,18 @@ jobs:
                   effective_size="1440,1800"
                 else
                   effective_size="390,1800"
+                fi
+              elif [[ "$name" == "questions-index" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,5200"
+                else
+                  effective_size="390,9000"
+                fi
+              elif [[ "$name" == "questions-open" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,2600"
+                else
+                  effective_size="390,3000"
                 fi
               elif [[ "$name" == "resources-index" ]]; then
                 if [[ "$folder" == "desktop" ]]; then
@@ -258,26 +303,28 @@ jobs:
           capture candidate 8766 390,844 narrow
 
           {
-            echo "contract=ND-UX-V2-RESOURCES"
-            echo "baseline_sha=33677f8fbe110c95adeedb9e90dd62c503d8c15c"
+            echo "contract=ND-UX-V2-QUESTIONS"
+            echo "baseline_sha=70692634e052cf4bdbdd29073d323f132f7e1624"
             echo "candidate_sha=${{ github.event.pull_request.head.sha }}"
             echo "evidence_detail=$EVIDENCE_DETAIL"
             echo "desktop=1440x1100"
             echo "narrow=390x844"
             echo "find_state_capture_height=1800"
+            echo "questions_default_capture=1440x5200,390x9000"
+            echo "questions_open_capture=1440x2600,390x3000"
             echo "resources_default_capture=1440x3200,390x6200"
             echo "resources_open_capture=1440x2400,390x2800"
             echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 30
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 30
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 34
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 34
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: nd-ux-v2-visual-evidence-${{ github.event.pull_request.head.sha }}
+          name: nd-ux-v2-2-visual-evidence-${{ github.event.pull_request.head.sha }}
           path: ux-evidence/
           if-no-files-found: error
           retention-days: 30
