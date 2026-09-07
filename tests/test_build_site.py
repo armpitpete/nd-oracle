@@ -534,6 +534,70 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn("background: var(--accent-soft)", css)
         self.assertIn('.primary-nav a[aria-current="page"]', css)
 
+    def test_topics_v24_recognition_grouping_and_word_learning(self):
+        page = self.page("/understand/")
+        self.assertIn("Start with what you notice", page)
+        self.assertIn("New word? Break it down", page)
+        self.assertIn('class="recognition-list"', page)
+        self.assertIn('class="topic-group-grid"', page)
+        self.assertIn('class="topic-list topic-index-list"', page)
+        self.assertIn('href="/find/"', page)
+
+        concept_ids = {concept["id"] for concept in self.concepts}
+        grouped = [
+            concept_id
+            for _slug, _title, _description, ids in build_site.V24_TOPIC_GROUPS
+            for concept_id in ids
+        ]
+        self.assertEqual(concept_ids, set(grouped))
+        self.assertEqual(len(grouped), len(set(grouped)))
+        self.assertEqual(len(self.concepts), page.count('<article class="topic-row">'))
+
+        for label, target in build_site.V24_RECOGNITION_ROUTES:
+            self.assertIn(html.escape(label, quote=True), page)
+            self.assertIn(f'href="/understand/{target}/"', page)
+
+        for _slug, title, description, ids in build_site.V24_TOPIC_GROUPS:
+            self.assertIn(html.escape(title, quote=True), page)
+            self.assertIn(html.escape(description, quote=True), page)
+            for concept_id in ids:
+                self.assertIn(f'href="/understand/{concept_id}/"', page)
+
+        monotropism = self.page("/understand/monotropism/")
+        self.assertIn('class="word-guide"', monotropism)
+        self.assertIn("Break the term down", monotropism)
+        for part in ("mono", "trop", "ism"):
+            self.assertIn(f'class="word-part">{part}</strong>', monotropism)
+        self.assertIn("This breakdown is a learning aid", monotropism)
+        self.assertIn("Whole meaning:", monotropism)
+
+        accessibility = self.page("/accessibility/")
+        self.assertIn("Language, overview and orientation", accessibility)
+        self.assertIn("Discovery and index pages use more of the desktop viewport", accessibility)
+        self.assertIn("Colour is used with headings, position and text labels", accessibility)
+
+    def test_v24_composition_css_is_wide_flat_and_directional(self):
+        css = (self.output / "styles.css").read_text(encoding="utf-8")
+        marker = "ND-UX-V2.4: page-first composition"
+        self.assertIn(marker, css)
+        v24 = css[css.index(marker):]
+        for selector in (
+            ".page--questions-index .reading-column",
+            ".page--resources-index .reading-column",
+            ".page--topics-index .reading-column",
+            ".page--find .reading-column",
+            ".page .page-heading",
+            ".question-cluster-list",
+            ".topic-group-grid",
+            ".recognition-list",
+            ".word-part",
+        ):
+            self.assertIn(selector, v24)
+        self.assertIn("background: transparent;", v24)
+        self.assertIn("border-left:", v24)
+        self.assertIn("grid-template-columns: repeat(4, minmax(0, 1fr));", v24)
+        self.assertIn("grid-template-columns: repeat(2, minmax(0, 1fr));", v24)
+
     def test_footer_exposes_evidence_governance_route(self):
         page = self.page("/")
         self.assertIn('aria-label="Footer"', page)
