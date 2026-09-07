@@ -27,7 +27,7 @@ jobs:
       - name: Check out frozen UX baseline
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          ref: 70692634e052cf4bdbdd29073d323f132f7e1624
+          ref: a758a49bcf4215673a5e1b2349164bd1efa5d894
           path: baseline
           persist-credentials: false
 
@@ -147,6 +147,99 @@ jobs:
                   questions.replace("</body>", measure + "</body>", 1),
                   encoding="utf-8",
               )
+
+              home = (root / "index.html").read_text(encoding="utf-8")
+              target = root / "home-measure"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(
+                  home.replace("</body>", measure + "</body>", 1),
+                  encoding="utf-8",
+              )
+
+              home_shortcuts_open = home.replace(
+                  '<details class="home-shortcuts">',
+                  '<details class="home-shortcuts" open>',
+                  1,
+              )
+              home_shortcuts_focus = """<style>
+          .site-header,
+          .site-footer,
+          .page-heading,
+          .home-start,
+          .home-needs,
+          .home-orientation,
+          .home-compatibility > :not(.home-shortcuts) {
+            display: none !important;
+          }
+          main { padding-top: 1rem !important; }
+          .home-compatibility { margin: 0 !important; padding: 0 !important; border: 0 !important; }
+          </style>"""
+              target = root / "home-shortcuts-open"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(
+                  home_shortcuts_open.replace("</head>", home_shortcuts_focus + "</head>", 1),
+                  encoding="utf-8",
+              )
+
+              needs = (root / "needs" / "index.html").read_text(encoding="utf-8")
+              target = root / "needs-measure"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(
+                  needs.replace("</body>", measure + "</body>", 1),
+                  encoding="utf-8",
+              )
+
+              needs_complete_open = needs.replace(
+                  '<details class="needs-complete-index">',
+                  '<details class="needs-complete-index" open>',
+                  1,
+              )
+              needs_complete_focus = """<style>
+          .site-header,
+          .site-footer,
+          .page-heading,
+          .notice,
+          .needs-overview,
+          #needs-other-heading,
+          .home-orientation,
+          .home-compatibility > :not(.needs-complete-index) {
+            display: none !important;
+          }
+          main { padding-top: 1rem !important; }
+          .home-compatibility { margin: 0 !important; padding: 0 !important; border: 0 !important; }
+          </style>"""
+              target = root / "needs-complete-open"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(
+                  needs_complete_open.replace("</head>", needs_complete_focus + "</head>", 1),
+                  encoding="utf-8",
+              )
+
+              communication = (root / "needs" / "communication" / "index.html").read_text(encoding="utf-8")
+              if '<details class="need-disclosure need-disclosure--questions">' in communication:
+                  communication_open = communication.replace(
+                      '<details class="need-disclosure need-disclosure--questions">',
+                      '<details class="need-disclosure need-disclosure--questions" open>',
+                      1,
+                  )
+              else:
+                  communication_open = communication
+              target = root / "need-communication-open"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(communication_open, encoding="utf-8")
+
+              layout_probe = """<script>
+          window.addEventListener("load", () => {
+            document.body.dataset.layoutScrollWidth = String(document.documentElement.scrollWidth);
+            document.body.dataset.layoutClientWidth = String(document.documentElement.clientWidth);
+          });
+          </script>"""
+              target = root / "need-communication-layout"
+              target.mkdir(parents=True, exist_ok=True)
+              (target / "index.html").write_text(
+                  communication.replace("</body>", layout_probe + "</body>", 1),
+                  encoding="utf-8",
+              )
           PY
 
       - name: Capture frozen baseline and exact candidate screenshots
@@ -194,6 +287,37 @@ jobs:
           ! grep -q '<details class="question-group" open' candidate/dist/questions/index.html
           test "$(grep -o '<article class="topic-row">' candidate/dist/questions/index.html | wc -l)" -eq 175
 
+          grep -q 'What do you need right now?' candidate/dist/index.html
+          test "$(grep -o 'choice-card home-start-card' candidate/dist/index.html | wc -l)" -eq 4
+          ! grep -q '<article class="topic-row">' candidate/dist/index.html
+          test "$(grep -o 'choice-card need-index-card' candidate/dist/needs/index.html | wc -l)" -eq 8
+          ! grep -q '<article class="topic-row">' candidate/dist/needs/index.html
+          grep -q 'need-hub--communication' candidate/dist/needs/communication/index.html
+          grep -q 'need-hub--health' candidate/dist/needs/health-wellbeing/index.html
+          grep -q '<details class="home-shortcuts" open>' candidate/dist/home-shortcuts-open/index.html
+          grep -q '<details class="needs-complete-index" open>' candidate/dist/needs-complete-open/index.html
+          test "$(grep -o 'href="/questions/' candidate/dist/needs-complete-open/index.html | wc -l)" -ge 175
+          test "$(grep -o '<details class="need-disclosure' candidate/dist/needs/communication/index.html | wc -l)" -eq 3
+          ! grep -q '<details class="need-disclosure need-disclosure--questions" open' candidate/dist/needs/communication/index.html
+
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/need-communication-layout/" > /tmp/candidate-need-communication-layout.html
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          text = Path("/tmp/candidate-need-communication-layout.html").read_text(encoding="utf-8")
+          sw = re.search(r'data-layout-scroll-width="(\d+)"', text)
+          cw = re.search(r'data-layout-client-width="(\d+)"', text)
+          if not sw or not cw:
+              raise SystemExit("Missing V2.3 narrow-layout width probe")
+          scroll_width = int(sw.group(1))
+          client_width = int(cw.group(1))
+          print(f"Need communication narrow width: scroll={scroll_width}px client={client_width}px")
+          if scroll_width > client_width:
+              raise SystemExit(
+                  f"V2.3 need-hub horizontal overflow: scroll={scroll_width}px client={client_width}px"
+              )
+          PY
+
           google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8765/questions-measure/" > /tmp/baseline-questions-measure.html
           google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/questions-measure/" > /tmp/candidate-questions-measure.html
 
@@ -210,25 +334,75 @@ jobs:
 
           baseline = height("/tmp/baseline-questions-measure.html")
           candidate = height("/tmp/candidate-questions-measure.html")
-          print(f"Questions narrow full-page height: baseline={baseline}px candidate={candidate}px")
-          if candidate >= baseline:
-              raise SystemExit("V2.2 Questions page did not reduce whole-page height")
-          if candidate > baseline * 0.45:
+          ratio = candidate / baseline
+          print(f"Questions narrow non-regression height: baseline={baseline}px candidate={candidate}px ratio={ratio:.4f}")
+          if candidate > baseline * 1.03:
               raise SystemExit(
-                  f"V2.2 Questions page reduction is too small: {candidate}px vs baseline {baseline}px"
+                  f"V2.3 materially regressed the accepted Questions page height: {candidate}px vs baseline {baseline}px"
               )
           if candidate > 9000:
-              raise SystemExit(f"V2.2 Questions default narrow page exceeds 9000px: {candidate}px")
+              raise SystemExit(f"Accepted Questions default narrow page exceeds 9000px: {candidate}px")
           Path("ux-evidence/questions-height.txt").write_text(
               f"baseline_narrow_scroll_height={baseline}\n"
               f"candidate_narrow_scroll_height={candidate}\n"
-              f"ratio={candidate / baseline:.4f}\n",
+              f"ratio={ratio:.4f}\n",
+              encoding="utf-8",
+          )
+          PY
+
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8765/home-measure/" > /tmp/baseline-home-measure.html
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/home-measure/" > /tmp/candidate-home-measure.html
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8765/needs-measure/" > /tmp/baseline-needs-measure.html
+          google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/needs-measure/" > /tmp/candidate-needs-measure.html
+
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          def height(path):
+              text = Path(path).read_text(encoding="utf-8")
+              match = re.search(r'data-scroll-height="(\d+)"', text)
+              if not match:
+                  raise SystemExit(f"Missing scroll-height measurement in {path}")
+              return int(match.group(1))
+
+          measurements = []
+          for name, baseline_path, candidate_path, max_ratio, hard_limit in (
+              ("Home", "/tmp/baseline-home-measure.html", "/tmp/candidate-home-measure.html", 0.55, 7000),
+              ("Needs index", "/tmp/baseline-needs-measure.html", "/tmp/candidate-needs-measure.html", 0.50, 7000),
+          ):
+              baseline = height(baseline_path)
+              candidate = height(candidate_path)
+              ratio = candidate / baseline
+              print(f"{name} narrow full-page height: baseline={baseline}px candidate={candidate}px ratio={ratio:.4f}")
+              if candidate >= baseline:
+                  raise SystemExit(f"V2.3 {name} did not reduce whole-page height")
+              if ratio > max_ratio:
+                  raise SystemExit(
+                      f"V2.3 {name} reduction is too small: {candidate}px vs baseline {baseline}px"
+                  )
+              if candidate > hard_limit:
+                  raise SystemExit(f"V2.3 {name} exceeds {hard_limit}px: {candidate}px")
+              measurements.append(
+                  f"{name.lower().replace(' ', '_')}_baseline={baseline}\n"
+                  f"{name.lower().replace(' ', '_')}_candidate={candidate}\n"
+                  f"{name.lower().replace(' ', '_')}_ratio={ratio:.4f}\n"
+              )
+
+          Path("ux-evidence/v2-3-height.txt").write_text(
+              "".join(measurements),
               encoding="utf-8",
           )
           PY
 
           ROUTES=(
             "home|/"
+            "home-shortcuts-open|/home-shortcuts-open/"
+            "needs-index|/needs/"
+            "needs-complete-open|/needs-complete-open/"
+            "need-communication|/needs/communication/"
+            "need-health|/needs/health-wellbeing/"
+            "need-communication-open|/need-communication-open/"
             "find|/find/"
             "find-no-result|/find-no-result/"
             "find-results|/find-results/"
@@ -257,7 +431,43 @@ jobs:
               name="${spec%%|*}"
               route="${spec#*|}"
               effective_size="$size"
-              if [[ "$name" == "find-results" || "$name" == "find-no-result" ]]; then
+              if [[ "$name" == "home-shortcuts-open" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,3200"
+                else
+                  effective_size="390,5200"
+                fi
+              elif [[ "$name" == "needs-complete-open" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,4200"
+                else
+                  effective_size="390,6200"
+                fi
+              elif [[ "$name" == "home" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,6000"
+                else
+                  effective_size="390,9000"
+                fi
+              elif [[ "$name" == "needs-index" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,4200"
+                else
+                  effective_size="390,7000"
+                fi
+              elif [[ "$name" == "need-communication" || "$name" == "need-health" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,3000"
+                else
+                  effective_size="390,5000"
+                fi
+              elif [[ "$name" == "need-communication-open" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,3200"
+                else
+                  effective_size="390,5200"
+                fi
+              elif [[ "$name" == "find-results" || "$name" == "find-no-result" ]]; then
                 if [[ "$folder" == "desktop" ]]; then
                   effective_size="1440,1800"
                 else
@@ -303,13 +513,18 @@ jobs:
           capture candidate 8766 390,844 narrow
 
           {
-            echo "contract=ND-UX-V2-QUESTIONS"
-            echo "baseline_sha=70692634e052cf4bdbdd29073d323f132f7e1624"
+            echo "contract=ND-UX-V2-HOME-NEEDS"
+            echo "baseline_sha=a758a49bcf4215673a5e1b2349164bd1efa5d894"
             echo "candidate_sha=${{ github.event.pull_request.head.sha }}"
             echo "evidence_detail=$EVIDENCE_DETAIL"
             echo "desktop=1440x1100"
             echo "narrow=390x844"
             echo "find_state_capture_height=1800"
+            echo "home_capture=1440x6000,390x9000"
+            echo "home_shortcuts_open_capture=1440x3200,390x5200"
+            echo "needs_complete_open_capture=1440x4200,390x6200"
+            echo "needs_index_capture=1440x4200,390x7000"
+            echo "need_hub_capture=1440x3000,390x5000"
             echo "questions_default_capture=1440x5200,390x9000"
             echo "questions_open_capture=1440x2600,390x3000"
             echo "resources_default_capture=1440x3200,390x6200"
@@ -318,13 +533,13 @@ jobs:
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 34
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 34
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 46
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 46
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: nd-ux-v2-2-visual-evidence-${{ github.event.pull_request.head.sha }}
+          name: nd-ux-v2-3-visual-evidence-${{ github.event.pull_request.head.sha }}
           path: ux-evidence/
           if-no-files-found: error
           retention-days: 30
