@@ -21,7 +21,7 @@ jobs:
   visual-evidence:
     name: visual-evidence
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - name: Check out frozen UX baseline
@@ -518,12 +518,19 @@ jobs:
                   effective_size="390,4200"
                 fi
               fi
-              google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+              screenshot="ux-evidence/$label/$folder/$name.png"
+              if ! timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+                --disable-background-networking --disable-component-update --disable-sync --no-first-run \
                 --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
                 --window-size="$effective_size" \
-                --screenshot="ux-evidence/$label/$folder/$name.png" \
-                "http://127.0.0.1:$port$route"
-              test -s "ux-evidence/$label/$folder/$name.png"
+                --screenshot="$screenshot" \
+                "http://127.0.0.1:$port$route"; then
+                # Chrome can occasionally keep a background process alive after the
+                # screenshot is complete. Accept only a non-empty screenshot; a
+                # timeout before output remains a hard failure.
+                test -s "$screenshot"
+              fi
+              test -s "$screenshot"
             done
           }
 
