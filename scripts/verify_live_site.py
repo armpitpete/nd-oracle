@@ -85,11 +85,11 @@ STABLE_BASE_MARKERS = (
     ("/accessibility/", "<h1>Accessibility</h1>"), ("/feedback/", "<h1>Feedback</h1>"), ("/privacy/", "<h1>Privacy</h1>"),
 )
 NAVIGATION_MARKERS = (
-    ("/needs/", "<h1>Browse by need</h1>"), ("/needs/daily-life/", "<h1>Daily life</h1>"),
+    ("/needs/", "<h1>Browse by area of life</h1>"), ("/needs/daily-life/", "<h1>Daily life</h1>"),
     ("/needs/sensory-environment/", "<h1>Sensory &amp; environment</h1>"), ("/needs/communication/", "<h1>Communication</h1>"),
     ("/needs/work/", "<h1>Work</h1>"), ("/needs/education-study/", "<h1>Education &amp; study</h1>"),
     ("/needs/assessment-diagnosis/", "<h1>Assessment &amp; diagnosis</h1>"), ("/needs/health-wellbeing/", "<h1>Health &amp; wellbeing</h1>"),
-    ("/needs/relationships-family/", "<h1>Relationships &amp; family</h1>"), ("/types/", "<h1>Browse by content type</h1>"),
+    ("/needs/relationships-family/", "<h1>Relationships &amp; community</h1>"), ("/types/", "<h1>Browse by content type</h1>"),
     ("/places/", "<h1>Browse by geographic scope</h1>"), ("/a-z/", "<h1>A–Z</h1>"), ("/find/", "<h1>Find a governed route</h1>"),
 )
 ROUTES = tuple([STABLE_BASE_MARKERS[0], STABLE_BASE_MARKERS[1]] + [(p, f"<h1>{html.escape(n, quote=True)}</h1>") for p, n in CONCEPT_MARKERS_V10.items()] + list(STABLE_BASE_MARKERS[2:7]) + [(p, f"<h1>{html.escape(n, quote=True)}</h1>") for p, (n, _u) in RESOURCE_MARKERS_V10.items()] + [STABLE_BASE_MARKERS[7]] + [(p, f"<h1>{html.escape(q, quote=True)}</h1>") for p, q in QUESTION_MARKERS_V10.items()] + list(STABLE_BASE_MARKERS[8:]) + list(NAVIGATION_MARKERS))
@@ -168,11 +168,26 @@ def verify_routes(origin: str,*,fetcher=fetch_url) -> list[str]:
     return failures
 def verify_v06_reading_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     failures=[]; home=fetcher(expected_url(origin,"/"))
-    for question,target in HOMEPAGE_QUESTIONS:
-        if question not in home.body: failures.append(f"/: missing v0.6 homepage question {question!r}")
-        if f'href="{target}"' not in home.body: failures.append(f"/: missing v0.6 homepage route to {target}")
-    for marker in ("Explore useful things",'href="/resources/"','href="/tools/"','href="/games/"','href="/community/"',"A listing is not an endorsement"):
-        if marker not in home.body: failures.append(f"/: ecosystem marker missing: {marker!r}")
+    # V2.3 intentionally replaced the inventory-first v0.6 homepage with an
+    # orientation-first entry surface. Preserve the durable reading/detail
+    # contract below, but verify the currently accepted home discovery routes
+    # rather than obsolete visible inventory markers.
+    for marker in (
+        "What do you need right now?",
+        "Describe what is happening",
+        "I know what I need help with",
+        "I want something practical",
+        "I want to understand something",
+        "Need another way in?",
+        'href="/find/"',
+        'href="/questions/"',
+        'href="/resources/"',
+        'href="/understand/"',
+        'href="/places/"',
+        'href="/a-z/"',
+        'href="/how-it-works/"',
+    ):
+        if marker not in home.body: failures.append(f"/: current home discovery marker missing: {marker!r}")
     for path,first in TOPIC_FIRST_READ_MARKERS.items():
         r=fetcher(expected_url(origin,path))
         for marker,label in ((html.escape(first,quote=True),"simple first-read explanation"),('class="review-meta">Last reviewed:',"visible Last reviewed metadata"),('<details class="technical-summary"><summary>More precise description</summary>',"precise-description disclosure"),('href="/how-it-works/#confidence"',"confidence explanation link")):
@@ -207,7 +222,13 @@ def verify_compatibility_fixture() -> list[str]:
 def verify_v08_subset_preserved() -> list[str]: return verify_compatibility_fixture()
 def verify_v10_concept_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     failures=[]; idx=fetcher(expected_url(origin,"/understand/"))
-    if f"There are {len(CONCEPT_RECORDS)} reviewed topic pages" not in idx.body: failures.append("/understand/: current Concept count is missing")
+    for marker in ("Start with what you notice","Browse by kind of topic","All topics A–Z",'href="/find/"'):
+        if marker not in idx.body: failures.append(f"/understand/: V2.4 discovery marker missing: {marker!r}")
+    for concept in CONCEPT_RECORDS:
+        if f'href="/understand/{concept["id"]}/"' not in idx.body:
+            failures.append(f"/understand/: governed Topic link missing: {concept['id']}")
+    if 'href="/understand/monotropism/"' in idx.body and "New word? Break it down" not in idx.body:
+        failures.append("/understand/: V2.4 word-learning example is missing")
     for concept in CONCEPT_RECORDS:
         path=f'/understand/{concept["id"]}/'; r=fetcher(expected_url(origin,path))
         for marker in (html.escape(build_site.reader_intro(concept),quote=True),html.escape(concept["summary"],quote=True),'class="review-meta">Last reviewed:','<details class="technical-summary"><summary>More precise description</summary>','<h2 id="next-routes-heading">Useful next routes</h2>','href="/how-it-works/#confidence"'):
@@ -216,8 +237,15 @@ def verify_v10_concept_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     return failures
 def verify_v10_question_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     failures=[]; idx=fetcher(expected_url(origin,"/questions/"))
-    for marker in ("Relevant to inspect, not recommended.",f"{len(QUESTION_RECORDS)} governed practical questions",'href="/needs/"','href="/a-z/"'):
-        if marker not in idx.body: failures.append(f"/questions/: marker missing {marker!r}")
+    for marker in (
+        "Choose how to start",
+        "Choose an area of life",
+        "Need the complete index?",
+        "Relevant to inspect, not recommended.",
+        'href="/find/"',
+        'href="/a-z/"',
+    ):
+        if marker not in idx.body: failures.append(f"/questions/: current discovery marker missing {marker!r}")
     for path,_q in QUESTION_MARKERS_V10.items():
         r=fetcher(expected_url(origin,path))
         for marker in ("Relevant to inspect, not recommended.",'<h2 id="current-understanding-heading">Current understanding</h2>','<h2 id="related-things-heading">Related things to inspect</h2>','<h2 id="related-questions-heading">Related questions</h2>','<h2 id="evidence-needed-heading">What evidence is still needed</h2>','<h2 id="dissent-heading">Where people may disagree</h2>','<h2 id="reopen-heading">When this answer should be revisited</h2>'):
@@ -239,8 +267,16 @@ def verify_v10_resource_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     return failures
 def verify_v10_navigation_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     failures=[]; home=fetcher(expected_url(origin,"/"))
-    for marker in ('href="/needs/"','href="/types/"','href="/places/"','href="/a-z/"','href="/find/"'):
-        if marker not in home.body: failures.append(f"/: browse marker missing {marker!r}")
+    for marker in (
+        'href="/find/"',
+        'href="/questions/"',
+        'href="/resources/"',
+        'href="/understand/"',
+        'href="/places/"',
+        'href="/a-z/"',
+        'href="/how-it-works/"',
+    ):
+        if marker not in home.body: failures.append(f"/: current navigation marker missing {marker!r}")
     needs=fetcher(expected_url(origin,"/needs/"))
     for q in QUESTION_RECORDS:
         if f'href="/questions/{q["id"]}/"' not in needs.body: failures.append(f"/needs/: missing {q['id']}")

@@ -33,7 +33,14 @@ class VerifyQuestionDiscoveryV07CompatibilityTests(unittest.TestCase):
         def fetcher(url: str):
             path = url.removeprefix(origin)
             if path == "/questions/":
-                body = "Relevant to inspect, not recommended." + f"{len(verify_live_site.QUESTION_RECORDS)} governed practical questions" + '<a href="/needs/">Needs</a><a href="/a-z/">A-Z</a>'
+                body = (
+                    "Choose how to start"
+                    "Choose an area of life"
+                    "Need the complete index?"
+                    "Relevant to inspect, not recommended."
+                    '<a href="/find/">Find</a>'
+                    '<a href="/a-z/">A-Z</a>'
+                )
             elif path in verify_live_site.QUESTION_MARKERS_V10:
                 body = (
                     "Relevant to inspect, not recommended."
