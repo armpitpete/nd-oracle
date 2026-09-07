@@ -224,9 +224,9 @@ jobs:
           test "$(grep -o '<article class="topic-row">' candidate/dist/questions/index.html | wc -l)" -eq 175
 
           grep -q 'What do you need right now?' candidate/dist/index.html
-          test "$(grep -o 'home-start-card' candidate/dist/index.html | wc -l)" -eq 4
+          test "$(grep -o 'choice-card home-start-card' candidate/dist/index.html | wc -l)" -eq 4
           ! grep -q '<article class="topic-row">' candidate/dist/index.html
-          test "$(grep -o 'need-index-card' candidate/dist/needs/index.html | wc -l)" -eq 8
+          test "$(grep -o 'choice-card need-index-card' candidate/dist/needs/index.html | wc -l)" -eq 8
           ! grep -q '<article class="topic-row">' candidate/dist/needs/index.html
           grep -q 'need-hub--communication' candidate/dist/needs/communication/index.html
           grep -q 'need-hub--health' candidate/dist/needs/health-wellbeing/index.html
