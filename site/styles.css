@@ -1384,13 +1384,13 @@ li + li {
   margin-top: var(--space-7);
 }
 
-.home-compatibility {
+.home-complete-route {
   margin-top: var(--space-7);
   padding-top: var(--space-6);
   border-top: 1px solid var(--border-strong);
 }
 
-.home-compatibility h2 {
+.home-complete-route h2 {
   margin-top: 0;
 }
 
@@ -2030,7 +2030,7 @@ th {
 .resource-complete,
 .question-complete,
 .home-orientation,
-.home-compatibility {
+.home-complete-route {
   padding-top: var(--space-5);
   border-top: 1px solid var(--border-strong);
 }
