@@ -65,4 +65,18 @@ Generated output is written to `dist/` and is not committed.
 
 Merges and production deployments remain protected. A presentation candidate must pass exact-head validation and hostile/no-drift review. Final V2 freeze additionally requires real ND task evidence under `docs/ND_UX_V2_USER_TEST_PROTOCOL.md`.
 
+The production release contract remains Direct Upload from an exact current `main` SHA. Before deployment, verify the exact commit, clean tree, validation suite, built artifact and existing Cloudflare project/domain state, then stop for **explicit owner authorisation**.
+
+After that separate protected authorisation, the guarded release path uses the pinned CLI:
+
+```sh
+npx --yes wrangler@4.114.0 pages deploy dist \
+  --project-name=nd-oracle \
+  --branch=main \
+  --commit-hash=<EXACT_MAIN_SHA> \
+  --commit-dirty=false
+```
+
+Do not substitute a remembered SHA for `<EXACT_MAIN_SHA>`. Custom-domain attachment and DNS changes are later protected actions and are not implied by a Pages deployment.
+
 An exact live deployment SHA must come from protected deployment evidence; do not infer it from visible V2 page markers.
