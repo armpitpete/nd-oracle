@@ -1288,20 +1288,6 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
     if questions is None:
         questions = _compat08__load_questions()
     validate_question_navigation(questions)
-    question_map = {item['id']: item for item in questions}
-    concept_ids = {item['id'] for item in concepts}
-    common_targets = [target for _question, target in _compat06__COMMON_QUESTIONS]
-    if concept_ids != set(common_targets) or len(common_targets) != len(set(common_targets)):
-        raise ValueError('V2.3 Home compatibility shortcuts must cover each current Concept exactly once')
-
-    practical_shortcuts = ''.join((
-        f'''<li><a href="/questions/{_compat06__esc(question_id)}/">{_compat06__esc(question_map[question_id]['question'])}</a></li>'''
-        for question_id in _compat09__V07_HOMEPAGE_COMPAT_QUESTION_IDS
-    ))
-    topic_shortcuts = ''.join((
-        f'''<li><a href="/understand/{_compat06__esc(target)}/">{_compat06__esc(question)}</a></li>'''
-        for question, target in _compat06__COMMON_QUESTIONS
-    ))
 
     primary = (
         ('/find/', 'Describe what is happening', 'Use your own words when you do not know the topic or service name.', 'Find a route', 'find'),
