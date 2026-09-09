@@ -11,10 +11,10 @@
     "canonical_routes": 450,
     "note": "Governed knowledge, evidence and discovery authority. Presentation-only releases do not rewrite this identity."
   },
-  "presentation_repository": {
-    "status": "merged",
+  "presentation_baseline": {
+    "status": "accepted-repository-baseline",
     "baseline": "ND-UX-V2.4",
-    "main_sha": "0065ab8000bbb0020aa221f084525116f436b373",
+    "source_sha": "0065ab8000bbb0020aa221f084525116f436b373",
     "merged_prs": [165, 166, 167],
     "content_change": false
   },
