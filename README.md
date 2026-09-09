@@ -105,6 +105,11 @@ contracts/evidence-layer-v1.json     Machine-readable Evidence policy
 contracts/current-production.json    Accepted governed-knowledge deployment pointer
 contracts/current-public-state.json  Knowledge/presentation/live public-state separation
 docs/EVIDENCE_LAYER_STATE_v1.md      Current Evidence-layer implementation state
+docs/PUBLIC_STATE_MODEL_v1.md        Knowledge/presentation/live authority model
+docs/ND_UX_V2_4_FUNCTIONAL_BASELINE.md Frozen V2.4 functional/compositional baseline
+docs/ND_UX_V2_5_DESIGN_SYSTEM.md     V2.5 visual composition constraints
+docs/ND_UX_V2_USER_TEST_PROTOCOL.md  Required human ND task-test evidence
+docs/V2_PUBLIC_BASELINE_COMPLETION.md V2 completion register and protected gates
 docs/ASSESSMENT_DIAGNOSIS_UK_v1.md   UK assessment/diagnosis reference contract
 docs/ASSESSMENT_DIAGNOSIS_UK_SOURCE_MATRIX_v1.md UK source/jurisdiction matrix
 docs/ASSESSMENT_DIAGNOSIS_IRELAND_v1.md Republic-of-Ireland assessment reference contract
@@ -140,7 +145,7 @@ docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
 docs/CONTENT_GAP_MAP_v1.4.md         Historical 325-object/409-route editorial map
 docs/CONTENT_GAP_MAP_v2.0.md         Current 366-object/450-route editorial audit
 docs/GAMES_DOWNTIME_FACETS_v1.md     Governed descriptive-facet contract for games and downtime
-docs/PRODUCTION_STATE_2026-09-05_REFERENCE_DEPTH_INTERNATIONAL_v1.md Current accepted deployment evidence
+docs/PRODUCTION_STATE_2026-09-05_REFERENCE_DEPTH_INTERNATIONAL_v1.md Accepted governed-knowledge deployment evidence
 docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md Previous accepted deployment evidence
 docs/PRODUCTION_STATE_2026-09-04_IRELAND_ASSESSMENT_DIAGNOSIS_v1.md Previous accepted Ireland deployment evidence
 docs/PRODUCTION_STATE_2026-09-04_UK_REFERENCE_BASELINE_v1.md Previous accepted UK-baseline deployment evidence
