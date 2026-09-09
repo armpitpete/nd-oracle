@@ -1346,19 +1346,10 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
     <a href="/how-it-works/"><strong>How ND Oracle works</strong><span>See how evidence, uncertainty and resource listings are handled.</span></a>
   </div>
 </section>
-<section class="home-compatibility" aria-labelledby="home-more-shortcuts-heading">
-  <h2 id="home-more-shortcuts-heading">More question shortcuts</h2>
-  <p class="section-intro">These older entry points remain available without making the homepage show every shortcut at once.</p>
-  <details class="home-shortcuts">
-    <summary>Show more question shortcuts</summary>
-    <div class="home-shortcut-content">
-      <h3>Start with something you need to do</h3>
-      <ul>{practical_shortcuts}</ul>
-      <h3>Start with a question</h3>
-      <p>{len(concepts)} evidence-linked topics are available now.</p>
-      <ul>{topic_shortcuts}</ul>
-    </div>
-  </details>
+<section class="home-complete-route" aria-labelledby="home-complete-route-heading">
+  <h2 id="home-complete-route-heading">Want the whole catalogue?</h2>
+  <p class="section-intro">The homepage stays short on purpose. Open the complete A–Z when you want to scan every governed Topic, Question and Resource.</p>
+  <p><a href="/a-z/">Open the complete A–Z →</a></p>
 </section>
 '''
     return _compat08__page_shell(
