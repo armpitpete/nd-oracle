@@ -75,9 +75,9 @@ Exact-head candidate acceptance also proved:
 
 The administrative production-state reconciliation is **not** another deployment. The accepted public artifact remains the exact artifact generated from source SHA `8e60f264adfda2822312a05e835bc352ef263225`.
 
-### Presentation repository state
+### Presentation baseline
 
-ND-UX-V2.4 is merged through PRs #165, #166 and #167, ending at repository main SHA `0065ab8000bbb0020aa221f084525116f436b373`. Those changes alter presentation, live verification compatibility and stylesheet cache invalidation without changing governed content.
+ND-UX-V2.4 is merged through PRs #165, #166 and #167. Its accepted presentation-baseline source is `0065ab8000bbb0020aa221f084525116f436b373`. Those changes alter presentation, live verification compatibility and stylesheet cache invalidation without changing governed content.
 
 The canonical site visibly serves the V2.4 presentation family. The repository does **not** yet contain a protected deployment record proving the exact deployed V2.4 commit/artifact identity, so it must not be inferred from visible page markers alone. `contracts/current-public-state.json` records that distinction until a later protected deployment reconciliation replaces it.
 
