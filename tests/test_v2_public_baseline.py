@@ -22,8 +22,8 @@ class V2PublicBaselineTests(unittest.TestCase):
         self.assertEqual(current["source_sha"], public["knowledge_baseline"]["source_sha"])
         self.assertEqual(current["corpus"]["governed_objects"], public["knowledge_baseline"]["governed_objects"])
         self.assertEqual(current["verification"]["canonical_routes_verified"], public["knowledge_baseline"]["canonical_routes"])
-        self.assertEqual("0065ab8000bbb0020aa221f084525116f436b373", public["presentation_repository"]["main_sha"])
-        self.assertFalse(public["presentation_repository"]["content_change"])
+        self.assertEqual("0065ab8000bbb0020aa221f084525116f436b373", public["presentation_baseline"]["source_sha"])
+        self.assertFalse(public["presentation_baseline"]["content_change"])
         self.assertEqual("not-yet-reconciled", public["live_site"]["deployment_identity_status"])
 
     def test_gap_map_is_bound_to_current_accepted_corpus(self):
