@@ -33,7 +33,7 @@ Republic-of-Ireland child ADHD remains deliberately deferred because current fir
 
 The three implemented non-UK jurisdiction packages — Republic of Ireland, Australia and Canada — have now completed the architecture proof required before geography-schema reconsideration. The result is to **retain additive jurisdiction sidecars**. No core geography schema migration is justified, and mass-country expansion remains prohibited.
 
-Current accepted production was generated from exact source SHA `8e60f264adfda2822312a05e835bc352ef263225` and tree `e287f1a6003724b10ea130ef40d846b9837981de`, then freshly verified at `https://ndoracle.org`. Frozen clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged.
+The accepted governed-knowledge deployment was generated from exact source SHA `8e60f264adfda2822312a05e835bc352ef263225` and tree `e287f1a6003724b10ea130ef40d846b9837981de`, then freshly verified at `https://ndoracle.org`. Later presentation-only releases do not rewrite that knowledge identity. Frozen clinical, privacy, provenance, ranking, Evidence-Layer and AI-authority boundaries remain unchanged.
 
 Resource inclusion is **not endorsement**. A Resource may be listed without an efficacy claim when its identity, access route, intended use, limitations, cost/access notes and conflicts are useful. Serious testable propositions require governed evidence and uncertainty routes.
 
@@ -47,9 +47,13 @@ Books & media, Sleep, Food & eating and Mobility & travel are now reference-comp
 
 Relationships & family retains its existing safeguarding, consent, communication and jurisdiction boundaries.
 
-## Production state
+## Public state
 
-Current production is the accepted **Reference depth + international v1** deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `8e60f264adfda2822312a05e835bc352ef263225` and tree `e287f1a6003724b10ea130ef40d846b9837981de` by deployment workflow run `33987304421` (run #26).
+ND Oracle separates governed knowledge, presentation repository state and live deployment identity. See `docs/PUBLIC_STATE_MODEL_v1.md` and `contracts/current-public-state.json`.
+
+### Accepted governed-knowledge deployment
+
+The accepted governed-knowledge deployment is the **Reference depth + international v1** deployment of the `v1.2` public-site builder contract at `https://ndoracle.org`, generated from exact source SHA `8e60f264adfda2822312a05e835bc352ef263225` and tree `e287f1a6003724b10ea130ef40d846b9837981de` by deployment workflow run `33987304421` (run #26).
 
 The generated artifact SHA-256 is `d598e73f1403d11dc668bed209bd0c54218c587d65b3bd51e25215e26c5c2543` and the Cloudflare deployment identity is `https://9784eb1f.nd-oracle.pages.dev`. The workflow verified and preserved the existing Direct Upload project `nd-oracle`, production branch `main`, project subdomain `nd-oracle.pages.dev`, and exact custom-domain set `ndoracle.org`. No Pages-project, DNS, custom-domain, secret or other production-configuration mutation was performed.
 
@@ -70,6 +74,12 @@ Exact-head candidate acceptance also proved:
 `docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md`, the Ireland production record, the UK Reference Baseline production record and earlier production-state documents remain frozen historical evidence.
 
 The administrative production-state reconciliation is **not** another deployment. The accepted public artifact remains the exact artifact generated from source SHA `8e60f264adfda2822312a05e835bc352ef263225`.
+
+### Presentation repository state
+
+ND-UX-V2.4 is merged through PRs #165, #166 and #167, ending at repository main SHA `0065ab8000bbb0020aa221f084525116f436b373`. Those changes alter presentation, live verification compatibility and stylesheet cache invalidation without changing governed content.
+
+The canonical site visibly serves the V2.4 presentation family. The repository does **not** yet contain a protected deployment record proving the exact deployed V2.4 commit/artifact identity, so it must not be inferred from visible page markers alone. `contracts/current-public-state.json` records that distinction until a later protected deployment reconciliation replaces it.
 
 ## Repository map
 
@@ -92,7 +102,8 @@ scripts/check_content_freshness.py   Review-age/freshness gate, including Eviden
 scripts/evidence_coverage.py         Claim/Evidence coverage registry and CI gate
 scripts/evidence_public.py           Public Evidence projection and static browsing
 contracts/evidence-layer-v1.json     Machine-readable Evidence policy
-contracts/current-production.json    Canonical machine-readable current-production pointer
+contracts/current-production.json    Accepted governed-knowledge deployment pointer
+contracts/current-public-state.json  Knowledge/presentation/live public-state separation
 docs/EVIDENCE_LAYER_STATE_v1.md      Current Evidence-layer implementation state
 docs/ASSESSMENT_DIAGNOSIS_UK_v1.md   UK assessment/diagnosis reference contract
 docs/ASSESSMENT_DIAGNOSIS_UK_SOURCE_MATRIX_v1.md UK source/jurisdiction matrix
@@ -126,7 +137,8 @@ docs/PUBLIC_QUESTION_DISCOVERY_v0.7.md Historical question-led discovery contrac
 docs/CONTENT_NAVIGATION_v0.8.md      Historical accepted v0.8 findability contract
 docs/CONTENT_NAVIGATION_v0.9.md      Historical accepted v0.9 navigation contract
 docs/CONTENT_GAP_MAP_v0.9.md         Historical need-led editorial coverage map
-docs/CONTENT_GAP_MAP_v1.4.md         Current need-led editorial coverage map
+docs/CONTENT_GAP_MAP_v1.4.md         Historical 325-object/409-route editorial map
+docs/CONTENT_GAP_MAP_v2.0.md         Current 366-object/450-route editorial audit
 docs/GAMES_DOWNTIME_FACETS_v1.md     Governed descriptive-facet contract for games and downtime
 docs/PRODUCTION_STATE_2026-09-05_REFERENCE_DEPTH_INTERNATIONAL_v1.md Current accepted deployment evidence
 docs/PRODUCTION_STATE_2026-09-04_NHS_BULLETIN_PROMOTION_v1.md Previous accepted deployment evidence
