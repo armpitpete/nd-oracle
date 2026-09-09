@@ -1,0 +1,37 @@
+{
+  "schema_version": "1",
+  "status": "candidate-reconciled",
+  "as_of": "2026-09-09",
+  "canonical_site": "https://ndoracle.org",
+  "knowledge_baseline": {
+    "authority": "contracts/current-production.json",
+    "status": "accepted",
+    "source_sha": "8e60f264adfda2822312a05e835bc352ef263225",
+    "governed_objects": 366,
+    "canonical_routes": 450,
+    "note": "Governed knowledge, evidence and discovery authority. Presentation-only releases do not rewrite this identity."
+  },
+  "presentation_repository": {
+    "status": "merged",
+    "baseline": "ND-UX-V2.4",
+    "main_sha": "0065ab8000bbb0020aa221f084525116f436b373",
+    "merged_prs": [165, 166, 167],
+    "content_change": false
+  },
+  "live_site": {
+    "status": "observed-v2.4-unreconciled-deployment-identity",
+    "observed_on": "2026-09-09",
+    "markers": [
+      "What do you need right now?",
+      "Or start with an area of life",
+      "Need another way in?"
+    ],
+    "deployment_identity_status": "not-yet-reconciled",
+    "rule": "Do not infer an exact deployed SHA from visible V2.4 markers alone."
+  },
+  "completion_candidate": {
+    "branch": "agent/v2-public-baseline-completion",
+    "base_sha": "0065ab8000bbb0020aa221f084525116f436b373",
+    "status": "candidate"
+  }
+}
