@@ -65,11 +65,13 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertNotIn('href="/oracle/"', page)
         self.assertIn('href="/find/"', page)
 
-    def test_home_has_one_ordinary_language_route_for_every_topic(self):
-        page = self.page("/"); concept_ids = {item["id"] for item in self.concepts}; target_ids = [target for _q, target in build_site.COMMON_QUESTIONS]
-        self.assertEqual(concept_ids, set(target_ids)); self.assertEqual(len(concept_ids), len(target_ids))
-        for question, target in build_site.COMMON_QUESTIONS:
-            self.assertIn(html.escape(question, quote=True), page); self.assertIn(f'href="/understand/{target}/"', page)
+    def test_topics_index_reaches_every_current_topic_and_home_routes_to_topics(self):
+        home = self.page("/")
+        topics = self.page("/understand/")
+        self.assertIn('href="/understand/"', home)
+        for concept in self.concepts:
+            self.assertIn(f'href="/understand/{concept["id"]}/"', topics)
+            self.assertIn(html.escape(concept["name"], quote=True), topics)
 
     def test_reading_layer_and_topic_evidence_routes_cover_current_concepts(self):
         self.assertEqual({item["id"] for item in self.concepts}, set(build_site.SIMPLE_EXPLANATIONS)); build_site.validate_reading_layer(self.concepts)
