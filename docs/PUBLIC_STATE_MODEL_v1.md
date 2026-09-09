@@ -20,13 +20,13 @@ Current accepted knowledge baseline:
 - 0 evidence gaps;
 - source SHA `8e60f264adfda2822312a05e835bc352ef263225`.
 
-## 2. Presentation repository state
+## 2. Presentation baseline
 
 Authority: repository history plus `contracts/current-public-state.json`.
 
-This records the latest merged public interface implementation even when it changes no governed knowledge. ND-UX-V2.4 is merged through PRs #165, #166 and #167, ending at main SHA `0065ab8000bbb0020aa221f084525116f436b373`.
+This records the accepted presentation baseline from which the next public-interface candidate is derived. ND-UX-V2.4 is merged through PRs #165, #166 and #167, with baseline source SHA `0065ab8000bbb0020aa221f084525116f436b373`.
 
-Presentation state may move ahead of the accepted knowledge source without changing knowledge authority.
+A presentation candidate may move ahead of the accepted knowledge source without changing knowledge authority.
 
 ## 3. Live deployment state
 
