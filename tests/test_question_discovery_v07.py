@@ -34,15 +34,17 @@ class QuestionDiscoveryV07CompatibilityTests(unittest.TestCase):
         for question_id in V07_QUESTION_IDS:
             self.assertEqual("partially_resolved", self.question_map[question_id]["status"])
 
-    def test_home_keeps_practical_discovery_before_topic_orientation(self):
-        page = (self.output / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Start with something you need to do", page)
-        self.assertIn('href="/questions/"', page)
+    def test_home_keeps_practical_discovery_before_topic_catalogue(self):
+        home = (self.output / "index.html").read_text(encoding="utf-8")
+        questions = (self.output / "questions" / "index.html").read_text(encoding="utf-8")
+        self.assertIn("What do you need right now?", home)
+        self.assertIn('href="/questions/"', home)
+        self.assertIn('href="/understand/"', home)
+        self.assertLess(home.index('href="/questions/"'), home.index('href="/understand/"'))
         for question_id in V07_QUESTION_IDS:
             question = self.question_map[question_id]
-            self.assertIn(html.escape(question["question"], quote=True), page)
-            self.assertIn(f'href="/questions/{question_id}/"', page)
-        self.assertLess(page.index("Start with something you need to do"), page.index("Start with a question"))
+            self.assertIn(html.escape(question["question"], quote=True), questions)
+            self.assertIn(f'href="/questions/{question_id}/"', questions)
 
     def test_question_index_and_pages_preserve_governed_boundary(self):
         index = (self.output / "questions" / "index.html").read_text(encoding="utf-8")

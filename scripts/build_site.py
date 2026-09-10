@@ -1288,20 +1288,6 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
     if questions is None:
         questions = _compat08__load_questions()
     validate_question_navigation(questions)
-    question_map = {item['id']: item for item in questions}
-    concept_ids = {item['id'] for item in concepts}
-    common_targets = [target for _question, target in _compat06__COMMON_QUESTIONS]
-    if concept_ids != set(common_targets) or len(common_targets) != len(set(common_targets)):
-        raise ValueError('V2.3 Home compatibility shortcuts must cover each current Concept exactly once')
-
-    practical_shortcuts = ''.join((
-        f'''<li><a href="/questions/{_compat06__esc(question_id)}/">{_compat06__esc(question_map[question_id]['question'])}</a></li>'''
-        for question_id in _compat09__V07_HOMEPAGE_COMPAT_QUESTION_IDS
-    ))
-    topic_shortcuts = ''.join((
-        f'''<li><a href="/understand/{_compat06__esc(target)}/">{_compat06__esc(question)}</a></li>'''
-        for question, target in _compat06__COMMON_QUESTIONS
-    ))
 
     primary = (
         ('/find/', 'Describe what is happening', 'Use your own words when you do not know the topic or service name.', 'Find a route', 'find'),
@@ -1346,19 +1332,10 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
     <a href="/how-it-works/"><strong>How ND Oracle works</strong><span>See how evidence, uncertainty and resource listings are handled.</span></a>
   </div>
 </section>
-<section class="home-compatibility" aria-labelledby="home-more-shortcuts-heading">
-  <h2 id="home-more-shortcuts-heading">More question shortcuts</h2>
-  <p class="section-intro">These older entry points remain available without making the homepage show every shortcut at once.</p>
-  <details class="home-shortcuts">
-    <summary>Show more question shortcuts</summary>
-    <div class="home-shortcut-content">
-      <h3>Start with something you need to do</h3>
-      <ul>{practical_shortcuts}</ul>
-      <h3>Start with a question</h3>
-      <p>{len(concepts)} evidence-linked topics are available now.</p>
-      <ul>{topic_shortcuts}</ul>
-    </div>
-  </details>
+<section class="home-complete-route" aria-labelledby="home-complete-route-heading">
+  <h2 id="home-complete-route-heading">Want the whole catalogue?</h2>
+  <p class="section-intro">The homepage stays short on purpose. Open the complete A–Z when you want to scan every governed Topic, Question and Resource.</p>
+  <p><a href="/a-z/">Open the complete A–Z →</a></p>
 </section>
 '''
     return _compat08__page_shell(

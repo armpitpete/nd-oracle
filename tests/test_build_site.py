@@ -65,11 +65,13 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertNotIn('href="/oracle/"', page)
         self.assertIn('href="/find/"', page)
 
-    def test_home_has_one_ordinary_language_route_for_every_topic(self):
-        page = self.page("/"); concept_ids = {item["id"] for item in self.concepts}; target_ids = [target for _q, target in build_site.COMMON_QUESTIONS]
-        self.assertEqual(concept_ids, set(target_ids)); self.assertEqual(len(concept_ids), len(target_ids))
-        for question, target in build_site.COMMON_QUESTIONS:
-            self.assertIn(html.escape(question, quote=True), page); self.assertIn(f'href="/understand/{target}/"', page)
+    def test_topics_index_reaches_every_current_topic_and_home_routes_to_topics(self):
+        home = self.page("/")
+        topics = self.page("/understand/")
+        self.assertIn('href="/understand/"', home)
+        for concept in self.concepts:
+            self.assertIn(f'href="/understand/{concept["id"]}/"', topics)
+            self.assertIn(html.escape(concept["name"], quote=True), topics)
 
     def test_reading_layer_and_topic_evidence_routes_cover_current_concepts(self):
         self.assertEqual({item["id"] for item in self.concepts}, set(build_site.SIMPLE_EXPLANATIONS)); build_site.validate_reading_layer(self.concepts)
@@ -282,11 +284,10 @@ class WebsiteBuildTests(unittest.TestCase):
 
         self.assertNotIn("Browse current topics", page)
         self.assertNotIn('<article class="topic-row">', page)
-        self.assertIn('<details class="home-shortcuts">', page)
-        self.assertNotIn('<details class="home-shortcuts" open', page)
-        self.assertIn("Start with something you need to do", page)
-        self.assertIn("Start with a question", page)
-        self.assertIn(f"{len(self.concepts)} evidence-linked topics are available now", page)
+        self.assertNotIn("More question shortcuts", page)
+        self.assertNotIn('class="home-shortcuts"', page)
+        self.assertIn("Want the whole catalogue?", page)
+        self.assertIn("The homepage stays short on purpose.", page)
         self.assertIn("Need another way in?", page)
         self.assertIn('href="/places/"', page)
         self.assertIn('href="/a-z/"', page)
