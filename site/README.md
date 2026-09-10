@@ -24,6 +24,10 @@ Home is intentionally an orientation surface, not a catalogue. Legacy per-topic/
 - canonical content remains useful without JavaScript;
 - the stylesheet URL is content-versioned from the stylesheet bytes.
 
+Resource details additionally follow the V2.5 YP/ND grouping rules: keep the readable base text size, use typographic weight for importance, use low-intensity colour/surface regions to make conceptual boundaries visible, and keep related material closer together instead of using large blank gaps.
+
+Product/media imagery is controlled by `site/resource-visuals.json` and `docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md`. A book/game/app/media image may render only from a locally controlled asset with recorded provenance and a reviewed rights basis. Images are recognition aids, never evidence or endorsement. Unknown/uncleared rights fail closed to the text-complete no-image state.
+
 ## V2 composition
 
 The current doctrine is defined by:
