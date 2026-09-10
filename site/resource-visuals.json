@@ -1,0 +1,20 @@
+{
+  "schema_version": "1",
+  "policy": "docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md",
+  "render_rule": "Only entries with status=cleared and complete local rights/provenance metadata may render.",
+  "entries": {
+    "stardew-valley": {
+      "resource_id": "stardew-valley",
+      "kind": "game",
+      "status": "permission-required",
+      "render": false,
+      "source_url": "https://www.stardewvalley.net/terms/",
+      "rights_holder": "ConcernedApe LLC",
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "checked_on": "2026-09-10",
+      "note": "Official-site terms restrict reproduction/public display/republishing of website images and require permission for relevant marks. Do not copy or hotlink official artwork without a separately reviewed rights basis."
+    }
+  }
+}
