@@ -2483,3 +2483,161 @@ th {
     border: 1px solid ButtonText;
   }
 }
+
+/* ND-UX-V2.5: YP/ND resource hierarchy, section boundaries and proximity. */
+.page--resource .page-heading {
+  margin-bottom: var(--space-5);
+}
+
+.page--resource .back-link {
+  margin-bottom: var(--space-3);
+}
+
+.page--resource .resource-meta {
+  margin: 0 0 var(--space-3);
+}
+
+.page--resource .notice {
+  margin: 0.7rem 0;
+  padding: 0.85rem 1rem;
+  background: var(--wayfind-green-soft);
+  border-left: 0.36rem solid var(--wayfind-green);
+}
+
+.page--resource .notice strong {
+  font-weight: 850;
+}
+
+.page--resource .scope-panel,
+.page--resource main > section[aria-labelledby="use-heading"],
+.page--resource main > section[aria-labelledby="audience-heading"],
+.page--resource main > section[aria-labelledby="access-heading"],
+.page--resource main > section[aria-labelledby="related-heading"],
+.page--resource main > section[aria-labelledby="resource-question-heading"],
+.page--resource main > section[aria-labelledby="governed-resource-claims-heading"],
+.page--resource main > section[aria-labelledby="limits-heading"],
+.page--resource main > section[aria-labelledby="cost-heading"],
+.page--resource main > section[aria-labelledby="conflict-heading"],
+.page--resource .evidence-status {
+  margin: 0.7rem 0;
+  padding: 1rem 1.15rem;
+  border: 0;
+  border-left: 0.36rem solid var(--accent);
+}
+
+.page--resource .scope-panel {
+  background: var(--scope-soft);
+  border-left-color: var(--scope);
+}
+
+.page--resource main > section[aria-labelledby="use-heading"],
+.page--resource main > section[aria-labelledby="audience-heading"] {
+  background: var(--wayfind-green-soft);
+  border-left-color: var(--wayfind-green);
+}
+
+.page--resource main > section[aria-labelledby="audience-heading"] {
+  margin-top: 0;
+}
+
+.page--resource main > section[aria-labelledby="access-heading"] {
+  background: var(--wayfind-cyan-soft);
+  border-left-color: var(--wayfind-cyan);
+}
+
+.page--resource main > section[aria-labelledby="related-heading"],
+.page--resource main > section[aria-labelledby="resource-question-heading"] {
+  background: var(--wayfind-violet-soft);
+  border-left-color: var(--wayfind-violet);
+}
+
+.page--resource main > section[aria-labelledby="resource-question-heading"] {
+  margin-top: 0;
+}
+
+.page--resource main > section[aria-labelledby="governed-resource-claims-heading"] {
+  background: var(--scope-soft);
+  border-left-color: var(--scope);
+}
+
+.page--resource main > section[aria-labelledby="limits-heading"] {
+  background: var(--wayfind-rose-soft);
+  border-left-color: var(--wayfind-rose);
+}
+
+.page--resource main > section[aria-labelledby="cost-heading"] {
+  background: var(--wayfind-amber-soft);
+  border-left-color: var(--wayfind-amber);
+}
+
+.page--resource main > section[aria-labelledby="conflict-heading"],
+.page--resource .evidence-status {
+  background: var(--wayfind-slate-soft);
+  border-left-color: var(--wayfind-slate);
+}
+
+.page--resource main > section > h2,
+.page--resource .scope-panel > h2,
+.page--resource .evidence-status > h2 {
+  margin: 0 0 0.55rem;
+  font-weight: 800;
+}
+
+.page--resource main > section[aria-labelledby="limits-heading"] > h2,
+.page--resource .evidence-status > h2 {
+  font-weight: 850;
+}
+
+.page--resource main > section p,
+.page--resource main > section ul,
+.page--resource .scope-panel p,
+.page--resource .evidence-status p {
+  margin-block: 0.55rem;
+}
+
+.page--resource main > section li + li {
+  margin-top: 0.28rem;
+}
+
+.page--resource .provenance {
+  margin-top: var(--space-5);
+  padding: 0.9rem 1.05rem;
+  background: var(--wayfind-slate-soft);
+  border: 0;
+  border-left: 0.28rem solid var(--wayfind-slate);
+}
+
+/* V2.5 resource imagery is recognition material, never evidence. */
+.resource-visual {
+  max-width: 18rem;
+  margin: 0 0 var(--space-4);
+}
+
+.resource-visual img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 22rem;
+  object-fit: contain;
+}
+
+@media (max-width: 48rem) {
+  .page--resource .scope-panel,
+  .page--resource main > section[aria-labelledby],
+  .page--resource .evidence-status {
+    padding: 0.85rem 0.9rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .page--resource .notice,
+  .page--resource .scope-panel,
+  .page--resource main > section[aria-labelledby],
+  .page--resource .evidence-status,
+  .page--resource .provenance {
+    background: Canvas;
+    border: 0;
+    border-left: 4px solid CanvasText;
+  }
+}
