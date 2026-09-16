@@ -40,25 +40,31 @@ def test_resource_detail_uses_bounded_colour_sections_and_compact_proximity() ->
 
 def test_resource_visual_registry_fails_closed_by_policy() -> None:
     registry = json.loads(VISUALS.read_text(encoding="utf-8"))
+    assert registry["schema_version"] == "2"
     assert registry["policy"] == "docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md"
+    assert "materially helps the user recognise, distinguish or understand" in registry["render_rule"]
     for resource_id, entry in registry["entries"].items():
         assert entry["resource_id"] == resource_id
-        if entry["render"]:
-            assert entry["status"] == "cleared"
+        assert "render" not in entry
+        assert isinstance(entry["materially_helpful"], bool)
+        assert set(entry["helps"]) <= {"recognise", "distinguish", "understand"}
+        if entry["status"] == "cleared":
+            assert entry["materially_helpful"]
             assert entry["local_path"].startswith("site/resource-media/")
             assert entry["alt"]
             assert entry["source_url"]
             assert entry["rights_basis"]
             assert (ROOT / entry["local_path"]).is_file()
         else:
-            assert entry["status"] != "cleared" or entry["local_path"] is None
+            assert entry["local_path"] is None
+            assert entry["rights_basis"] is None
 
 
 def test_stardew_visual_is_not_fabricated_or_hotlinked_without_rights() -> None:
     registry = json.loads(VISUALS.read_text(encoding="utf-8"))
     stardew = registry["entries"]["stardew-valley"]
     assert stardew["status"] == "permission-required"
-    assert stardew["render"] is False
+    assert stardew["materially_helpful"] is True
     assert stardew["local_path"] is None
     assert "stardewvalley.net/terms" in stardew["source_url"]
 
@@ -66,3 +72,4 @@ def test_stardew_visual_is_not_fabricated_or_hotlinked_without_rights() -> None:
     assert "hotlink third-party covers" in policy
     assert "create a lookalike image and present it as the product" in policy
     assert "recognition material, not evidence" in policy
+    assert "Render a cleared visual when it materially helps the user recognise, distinguish or understand the resource." in policy

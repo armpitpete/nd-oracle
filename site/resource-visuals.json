@@ -1,20 +1,634 @@
 {
-  "schema_version": "1",
+  "schema_version": "2",
   "policy": "docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md",
-  "render_rule": "Only entries with status=cleared and complete local rights/provenance metadata may render.",
+  "render_rule": "Render a cleared visual when it materially helps the user recognise, distinguish or understand the resource; rendering is derived from usefulness + cleared status + valid local rights/provenance metadata.",
   "entries": {
+    "a-kind-of-spark": {
+      "resource_id": "a-kind-of-spark",
+      "kind": "book",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A cover normally helps a reader recognise and distinguish the exact book.",
+      "source_url": "https://www.panmacmillan.com/authors/elle-mcnicoll/a-kind-of-spark/9781037410642",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "android-live-transcribe": {
+      "resource_id": "android-live-transcribe",
+      "kind": "app",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "An official app/product visual normally helps a reader recognise the exact software.",
+      "source_url": "https://support.google.com/accessibility/android/answer/9158064?hl=en-GB",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "autistica-tips-hub": {
+      "resource_id": "autistica-tips-hub",
+      "kind": "app",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "An official app/product visual normally helps a reader recognise the exact software.",
+      "source_url": "https://www.autistica.org.uk/get-involved/autistica-tips-hub",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "bbc-1800-seconds-on-autism": {
+      "resource_id": "bbc-1800-seconds-on-autism",
+      "kind": "media",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A poster, programme, podcast or other official media visual normally helps recognition.",
+      "source_url": "https://podcasts.apple.com/gb/podcast/1800-seconds-on-autism/id1444057570",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "caged-in-chaos": {
+      "resource_id": "caged-in-chaos",
+      "kind": "book",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A cover normally helps a reader recognise and distinguish the exact book.",
+      "source_url": "https://books.google.com/books/about/Caged_in_Chaos.html?id=zCaPAwAAQBAJ",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "cats-organized-neatly": {
+      "resource_id": "cats-organized-neatly",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://store.steampowered.com/app/1369340/Cats_Organized_Neatly/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "cboard-aac": {
+      "resource_id": "cboard-aac",
+      "kind": "app",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "An official app/product visual normally helps a reader recognise the exact software.",
+      "source_url": "https://github.com/cboard-org/cboard",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "cloud-gardens": {
+      "resource_id": "cloud-gardens",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://store.steampowered.com/app/1372320/Cloud_Gardens/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "different-not-less": {
+      "resource_id": "different-not-less",
+      "kind": "book",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A cover normally helps a reader recognise and distinguish the exact book.",
+      "source_url": "https://www.murdochbooks.com/browse/book/Chlo%C3%A9-Hayden-Different%2C-Not-Less-9781922616180",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "dirty-laundry": {
+      "resource_id": "dirty-laundry",
+      "kind": "book",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A cover normally helps a reader recognise and distinguish the exact book.",
+      "source_url": "https://www.penguinrandomhouse.com/books/743719/dirty-laundry-by-richard-pink-and-roxanne-emery/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "dorfromantik": {
+      "resource_id": "dorfromantik",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://store.steampowered.com/app/1455840/Dorfromantik/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "focusmate": {
+      "resource_id": "focusmate",
+      "kind": "app",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "An official app/product visual normally helps a reader recognise the exact software.",
+      "source_url": "https://www.focusmate.com/how-it-works/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "front-of-the-class": {
+      "resource_id": "front-of-the-class",
+      "kind": "book",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A cover normally helps a reader recognise and distinguish the exact book.",
+      "source_url": "https://us.macmillan.com/books/9780312571399/frontoftheclass/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "garden-galaxy": {
+      "resource_id": "garden-galaxy",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://store.steampowered.com/app/1970460/Garden_Galaxy/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "gourdlets": {
+      "resource_id": "gourdlets",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://store.steampowered.com/app/2013730/Gourdlets/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "habitica": {
+      "resource_id": "habitica",
+      "kind": "app",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "An official app/product visual normally helps a reader recognise the exact software.",
+      "source_url": "https://habitica.com/static/home",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "how-to-adhd": {
+      "resource_id": "how-to-adhd",
+      "kind": "book",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A cover normally helps a reader recognise and distinguish the exact book.",
+      "source_url": "https://www.hachette.co.uk/titles/jessica-mccabe/how-to-adhd/9781805221289/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "inside-our-autistic-minds": {
+      "resource_id": "inside-our-autistic-minds",
+      "kind": "media",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A poster, programme, podcast or other official media visual normally helps recognition.",
+      "source_url": "https://connect.open.ac.uk/health-wellbeing-and-sports/inside-the-autistic-mind/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "microsoft-to-do": {
+      "resource_id": "microsoft-to-do",
+      "kind": "app",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "An official app/product visual normally helps a reader recognise the exact software.",
+      "source_url": "https://support.microsoft.com/en-us/todo/managing-tasks-in-microsoft-to-do",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "minami-lane": {
+      "resource_id": "minami-lane",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://store.steampowered.com/app/2678990/Minami_Lane/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "minecraft": {
+      "resource_id": "minecraft",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://www.minecraft.net/en-us/accessibility",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "molehill-mountain": {
+      "resource_id": "molehill-mountain",
+      "kind": "app",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "An official app/product visual normally helps a reader recognise the exact software.",
+      "source_url": "https://www.autistica.org.uk/our-research/research-projects/anxiety-tools-for-autistic-people",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
     "stardew-valley": {
       "resource_id": "stardew-valley",
       "kind": "game",
       "status": "permission-required",
-      "render": false,
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
       "source_url": "https://www.stardewvalley.net/terms/",
       "rights_holder": "ConcernedApe LLC",
       "rights_basis": null,
       "local_path": null,
       "alt": null,
+      "attribution": null,
       "checked_on": "2026-09-10",
-      "note": "Official-site terms restrict reproduction/public display/republishing of website images and require permission for relevant marks. Do not copy or hotlink official artwork without a separately reviewed rights basis."
+      "rights_note": "Official-site terms restrict reproduction/public display/republishing of website images and require permission for relevant marks. Do not copy or hotlink official artwork without a separately reviewed rights basis."
+    },
+    "strong-female-character": {
+      "resource_id": "strong-female-character",
+      "kind": "book",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A cover normally helps a reader recognise and distinguish the exact book.",
+      "source_url": "https://www.hachette.co.uk/titles/fern-brady-2/strong-female-character/9781914240461/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "summerhouse-game": {
+      "resource_id": "summerhouse-game",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://store.steampowered.com/app/2533960/SUMMERHOUSE/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "texthelp-read-write": {
+      "resource_id": "texthelp-read-write",
+      "kind": "app",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "An official app/product visual normally helps a reader recognise the exact software.",
+      "source_url": "https://academy.texthelp.com/read-and-write-education/introduction/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "the-shape-of-things": {
+      "resource_id": "the-shape-of-things",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://store.steampowered.com/app/1853410/The_Shape_of_Things/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "tiimo": {
+      "resource_id": "tiimo",
+      "kind": "app",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "An official app/product visual normally helps a reader recognise the exact software.",
+      "source_url": "https://www.tiimoapp.com/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "tiny-glade": {
+      "resource_id": "tiny-glade",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://store.steampowered.com/app/2198150/Tiny_Glade/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "townscaper": {
+      "resource_id": "townscaper",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://store.steampowered.com/app/1291340/Townscaper/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "unmasking-autism": {
+      "resource_id": "unmasking-autism",
+      "kind": "book",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A cover normally helps a reader recognise and distinguish the exact book.",
+      "source_url": "https://www.penguinrandomhouse.com/books/688819/unmasking-autism-by-devon-price-phd/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "unpacking": {
+      "resource_id": "unpacking",
+      "kind": "game",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "Box/key art normally helps a reader recognise and distinguish the exact game.",
+      "source_url": "https://www.unpackinggame.com/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
+    },
+    "were-all-neurodiverse": {
+      "resource_id": "were-all-neurodiverse",
+      "kind": "book",
+      "status": "rights-unknown",
+      "materially_helpful": true,
+      "helps": [
+        "recognise",
+        "distinguish"
+      ],
+      "usefulness_note": "A cover normally helps a reader recognise and distinguish the exact book.",
+      "source_url": "https://www.hachette.co.uk/titles/sonny-jane-wise/were-all-neurodiverse/9781839975783/",
+      "rights_holder": null,
+      "rights_basis": null,
+      "local_path": null,
+      "alt": null,
+      "attribution": null,
+      "checked_on": "2026-09-16",
+      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed."
     }
   }
 }

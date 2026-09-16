@@ -20,6 +20,7 @@ from urllib.parse import urlsplit
 import sys
 from collections import defaultdict
 from scripts import discovery
+from scripts import resource_visuals as _resource_visuals
 from scripts.release_identity import PUBLIC_SITE_RELEASE
 
 # ---- v06 compatibility foundation ----
@@ -996,6 +997,12 @@ def render_governed_resource_claims(resource: dict, evidence_map: dict[str, dict
     return '<section aria-labelledby="governed-resource-claims-heading"><h2 id="governed-resource-claims-heading">Governed claims and evidence</h2><section class="notice"><strong>A supported claim is not a recommendation or an individual decision.</strong> Read the exact wording, evidence context and open uncertainty together.</section>' + ''.join(rows) + '</section>'
 def render_resource(resource: dict, concept_map: dict[str, dict], questions: list[dict], evidence_map: dict[str, dict] | None=None) -> str:
     page = _compat09__render_resource(resource, concept_map, questions)
+    visual = _resource_visuals.render_resource_visual(resource)
+    if visual:
+        marker = '<section class="notice"><strong>Listed, not endorsed.</strong>'
+        if marker not in page:
+            raise ValueError(f"{resource['id']}: cannot locate resource boundary for recognition visual")
+        page = page.replace(marker, visual + marker, 1)
     if evidence_map is None:
         evidence_map = {item['id']: item for item in load_evidence()}
     claims = render_governed_resource_claims(resource, evidence_map)
@@ -1786,6 +1793,7 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
     concepts = _compat06__load_concepts()
     resources = _compat06__load_resources()
     evidence = load_evidence()
+    _resource_visuals.publish_resource_visual_assets(destination, resources)
     concept_map = {item['id']: item for item in concepts}
     evidence_map = {item['id']: item for item in evidence}
     for resource in resources:

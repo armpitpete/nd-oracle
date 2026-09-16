@@ -57,7 +57,7 @@ Colour marks **where a conceptual section starts and stops**, not merely categor
 
 ## Recognition visuals
 
-For recognisable resources such as books, games, apps, films, physical products and other media, a useful product visual should normally be shown when ND Oracle has a lawful asset to publish.
+**Render a cleared visual when it materially helps the user recognise, distinguish or understand the resource.** This usefulness gate comes before publication: a lawful asset is not displayed merely because it exists.
 
 The visual exists for **recognition** — helping somebody confirm “yes, that is the thing I meant” — not decoration or evidential authority.
 

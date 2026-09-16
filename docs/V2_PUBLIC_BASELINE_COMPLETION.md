@@ -24,6 +24,12 @@ Base: `0065ab8000bbb0020aa221f084525116f436b373`
 - [x] add the lawful product/media visual policy and controlled rights registry;
 - [x] classify Stardew Valley imagery as `permission-required` rather than copying, hotlinking or fabricating artwork without a reviewed rights basis;
 - [x] add regression coverage for resource hierarchy/grouping and visual-rights fail-closed behaviour.
+- [x] freeze the canonical visual usefulness rule: render only when a cleared visual materially helps recognition, distinction or understanding;
+- [x] derive rendering from usefulness + cleared rights state rather than an independent render switch;
+- [x] wire the resource visual registry into the public builder and local generated asset publication path;
+- [x] add positive-path cleared-fixture proof plus fail-closed negative tests;
+- [x] inventory every P1 book/game/app/media Resource and record an explicit rights state without fabricating permission;
+- [x] define media-format, local-path and 1.5 MB source-asset boundaries.
 
 ## Existing accepted work reused
 

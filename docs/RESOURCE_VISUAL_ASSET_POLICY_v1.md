@@ -7,6 +7,10 @@ Status: V2.5 presentation contract
 
 Books, games, apps, films, media and recognisable products benefit from a visual identity because a reader can recognise the item before processing all of its text. ND Oracle therefore treats product imagery as an accessibility/navigation aid when it can lawfully publish the asset.
 
+**Canonical usefulness rule:** **Render a cleared visual when it materially helps the user recognise, distinguish or understand the resource.**
+
+Usefulness is the first gate. Finding an image, owning a local copy or having permission does not by itself justify displaying it. A visual that does not materially help is recorded as `not-useful` and stays absent.
+
 The image is **recognition material, not evidence**. It must never imply endorsement, efficacy, safety, suitability or a stronger evidence status.
 
 ## Registry
@@ -20,7 +24,7 @@ A registry item may have one of these states:
 - `rights-unknown` — provenance or rights are not sufficiently established;
 - `not-useful` — an image would not materially improve recognition.
 
-Only `cleared` may render.
+Only `cleared` may render, and only when `materially_helpful` is true with one or more recorded usefulness reasons: `recognise`, `distinguish`, or `understand`. Rendering is derived from those fields; the registry does not contain an independent `render` switch.
 
 ## Required fields for a rendered visual
 
@@ -36,6 +40,13 @@ A `cleared` entry must record:
 - optional attribution text when required.
 
 The build must fail closed if a `cleared` entry lacks the local file or required rights/provenance fields.
+
+
+## Asset format and size boundary
+
+Publishable local assets are limited to PNG, JPEG, WebP and SVG. A single source asset must be no larger than 1.5 MB. Presentation CSS preserves the useful source aspect ratio rather than forcing every resource into a square thumbnail. Cropping must not remove identifying information such as a book title, game identity or app mark.
+
+The source file remains local under `site/resource-media/`; the generated public path is `/resource-media/<filename>`. Remote image URLs are provenance only and are never used as the rendered image source.
 
 ## Prohibited shortcuts
 
