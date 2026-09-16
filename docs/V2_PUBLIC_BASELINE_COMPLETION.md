@@ -1,6 +1,6 @@
 # ND Oracle V2 Public Baseline — completion register
 
-Date: 2026-09-10
+Date: 2026-09-16
 Candidate branch: `agent/v2-public-baseline-completion`
 Base: `0065ab8000bbb0020aa221f084525116f436b373`
 
@@ -23,13 +23,14 @@ Base: `0065ab8000bbb0020aa221f084525116f436b373`
 - [x] reduce vertical separation inside the resource-detail reading sequence so related material remains in working view;
 - [x] add the lawful product/media visual policy and controlled rights registry;
 - [x] classify Stardew Valley imagery as `permission-required` rather than copying, hotlinking or fabricating artwork without a reviewed rights basis;
-- [x] add regression coverage for resource hierarchy/grouping and visual-rights fail-closed behaviour.
+- [x] add regression coverage for resource hierarchy/grouping and visual-rights fail-closed behaviour;
 - [x] freeze the canonical visual usefulness rule: render only when a cleared visual materially helps recognition, distinction or understanding;
 - [x] derive rendering from usefulness + cleared rights state rather than an independent render switch;
 - [x] wire the resource visual registry into the public builder and local generated asset publication path;
 - [x] add positive-path cleared-fixture proof plus fail-closed negative tests;
-- [x] inventory every P1 book/game/app/media Resource and record an explicit rights state without fabricating permission;
-- [x] define media-format, local-path and 1.5 MB source-asset boundaries.
+- [x] inventory all 33 P1 visual candidates — 9 books, 13 games, 9 apps and 2 media Resources — and record explicit rights states without fabricating permission;
+- [x] define media-format, local-path and 1.5 MB source-asset boundaries;
+- [x] run the complete repository regression suite after resource-visual integration and pass the protected-path guard.
 
 ## Existing accepted work reused
 
@@ -50,9 +51,11 @@ These are not reimplemented merely to create churn.
 
 ## Resource visual boundary
 
-The visual rule is active, but it is intentionally fail-closed. A book, game, app, film, physical product or other recognisable Resource should show a product visual when a locally controlled asset has an explicit publishable rights basis recorded in `site/resource-visuals.json`.
+**Render a cleared visual when it materially helps the user recognise, distinguish or understand the resource.**
 
-No visual is preferable to an unlicensed, hotlinked or misleading visual. Imagery is recognition/navigation material and must not become Evidence, endorsement or ranking authority.
+The visual rule is active and intentionally fail-closed. The current P1 inventory covers 33 books, games, apps and media Resources. A product visual renders only when the usefulness gate passes and a locally controlled asset has an explicit publishable rights basis recorded in `site/resource-visuals.json`.
+
+No visual is preferable to an unlicensed, hotlinked or misleading visual. Imagery is recognition/navigation material and must not become Evidence, endorsement or ranking authority. `rights-unknown` and `permission-required` are valid completed triage states; they are not permission to publish an asset.
 
 ## Evidence gates not forgeable by repository edits
 
