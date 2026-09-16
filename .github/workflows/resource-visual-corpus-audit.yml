@@ -1,0 +1,62 @@
+name: Resource Visual Corpus Audit
+
+on:
+  push:
+    branches:
+      - agent/v2-public-baseline-completion
+    paths:
+      - .github/workflows/resource-visual-corpus-audit.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Build complete governed Resource audit
+        run: |
+          python - <<'PY'
+          import csv, json
+          from collections import Counter
+          from pathlib import Path
+
+          root = Path('.')
+          rows = []
+          for path in sorted((root / 'objects' / 'resources').glob('*.json')):
+              item = json.loads(path.read_text(encoding='utf-8'))
+              rows.append({
+                  'id': item['id'],
+                  'name': item['name'],
+                  'category': item.get('category'),
+                  'description': item.get('description'),
+                  'url': item.get('url'),
+                  'intended_use': item.get('intended_use'),
+                  'limitations': item.get('limitations'),
+                  'last_reviewed': (item.get('provenance') or {}).get('last_reviewed'),
+                  'path': str(path),
+              })
+          if len(rows) != 168:
+              raise SystemExit(f'expected 168 Resources, found {len(rows)}')
+          counts = dict(sorted(Counter(row['category'] for row in rows).items()))
+          out = root / 'tmp-resource-visual-audit'
+          out.mkdir()
+          (out / 'resources.json').write_text(json.dumps({'count': len(rows), 'category_counts': counts, 'resources': rows}, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
+          with (out / 'resources.csv').open('w', encoding='utf-8', newline='') as handle:
+              writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+              writer.writeheader()
+              writer.writerows(rows)
+          (out / 'summary.txt').write_text(f'total=168\n' + '\n'.join(f'{k}={v}' for k,v in counts.items()) + '\n', encoding='utf-8')
+          print((out / 'summary.txt').read_text())
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: resource-visual-corpus-audit-${{ github.sha }}
+          path: tmp-resource-visual-audit/
+          if-no-files-found: error
+          retention-days: 7
