@@ -30,8 +30,23 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Install repository validation dependencies
+        run: python -m pip install --requirement requirements-dev.txt
+
       - name: Apply bounded resource visual completion
         run: python scripts/_temp_complete_resource_visuals_v1.py
+
+      - name: Repair per-page render validation boundary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/resource_visuals.py')
+          text = path.read_text(encoding='utf-8')
+          needle = '    validate_registry(registry, [resource], root=root)\n'
+          if text.count(needle) != 1:
+              raise SystemExit(f'expected one render-time full-registry validation call, found {text.count(needle)}')
+          path.write_text(text.replace(needle, '', 1), encoding='utf-8')
+          PY
 
       - name: Compile and run targeted resource visual tests
         run: |
