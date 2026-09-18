@@ -391,7 +391,8 @@ jobs:
             "question-workplace-gb|/questions/workplace-support-great-britain/"
             "resources-index|/resources/"
             "resources-open|/resources-open/"
-            "resource-goblin-tools|/resources/goblin-tools/"\n            "resource-townscaper|/resources/townscaper/"
+            "resource-goblin-tools|/resources/goblin-tools/"
+            "resource-townscaper|/resources/townscaper/"
             "topics-index|/understand/"
             "concept-autism|/understand/autism/"
             "concept-monotropism|/understand/monotropism/"
@@ -521,15 +522,16 @@ jobs:
             echo "questions_default_capture=1440x5200,390x9000"
             echo "questions_open_capture=1440x2600,390x3000"
             echo "resources_default_capture=1440x3200,390x6200"
-            echo "resources_open_capture=1440x2400,390x2800"\n            echo "resource_townscaper_capture=1440x1100,390x844"
+            echo "resources_open_capture=1440x2400,390x2800"
+            echo "resource_townscaper_capture=1440x1100,390x844"
             echo "topics_index_capture=1440x3600,390x5600"
             echo "concept_monotropism_capture=1440x2600,390x4200"
             echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 46
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 46
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 48
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 48
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
