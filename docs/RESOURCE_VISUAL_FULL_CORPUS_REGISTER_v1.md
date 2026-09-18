@@ -13,9 +13,9 @@ Authority: `docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md`
 - Governed Resources reviewed: **168/168**
 - Materially useful visual candidates: **37**
 - Explicit `not-useful` decisions: **131**
-- `permission-required`: **29**
+- `permission-required`: **28**
 - `rights-unknown`: **8**
-- `cleared`: **0**
+- `cleared`: **1**
 
 Complete means every Resource has an explicit usefulness and rights state; it does not mean forcing an image onto every Resource. Only a useful, cleared, local, validated asset may render.
 
@@ -194,7 +194,7 @@ Complete means every Resource has an explicit usefulness and rights state; it do
 | `tiny-glade` — Tiny Glade | game | yes | `permission-required` | official-product-imagery-found-no-public-reuse-licence |
 | `tourettes-action` — Tourettes Action | organisation | no | `not-useful` | not-required-usefulness-gate-failed |
 | `tourettes-action-support-groups` — Tourettes Action support groups | community | no | `not-useful` | not-required-usefulness-gate-failed |
-| `townscaper` — Townscaper | game | yes | `permission-required` | official-press-kit-found-scope-unconfirmed |
+| `townscaper` — Townscaper | game | yes | `cleared` | cleared-written-permission-exact-press-kit-asset |
 | `translink-accessibility-northern-ireland` — Translink — accessibility and passenger assistance | service | no | `not-useful` | not-required-usefulness-gate-failed |
 | `uk-benefit-decision-challenge-signposts` — UK benefit-decision challenge signposts | practical_guide | no | `not-useful` | not-required-usefulness-gate-failed |
 | `uk-consent-healthy-relationships-starting-points` — Consent and healthy relationships — NHS public-information starting points | practical_guide | no | `not-useful` | not-required-usefulness-gate-failed |

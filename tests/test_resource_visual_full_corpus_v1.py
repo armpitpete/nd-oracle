@@ -38,8 +38,8 @@ class ResourceVisualFullCorpusTests(unittest.TestCase):
         entries = list(registry["entries"].values())
         self.assertEqual(37, sum(bool(entry["materially_helpful"]) for entry in entries))
         self.assertEqual(131, sum(entry["status"] == "not-useful" for entry in entries))
-        self.assertEqual(0, sum(entry["status"] == "cleared" for entry in entries))
-        self.assertEqual(29, sum(entry["status"] == "permission-required" for entry in entries))
+        self.assertEqual(1, sum(entry["status"] == "cleared" for entry in entries))
+        self.assertEqual(28, sum(entry["status"] == "permission-required" for entry in entries))
         self.assertEqual(8, sum(entry["status"] == "rights-unknown" for entry in entries))
 
     def test_corrupt_cleared_asset_fails_closed(self) -> None:

@@ -3247,27 +3247,27 @@
     "townscaper": {
       "resource_id": "townscaper",
       "kind": "game",
-      "status": "permission-required",
+      "status": "cleared",
       "materially_helpful": true,
       "helps": [
         "recognise",
         "distinguish"
       ],
       "usefulness_note": "Official key art, cover art or an approved screenshot materially helps readers recognise and distinguish the game.",
-      "source_url": "https://store.steampowered.com/app/1291340/Townscaper/",
+      "source_url": "https://drive.google.com/file/d/1NHHqC4NsaQJ81FW84LiVr_sINjUmT_Ps/view?usp=drivesdk",
       "rights_holder": "Oskar Stålberg / Raw Fury",
-      "rights_basis": null,
-      "local_path": null,
-      "alt": null,
+      "rights_basis": "Written permission from Raw Fury Press on 2026-09-18 granting ND Oracle use of any assets from the linked Townscaper press kit; exact asset Townscaper_04.jpg verified inside that kit.",
+      "local_path": "site/resource-media/townscaper.jpg",
+      "alt": "A colourful island town of closely packed buildings created in Townscaper.",
       "attribution": null,
       "checked_on": "2026-09-18",
-      "rights_note": "No explicit republication licence or permission has yet been recorded in ND Oracle; fail closed until one is reviewed.",
+      "rights_note": "Cleared by written Raw Fury Press permission for any asset in the linked Townscaper press kit. The published file is a proportionally resized/compressed derivative of Townscaper_04.jpg with no crop, overlay or colour alteration.",
       "attribution_required": false,
-      "rights_research_state": "official-press-kit-found-scope-unconfirmed",
-      "rights_review_url": "https://www.townscapergame.com/",
-      "permission_route": "rebelrebel@rawfury.com",
-      "rights_candidate_basis": "The official Townscaper site exposes a press kit and press contact but no explicit blanket licence was identified.",
-      "asset_strategy": "Use press-kit art after confirmation."
+      "rights_research_state": "cleared-written-permission-exact-press-kit-asset",
+      "rights_review_url": "https://drive.google.com/drive/folders/1cOkqyqhs9LGk2Bcf9Z1uttKH5113y9p3?usp=sharing",
+      "permission_route": "Raw Fury Press <presspress@rawfury.com>",
+      "rights_candidate_basis": "Written permission received from Raw Fury Press.",
+      "asset_strategy": "Use Townscaper_04.jpg from the authorised press-kit Screenshots folder, proportionally resized/compressed only."
     },
     "translink-accessibility-northern-ireland": {
       "resource_id": "translink-accessibility-northern-ireland",

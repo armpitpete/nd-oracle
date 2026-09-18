@@ -11,8 +11,8 @@ No entry in this queue may render until a **specific asset** has a recorded righ
 ## Queue summary
 
 - Useful visual candidates: **37**
-- Cleared for publication: **0**
-- Permission required: **29**
+- Cleared for publication: **1**
+- Permission required: **28**
 - Rights/asset binding unresolved: **8**
 
 ## Queue
@@ -52,7 +52,6 @@ No entry in this queue may render until a **specific asset** has a recorded righ
 | `tiimo` — Tiimo | app | `rights-unknown` | Tiimo | official-media-kit-found-scope-unconfirmed | hln@tiimo.dk |
 | `time-timer` — Time Timer | tool | `permission-required` | Time Timer | no-general-product-image-reuse-licence-found | Time Timer support/media contact |
 | `tiny-glade` — Tiny Glade | game | `permission-required` | Pounce Light | official-product-imagery-found-no-public-reuse-licence | developer/publisher contact via official product site |
-| `townscaper` — Townscaper | game | `permission-required` | Oskar Stålberg / Raw Fury | official-press-kit-found-scope-unconfirmed | rebelrebel@rawfury.com |
 | `unmasking-autism` — Unmasking Autism | book | `permission-required` | Penguin Random House | permission-route-confirmed | Penguin Random House permissions portal |
 | `unpacking` — Unpacking | game | `permission-required` | Witch Beam / Balor Games | official-screenshots-found-no-explicit-reuse-licence | official developer/publisher contact |
 | `were-all-neurodiverse` — We're All Neurodiverse — Sonny Jane Wise | book | `permission-required` | Hachette UK | permission-route-confirmed | PLS Clear |
@@ -64,7 +63,7 @@ These still do not render because an exact compliant asset has not been bound an
 - **Microsoft To Do / Microsoft Immersive Reader:** Microsoft publishes conditions under which non-opening screenshots can be used on websites. Use a clean unaltered screenshot with no third-party or identifiable-person content; product icons require separate authorization.
 - **Habitica:** HabitRPG-designed assets have published CC BY-NC-SA 3.0 coverage, but the exact image must be traced to that licence rather than assuming every asset has the same terms.
 - **Google / Android Live Transcribe:** Google branding guidance provides a conditional route for standard unaltered screenshots; bind and review the exact screenshot before clearance.
-- **Focusmate / Tiimo / Dorfromantik / SUMMERHOUSE / Townscaper:** official media/press assets exist, but the reviewed public pages do not provide a sufficiently explicit blanket licence for ND Oracle's durable public use. Confirm scope or obtain written permission.
+- **Focusmate / Tiimo / Dorfromantik / SUMMERHOUSE:** official media/press assets exist, but the reviewed public pages do not provide a sufficiently explicit blanket licence for ND Oracle's durable public use. Confirm scope or obtain written permission.
 
 ## Batch permission groups
 
