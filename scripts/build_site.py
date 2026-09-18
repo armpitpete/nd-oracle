@@ -20,6 +20,7 @@ from urllib.parse import urlsplit
 import sys
 from collections import defaultdict
 from scripts import discovery
+from scripts import resource_visuals as _resource_visuals
 from scripts.release_identity import PUBLIC_SITE_RELEASE
 
 # ---- v06 compatibility foundation ----
@@ -996,6 +997,12 @@ def render_governed_resource_claims(resource: dict, evidence_map: dict[str, dict
     return '<section aria-labelledby="governed-resource-claims-heading"><h2 id="governed-resource-claims-heading">Governed claims and evidence</h2><section class="notice"><strong>A supported claim is not a recommendation or an individual decision.</strong> Read the exact wording, evidence context and open uncertainty together.</section>' + ''.join(rows) + '</section>'
 def render_resource(resource: dict, concept_map: dict[str, dict], questions: list[dict], evidence_map: dict[str, dict] | None=None) -> str:
     page = _compat09__render_resource(resource, concept_map, questions)
+    visual = _resource_visuals.render_resource_visual(resource)
+    if visual:
+        marker = '<section class="notice"><strong>Listed, not endorsed.</strong>'
+        if marker not in page:
+            raise ValueError(f"{resource['id']}: cannot locate resource boundary for recognition visual")
+        page = page.replace(marker, visual + marker, 1)
     if evidence_map is None:
         evidence_map = {item['id']: item for item in load_evidence()}
     claims = render_governed_resource_claims(resource, evidence_map)
@@ -1288,20 +1295,6 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
     if questions is None:
         questions = _compat08__load_questions()
     validate_question_navigation(questions)
-    question_map = {item['id']: item for item in questions}
-    concept_ids = {item['id'] for item in concepts}
-    common_targets = [target for _question, target in _compat06__COMMON_QUESTIONS]
-    if concept_ids != set(common_targets) or len(common_targets) != len(set(common_targets)):
-        raise ValueError('V2.3 Home compatibility shortcuts must cover each current Concept exactly once')
-
-    practical_shortcuts = ''.join((
-        f'''<li><a href="/questions/{_compat06__esc(question_id)}/">{_compat06__esc(question_map[question_id]['question'])}</a></li>'''
-        for question_id in _compat09__V07_HOMEPAGE_COMPAT_QUESTION_IDS
-    ))
-    topic_shortcuts = ''.join((
-        f'''<li><a href="/understand/{_compat06__esc(target)}/">{_compat06__esc(question)}</a></li>'''
-        for question, target in _compat06__COMMON_QUESTIONS
-    ))
 
     primary = (
         ('/find/', 'Describe what is happening', 'Use your own words when you do not know the topic or service name.', 'Find a route', 'find'),
@@ -1346,19 +1339,10 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
     <a href="/how-it-works/"><strong>How ND Oracle works</strong><span>See how evidence, uncertainty and resource listings are handled.</span></a>
   </div>
 </section>
-<section class="home-compatibility" aria-labelledby="home-more-shortcuts-heading">
-  <h2 id="home-more-shortcuts-heading">More question shortcuts</h2>
-  <p class="section-intro">These older entry points remain available without making the homepage show every shortcut at once.</p>
-  <details class="home-shortcuts">
-    <summary>Show more question shortcuts</summary>
-    <div class="home-shortcut-content">
-      <h3>Start with something you need to do</h3>
-      <ul>{practical_shortcuts}</ul>
-      <h3>Start with a question</h3>
-      <p>{len(concepts)} evidence-linked topics are available now.</p>
-      <ul>{topic_shortcuts}</ul>
-    </div>
-  </details>
+<section class="home-complete-route" aria-labelledby="home-complete-route-heading">
+  <h2 id="home-complete-route-heading">Want the whole catalogue?</h2>
+  <p class="section-intro">The homepage stays short on purpose. Open the complete A–Z when you want to scan every governed Topic, Question and Resource.</p>
+  <p><a href="/a-z/">Open the complete A–Z →</a></p>
 </section>
 '''
     return _compat08__page_shell(
@@ -1809,6 +1793,7 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
     concepts = _compat06__load_concepts()
     resources = _compat06__load_resources()
     evidence = load_evidence()
+    _resource_visuals.publish_resource_visual_assets(destination, resources)
     concept_map = {item['id']: item for item in concepts}
     evidence_map = {item['id']: item for item in evidence}
     for resource in resources:

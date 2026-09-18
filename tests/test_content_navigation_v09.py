@@ -48,12 +48,17 @@ class ContentNavigationV09CompatibilityTests(unittest.TestCase):
         self.assertTrue(set(V09["navigation_routes"]) <= current_paths)
         self.assertGreaterEqual(len(current_paths), V09["route_count"])
 
-    def test_homepage_preserves_v07_question_routes(self) -> None:
-        page = self.page("/")
+    def test_v07_question_routes_remain_reachable_without_home_inventory(self) -> None:
+        home = self.page("/")
+        questions = self.page("/questions/")
+        az = self.page("/a-z/")
+        self.assertIn('href="/questions/"', home)
         question_map = {item["id"]: item for item in self.questions}
         for question_id in FIXTURE["v07"]["question_ids"]:
             self.assertIn(question_id, question_map)
-            self.assertIn(f'href="/questions/{question_id}/"', page)
+            route = f'href="/questions/{question_id}/"'
+            self.assertIn(route, questions)
+            self.assertIn(route, az)
 
     def test_current_needs_types_places_and_az_reach_the_current_corpus(self) -> None:
         needs = self.page("/needs/")
