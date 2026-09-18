@@ -15,7 +15,7 @@ The image is **recognition material, not evidence**. It must never imply endorse
 
 ## Registry
 
-`site/resource-visuals.json` is the controlled sidecar for resource imagery. Absence from the registry means no image is rendered.
+`site/resource-visuals.json` is the controlled sidecar for resource imagery. Every governed Resource must have an explicit registry entry. In a production/full-corpus build, absence from the registry is an error rather than an implicit no-image decision.
 
 A registry item may have one of these states:
 
@@ -59,7 +59,7 @@ Do not:
 - infer permission from a wiki/community upload policy that applies only to that site;
 - allow imagery to change resource ranking, evidence status or recommendation language.
 
-A missing visual is preferable to an unlicensed or misleading one.
+A missing visual is preferable to an unlicensed or misleading one. A Resource that fails the usefulness gate is explicitly recorded as `not-useful`; it is not silently omitted from the registry.
 
 ## Stardew Valley disposition
 

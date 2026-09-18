@@ -90,18 +90,22 @@ class ResourceVisualPipelineTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             resource_visuals.validate_registry(external, resources, root=root)
 
-    def test_actual_registry_is_schema_v2_and_p1_only(self) -> None:
+    def test_actual_registry_covers_the_full_resource_corpus(self) -> None:
         registry = resource_visuals.load_registry()
         resources = []
         for path in sorted((ROOT / "objects" / "resources").glob("*.json")):
             resources.append(json.loads(path.read_text(encoding="utf-8")))
-        resource_visuals.validate_registry(registry, resources)
-        resource_map = {item["id"]: item for item in resources}
-        self.assertTrue(registry["entries"])
-        for rid, entry in registry["entries"].items():
-            self.assertIn(resource_map[rid]["category"], {"book", "game", "app", "media"})
-            self.assertTrue(entry["materially_helpful"])
-            self.assertTrue(entry["helps"])
+        resource_visuals.validate_registry(registry, resources, require_complete=True)
+        self.assertEqual(168, len(resources))
+        self.assertEqual(168, len(registry["entries"]))
+        useful = [entry for entry in registry["entries"].values() if entry["materially_helpful"]]
+        not_useful = [entry for entry in registry["entries"].values() if entry["status"] == "not-useful"]
+        self.assertEqual(37, len(useful))
+        self.assertEqual(131, len(not_useful))
+        self.assertEqual(
+            {"apple-assistive-access", "goblin-tools", "microsoft-immersive-reader", "time-timer"},
+            {entry["resource_id"] for entry in useful if entry["kind"] == "tool"},
+        )
 
     def test_builder_wires_registry_render_and_asset_publication(self) -> None:
         source = (ROOT / "scripts" / "build_site.py").read_text(encoding="utf-8")

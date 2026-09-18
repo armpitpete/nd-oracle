@@ -43,7 +43,7 @@ def _asset_path(entry: dict, *, root: Path) -> Path:
     return candidate
 
 
-def validate_registry(registry: dict, resources: list[dict], *, root: Path = ROOT) -> dict:
+def validate_registry(registry: dict, resources: list[dict], *, root: Path = ROOT, require_complete: bool = False) -> dict:
     if registry.get("schema_version") != "2":
         raise ValueError("resource visual registry must use schema_version 2")
     if registry.get("policy") != "docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md":
@@ -53,6 +53,12 @@ def validate_registry(registry: dict, resources: list[dict], *, root: Path = ROO
         raise ValueError("resource visual registry entries must be an object")
 
     resource_map = {item["id"]: item for item in resources}
+    if require_complete:
+        missing = sorted(set(resource_map) - set(entries))
+        if missing:
+            raise ValueError(f"resource visual registry is incomplete; missing Resource IDs: {', '.join(missing)}")
+
+    rendered_assets: set[str] = set()
     for resource_id, entry in entries.items():
         if resource_id not in resource_map:
             raise ValueError(f"resource visual registry contains orphan Resource ID: {resource_id}")
@@ -92,6 +98,13 @@ def validate_registry(registry: dict, resources: list[dict], *, root: Path = ROO
                 raise ValueError(f"{resource_id}: unsupported visual format {asset.suffix}")
             if asset.stat().st_size > MAX_ASSET_BYTES:
                 raise ValueError(f"{resource_id}: visual exceeds {MAX_ASSET_BYTES} bytes")
+            _validate_asset_bytes(asset, resource_id=resource_id)
+            if entry.get("attribution_required") and not entry.get("attribution"):
+                raise ValueError(f"{resource_id}: cleared visual requires attribution text")
+            asset_key = str(asset.resolve()).casefold()
+            if asset_key in rendered_assets:
+                raise ValueError(f"{resource_id}: cleared visual reuses a local asset already mapped to another Resource")
+            rendered_assets.add(asset_key)
         else:
             if entry.get("local_path") is not None:
                 raise ValueError(f"{resource_id}: uncleared/non-useful visual must not store a publishable local_path")
@@ -100,6 +113,19 @@ def validate_registry(registry: dict, resources: list[dict], *, root: Path = ROO
             if entry.get("rights_basis") is not None:
                 raise ValueError(f"{resource_id}: uncleared/non-useful visual must not claim a rights basis")
     return registry
+
+
+def _validate_asset_bytes(asset: Path, *, resource_id: str) -> None:
+    raw = asset.read_bytes()
+    suffix = asset.suffix.casefold()
+    if suffix == ".png" and not raw.startswith(b"\x89PNG\r\n\x1a\n"):
+        raise ValueError(f"{resource_id}: PNG asset has an invalid file signature")
+    if suffix in {".jpg", ".jpeg"} and not raw.startswith(b"\xff\xd8\xff"):
+        raise ValueError(f"{resource_id}: JPEG asset has an invalid file signature")
+    if suffix == ".webp" and (len(raw) < 12 or raw[:4] != b"RIFF" or raw[8:12] != b"WEBP"):
+        raise ValueError(f"{resource_id}: WebP asset has an invalid file signature")
+    if suffix == ".svg" and b"<svg" not in raw[:2048].lower():
+        raise ValueError(f"{resource_id}: SVG asset does not contain an SVG root element")
 
 
 def render_resource_visual(resource: dict, *, registry: dict | None = None, root: Path = ROOT) -> str:
@@ -122,7 +148,7 @@ def render_resource_visual(resource: dict, *, registry: dict | None = None, root
 def publish_resource_visual_assets(destination: Path, resources: list[dict], *, registry: dict | None = None, root: Path = ROOT) -> list[Path]:
     if registry is None:
         registry = load_registry()
-    validate_registry(registry, resources, root=root)
+    validate_registry(registry, resources, root=root, require_complete=True)
     copied: list[Path] = []
     for entry in registry["entries"].values():
         if not should_render(entry):
