@@ -13,8 +13,8 @@ Authority: `docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md`
 - Governed Resources reviewed: **168/168**
 - Materially useful visual candidates: **37**
 - Explicit `not-useful` decisions: **131**
-- `permission-required`: **28**
-- `rights-unknown`: **8**
+- `permission-required`: **26**
+- `rights-unknown`: **7**
 - `cleared`: **1**
 
 Complete means every Resource has an explicit usefulness and rights state; it does not mean forcing an image onto every Resource. Only a useful, cleared, local, validated asset may render.
@@ -82,7 +82,7 @@ Complete means every Resource has an explicit usefulness and rights state; it do
 | `dyspraxia-foundation-local-groups` — Dyspraxia Foundation local groups | community | no | `not-useful` | not-required-usefulness-gate-failed |
 | `dyspraxic-adults-forum` — Dyspraxic Adults forum | community | no | `not-useful` | not-required-usefulness-gate-failed |
 | `evenbreak-career-hive` — Evenbreak Career Hive | education_work_resource | no | `not-useful` | not-required-usefulness-gate-failed |
-| `focusmate` — Focusmate | app | yes | `rights-unknown` | official-media-kit-found-scope-unconfirmed |
+| `focusmate` — Focusmate | app | yes | `cleared` | cleared-written-permission-first-party-logo-linked-attribution |
 | `front-of-the-class` — Front of the Class — Brad Cohen with Lisa Wysocky | book | yes | `permission-required` | permission-route-confirmed |
 | `garden-galaxy` — Garden Galaxy | game | yes | `permission-required` | official-product-imagery-found-no-public-reuse-licence |
 | `goblin-tools` — Goblin Tools | tool | yes | `permission-required` | no-public-reuse-licence-found |
@@ -117,7 +117,7 @@ Complete means every Resource has an explicit usefulness and rights state; it do
 | `microsoft-immersive-reader` — Microsoft Immersive Reader | tool | yes | `rights-unknown` | conditional-screenshot-route-found |
 | `microsoft-to-do` — Microsoft To Do | app | yes | `rights-unknown` | conditional-screenshot-route-found |
 | `microsoft-windows-accessibility` — Microsoft Windows accessibility features | practical_guide | no | `not-useful` | not-required-usefulness-gate-failed |
-| `minami-lane` — Minami Lane | game | yes | `permission-required` | official-product-imagery-found-no-public-reuse-licence |
+| `minami-lane` — Minami Lane | game | yes | `cleared` | cleared-written-permission-exact-press-kit-asset |
 | `minecraft` — Minecraft | game | yes | `permission-required` | usage-guidelines-reviewed-approval-required-for-uncertain-entity-use |
 | `molehill-mountain` — Molehill Mountain | app | yes | `permission-required` | co-owned-product-permission-required |
 | `moneyhelper-budget-planner` — MoneyHelper Budget planner | tool | no | `not-useful` | not-required-usefulness-gate-failed |
@@ -188,7 +188,7 @@ Complete means every Resource has an explicit usefulness and rights state; it do
 | `student-finance-wales-disabled-students-allowance` — Student Finance Wales — Disabled Students' Allowance | service | no | `not-useful` | not-required-usefulness-gate-failed |
 | `summerhouse-game` — SUMMERHOUSE | game | yes | `permission-required` | official-press-kit-found-scope-unconfirmed |
 | `texthelp-read-write` — Texthelp Read&Write | app | yes | `permission-required` | no-public-media-reuse-licence-found |
-| `the-shape-of-things` — The Shape of Things | game | yes | `permission-required` | official-product-imagery-found-no-public-reuse-licence |
+| `the-shape-of-things` — The Shape of Things | game | yes | `cleared` | cleared-written-permission-exact-steam-screenshot |
 | `tiimo` — Tiimo | app | yes | `rights-unknown` | official-media-kit-found-scope-unconfirmed |
 | `time-timer` — Time Timer | tool | yes | `permission-required` | no-general-product-image-reuse-licence-found |
 | `tiny-glade` — Tiny Glade | game | yes | `permission-required` | official-product-imagery-found-no-public-reuse-licence |

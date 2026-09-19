@@ -11,15 +11,15 @@ No entry in this queue may render until a **specific asset** has a recorded righ
 ## Queue summary
 
 - Useful visual candidates: **37**
-- Cleared for publication: **1**
-- Permission required: **28**
-- Rights/asset binding unresolved: **8**
+- Cleared for publication: **4**
+- Permission required: **26**
+- Rights/asset binding unresolved: **7**
 
 ## Queue
 
 | Resource | Type | State | Rightsholder / owner | Research state | Permission / clearance route |
 | --- | --- | --- | --- | --- | --- |
-| `a-kind-of-spark` — A Kind of Spark — Elle McNicoll | book | `permission-required` | Pan Macmillan | permission-route-confirmed | rightsquery@macmillan.co.uk |
+| `a-kind-of-spark` — A Kind of Spark — Elle McNicoll | book | `permission-required` | Pan Macmillan | permission-route-confirmed | childrenspermissions@macmillan.com |
 | `android-live-transcribe` — Android Live Transcribe | app | `rights-unknown` | Google LLC | conditional-screenshot-route-found | Google Brand Permissions |
 | `apple-assistive-access` — Apple Assistive Access | tool | `permission-required` | Apple Inc. | apple-site-content-requires-express-consent | Apple legal/permissions route |
 | `autistica-tips-hub` — Autistica Tips Hub | app | `permission-required` | Autistica | no-public-reuse-licence-found | Autistica media/general enquiries |
@@ -31,7 +31,6 @@ No entry in this queue may render until a **specific asset** has a recorded righ
 | `different-not-less` — Different, Not Less — Chloé Hayden | book | `rights-unknown` | Murdoch Books | official-cover-download-found-scope-unconfirmed | enquiries@murdochbooks.com.au |
 | `dirty-laundry` — Dirty Laundry — Richard Pink and Roxanne Emery | book | `permission-required` | Penguin Random House | permission-route-confirmed | Penguin Random House permissions request form |
 | `dorfromantik` — Dorfromantik | game | `permission-required` | Toukana Interactive | official-press-kit-found-scope-unconfirmed | press@toukana.com |
-| `focusmate` — Focusmate | app | `rights-unknown` | Focusmate Inc | official-media-kit-found-scope-unconfirmed | press@focusmate.com |
 | `front-of-the-class` — Front of the Class — Brad Cohen with Lisa Wysocky | book | `permission-required` | Macmillan Publishers / St. Martin's Press | permission-route-confirmed | Macmillan online Permission Request Form |
 | `garden-galaxy` — Garden Galaxy | game | `permission-required` | Anneka Tran | official-product-imagery-found-no-public-reuse-licence | developer/publisher contact via official product site |
 | `goblin-tools` — Goblin Tools | tool | `permission-required` | Skyhook BV / Goblin Tools | no-public-reuse-licence-found | contact@goblin.tools |
@@ -41,14 +40,12 @@ No entry in this queue may render until a **specific asset** has a recorded righ
 | `inside-our-autistic-minds` — Inside Our Autistic Minds — BBC / Open University | media | `permission-required` | BBC / relevant programme rights holder; Open University material separately controlled | public-site-content-restricted | programme rights holder / Open University permission as applicable |
 | `microsoft-immersive-reader` — Microsoft Immersive Reader | tool | `rights-unknown` | Microsoft Corporation | conditional-screenshot-route-found | Microsoft copyright permissions / trademarks contact if outside conditions |
 | `microsoft-to-do` — Microsoft To Do | app | `rights-unknown` | Microsoft Corporation | conditional-screenshot-route-found | Microsoft copyright permissions / trademarks contact if outside conditions |
-| `minami-lane` — Minami Lane | game | `permission-required` | Blibloop / Doot / Doot Tiny Games / Wholesome Games Presents | official-product-imagery-found-no-public-reuse-licence | developer/publisher contact via official product site |
 | `minecraft` — Minecraft | game | `permission-required` | Mojang AB / Microsoft | usage-guidelines-reviewed-approval-required-for-uncertain-entity-use | Minecraft/Mojang formal approval route |
 | `molehill-mountain` — Molehill Mountain | app | `permission-required` | Autistica and King's College London | co-owned-product-permission-required | Autistica media/general enquiries; confirm co-owner approval if required |
 | `stardew-valley` — Stardew Valley | game | `permission-required` | ConcernedApe / Stardew Valley rights holder | permission-required-by-reviewed-terms | official Stardew Valley contact/permission route |
 | `strong-female-character` — Strong Female Character — Fern Brady | book | `permission-required` | Hachette UK | permission-route-confirmed | PLS Clear |
 | `summerhouse-game` — SUMMERHOUSE | game | `permission-required` | Friedemann / Future Friends Games | official-press-kit-found-scope-unconfirmed | Future Friends Games press contact |
 | `texthelp-read-write` — Texthelp Read&Write | app | `permission-required` | Everway / Texthelp | no-public-media-reuse-licence-found | Everway/Texthelp support or media contact |
-| `the-shape-of-things` — The Shape of Things | game | `permission-required` | Hyper Three Studio | official-product-imagery-found-no-public-reuse-licence | developer/publisher contact via official product site |
 | `tiimo` — Tiimo | app | `rights-unknown` | Tiimo | official-media-kit-found-scope-unconfirmed | hln@tiimo.dk |
 | `time-timer` — Time Timer | tool | `permission-required` | Time Timer | no-general-product-image-reuse-licence-found | Time Timer support/media contact |
 | `tiny-glade` — Tiny Glade | game | `permission-required` | Pounce Light | official-product-imagery-found-no-public-reuse-licence | developer/publisher contact via official product site |
@@ -63,7 +60,7 @@ These still do not render because an exact compliant asset has not been bound an
 - **Microsoft To Do / Microsoft Immersive Reader:** Microsoft publishes conditions under which non-opening screenshots can be used on websites. Use a clean unaltered screenshot with no third-party or identifiable-person content; product icons require separate authorization.
 - **Habitica:** HabitRPG-designed assets have published CC BY-NC-SA 3.0 coverage, but the exact image must be traced to that licence rather than assuming every asset has the same terms.
 - **Google / Android Live Transcribe:** Google branding guidance provides a conditional route for standard unaltered screenshots; bind and review the exact screenshot before clearance.
-- **Focusmate / Tiimo / Dorfromantik / SUMMERHOUSE:** official media/press assets exist, but the reviewed public pages do not provide a sufficiently explicit blanket licence for ND Oracle's durable public use. Confirm scope or obtain written permission.
+- **Tiimo / Dorfromantik / SUMMERHOUSE:** official media/press assets exist, but the reviewed public pages do not provide a sufficiently explicit blanket licence for ND Oracle's durable public use. Confirm scope or obtain written permission.
 
 ## Batch permission groups
 

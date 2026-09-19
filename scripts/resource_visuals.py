@@ -101,6 +101,11 @@ def validate_registry(registry: dict, resources: list[dict], *, root: Path = ROO
             _validate_asset_bytes(asset, resource_id=resource_id)
             if entry.get("attribution_required") and not entry.get("attribution"):
                 raise ValueError(f"{resource_id}: cleared visual requires attribution text")
+            attribution_url = entry.get("attribution_url")
+            if attribution_url is not None and not _safe_source_url(attribution_url):
+                raise ValueError(f"{resource_id}: visual attribution_url must be safe http(s)")
+            if entry.get("attribution_url_required") and not attribution_url:
+                raise ValueError(f"{resource_id}: cleared visual requires a linked attribution URL")
             asset_key = str(asset.resolve()).casefold()
             if asset_key in rendered_assets:
                 raise ValueError(f"{resource_id}: cleared visual reuses a local asset already mapped to another Resource")
@@ -137,7 +142,18 @@ def render_resource_visual(resource: dict, *, registry: dict | None = None, root
     local_path = entry["local_path"]
     public_path = "/" + local_path.removeprefix("site/")
     attribution = entry.get("attribution")
-    caption = f"<figcaption>{html.escape(str(attribution))}</figcaption>" if attribution else ""
+    attribution_url = entry.get("attribution_url")
+    if attribution:
+        label = html.escape(str(attribution))
+        if attribution_url:
+            caption = (
+                f'<figcaption><a href="{html.escape(str(attribution_url), quote=True)}">'
+                f"{label}</a></figcaption>"
+            )
+        else:
+            caption = f"<figcaption>{label}</figcaption>"
+    else:
+        caption = ""
     return (
         '<figure class="resource-visual" aria-label="Resource recognition visual">'
         f'<img src="{html.escape(public_path, quote=True)}" alt="{html.escape(entry["alt"], quote=True)}" decoding="async">'

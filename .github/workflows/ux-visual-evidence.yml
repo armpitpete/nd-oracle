@@ -376,6 +376,12 @@ jobs:
           )
           PY
 
+          grep -q 'src="/resource-media/townscaper.jpg"' candidate/dist/resources/townscaper/index.html
+          grep -q 'src="/resource-media/minami-lane.jpg"' candidate/dist/resources/minami-lane/index.html
+          grep -q 'src="/resource-media/the-shape-of-things.jpg"' candidate/dist/resources/the-shape-of-things/index.html
+          grep -q 'src="/resource-media/focusmate.png"' candidate/dist/resources/focusmate/index.html
+          grep -q '<figcaption><a href="https://www.focusmate.com/">Focusmate</a></figcaption>' candidate/dist/resources/focusmate/index.html
+
           ROUTES=(
             "home|/"
             "needs-index|/needs/"
@@ -393,6 +399,9 @@ jobs:
             "resources-open|/resources-open/"
             "resource-goblin-tools|/resources/goblin-tools/"
             "resource-townscaper|/resources/townscaper/"
+            "resource-minami-lane|/resources/minami-lane/"
+            "resource-shape-of-things|/resources/the-shape-of-things/"
+            "resource-focusmate|/resources/focusmate/"
             "topics-index|/understand/"
             "concept-autism|/understand/autism/"
             "concept-monotropism|/understand/monotropism/"

@@ -38,9 +38,9 @@ class ResourceVisualFullCorpusTests(unittest.TestCase):
         entries = list(registry["entries"].values())
         self.assertEqual(37, sum(bool(entry["materially_helpful"]) for entry in entries))
         self.assertEqual(131, sum(entry["status"] == "not-useful" for entry in entries))
-        self.assertEqual(1, sum(entry["status"] == "cleared" for entry in entries))
-        self.assertEqual(28, sum(entry["status"] == "permission-required" for entry in entries))
-        self.assertEqual(8, sum(entry["status"] == "rights-unknown" for entry in entries))
+        self.assertEqual(4, sum(entry["status"] == "cleared" for entry in entries))
+        self.assertEqual(26, sum(entry["status"] == "permission-required" for entry in entries))
+        self.assertEqual(7, sum(entry["status"] == "rights-unknown" for entry in entries))
 
     def test_corrupt_cleared_asset_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -91,6 +91,51 @@ class ResourceVisualFullCorpusTests(unittest.TestCase):
             }
             with self.assertRaisesRegex(ValueError, "requires attribution"):
                 resource_visuals.validate_registry(registry, [resource], root=root)
+
+
+    def test_required_attribution_link_fails_closed_when_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            media = root / "site" / "resource-media"
+            media.mkdir(parents=True)
+            shutil.copy2(ROOT / "tests" / "fixtures" / "resource-visual-cleared.svg", media / "demo.svg")
+            resource = {"id": "demo", "category": "app", "name": "Demo"}
+            registry = {
+                "schema_version": "2",
+                "policy": "docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md",
+                "entries": {
+                    "demo": {
+                        "resource_id": "demo", "kind": "app", "status": "cleared",
+                        "materially_helpful": True, "helps": ["recognise"],
+                        "usefulness_note": "test", "source_url": "https://example.org/demo",
+                        "rights_holder": "Fixture", "rights_basis": "Fixture permission",
+                        "local_path": "site/resource-media/demo.svg", "alt": "Demo",
+                        "attribution": "Fixture", "attribution_required": True,
+                        "attribution_url_required": True,
+                        "checked_on": "2026-09-19", "rights_note": "test",
+                    }
+                },
+            }
+            with self.assertRaisesRegex(ValueError, "requires a linked attribution URL"):
+                resource_visuals.validate_registry(registry, [resource], root=root)
+
+    def test_linked_attribution_renders_as_a_safe_link(self) -> None:
+        resource = {"id": "demo", "category": "app", "name": "Demo"}
+        registry = {
+            "entries": {
+                "demo": {
+                    "resource_id": "demo",
+                    "status": "cleared",
+                    "materially_helpful": True,
+                    "local_path": "site/resource-media/demo.png",
+                    "alt": "Demo logo.",
+                    "attribution": "Demo",
+                    "attribution_url": "https://example.org/",
+                }
+            }
+        }
+        rendered = resource_visuals.render_resource_visual(resource, registry=registry)
+        self.assertIn('<figcaption><a href="https://example.org/">Demo</a></figcaption>', rendered)
 
 
 if __name__ == "__main__":
