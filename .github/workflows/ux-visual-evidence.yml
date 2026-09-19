@@ -533,14 +533,17 @@ jobs:
             echo "resources_default_capture=1440x3200,390x6200"
             echo "resources_open_capture=1440x2400,390x2800"
             echo "resource_townscaper_capture=1440x1100,390x844"
+            echo "resource_minami_lane_capture=1440x1100,390x844"
+            echo "resource_shape_of_things_capture=1440x1100,390x844"
+            echo "resource_focusmate_capture=1440x1100,390x844"
             echo "topics_index_capture=1440x3600,390x5600"
             echo "concept_monotropism_capture=1440x2600,390x4200"
             echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 48
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 48
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 54
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 54
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
