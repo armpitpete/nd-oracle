@@ -194,7 +194,7 @@ def main() -> None:
     update_full_corpus_register()
     update_permission_queue()
     update_tests()
-    update_visual_evidence_workflow()
+    # Visual-evidence workflow is updated separately through the authenticated GitHub connector.
 
 
 if __name__ == "__main__":
