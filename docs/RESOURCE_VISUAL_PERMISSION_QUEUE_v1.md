@@ -1,6 +1,6 @@
 # Resource Visual Permission Queue v1
 
-Date: 2026-09-18
+Date: 2026-09-22
 Status: external-rights work queue
 Scope: all materially useful Resource visuals not yet cleared
 
@@ -11,15 +11,15 @@ No entry in this queue may render until a **specific asset** has a recorded righ
 ## Queue summary
 
 - Useful visual candidates: **37**
-- Cleared for publication: **4**
-- Permission required: **26**
+- Cleared for publication: **5**
+- Permission required: **25**
 - Rights/asset binding unresolved: **7**
+- Resolved 2026-09-22: `a-kind-of-spark` moved to `cleared` on written Pan Macmillan permission with the exact supplied cover retained unaltered.
 
 ## Queue
 
 | Resource | Type | State | Rightsholder / owner | Research state | Permission / clearance route |
 | --- | --- | --- | --- | --- | --- |
-| `a-kind-of-spark` — A Kind of Spark — Elle McNicoll | book | `permission-required` | Pan Macmillan | permission-route-confirmed | childrenspermissions@macmillan.com |
 | `android-live-transcribe` — Android Live Transcribe | app | `rights-unknown` | Google LLC | conditional-screenshot-route-found | Google Brand Permissions |
 | `apple-assistive-access` — Apple Assistive Access | tool | `permission-required` | Apple Inc. | apple-site-content-requires-express-consent | Apple legal/permissions route |
 | `autistica-tips-hub` — Autistica Tips Hub | app | `permission-required` | Autistica | no-public-reuse-licence-found | Autistica media/general enquiries |
@@ -66,7 +66,7 @@ These still do not render because an exact compliant asset has not been bound an
 
 1. **Hachette / JKP / PLS Clear:** `caged-in-chaos`, `how-to-adhd`, `strong-female-character`, `were-all-neurodiverse`.
 2. **Penguin Random House:** `dirty-laundry`, `unmasking-autism`.
-3. **Macmillan:** `a-kind-of-spark` and `front-of-the-class`.
+3. **Macmillan:** `front-of-the-class`.
 4. **Murdoch Books:** `different-not-less` — confirm whether the downloadable cover is licensed for this editorial web use.
 5. **Games:** contact the relevant developer/publisher or press route for every game marked `permission-required`; where a press kit exists, ask for confirmation that ND Oracle may host the selected asset locally.
 6. **Apps/tools/media:** use each entry's recorded media/legal/contact route; where a conditional screenshot/open-licence route exists, bind a specific compliant asset before changing status.

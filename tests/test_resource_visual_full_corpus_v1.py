@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import shutil
 import tempfile
@@ -38,9 +39,24 @@ class ResourceVisualFullCorpusTests(unittest.TestCase):
         entries = list(registry["entries"].values())
         self.assertEqual(37, sum(bool(entry["materially_helpful"]) for entry in entries))
         self.assertEqual(131, sum(entry["status"] == "not-useful" for entry in entries))
-        self.assertEqual(4, sum(entry["status"] == "cleared" for entry in entries))
-        self.assertEqual(26, sum(entry["status"] == "permission-required" for entry in entries))
+        self.assertEqual(5, sum(entry["status"] == "cleared" for entry in entries))
+        self.assertEqual(25, sum(entry["status"] == "permission-required" for entry in entries))
         self.assertEqual(7, sum(entry["status"] == "rights-unknown" for entry in entries))
+
+    def test_a_kind_of_spark_permission_and_exact_asset_are_frozen(self) -> None:
+        registry = resource_visuals.load_registry()
+        entry = registry["entries"]["a-kind-of-spark"]
+        self.assertEqual("cleared", entry["status"])
+        self.assertEqual("cleared-written-permission-exact-attached-cover-unaltered", entry["rights_research_state"])
+        self.assertIn("must remain byte-for-byte unaltered", entry["rights_note"])
+        self.assertIn("future editorial change", entry["rights_note"])
+        asset = ROOT / entry["local_path"]
+        raw = asset.read_bytes()
+        self.assertEqual(1478012, len(raw))
+        self.assertEqual(
+            "483dc7fd0daa8bc473b449c298737e943a717a3e544f2bd48650d272f021d7d7",
+            hashlib.sha256(raw).hexdigest(),
+        )
 
     def test_corrupt_cleared_asset_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

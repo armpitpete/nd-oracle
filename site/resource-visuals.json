@@ -3,12 +3,12 @@
   "policy": "docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md",
   "render_rule": "Render a cleared visual when it materially helps the user recognise, distinguish or understand the resource; rendering is derived from usefulness + cleared status + valid local rights/provenance metadata.",
   "corpus_contract": "Every governed Resource must have one explicit registry state; missing Resource IDs fail the production build.",
-  "reviewed_on": "2026-09-19",
+  "reviewed_on": "2026-09-22",
   "entries": {
     "a-kind-of-spark": {
       "resource_id": "a-kind-of-spark",
       "kind": "book",
-      "status": "permission-required",
+      "status": "cleared",
       "materially_helpful": true,
       "helps": [
         "recognise",
@@ -17,16 +17,20 @@
       "usefulness_note": "A cover materially helps readers recognise and distinguish the exact book.",
       "source_url": "https://www.panmacmillan.com/authors/elle-mcnicoll/a-kind-of-spark/9781037410642",
       "rights_holder": "Pan Macmillan",
-      "rights_basis": null,
-      "local_path": null,
-      "alt": null,
+      "rights_basis": "Written permission from PanMac Permissions on 2026-09-22 for ND Oracle to reproduce the supplied A Kind of Spark cover, subject to no alterations to the image and no defamatory or negative references to the book.",
+      "local_path": "site/resource-media/a-kind-of-spark.jpg",
+      "alt": "Cover of A Kind of Spark by Elle McNicoll.",
       "attribution": null,
-      "checked_on": "2026-09-18",
-      "rights_note": "Pan Macmillan's site terms restrict republication/public dissemination of site material without written permission. Request permission for the exact cover/edition before publication.",
+      "checked_on": "2026-09-22",
+      "rights_note": "PanMac Permissions supplied the exact cover file and granted the requested ND Oracle web use. The supplied JPEG must remain byte-for-byte unaltered; display sizing is CSS/browser-only. The permission is conditional on no defamatory or negative references to the book, so any material future editorial change to this Resource requires a fresh rights review before the visual remains publishable.",
       "attribution_required": false,
-      "rights_research_state": "permission-route-confirmed",
+      "rights_research_state": "cleared-written-permission-exact-attached-cover-unaltered",
       "rights_review_url": "https://www.panmacmillan.com/terms-and-conditions",
-      "permission_route": "rightsquery@macmillan.co.uk"
+      "permission_route": "PanMac Permissions <panmac.permissions@macmillan.com>",
+      "rights_candidate_basis": "Written permission received from PanMac Permissions on 2026-09-22.",
+      "asset_strategy": "Use the exact publisher-supplied JPEG bytes unchanged; resize only at presentation time with CSS/browser layout.",
+      "permission_evidence": "docs/RESOURCE_VISUAL_RIGHTS_A_KIND_OF_SPARK_v1.md",
+      "recheck_trigger": "Any material editorial change to the A Kind of Spark Resource commentary requires manual re-review of the image permission condition."
     },
     "abilitynet-my-computer-my-way": {
       "resource_id": "abilitynet-my-computer-my-way",

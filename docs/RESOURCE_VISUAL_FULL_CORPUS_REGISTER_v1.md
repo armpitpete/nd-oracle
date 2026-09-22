@@ -1,6 +1,6 @@
 # Resource Visual Full-Corpus Register v1
 
-Date: 2026-09-18
+Date: 2026-09-22
 Status: V2 candidate evidence
 Authority: `docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md`
 
@@ -13,9 +13,9 @@ Authority: `docs/RESOURCE_VISUAL_ASSET_POLICY_v1.md`
 - Governed Resources reviewed: **168/168**
 - Materially useful visual candidates: **37**
 - Explicit `not-useful` decisions: **131**
-- `permission-required`: **26**
+- `permission-required`: **25**
 - `rights-unknown`: **7**
-- `cleared`: **1**
+- `cleared`: **5**
 
 Complete means every Resource has an explicit usefulness and rights state; it does not mean forcing an image onto every Resource. Only a useful, cleared, local, validated asset may render.
 
@@ -38,7 +38,7 @@ Complete means every Resource has an explicit usefulness and rights state; it do
 
 | Resource | Category | Helpful? | State | Research state |
 | --- | --- | --- | --- | --- |
-| `a-kind-of-spark` — A Kind of Spark — Elle McNicoll | book | yes | `permission-required` | permission-route-confirmed |
+| `a-kind-of-spark` — A Kind of Spark — Elle McNicoll | book | yes | `cleared` | cleared-written-permission-exact-attached-cover-unaltered |
 | `abilitynet-my-computer-my-way` — AbilityNet My Computer My Way | practical_guide | no | `not-useful` | not-required-usefulness-gate-failed |
 | `acas-performance-and-adjustments` — Acas performance management and reasonable adjustments | education_work_resource | no | `not-useful` | not-required-usefulness-gate-failed |
 | `acas-reasonable-adjustments` — Acas — reasonable adjustments at work | education_work_resource | no | `not-useful` | not-required-usefulness-gate-failed |
