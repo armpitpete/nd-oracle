@@ -39,7 +39,7 @@ jobs:
           set -euo pipefail
           mkdir -p site/resource-media
           curl --fail-with-body --location --silent --show-error \
-            'https://sdmntprnorthcentralus.oaiusercontent.com/files/00000000-ec94-822f-9d81-d6ea71e1862b/raw?se=2026-09-22T12%3A26%3A38Z&sp=r&sv=2026-02-06&sr=b&scid=78e92985-110f-5045-a253-141b33f24c01&skoid=8981e47a-681f-4a6a-b86c-73d6347614b7&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-22T07%3A16%3A54Z&ske=2026-09-23T07%3A16%3A54Z&sks=b&skv=2026-02-06&sig=cI1PE2Y%2BHtvyqZkX69KQFyOYhH0DCXvvII/lvcoImIw%3D' \
+            'https://sdmntprnortheu.oaiusercontent.com/files/00000000-4320-81f4-ba29-ddd161017299/raw?se=2026-09-22T12%3A32%3A48Z&sp=r&sv=2026-02-06&sr=b&scid=d6237378-9414-5ec0-acd2-b6db3e095a7f&skoid=8981e47a-681f-4a6a-b86c-73d6347614b7&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-22T08%3A58%3A43Z&ske=2026-09-23T08%3A58%3A43Z&sks=b&skv=2026-02-06&sig=GD/6aM/lhFEtneXiupMGbjMz6X4TrbzifhbD8uCTu68%3D' \
             --output site/resource-media/a-kind-of-spark.jpg
           echo '483dc7fd0daa8bc473b449c298737e943a717a3e544f2bd48650d272f021d7d7  site/resource-media/a-kind-of-spark.jpg' | sha256sum --check -
           test "$(wc -c < site/resource-media/a-kind-of-spark.jpg)" -eq 1478012
