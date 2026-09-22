@@ -31,6 +31,10 @@ Base: `0065ab8000bbb0020aa221f084525116f436b373`
 - [x] inventory all 33 P1 visual candidates — 9 books, 13 games, 9 apps and 2 media Resources — and record explicit rights states without fabricating permission;
 - [x] define media-format, local-path and 1.5 MB source-asset boundaries;
 - [x] run the complete repository regression suite after resource-visual integration and pass the protected-path guard.
+- [x] ingest the publisher-supplied `A Kind of Spark` cover byte-for-byte with written permission evidence and fail-closed editorial re-review conditions;
+- [x] disposition human finding `HF-001` (Resources first-choice overload) as REPAIR and replace the competing strategy/need grids with five direct recognition categories: Books, Games, Conditions & topics, Apps & tools, Support & organisations;
+- [x] preserve Find, Needs, Places, Types and the complete A–Z catalogue as governed specialist routes rather than competing first-screen choices on Resources;
+- [x] expand exact-head A Kind of Spark visual capture so the supplied cover itself is visible in desktop and narrow evidence.
 
 ## Existing accepted work reused
 

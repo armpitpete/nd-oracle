@@ -695,77 +695,37 @@ def _compat09__render_resources_index(resources: list[dict]) -> str:
 </section>'''
         for letter, rows in alpha_rows.items()
     ))
-    primary_choices = (
-        ('/find/', 'Describe what you need', 'Type what you need in your own words. Results come from the reviewed ND Oracle catalogue.', 'Open Find'),
-        ('/needs/', 'Start from a life problem', 'Choose an area such as daily life, communication, work, education or wellbeing.', 'Browse needs'),
-        ('/places/', 'Check what applies where I live', 'Check whether information is UK-wide, for one nation, or international before you act.', 'Browse by place'),
-        ('/types/', 'Browse by kind of resource', 'Choose services, organisations, tools, apps, games, books, guides and other content types.', 'Browse types'),
+    resource_categories = (
+        ('/books-media/', 'Books', 'Books and other media with context and limitations kept visible.'),
+        ('/games/', 'Games', 'Games with play characteristics and possible poor fit kept visible.'),
+        ('/understand/', 'Conditions & topics', 'Plain-language information about neurodivergence, conditions and related topics.'),
+        ('/tools/', 'Apps & tools', 'Apps, tools, guides and practical products.'),
+        ('/community/', 'Support & organisations', 'Services, organisations and peer communities.'),
     )
-    primary_cards = ''.join((
-        f'''<a class="choice-card choice-card--primary" href="{_compat06__esc(href)}">
-  <strong>{_compat06__esc(title)}</strong>
-  <span>{_compat06__esc(description)}</span>
-  <span class="choice-card-action">{_compat06__esc(action)} →</span>
-</a>'''
-        for href, title, description, action in primary_choices
-    ))
-    need_copy = {
-        'needs/daily-life': 'Planning, routines, getting started, technology and everyday tasks.',
-        'needs/sensory-environment': 'Noise, light, touch, overload and changing the environment around you.',
-        'needs/communication': 'Phone calls, processing time, speaking, AAC and written communication.',
-        'needs/work': 'Adjustments, interviews, disclosure, job-search support and staying in work.',
-        'needs/education-study': 'Organisation, study support, exams and school or college access.',
-        'needs/assessment-diagnosis': 'Assessment routes, waiting, private options and what happens next.',
-        'needs/health-wellbeing': 'Sleep, food, burnout, anxiety and healthcare access.',
-        'needs/relationships-family': 'Parenting, boundaries, family life and relationship communication.',
-    }
-    need_cards = ''.join((
-        f'''<a class="choice-card choice-card--need" href="/{_compat06__esc(route)}/">
-  <strong>{_compat06__esc(title)}</strong>
-  <span>{_compat06__esc(need_copy[route])}</span>
-</a>'''
-        for route, title, _intro, _groups in _compat09__HUB_DEFINITIONS
-    ))
-    resource_families = (
-        ('/tools/', 'Tools & practical help', 'Apps, tools, guides and practical products.'),
-        ('/games/', 'Games', 'Browse by play characteristics and possible poor fit, not as treatment.'),
-        ('/books-media/', 'Books & media', 'Books, podcasts and media with context and limitations visible.'),
-        ('/community/', 'Support & organisations', 'Services, organisations and communities with scope kept visible.'),
-    )
-    family_cards = ''.join((
+    category_cards = ''.join((
         f'''<a class="choice-card choice-card--family" href="{_compat06__esc(href)}">
   <strong>{_compat06__esc(title)}</strong>
   <span>{_compat06__esc(description)}</span>
 </a>'''
-        for href, title, description in resource_families
+        for href, title, description in resource_categories
     ))
     body = f'''
 <section class="resource-start" aria-labelledby="resource-start-heading">
   <div class="section-heading-row">
     <div>
-      <h2 id="resource-start-heading">Choose how to start</h2>
-      <p class="section-intro">You do not need to know a diagnosis or service name. Pick the route closest to what you already know.</p>
+      <h2 id="resource-start-heading">Choose a category</h2>
+      <p class="section-intro">Pick the kind of thing you are looking for.</p>
     </div>
   </div>
-  <div class="choice-grid choice-grid--primary">{primary_cards}</div>
+  <div class="choice-grid choice-grid--families">{category_cards}</div>
 </section>
 <section class="notice resource-boundary">
   <strong>Listed, not endorsed.</strong> A listing means we have checked and described the resource. It does not mean we have proved it works or that it is right for you.
 </section>
-<section class="resource-needs" aria-labelledby="resource-needs-heading">
-  <h2 id="resource-needs-heading">Browse by area of life</h2>
-  <p class="section-intro">Choose the part of life closest to what you are dealing with. These routes take you to reviewed questions, topics and resources.</p>
-  <div class="choice-grid choice-grid--needs">{need_cards}</div>
-</section>
-<section class="resource-families" aria-labelledby="resource-families-heading">
-  <h2 id="resource-families-heading">Or browse a resource family</h2>
-  <p class="section-intro">Use this when you already know the kind of thing you want to inspect.</p>
-  <div class="choice-grid choice-grid--families">{family_cards}</div>
-</section>
 <section class="resource-complete" aria-labelledby="resource-complete-heading">
-  <h2 id="resource-complete-heading">Need the complete catalogue?</h2>
-  <p class="section-intro">Nothing has been removed. The complete alphabetical catalogue is still available when you want it, without making everyone scan it first.</p>
-  <p><a class="standalone-action" href="/a-z/">Open the complete A–Z index</a></p>
+  <h2 id="resource-complete-heading">All resources</h2>
+  <p class="section-intro">If you know the name, use the alphabetical catalogue. Find remains available from the main navigation.</p>
+  <p><a class="standalone-action" href="/a-z/">Open the A–Z index</a></p>
   <details class="resource-catalogue">
     <summary><span>Show all {len(resources)} resources A–Z on this page</span></summary>
     <div class="resource-catalogue-body">{catalogue_groups}</div>
@@ -774,7 +734,7 @@ def _compat09__render_resources_index(resources: list[dict]) -> str:
 '''
     return _compat08__page_shell(
         'Resources',
-        'Find a useful starting point without scanning the whole catalogue. Start with what you need, where you live, the kind of resource, or your own words.',
+        'Choose a clear category: books, games, conditions and topics, apps and tools, or support and organisations.',
         body,
         current='resources',
         path='/resources/',
