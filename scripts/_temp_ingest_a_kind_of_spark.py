@@ -24,7 +24,7 @@ def verify_asset() -> None:
     digest = hashlib.sha256(raw).hexdigest()
     if digest != EXPECTED_SHA256:
         raise SystemExit(f"unexpected cover sha256: {digest}")
-    if not raw.startswith(b"\\xff\\xd8\\xff"):
+    if raw[:3] != bytes.fromhex("ffd8ff"):
         raise SystemExit("cover is not a JPEG")
 
 
