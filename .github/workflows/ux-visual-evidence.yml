@@ -215,6 +215,32 @@ jobs:
                   communication.replace("</body>", layout_probe + "</body>", 1),
                   encoding="utf-8",
               )
+
+          # Candidate-only visual fixture: keep the real resource page unchanged,
+          # but focus evidence on the exact published recognition image and force
+          # synchronous decoding so the screenshot proves pixels, not only layout.
+          candidate_root = Path("candidate/dist")
+          cover_page = (candidate_root / "resources" / "a-kind-of-spark" / "index.html").read_text(encoding="utf-8")
+          if '<figure class="resource-visual"' not in cover_page:
+              raise SystemExit("A Kind of Spark recognition visual missing from candidate page")
+          cover_focus = """<style>
+          .site-header,
+          .site-footer,
+          .page-heading,
+          main > :not(.resource-visual) {
+            display: none !important;
+          }
+          main { padding-top: 1rem !important; }
+          .resource-visual { max-width: 24rem !important; margin: 0 !important; }
+          .resource-visual img { max-height: none !important; width: 100% !important; height: auto !important; }
+          </style>"""
+          cover_page = cover_page.replace('decoding="async"', 'decoding="sync"', 1)
+          target = candidate_root / "resource-a-kind-of-spark-cover"
+          target.mkdir(parents=True, exist_ok=True)
+          (target / "index.html").write_text(
+              cover_page.replace("</head>", cover_focus + "</head>", 1),
+              encoding="utf-8",
+          )
           PY
 
       - name: Capture frozen baseline and exact candidate screenshots
@@ -533,6 +559,24 @@ jobs:
           capture candidate 8766 1440,1100 desktop
           capture candidate 8766 390,844 narrow
 
+          timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+            --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+            --run-all-compositor-stages-before-draw --virtual-time-budget=3000 \
+            --window-size=900,1100 \
+            --screenshot="ux-evidence/candidate/desktop/resource-a-kind-of-spark-cover.png" \
+            "http://127.0.0.1:8766/resource-a-kind-of-spark-cover/" || \
+            test -s "ux-evidence/candidate/desktop/resource-a-kind-of-spark-cover.png"
+          test -s "ux-evidence/candidate/desktop/resource-a-kind-of-spark-cover.png"
+
+          timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+            --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+            --run-all-compositor-stages-before-draw --virtual-time-budget=3000 \
+            --window-size=390,900 \
+            --screenshot="ux-evidence/candidate/narrow/resource-a-kind-of-spark-cover.png" \
+            "http://127.0.0.1:8766/resource-a-kind-of-spark-cover/" || \
+            test -s "ux-evidence/candidate/narrow/resource-a-kind-of-spark-cover.png"
+          test -s "ux-evidence/candidate/narrow/resource-a-kind-of-spark-cover.png"
+
           {
             echo "contract=ND-UX-V2-5-PUBLIC-BASELINE"
             echo "baseline_sha=b165ebb88141a2ce4e0f92a1ca5b64537b6aae49"
@@ -550,6 +594,7 @@ jobs:
             echo "resources_default_capture=1440x3200,390x6200"
             echo "resources_open_capture=1440x2400,390x2800"
             echo "resource_a_kind_of_spark_capture=1440x2600,390x2600"
+            echo "resource_a_kind_of_spark_cover_focus=900x1100,390x900"
             echo "resource_townscaper_capture=1440x1100,390x844"
             echo "resource_minami_lane_capture=1440x1100,390x844"
             echo "resource_shape_of_things_capture=1440x1100,390x844"
@@ -561,7 +606,7 @@ jobs:
           } > ux-evidence/manifest.txt
 
           test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 56
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 56
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 58
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
