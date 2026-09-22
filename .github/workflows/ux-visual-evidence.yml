@@ -250,11 +250,20 @@ jobs:
 
           grep -q 'class="resource-catalogue"' candidate/dist/resources/index.html
           ! grep -q 'class="resource-catalogue" open' candidate/dist/resources/index.html
-          test "$(grep -o 'choice-card choice-card--primary' candidate/dist/resources/index.html | wc -l)" -eq 4
-          grep -q 'Describe what you need' candidate/dist/resources/index.html
-          grep -q 'Start from a life problem' candidate/dist/resources/index.html
-          grep -q 'Check what applies where I live' candidate/dist/resources/index.html
-          grep -q 'Browse by kind of resource' candidate/dist/resources/index.html
+          grep -q 'Choose a category' candidate/dist/resources/index.html
+          ! grep -q 'choice-card choice-card--primary' candidate/dist/resources/index.html
+          ! grep -q 'choice-card choice-card--need' candidate/dist/resources/index.html
+          test "$(grep -o 'choice-card choice-card--family' candidate/dist/resources/index.html | wc -l)" -eq 5
+          grep -q 'href="/books-media/"' candidate/dist/resources/index.html
+          grep -q '>Books<' candidate/dist/resources/index.html
+          grep -q 'href="/games/"' candidate/dist/resources/index.html
+          grep -q '>Games<' candidate/dist/resources/index.html
+          grep -q 'href="/understand/"' candidate/dist/resources/index.html
+          grep -q 'Conditions &amp; topics' candidate/dist/resources/index.html
+          grep -q 'href="/tools/"' candidate/dist/resources/index.html
+          grep -q 'Apps &amp; tools' candidate/dist/resources/index.html
+          grep -q 'href="/community/"' candidate/dist/resources/index.html
+          grep -q 'Support &amp; organisations' candidate/dist/resources/index.html
 
           grep -q 'Start with what you notice' candidate/dist/understand/index.html
           grep -q 'New word? Break it down' candidate/dist/understand/index.html
