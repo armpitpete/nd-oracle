@@ -69,9 +69,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git rm .github/workflows/temp-ingest-a-kind-of-spark.yml scripts/_temp_ingest_a_kind_of_spark.py
-          git add .github/workflows/ux-visual-evidence.yml \
-            docs/RESOURCE_VISUAL_FULL_CORPUS_REGISTER_v1.md \
+          git rm scripts/_temp_ingest_a_kind_of_spark.py
+          git add docs/RESOURCE_VISUAL_FULL_CORPUS_REGISTER_v1.md \
             docs/RESOURCE_VISUAL_PERMISSION_QUEUE_v1.md \
             docs/RESOURCE_VISUAL_RIGHTS_A_KIND_OF_SPARK_v1.md \
             site/resource-media/a-kind-of-spark.jpg \
