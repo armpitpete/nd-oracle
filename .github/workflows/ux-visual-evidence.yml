@@ -376,6 +376,7 @@ jobs:
           )
           PY
 
+          grep -q 'src="/resource-media/a-kind-of-spark.jpg"' candidate/dist/resources/a-kind-of-spark/index.html
           grep -q 'src="/resource-media/townscaper.jpg"' candidate/dist/resources/townscaper/index.html
           grep -q 'src="/resource-media/minami-lane.jpg"' candidate/dist/resources/minami-lane/index.html
           grep -q 'src="/resource-media/the-shape-of-things.jpg"' candidate/dist/resources/the-shape-of-things/index.html
@@ -398,6 +399,7 @@ jobs:
             "resources-index|/resources/"
             "resources-open|/resources-open/"
             "resource-goblin-tools|/resources/goblin-tools/"
+            "resource-a-kind-of-spark|/resources/a-kind-of-spark/"
             "resource-townscaper|/resources/townscaper/"
             "resource-minami-lane|/resources/minami-lane/"
             "resource-shape-of-things|/resources/the-shape-of-things/"
@@ -532,6 +534,7 @@ jobs:
             echo "questions_open_capture=1440x2600,390x3000"
             echo "resources_default_capture=1440x3200,390x6200"
             echo "resources_open_capture=1440x2400,390x2800"
+            echo "resource_a_kind_of_spark_capture=1440x1100,390x844"
             echo "resource_townscaper_capture=1440x1100,390x844"
             echo "resource_minami_lane_capture=1440x1100,390x844"
             echo "resource_shape_of_things_capture=1440x1100,390x844"
@@ -542,8 +545,8 @@ jobs:
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 54
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 54
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 56
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 56
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
