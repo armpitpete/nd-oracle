@@ -39,7 +39,7 @@ jobs:
           set -euo pipefail
           mkdir -p site/resource-media
           curl --fail-with-body --location --silent --show-error \
-            'https://dam.bibliolive.com/macmillanaus/getimage.aspx?assetversionid=977398&cat=default&class=books&id=69558&size=origjpg' \
+            'https://sdmntprnortheu.oaiusercontent.com/files/00000000-8cb4-81f4-8695-dc6d9e396607/raw?se=2026-09-22T12%3A16%3A04Z&sp=r&sv=2026-02-06&sr=b&scid=b36ec0da-c11b-5d72-bda4-7caf604af857&skoid=8981e47a-681f-4a6a-b86c-73d6347614b7&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-09-22T06%3A53%3A42Z&ske=2026-09-23T06%3A53%3A42Z&sks=b&skv=2026-02-06&sig=qs8wlmGJ2RNnLe9BoYRJtOaBlnD4HmfE5a%2Be7APlO98%3D' \
             --output site/resource-media/a-kind-of-spark.jpg
           echo '483dc7fd0daa8bc473b449c298737e943a717a3e544f2bd48650d272f021d7d7  site/resource-media/a-kind-of-spark.jpg' | sha256sum --check -
           test "$(wc -c < site/resource-media/a-kind-of-spark.jpg)" -eq 1478012
