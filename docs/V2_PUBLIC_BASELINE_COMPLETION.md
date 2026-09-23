@@ -47,6 +47,17 @@ Base: `0065ab8000bbb0020aa221f084525116f436b373`
 - [x] bind the human protocol to an unprompted first-impression question and Found it / Confusing / Couldn't find it outcomes;
 - [x] confirm the existing visual-evidence workflow already captures Home at desktop and narrow widths and bind that coverage in regression tests;
 - [x] record the Phase 1 decision and HF-002 rationale without claiming Phase 2 implementation or final human acceptance.
+- [x] implement the frozen Navigation Contract v1 on Home with nine concrete visitor-facing category choices;
+- [x] implement direct Conditions, Books, Apps & tools, Organisations & peer groups, Work & education, Health & diagnosis, Daily living and Not sure where to start? routes as presentation aliases over existing governed content;
+- [x] preserve /games/ and /evidence/ as existing canonical category routes;
+- [x] update the Resources specialist route to the same concrete category labels;
+- [x] surface cleared recognition imagery on Books, Games and Apps & tools category listings without changing source assets or rights authority;
+- [x] preserve the accepted 450-route production/sitemap identity by keeping new aliases noindex and outside the sitemap until a later protected production-state reconciliation;
+- [x] add Phase 2 regression coverage for direct Home → category → item reachability and uncertainty-route cardinality;
+- [x] update current live-verifier Home markers to the concrete-category contract;
+- [x] expand exact-head visual evidence with desktop+narrow captures for all Navigation v1 category/escape routes;
+- [ ] run the real-human first-impression/category test and ten fixed journeys on the exact Phase 2 candidate;
+- [ ] disposition human findings and repair only demonstrated problems;
 
 ## Existing accepted work reused
 

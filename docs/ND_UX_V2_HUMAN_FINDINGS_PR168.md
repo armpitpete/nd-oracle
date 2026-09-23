@@ -41,7 +41,7 @@ The current navigation model still makes abstract/internal labels too prominent.
 
 **Severity:** MAJOR
 
-**Disposition:** CONTRACT REPAIR APPLIED / IMPLEMENTATION PENDING PHASE 2
+**Disposition:** CONTRACT REPAIR APPLIED / PHASE 2 IMPLEMENTATION APPLIED / HUMAN VALIDATION PENDING
 
 **Smallest justified Phase 1 repair**
 
@@ -50,7 +50,7 @@ The current navigation model still makes abstract/internal labels too prominent.
 - bind direct reachability and human acceptance criteria;
 - do not modify governed knowledge or production state in this phase.
 
-Phase 1 does not claim that the Home implementation already satisfies HF-002. That implementation and its visual/human evidence belong to Phase 2.
+Phase 2 now implements the frozen contract with direct concrete-category Home choices and direct category routes over existing governed content. Machine and visual evidence must pass at one exact SHA, but HF-002 remains open for real-human validation; implementation alone is not a human PASS.
 
 ## Human gate
 

@@ -123,7 +123,11 @@ def _ux_page_kind(path: str | None) -> tuple[str, str]:
         }
         tone = tone_by_slug.get(parts[1], 'daily-life')
         return (f'need-hub page--need-{tone}', 'Area of life')
-    if parts[:1] in (['types'], ['a-z'], ['tools'], ['games'], ['community'], ['books-media']):
+    if parts[:1] in (
+        ['types'], ['a-z'], ['tools'], ['games'], ['community'], ['books-media'],
+        ['conditions'], ['books'], ['apps-tools'], ['organisations'],
+        ['work-education'], ['health-diagnosis'], ['daily-living'], ['start'],
+    ):
         return ('browse', 'Browse')
     return ('information', 'ND Oracle')
 
@@ -1900,6 +1904,470 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
     if generated_script.exists():
         generated_script.unlink()
     return destination
+
+
+
+# ---- ND-UX-V2 Navigation Contract v1 implementation ----
+#
+# These visitor-facing category routes are presentation aliases over existing
+# governed Concepts, Questions and Resources. They do not alter object
+# authority, ranking, discovery policy or the accepted 450-route production
+# sitemap identity. Until a later protected production-state reconciliation
+# explicitly changes that identity, the new aliases are public/directly
+# reachable but noindex and absent from the canonical sitemap.
+
+_NAV_V1_BASE_BUILD = build
+NAVIGATION_V1_CONTRACT_PATH = _compat06__ROOT / 'contracts' / 'navigation-v1.json'
+NAVIGATION_V1_ALIAS_ROUTES = (
+    '/conditions/',
+    '/books/',
+    '/apps-tools/',
+    '/organisations/',
+    '/work-education/',
+    '/health-diagnosis/',
+    '/daily-living/',
+    '/start/',
+)
+NAVIGATION_V1_CONDITION_IDS = (
+    'adhd',
+    'autism',
+    'dyslexia',
+    'dyscalculia',
+    'developmental-coordination-disorder',
+    'developmental-language-disorder',
+    'learning-disability',
+    'tourette-syndrome',
+)
+NAVIGATION_V1_APP_TOOL_CATEGORIES = {'app', 'tool', 'product'}
+NAVIGATION_V1_ORGANISATION_CATEGORIES = {'organisation', 'community'}
+
+
+def load_navigation_v1_contract() -> dict:
+    return json.loads(NAVIGATION_V1_CONTRACT_PATH.read_text(encoding='utf-8'))
+
+
+def _nav_v1_utility_links() -> str:
+    return '''
+<nav class="nav-v1-utilities" aria-label="Other ways to find something">
+  <a href="/"><strong>Home</strong><span>Back to the main categories.</span></a>
+  <a href="/find/"><strong>Search</strong><span>Describe what you need in your own words.</span></a>
+  <a href="/a-z/"><strong>A–Z</strong><span>Find something when you already know its name.</span></a>
+</nav>
+'''
+
+
+def _nav_v1_category_card(href: str, label: str, description: str, tone: str) -> str:
+    return f'''<a class="choice-card home-category-card home-category-card--{_compat06__esc(tone)}" href="{_compat06__esc(href)}">
+  <strong>{_compat06__esc(label)}</strong>
+  <span>{_compat06__esc(description)}</span>
+</a>'''
+
+
+def render_home_navigation_v1(
+    concepts: list[dict],
+    resources: list[dict],
+    questions: list[dict] | None = None,
+) -> str:
+    if questions is None:
+        questions = _compat08__load_questions()
+    validate_question_navigation(questions)
+    contract = load_navigation_v1_contract()
+    categories = {item['id']: item for item in contract['primary_categories']}
+
+    things_order = ('conditions', 'books', 'games', 'apps-tools', 'organisations-peer-groups')
+    practical_order = ('work-education', 'health-diagnosis', 'daily-living')
+    authority_order = ('evidence-research',)
+
+    things = ''.join(
+        _nav_v1_category_card(
+            categories[item_id]['target_route'],
+            categories[item_id]['label'],
+            categories[item_id]['purpose'],
+            'things',
+        )
+        for item_id in things_order
+    )
+    practical = ''.join(
+        _nav_v1_category_card(
+            categories[item_id]['target_route'],
+            categories[item_id]['label'],
+            categories[item_id]['purpose'],
+            'practical',
+        )
+        for item_id in practical_order
+    )
+    authority = ''.join(
+        _nav_v1_category_card(
+            categories[item_id]['target_route'],
+            categories[item_id]['label'],
+            categories[item_id]['purpose'],
+            'authority',
+        )
+        for item_id in authority_order
+    )
+
+    body = f'''
+<section class="home-category-group home-category-group--things" aria-labelledby="home-things-heading">
+  <h2 id="home-things-heading">Browse things</h2>
+  <p class="section-intro">Choose the kind of thing you are looking for.</p>
+  <div class="choice-grid choice-grid--home-categories">{things}</div>
+</section>
+<section class="home-category-group home-category-group--practical" aria-labelledby="home-practical-heading">
+  <h2 id="home-practical-heading">Get help with life</h2>
+  <p class="section-intro">Start with the part of life where you need information or support.</p>
+  <div class="choice-grid choice-grid--home-categories">{practical}</div>
+</section>
+<section class="home-category-group home-category-group--authority" aria-labelledby="home-evidence-heading">
+  <h2 id="home-evidence-heading">Check evidence</h2>
+  <p class="section-intro">Use this when you want to inspect sources, uncertainty and evidence rather than browse a product or practical route.</p>
+  <div class="choice-grid choice-grid--home-categories">{authority}</div>
+</section>
+<section class="home-secondary" aria-labelledby="home-secondary-heading">
+  <h2 id="home-secondary-heading">Other ways to find something</h2>
+  <div class="home-route-grid">
+    <a href="/find/"><strong>Search</strong><span>Describe what you need in your own words.</span></a>
+    <a href="/a-z/"><strong>A–Z</strong><span>Use this when you already know the name.</span></a>
+    <a href="/types/"><strong>Browse everything</strong><span>Open the complete content-type catalogue.</span></a>
+    <a href="/start/"><strong>Not sure where to start?</strong><span>Choose from four simple starting points.</span></a>
+  </div>
+</section>
+'''
+    return _compat08__page_shell(
+        'What are you looking for?',
+        'Choose a clear category such as conditions, books, games, apps, organisations or practical help. You do not need to learn ND Oracle terminology first.',
+        body,
+        path='/',
+    )
+
+
+def _nav_v1_resource_row(resource: dict) -> str:
+    category = _compat06__RESOURCE_CATEGORY_LABELS.get(
+        resource['category'],
+        resource['category'].replace('_', ' ').title(),
+    )
+    visual = _resource_visuals.render_resource_visual(resource)
+    visual_html = f'<div class="nav-v1-resource-visual">{visual}</div>' if visual else ''
+    return f'''<article class="resource-row nav-v1-resource-row">
+  {visual_html}
+  <div class="nav-v1-resource-copy">
+    <div class="resource-row-head">
+      <h3><a href="/resources/{_compat06__esc(resource['id'])}/">{_compat06__esc(resource['name'])}</a></h3>
+      <span class="resource-kind">{_compat06__esc(category)}</span>
+    </div>
+    <p>{_compat06__esc(resource['description'])}</p>
+    <p class="meta">For: {_compat06__esc(resource['audience_or_context'])}</p>
+  </div>
+</article>'''
+
+
+def _nav_v1_resource_category_page(
+    resources: list[dict],
+    *,
+    title: str,
+    intro: str,
+    route: str,
+    categories: set[str],
+    current: str | None = None,
+    indexable: bool = False,
+) -> str:
+    selected = sorted(
+        (item for item in resources if item['category'] in categories),
+        key=lambda item: item['name'].casefold(),
+    )
+    rows = ''.join(_nav_v1_resource_row(item) for item in selected)
+    body = f'''
+<p class="back-link"><a href="/">← Home</a></p>
+<section class="notice">
+  <strong>Listed, not endorsed.</strong> These are governed listings for recognition and inspection. Inclusion does not mean ND Oracle has proved that something works or will suit you.
+</section>
+<section class="nav-v1-category-list" aria-labelledby="nav-v1-category-list-heading">
+  <h2 id="nav-v1-category-list-heading">{len(selected)} {('item' if len(selected) == 1 else 'items')}</h2>
+  <div class="resource-list">{rows}</div>
+</section>
+{_nav_v1_utility_links()}
+'''
+    return _compat08__page_shell(
+        title,
+        intro,
+        body,
+        current=current,
+        path=f'/{route}/',
+        indexable=indexable,
+    )
+
+
+def render_conditions_navigation_v1(concepts: list[dict]) -> str:
+    concept_map = {item['id']: item for item in concepts}
+    selected = [concept_map[item_id] for item_id in NAVIGATION_V1_CONDITION_IDS if item_id in concept_map]
+    rows = ''.join(_compat06__topic_link(item) for item in selected)
+    body = f'''
+<p class="back-link"><a href="/">← Home</a></p>
+<section class="notice">
+  <strong>Information, not diagnosis.</strong> These pages explain named conditions and keep evidence and uncertainty available. They do not diagnose a person.
+</section>
+<section class="nav-v1-category-list" aria-labelledby="condition-list-heading">
+  <h2 id="condition-list-heading">Conditions</h2>
+  <div class="topic-list">{rows}</div>
+</section>
+<p><a href="/understand/">See related concepts and experiences →</a></p>
+{_nav_v1_utility_links()}
+'''
+    return _compat08__page_shell(
+        'Conditions',
+        'Plain-language information about named neurodevelopmental and neurodivergent conditions.',
+        body,
+        path='/conditions/',
+        indexable=False,
+    )
+
+
+def _nav_v1_question_groups_page(
+    questions: list[dict],
+    *,
+    title: str,
+    intro: str,
+    route: str,
+    group_names: tuple[str, ...],
+) -> str:
+    question_map = {item['id']: item for item in questions}
+    group_map = {name: ids for name, ids in QUESTION_GROUPS}
+    sections = []
+    for group_name in group_names:
+        ids = group_map.get(group_name, [])
+        rows = ''.join(
+            _compat08__question_link(question_map[question_id])
+            for question_id in ids
+            if question_id in question_map
+        )
+        sections.append(
+            f'''<details class="nav-v1-subgroup">
+  <summary><span>{_compat06__esc(group_name)}</span><span class="summary-meta">{len(ids)} routes</span></summary>
+  <div class="topic-list">{rows}</div>
+</details>'''
+        )
+    body = f'''
+<p class="back-link"><a href="/">← Home</a></p>
+<section class="notice">
+  <strong>Relevant to inspect, not recommended.</strong> Choose the closest area, then open a reviewed route. These links do not infer diagnosis, eligibility or the right support for an individual.
+</section>
+<section class="nav-v1-practical-groups" aria-labelledby="nav-v1-practical-heading">
+  <h2 id="nav-v1-practical-heading">Choose an area</h2>
+  <div class="nav-v1-subgroup-stack">{''.join(sections)}</div>
+</section>
+{_nav_v1_utility_links()}
+'''
+    return _compat08__page_shell(
+        title,
+        intro,
+        body,
+        path=f'/{route}/',
+        indexable=False,
+    )
+
+
+def render_start_navigation_v1() -> str:
+    choices = (
+        ('/conditions/', 'Something about me', 'Start with named conditions and plain-language explanations.'),
+        ('/daily-living/', 'Something I need help with', 'Start with an everyday-life area such as communication, food, sleep, sensory needs, money or travel.'),
+        ('/resources/', 'Something to read, watch or use', 'Choose books, games, apps, tools and other governed resources.'),
+        ('/organisations/', 'Somewhere or someone that can help', 'Find organisations and peer groups without scanning the whole catalogue.'),
+    )
+    cards = ''.join(
+        _nav_v1_category_card(href, label, description, 'start')
+        for href, label, description in choices
+    )
+    body = f'''
+<p class="back-link"><a href="/">← Home</a></p>
+<section class="home-category-group home-category-group--start" aria-labelledby="start-simple-heading">
+  <h2 id="start-simple-heading">Pick the closest one</h2>
+  <p class="section-intro">You do not need to know the right ND Oracle category. Choose the closest description and change route whenever you need to.</p>
+  <div class="choice-grid choice-grid--start">{cards}</div>
+</section>
+{_nav_v1_utility_links()}
+'''
+    return _compat08__page_shell(
+        'Not sure where to start?',
+        'Four simple starting points when you do not know the site structure or the right term.',
+        body,
+        path='/start/',
+        indexable=False,
+    )
+
+
+def render_resources_navigation_v1(resources: list[dict]) -> str:
+    alpha_rows: dict[str, list[str]] = {}
+    for resource in resources:
+        first = resource['name'].strip()[:1].upper()
+        letter = first if first.isalnum() else '#'
+        alpha_rows.setdefault(letter, []).append(_compat06__resource_link(resource))
+    catalogue_groups = ''.join(
+        f'''<section class="resource-alpha-group" aria-labelledby="resource-letter-{_compat06__esc(letter.lower() if letter != '#' else 'other')}">
+  <h3 id="resource-letter-{_compat06__esc(letter.lower() if letter != '#' else 'other')}">{_compat06__esc(letter)}</h3>
+  <div class="resource-list">{''.join(rows)}</div>
+</section>'''
+        for letter, rows in alpha_rows.items()
+    )
+    categories = (
+        ('/books/', 'Books', 'Books with context, access notes and limitations kept visible.'),
+        ('/games/', 'Games', 'Games with play characteristics, accessibility and possible poor fit kept visible.'),
+        ('/conditions/', 'Conditions', 'Plain-language information about named conditions.'),
+        ('/apps-tools/', 'Apps & tools', 'Apps and practical tools that may help with access or everyday tasks.'),
+        ('/organisations/', 'Organisations & peer groups', 'Organisations and peer communities with scope and limitations visible.'),
+    )
+    cards = ''.join(
+        f'''<a class="choice-card choice-card--family" href="{_compat06__esc(href)}">
+  <strong>{_compat06__esc(label)}</strong>
+  <span>{_compat06__esc(description)}</span>
+</a>'''
+        for href, label, description in categories
+    )
+    body = f'''
+<p class="back-link"><a href="/">← Home</a></p>
+<section class="resource-start" aria-labelledby="resource-start-heading">
+  <h2 id="resource-start-heading">Choose a category</h2>
+  <p class="section-intro">Pick the kind of thing you are looking for.</p>
+  <div class="choice-grid choice-grid--families">{cards}</div>
+</section>
+<section class="notice resource-boundary">
+  <strong>Listed, not endorsed.</strong> A listing means we have checked and described the resource. It does not mean we have proved it works or that it is right for you.
+</section>
+<section class="resource-complete" aria-labelledby="resource-complete-heading">
+  <h2 id="resource-complete-heading">All resources</h2>
+  <p class="section-intro">If you know the name, use A–Z. The complete resource catalogue remains available here as a specialist route.</p>
+  <p><a class="standalone-action" href="/a-z/">Open the A–Z index</a></p>
+  <details class="resource-catalogue">
+    <summary><span>Show all {len(resources)} resources A–Z on this page</span></summary>
+    <div class="resource-catalogue-body">{catalogue_groups}</div>
+  </details>
+</section>
+'''
+    return _compat08__page_shell(
+        'Resources',
+        'Choose books, games, conditions, apps and tools, or organisations and peer groups without learning the catalogue structure first.',
+        body,
+        current='resources',
+        path='/resources/',
+    )
+
+
+def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
+    destination = _NAV_V1_BASE_BUILD(output_dir)
+    concepts = _compat06__load_concepts()
+    resources = _compat06__load_resources()
+    questions = _compat08__load_questions()
+
+    (destination / 'index.html').write_text(
+        render_home_navigation_v1(concepts, resources, questions),
+        encoding='utf-8',
+    )
+    _compat06__write_route(destination, 'resources', render_resources_navigation_v1(resources))
+
+    _compat06__write_route(destination, 'conditions', render_conditions_navigation_v1(concepts))
+    _compat06__write_route(
+        destination,
+        'books',
+        _nav_v1_resource_category_page(
+            resources,
+            title='Books',
+            intro='Governed book listings with recognition images where ND Oracle has a cleared lawful asset.',
+            route='books',
+            categories={'book'},
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'games',
+        _nav_v1_resource_category_page(
+            resources,
+            title='Games',
+            intro='Governed game listings described for inspection rather than as treatment or recommendation.',
+            route='games',
+            categories={'game'},
+            current='games',
+            indexable=True,
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'apps-tools',
+        _nav_v1_resource_category_page(
+            resources,
+            title='Apps & tools',
+            intro='Governed apps and practical tools with access, limitations and conflicts kept visible.',
+            route='apps-tools',
+            categories=NAVIGATION_V1_APP_TOOL_CATEGORIES,
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'organisations',
+        _nav_v1_resource_category_page(
+            resources,
+            title='Organisations & peer groups',
+            intro='Governed organisations and peer communities with scope, access and limitations kept visible.',
+            route='organisations',
+            categories=NAVIGATION_V1_ORGANISATION_CATEGORIES,
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'work-education',
+        _nav_v1_question_groups_page(
+            questions,
+            title='Work & education',
+            intro='Practical routes for work, study, adjustments, education and access.',
+            route='work-education',
+            group_names=('Work', 'Education & study'),
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'health-diagnosis',
+        _nav_v1_question_groups_page(
+            questions,
+            title='Health & diagnosis',
+            intro='Assessment, diagnosis, healthcare access and health-support routes without turning ND Oracle into a diagnostic service.',
+            route='health-diagnosis',
+            group_names=('Assessment & diagnosis', 'Healthcare access', 'Health & wellbeing'),
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'daily-living',
+        _nav_v1_question_groups_page(
+            questions,
+            title='Daily living',
+            intro='Practical everyday-life routes covering tasks, sensory needs, communication, food, sleep, money and travel.',
+            route='daily-living',
+            group_names=(
+                'Daily life & technology',
+                'Sensory & environment',
+                'Communication',
+                'Food & eating',
+                'Sleep',
+                'Money & administration',
+                'Mobility & travel',
+            ),
+        ),
+    )
+    _compat06__write_route(destination, 'start', render_start_navigation_v1())
+
+    for route in NAVIGATION_V1_ALIAS_ROUTES:
+        generated = destination / route.strip('/') / 'index.html'
+        if not generated.is_file():
+            raise ValueError(f'Navigation v1 alias route was not generated: {route}')
+        text = generated.read_text(encoding='utf-8')
+        if 'name="robots" content="noindex, follow"' not in text:
+            raise ValueError(f'Navigation v1 alias route must remain noindex until protected route-count reconciliation: {route}')
+
+    games_page = (destination / 'games' / 'index.html').read_text(encoding='utf-8')
+    if 'name="robots" content="noindex, follow"' in games_page:
+        raise ValueError('/games/ must remain indexable')
+
+    return destination
+
+
+render_index = render_home_navigation_v1
 
 
 # ---- command-line entrypoint ----

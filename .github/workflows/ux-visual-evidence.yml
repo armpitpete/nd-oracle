@@ -280,16 +280,16 @@ jobs:
           ! grep -q 'choice-card choice-card--primary' candidate/dist/resources/index.html
           ! grep -q 'choice-card choice-card--need' candidate/dist/resources/index.html
           test "$(grep -o 'choice-card choice-card--family' candidate/dist/resources/index.html | wc -l)" -eq 5
-          grep -q 'href="/books-media/"' candidate/dist/resources/index.html
+          grep -q 'href="/books/"' candidate/dist/resources/index.html
           grep -q '>Books<' candidate/dist/resources/index.html
           grep -q 'href="/games/"' candidate/dist/resources/index.html
           grep -q '>Games<' candidate/dist/resources/index.html
-          grep -q 'href="/understand/"' candidate/dist/resources/index.html
-          grep -q 'Conditions &amp; topics' candidate/dist/resources/index.html
-          grep -q 'href="/tools/"' candidate/dist/resources/index.html
+          grep -q 'href="/conditions/"' candidate/dist/resources/index.html
+          grep -q '>Conditions<' candidate/dist/resources/index.html
+          grep -q 'href="/apps-tools/"' candidate/dist/resources/index.html
           grep -q 'Apps &amp; tools' candidate/dist/resources/index.html
-          grep -q 'href="/community/"' candidate/dist/resources/index.html
-          grep -q 'Support &amp; organisations' candidate/dist/resources/index.html
+          grep -q 'href="/organisations/"' candidate/dist/resources/index.html
+          grep -q 'Organisations &amp; peer groups' candidate/dist/resources/index.html
 
           grep -q 'Start with what you notice' candidate/dist/understand/index.html
           grep -q 'New word? Break it down' candidate/dist/understand/index.html
@@ -306,9 +306,35 @@ jobs:
           ! grep -q '<details class="question-group" open' candidate/dist/questions/index.html
           test "$(grep -o '<article class="topic-row">' candidate/dist/questions/index.html | wc -l)" -eq 175
 
-          grep -q 'What do you need right now?' candidate/dist/index.html
-          test "$(grep -o 'choice-card home-start-card' candidate/dist/index.html | wc -l)" -eq 4
+          grep -q 'Browse things' candidate/dist/index.html
+          grep -q 'Get help with life' candidate/dist/index.html
+          grep -q 'Check evidence' candidate/dist/index.html
+          test "$(grep -o 'choice-card home-category-card' candidate/dist/index.html | wc -l)" -eq 9
+          grep -q 'href="/conditions/"' candidate/dist/index.html
+          grep -q 'href="/books/"' candidate/dist/index.html
+          grep -q 'href="/games/"' candidate/dist/index.html
+          grep -q 'href="/apps-tools/"' candidate/dist/index.html
+          grep -q 'href="/organisations/"' candidate/dist/index.html
+          grep -q 'href="/work-education/"' candidate/dist/index.html
+          grep -q 'href="/health-diagnosis/"' candidate/dist/index.html
+          grep -q 'href="/daily-living/"' candidate/dist/index.html
+          grep -q 'href="/evidence/"' candidate/dist/index.html
+          grep -q 'href="/start/"' candidate/dist/index.html
+          ! grep -q 'What do you need right now?' candidate/dist/index.html
+          ! grep -q 'I want something practical' candidate/dist/index.html
           ! grep -q '<article class="topic-row">' candidate/dist/index.html
+          grep -q 'href="/understand/autism/"' candidate/dist/conditions/index.html
+          grep -q 'href="/resources/a-kind-of-spark/"' candidate/dist/books/index.html
+          grep -q 'src="/resource-media/a-kind-of-spark.jpg"' candidate/dist/books/index.html
+          grep -q 'href="/resources/townscaper/"' candidate/dist/games/index.html
+          grep -q 'src="/resource-media/townscaper.jpg"' candidate/dist/games/index.html
+          grep -q 'href="/resources/focusmate/"' candidate/dist/apps-tools/index.html
+          grep -q 'src="/resource-media/focusmate.png"' candidate/dist/apps-tools/index.html
+          grep -q 'href="/resources/autistica/"' candidate/dist/organisations/index.html
+          grep -q 'href="/questions/workplace-support-great-britain/"' candidate/dist/work-education/index.html
+          grep -q 'href="/questions/adult-adhd-assessment-england/"' candidate/dist/health-diagnosis/index.html
+          grep -q 'href="/questions/phone-calls-are-difficult/"' candidate/dist/daily-living/index.html
+          test "$(grep -o 'home-category-card--start' candidate/dist/start/index.html | wc -l)" -eq 4
           test "$(grep -o 'choice-card need-index-card' candidate/dist/needs/index.html | wc -l)" -eq 8
           ! grep -q '<article class="topic-row">' candidate/dist/needs/index.html
           grep -q 'need-hub--communication' candidate/dist/needs/communication/index.html
@@ -559,6 +585,39 @@ jobs:
           capture candidate 8766 1440,1100 desktop
           capture candidate 8766 390,844 narrow
 
+          NAV_V1_ROUTES=(
+            "category-conditions|/conditions/"
+            "category-books|/books/"
+            "category-games|/games/"
+            "category-apps-tools|/apps-tools/"
+            "category-organisations|/organisations/"
+            "category-work-education|/work-education/"
+            "category-health-diagnosis|/health-diagnosis/"
+            "category-daily-living|/daily-living/"
+            "category-start|/start/"
+          )
+          for spec in "${NAV_V1_ROUTES[@]}"; do
+            name="${spec%%|*}"
+            route="${spec#*|}"
+            for folder in desktop narrow; do
+              if [[ "$folder" == "desktop" ]]; then
+                size="1440,3000"
+              else
+                size="390,4200"
+              fi
+              screenshot="ux-evidence/candidate/$folder/$name.png"
+              if ! timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+                --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+                --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
+                --window-size="$size" \
+                --screenshot="$screenshot" \
+                "http://127.0.0.1:8766$route"; then
+                test -s "$screenshot"
+              fi
+              test -s "$screenshot"
+            done
+          done
+
           timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
             --disable-background-networking --disable-component-update --disable-sync --no-first-run \
             --run-all-compositor-stages-before-draw --virtual-time-budget=3000 \
@@ -599,6 +658,8 @@ jobs:
             echo "resource_minami_lane_capture=1440x1100,390x844"
             echo "resource_shape_of_things_capture=1440x1100,390x844"
             echo "resource_focusmate_capture=1440x1100,390x844"
+            echo "navigation_v1_categories=conditions,books,games,apps-tools,organisations,work-education,health-diagnosis,daily-living,start"
+            echo "navigation_v1_category_capture=1440x3000,390x4200"
             echo "topics_index_capture=1440x3600,390x5600"
             echo "concept_monotropism_capture=1440x2600,390x4200"
             echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
@@ -606,7 +667,7 @@ jobs:
           } > ux-evidence/manifest.txt
 
           test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 56
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 58
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 76
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

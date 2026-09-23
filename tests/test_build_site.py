@@ -112,7 +112,7 @@ class WebsiteBuildTests(unittest.TestCase):
             if resource["category"] in build_site.TOOL_CATEGORIES: self.assertIn(name, tools)
             if resource["category"] in build_site.COMMUNITY_CATEGORIES: self.assertIn(name, community)
 
-    def test_resources_index_uses_direct_recognisable_categories_without_hiding_catalogue(self):
+    def test_resources_index_uses_navigation_v1_categories_without_hiding_catalogue(self):
         page = self.page("/resources/")
         self.assertIn("Choose a category", page)
         self.assertNotIn("Choose how to start", page)
@@ -122,11 +122,11 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertEqual(5, page.count("choice-card choice-card--family"))
 
         for href, label in (
-            ("/books-media/", "Books"),
+            ("/books/", "Books"),
             ("/games/", "Games"),
-            ("/understand/", "Conditions &amp; topics"),
-            ("/tools/", "Apps &amp; tools"),
-            ("/community/", "Support &amp; organisations"),
+            ("/conditions/", "Conditions"),
+            ("/apps-tools/", "Apps &amp; tools"),
+            ("/organisations/", "Organisations &amp; peer groups"),
         ):
             self.assertIn(f'href="{href}"', page)
             self.assertIn(label, page)
@@ -142,11 +142,9 @@ class WebsiteBuildTests(unittest.TestCase):
 
     def test_resources_direct_categories_preserve_specialist_need_and_place_routes(self):
         resources_page = self.page("/resources/")
-        for href in ("/books-media/", "/games/", "/understand/", "/tools/", "/community/"):
+        for href in ("/books/", "/games/", "/conditions/", "/apps-tools/", "/organisations/"):
             self.assertIn(f'href="{href}"', resources_page)
 
-        # The former multi-strategy entry routes remain available as governed
-        # specialist pages; they are simply no longer competing on Resources.
         education = self.page("/needs/education-study/")
         self.assertIn('href="/questions/organising-study-and-assignments/"', education)
 
@@ -250,35 +248,41 @@ class WebsiteBuildTests(unittest.TestCase):
             [result.route for result in phone_results],
         )
 
-    def test_home_is_orientation_first_not_inventory_first(self):
+    def test_home_uses_concrete_categories_before_internal_taxonomy(self):
         page = self.page("/")
-        self.assertIn("What do you need right now?", page)
-        self.assertEqual(4, page.count("choice-card home-start-card"))
+        self.assertIn("Browse things", page)
+        self.assertIn("Get help with life", page)
+        self.assertIn("Check evidence", page)
+        self.assertEqual(9, page.count("choice-card home-category-card"))
         for href, label in (
-            ("/find/", "Describe what is happening"),
-            ("/questions/", "I know what I need help with"),
-            ("/resources/", "I want something practical"),
-            ("/understand/", "I want to understand something"),
+            ("/conditions/", "Conditions"),
+            ("/books/", "Books"),
+            ("/games/", "Games"),
+            ("/apps-tools/", "Apps &amp; tools"),
+            ("/organisations/", "Organisations &amp; peer groups"),
+            ("/work-education/", "Work &amp; education"),
+            ("/health-diagnosis/", "Health &amp; diagnosis"),
+            ("/daily-living/", "Daily living"),
+            ("/evidence/", "Evidence &amp; research"),
         ):
             self.assertIn(f'href="{href}"', page)
             self.assertIn(label, page)
 
-        self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("choice-card home-need-card"))
-        for route, title, _intro, _groups, tone in build_site.V23_HUB_DEFINITIONS:
-            self.assertIn(f'href="/{route}/"', page)
-            self.assertIn(f"home-need-card--{tone}", page)
-            self.assertIn(html.escape(title, quote=True), page)
-
+        self.assertNotIn("What do you need right now?", page)
+        self.assertNotIn("I want something practical", page)
+        self.assertNotIn("I want to understand something", page)
         self.assertNotIn("Browse current topics", page)
         self.assertNotIn('<article class="topic-row">', page)
-        self.assertNotIn("More question shortcuts", page)
-        self.assertNotIn('class="home-shortcuts"', page)
-        self.assertIn("Want the whole catalogue?", page)
-        self.assertIn("The homepage stays short on purpose.", page)
-        self.assertIn("Need another way in?", page)
-        self.assertIn('href="/places/"', page)
-        self.assertIn('href="/a-z/"', page)
-        self.assertIn('href="/how-it-works/"', page)
+
+        self.assertIn("Other ways to find something", page)
+        for href, label in (
+            ("/find/", "Search"),
+            ("/a-z/", "A–Z"),
+            ("/types/", "Browse everything"),
+            ("/start/", "Not sure where to start?"),
+        ):
+            self.assertIn(f'href="{href}"', page)
+            self.assertIn(label, page)
 
     def test_needs_index_is_eight_clear_areas_not_a_question_wall(self):
         page = self.page("/needs/")
@@ -328,25 +332,27 @@ class WebsiteBuildTests(unittest.TestCase):
                 self.assertIn(f'href="/questions/{question_id}/"', page)
                 self.assertIn(html.escape(question_map[question_id]["question"], quote=True), page)
 
-    def test_home_and_need_hub_task_journeys_are_short(self):
+    def test_home_concrete_category_journeys_are_direct(self):
         home = self.page("/")
         journeys = (
-            ("needs/communication", "/questions/phone-calls-are-difficult/"),
-            ("needs/education-study", "/questions/organising-study-and-assignments/"),
-            ("needs/work", "/questions/workplace-support-great-britain/"),
-            ("needs/assessment-diagnosis", "/questions/adult-autism-assessment-england/"),
-            ("needs/sensory-environment", "/questions/sensory-overload-what-can-i-change/"),
-            ("needs/health-wellbeing", "/questions/low-mood-depression-where-start/"),
-            ("needs/relationships-family", "/questions/communication-needs-in-relationships/"),
+            ("/conditions/", "/understand/autism/"),
+            ("/books/", "/resources/a-kind-of-spark/"),
+            ("/games/", "/resources/townscaper/"),
+            ("/apps-tools/", "/resources/focusmate/"),
+            ("/organisations/", "/resources/autistica/"),
+            ("/work-education/", "/questions/workplace-support-great-britain/"),
+            ("/health-diagnosis/", "/questions/adult-adhd-assessment-england/"),
+            ("/daily-living/", "/questions/phone-calls-are-difficult/"),
         )
-        for hub_route, question_route in journeys:
-            self.assertIn(f'href="/{hub_route}/"', home)
-            hub = self.page(f"/{hub_route}/")
-            self.assertIn(f'href="{question_route}"', hub)
+        for category_route, item_route in journeys:
+            self.assertIn(f'href="{category_route}"', home)
+            category = self.page(category_route)
+            self.assertIn(f'href="{item_route}"', category)
 
+        self.assertIn('href="/evidence/"', home)
+        self.assertIn('href="/find/"', home)
         self.assertIn('href="/a-z/"', home)
-        self.assertIn('href="/questions/"', home)
-        self.assertIn('href="/resources/"', home)
+        self.assertIn('href="/start/"', home)
 
     def test_every_indexable_page_has_accessibility_metadata_and_canonical_url(self):
         paths = build_site.sitemap_paths(self.concepts, self.resources, self.questions)

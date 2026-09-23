@@ -73,21 +73,38 @@ class V2PublicBaselineTests(unittest.TestCase):
         self.assertIn("border-left", tail)
         self.assertIn(".choice-card", tail)
 
-    def test_home_is_short_orientation_surface_not_legacy_catalogue(self):
+    def test_home_is_concrete_category_surface_not_internal_taxonomy_gate(self):
         concepts = build_site.load_concepts()
         resources = build_site.load_resources()
         questions = build_site.load_questions()
         page = build_site.render_index(concepts, resources, questions)
 
-        self.assertIn("What do you need right now?", page)
-        self.assertIn("Or start with an area of life", page)
-        self.assertIn("Need another way in?", page)
-        self.assertIn("Want the whole catalogue?", page)
+        self.assertIn("Browse things", page)
+        self.assertIn("Get help with life", page)
+        self.assertIn("Check evidence", page)
+        self.assertEqual(9, page.count("home-category-card"))
+        for href in (
+            "/conditions/",
+            "/books/",
+            "/games/",
+            "/apps-tools/",
+            "/organisations/",
+            "/work-education/",
+            "/health-diagnosis/",
+            "/daily-living/",
+            "/evidence/",
+            "/find/",
+            "/a-z/",
+            "/types/",
+            "/start/",
+        ):
+            self.assertIn(f'href="{href}"', page)
+
+        self.assertNotIn("What do you need right now?", page)
+        self.assertNotIn("I want something practical", page)
+        self.assertNotIn("I want to understand something", page)
         self.assertNotIn("More question shortcuts", page)
         self.assertNotIn('class="home-shortcuts"', page)
-
-        for href in ("/find/", "/questions/", "/resources/", "/understand/", "/a-z/"):
-            self.assertIn(f'href="{href}"', page)
 
     def test_human_task_gate_cannot_be_satisfied_by_automation(self):
         text = USER_TEST.read_text(encoding="utf-8")
