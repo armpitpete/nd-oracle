@@ -36,6 +36,18 @@ Base: `0065ab8000bbb0020aa221f084525116f436b373`
 - [x] preserve Find, Needs, Places, Types and the complete A–Z catalogue as governed specialist routes rather than competing first-screen choices on Resources;
 - [x] expand exact-head A Kind of Spark visual capture so the supplied cover itself is visible in desktop and narrow evidence.
 
+- [x] freeze ND-UX-V2 Navigation Contract v1 with the release-blocking concrete-category acceptance rule;
+- [x] freeze the nine visitor categories, their purpose/scope/exclusions and deterministic overlap rules;
+- [x] freeze Search, A–Z, Browse everything and Not sure where to start? as secondary utilities;
+- [x] demote Resources, Topics, Needs and Questions from prerequisite first-level visitor vocabulary while preserving compatibility/specialist authority;
+- [x] freeze the four-choice uncertainty-route contract;
+- [x] freeze Home hierarchy, direct-reachability, terminology, visual hierarchy and rights-gated imagery rules;
+- [x] bind Phase 1 to presentation/navigation authority only and enumerate protected knowledge/production paths;
+- [x] add machine-readable `contracts/navigation-v1.json` plus regression tests for the navigation contract;
+- [x] bind the human protocol to an unprompted first-impression question and Found it / Confusing / Couldn't find it outcomes;
+- [x] confirm the existing visual-evidence workflow already captures Home at desktop and narrow widths and bind that coverage in regression tests;
+- [x] record the Phase 1 decision and HF-002 rationale without claiming Phase 2 implementation or final human acceptance.
+
 ## Existing accepted work reused
 
 V2.4 already supplies:

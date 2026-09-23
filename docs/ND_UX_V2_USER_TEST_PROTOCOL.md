@@ -7,6 +7,28 @@ Status: required before final V2 Public Baseline freeze
 
 Automated route tests are necessary but are not a substitute for real neurodivergent task evidence. Do not mark this gate PASS from screenshots, heuristic review or an AI simulation.
 
+
+## First-impression navigation check
+
+Before any fixed journey and without explaining ND Oracle's terminology, ask:
+
+> **Without clicking anything, what kinds of things do you think you can find on this website?**
+
+The participant should be able to identify concrete categories such as conditions, books, games or apps without being taught what Resources, Topics, Needs or Questions mean.
+
+Then ask the participant to attempt direct navigation to:
+
+- one condition;
+- one book;
+- one game;
+- one app/tool;
+- one organisation/peer group;
+- one practical-help route.
+
+For the participant-facing record, use only **Found it**, **Confusing**, or **Couldn't find it**. If the answer is Confusing or Couldn't find it, record one short reason. The detailed journey fields below remain available to the moderator for disposition and release evidence.
+
+This first-impression check does not replace the ten fixed journeys.
+
 ## Fixed journeys
 
 1. “I think I might have ADHD. Where do I begin?”

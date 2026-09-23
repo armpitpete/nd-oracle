@@ -55,6 +55,19 @@ Colour marks **where a conceptual section starts and stops**, not merely categor
 - every colour signal is paired with a heading, label, structural position or other non-colour cue;
 - avoid a high-saturation rainbow effect: surfaces remain calm and low-intensity.
 
+
+## Home navigation authority
+
+The primary Home navigation is governed by `docs/ND_UX_V2_NAVIGATION_CONTRACT_v1.md` and `contracts/navigation-v1.json`.
+
+A new visitor must encounter **concrete visitor-recognisable categories** before internal information-architecture terms. `Resources`, `Topics`, `Needs` and `Questions` may remain specialist or compatibility routes, but they are not prerequisite vocabulary for basic navigation.
+
+The release-blocking criterion is:
+
+> **A new visitor can tell that ND Oracle contains things such as conditions, books, games and apps, and can reach them without first learning what “Resources”, “Topics”, “Needs” or similar internal categories mean.**
+
+The category contract applies at desktop and narrow/mobile widths and is implemented only after the Phase 1 contract is frozen.
+
 ## Recognition visuals
 
 **Render a cleared visual when it materially helps the user recognise, distinguish or understand the resource.** This usefulness gate comes before publication: a lawful asset is not displayed merely because it exists.
