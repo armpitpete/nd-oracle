@@ -1938,12 +1938,38 @@ NAVIGATION_V1_CONDITION_IDS = (
     'learning-disability',
     'tourette-syndrome',
 )
+NAVIGATION_V1_PRIMARY_CATEGORIES = (
+    ('conditions', 'Conditions', 'Learn about named neurodivergent or neurodevelopmental conditions and related explanations.', '/conditions/'),
+    ('books', 'Books', 'Find fiction, memoir, practical and informational books in the governed Resource catalogue.', '/books/'),
+    ('games', 'Games', 'Find governed game Resources without first browsing the generic Resource catalogue.', '/games/'),
+    ('apps-tools', 'Apps & tools', 'Find governed software, accessibility tools and practical tools.', '/apps-tools/'),
+    ('organisations-peer-groups', 'Organisations & peer groups', 'Find organisations, communities and peer-support routes.', '/organisations/'),
+    ('work-education', 'Work & education', 'Find practical support for work, study, adjustments and education.', '/work-education/'),
+    ('health-diagnosis', 'Health & diagnosis', 'Find assessment, diagnosis, healthcare access and health-support routes.', '/health-diagnosis/'),
+    ('daily-living', 'Daily living', 'Find practical help with everyday activities, sensory needs, communication, food, sleep, money and mobility.', '/daily-living/'),
+    ('evidence-research', 'Evidence & research', 'Inspect governed evidence, sources, uncertainty and authority boundaries.', '/evidence/'),
+)
+NAVIGATION_V1_PRIMARY_NAV = [('find', 'Search'), ('a-z', 'A–Z'), ('about', 'About')]
 NAVIGATION_V1_APP_TOOL_CATEGORIES = {'app', 'tool', 'product'}
 NAVIGATION_V1_ORGANISATION_CATEGORIES = {'organisation', 'community'}
 
 
 def load_navigation_v1_contract() -> dict:
     return json.loads(NAVIGATION_V1_CONTRACT_PATH.read_text(encoding='utf-8'))
+
+
+def _nav_v1_primary(current: str | None = None) -> str:
+    links = ['<a href="/">Home</a>']
+    for slug, label in NAVIGATION_V1_PRIMARY_NAV:
+        current_attr = ' aria-current="page"' if slug == current else ''
+        links.append(f'<a href="/{_compat06__esc(slug)}/"{current_attr}>{_compat06__esc(label)}</a>')
+    return '<nav class="primary-nav" aria-label="Primary">' + ''.join(links) + '</nav>'
+
+
+_compat06__PRIMARY_NAV = NAVIGATION_V1_PRIMARY_NAV
+_compat06__nav = _nav_v1_primary
+PRIMARY_NAV = NAVIGATION_V1_PRIMARY_NAV
+nav = _nav_v1_primary
 
 
 def _nav_v1_utility_links() -> str:
@@ -1971,8 +1997,10 @@ def render_home_navigation_v1(
     if questions is None:
         questions = _compat08__load_questions()
     validate_question_navigation(questions)
-    contract = load_navigation_v1_contract()
-    categories = {item['id']: item for item in contract['primary_categories']}
+    categories = {
+        item_id: {'label': label, 'purpose': purpose, 'target_route': target_route}
+        for item_id, label, purpose, target_route in NAVIGATION_V1_PRIMARY_CATEGORIES
+    }
 
     things_order = ('conditions', 'books', 'games', 'apps-tools', 'organisations-peer-groups')
     practical_order = ('work-education', 'health-diagnosis', 'daily-living')

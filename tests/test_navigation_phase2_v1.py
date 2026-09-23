@@ -29,6 +29,24 @@ class NavigationPhase2V1Tests(unittest.TestCase):
             self.assertIn(item["label"].replace("&", "&amp;"), home)
         self.assertEqual(9, home.count("choice-card home-category-card"))
 
+    def test_executable_categories_match_the_frozen_contract(self):
+        contract = build_site.load_navigation_v1_contract()
+        expected = [
+            (item["id"], item["label"], item["purpose"], item["target_route"])
+            for item in contract["primary_categories"]
+        ]
+        self.assertEqual(expected, list(build_site.NAVIGATION_V1_PRIMARY_CATEGORIES))
+
+    def test_global_header_is_utility_navigation_not_internal_taxonomy(self):
+        home = self.page("/")
+        self.assertIn('href="/">Home</a>', home)
+        self.assertIn('href="/find/">Search</a>', home)
+        self.assertIn('href="/a-z/">A–Z</a>', home)
+        self.assertIn('href="/about/">About</a>', home)
+        self.assertNotIn('href="/questions/">Questions</a>', home)
+        self.assertNotIn('href="/understand/">Topics</a>', home)
+        self.assertNotIn('href="/resources/">Resources</a>', home)
+
     def test_alias_routes_exist_without_rewriting_frozen_sitemap_authority(self):
         canonical = set(build_site.sitemap_paths(
             build_site.load_concepts(),

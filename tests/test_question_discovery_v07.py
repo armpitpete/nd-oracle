@@ -34,13 +34,13 @@ class QuestionDiscoveryV07CompatibilityTests(unittest.TestCase):
         for question_id in V07_QUESTION_IDS:
             self.assertEqual("partially_resolved", self.question_map[question_id]["status"])
 
-    def test_home_keeps_practical_discovery_before_topic_catalogue(self):
+    def test_home_keeps_practical_discovery_visible_after_navigation_repair(self):
         home = (self.output / "index.html").read_text(encoding="utf-8")
         questions = (self.output / "questions" / "index.html").read_text(encoding="utf-8")
-        self.assertIn("What do you need right now?", home)
-        self.assertIn('href="/questions/"', home)
-        self.assertIn('href="/understand/"', home)
-        self.assertLess(home.index('href="/questions/"'), home.index('href="/understand/"'))
+        self.assertIn("Get help with life", home)
+        self.assertIn('href="/work-education/"', home)
+        self.assertIn('href="/daily-living/"', home)
+        self.assertLess(home.index("Get help with life"), home.index("Check evidence"))
         for question_id in V07_QUESTION_IDS:
             question = self.question_map[question_id]
             self.assertIn(html.escape(question["question"], quote=True), questions)

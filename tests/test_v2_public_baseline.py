@@ -82,7 +82,7 @@ class V2PublicBaselineTests(unittest.TestCase):
         self.assertIn("Browse things", page)
         self.assertIn("Get help with life", page)
         self.assertIn("Check evidence", page)
-        self.assertEqual(9, page.count("home-category-card"))
+        self.assertEqual(9, page.count("choice-card home-category-card"))
         for href in (
             "/conditions/",
             "/books/",
