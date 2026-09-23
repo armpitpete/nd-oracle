@@ -65,10 +65,12 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertNotIn('href="/oracle/"', page)
         self.assertIn('href="/find/"', page)
 
-    def test_topics_index_reaches_every_current_topic_and_home_routes_to_topics(self):
+    def test_topics_index_reaches_every_current_topic_and_conditions_route_to_topics(self):
         home = self.page("/")
+        conditions = self.page("/conditions/")
         topics = self.page("/understand/")
-        self.assertIn('href="/understand/"', home)
+        self.assertIn('href="/conditions/"', home)
+        self.assertIn('href="/understand/"', conditions)
         for concept in self.concepts:
             self.assertIn(f'href="/understand/{concept["id"]}/"', topics)
             self.assertIn(html.escape(concept["name"], quote=True), topics)
@@ -419,24 +421,27 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn('class="page-kind"', page, route)
             self.assertIn(label, page, route)
 
-    def test_primary_navigation_is_bounded_and_find_first(self):
+    def test_primary_navigation_is_bounded_and_utility_only(self):
         page = self.page("/")
         start = page.index('<nav class="primary-nav" aria-label="Primary">')
         end = page.index("</nav>", start)
         nav = page[start:end]
         self.assertEqual(4, nav.count("<a "))
-        self.assertLess(nav.index('href="/find/"'), nav.index('href="/questions/"'))
-        for href in ("/find/", "/questions/", "/understand/", "/resources/"):
+        for href in ("/", "/find/", "/a-z/", "/about/"):
             self.assertIn(f'href="{href}"', nav)
-        self.assertNotIn('href="/about/"', nav)
-        self.assertNotIn('href="/how-it-works/"', nav)
+        self.assertIn(">Home</a>", nav)
+        self.assertIn(">Search</a>", nav)
+        self.assertIn(">A–Z</a>", nav)
+        self.assertIn(">About</a>", nav)
+        for href in ("/questions/", "/understand/", "/resources/", "/needs/"):
+            self.assertNotIn(f'href="{href}"', nav)
         footer = page[page.index('aria-label="Footer"'):]
         self.assertIn('href="/about/"', footer)
         self.assertIn('href="/how-it-works/"', footer)
 
-    def test_find_is_primary_navigation_and_has_accessible_local_controls(self):
+    def test_search_is_global_utility_navigation_and_has_accessible_local_controls(self):
         page = self.page("/find/")
-        self.assertIn('href="/find/" aria-current="page">Find</a>', page)
+        self.assertIn('href="/find/" aria-current="page">Search</a>', page)
         self.assertIn('aria-describedby="find-help"', page)
         self.assertIn('role="region" aria-label="Find results"', page)
         self.assertIn("Local governed discovery.", page)

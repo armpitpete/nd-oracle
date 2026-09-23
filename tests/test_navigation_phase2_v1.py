@@ -39,13 +39,16 @@ class NavigationPhase2V1Tests(unittest.TestCase):
 
     def test_global_header_is_utility_navigation_not_internal_taxonomy(self):
         home = self.page("/")
-        self.assertIn('href="/">Home</a>', home)
-        self.assertIn('href="/find/">Search</a>', home)
-        self.assertIn('href="/a-z/">A–Z</a>', home)
-        self.assertIn('href="/about/">About</a>', home)
-        self.assertNotIn('href="/questions/">Questions</a>', home)
-        self.assertNotIn('href="/understand/">Topics</a>', home)
-        self.assertNotIn('href="/resources/">Resources</a>', home)
+        start = home.index('<nav class="primary-nav" aria-label="Primary">')
+        end = home.index("</nav>", start)
+        nav = home[start:end]
+        self.assertIn('href="/">Home</a>', nav)
+        self.assertIn('href="/find/">Search</a>', nav)
+        self.assertIn('href="/a-z/">A–Z</a>', nav)
+        self.assertIn('href="/about/">About</a>', nav)
+        self.assertNotIn('href="/questions/">Questions</a>', nav)
+        self.assertNotIn('href="/understand/">Topics</a>', nav)
+        self.assertNotIn('href="/resources/">Resources</a>', nav)
 
     def test_alias_routes_exist_without_rewriting_frozen_sitemap_authority(self):
         canonical = set(build_site.sitemap_paths(

@@ -34,8 +34,11 @@ class BatchAPublicSiteTests(unittest.TestCase):
                 self.assertIn("Sources", text, object_id)
 
             homepage = (output / "index.html").read_text(encoding="utf-8")
-            self.assertIn('href="/understand/"', homepage)
+            self.assertIn('href="/conditions/"', homepage)
             self.assertNotIn("Five core topics", homepage)
+
+            conditions = (output / "conditions" / "index.html").read_text(encoding="utf-8")
+            self.assertIn('href="/understand/"', conditions)
 
             topics = (output / "understand" / "index.html").read_text(encoding="utf-8")
             for object_id in BATCH_A_IDS:
@@ -48,6 +51,3 @@ class BatchAPublicSiteTests(unittest.TestCase):
             for object_id in BATCH_A_IDS:
                 self.assertIn(f"https://ndoracle.org/understand/{object_id}/", sitemap)
 
-
-if __name__ == "__main__":
-    unittest.main()
