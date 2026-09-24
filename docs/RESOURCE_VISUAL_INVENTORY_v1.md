@@ -25,7 +25,7 @@ All P1 items pass the usefulness gate because their cover/icon/key-art/poster id
 | --- | --- | --- | --- |
 | A Kind of Spark — Elle McNicoll | `a-kind-of-spark` | `rights-unknown` | https://www.panmacmillan.com/authors/elle-mcnicoll/a-kind-of-spark/9781037410642 |
 | Caged in Chaos — Victoria Biggs | `caged-in-chaos` | `rights-unknown` | https://books.google.com/books/about/Caged_in_Chaos.html?id=zCaPAwAAQBAJ |
-| Different, Not Less — Chloé Hayden | `different-not-less` | `rights-unknown` | https://www.murdochbooks.com/browse/book/Chlo%C3%A9-Hayden-Different%2C-Not-Less-9781922616180 |
+| Different, Not Less — Chloé Hayden | `different-not-less` | `cleared` | https://www.murdochbooks.com/browse/book/Chlo%C3%A9-Hayden-Different%2C-Not-Less-9781922616180 |
 | Dirty Laundry — Richard Pink and Roxanne Emery | `dirty-laundry` | `rights-unknown` | https://www.penguinrandomhouse.com/books/743719/dirty-laundry-by-richard-pink-and-roxanne-emery/ |
 | Front of the Class — Brad Cohen with Lisa Wysocky | `front-of-the-class` | `rights-unknown` | https://us.macmillan.com/books/9780312571399/frontoftheclass/ |
 | How to ADHD — Jessica McCabe | `how-to-adhd` | `rights-unknown` | https://www.hachette.co.uk/titles/jessica-mccabe/how-to-adhd/9781805221289/ |

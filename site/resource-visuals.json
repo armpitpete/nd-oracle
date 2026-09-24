@@ -743,7 +743,7 @@
     "different-not-less": {
       "resource_id": "different-not-less",
       "kind": "book",
-      "status": "rights-unknown",
+      "status": "cleared",
       "materially_helpful": true,
       "helps": [
         "recognise",
@@ -752,16 +752,20 @@
       "usefulness_note": "A cover materially helps readers recognise and distinguish the exact book.",
       "source_url": "https://www.murdochbooks.com/browse/book/Chlo%C3%A9-Hayden-Different%2C-Not-Less-9781922616180",
       "rights_holder": "Murdoch Books",
-      "rights_basis": null,
-      "local_path": null,
-      "alt": null,
-      "attribution": null,
-      "checked_on": "2026-09-18",
-      "rights_note": "Murdoch Books provides a high-resolution cover download route, but the reviewed public material does not state a general republication licence. Keep fail-closed until reuse scope is confirmed.",
-      "attribution_required": false,
-      "rights_research_state": "official-cover-download-found-scope-unconfirmed",
+      "rights_basis": "Written permission from Murdoch Books on 2026-09-24 granting ND Oracle use of the supplied Different, Not Less cover; Murdoch supplied a high-resolution cover and a preferred credit line, explicitly allowing the credit details to be reworked to ND Oracle's usual format.",
+      "local_path": "site/resource-media/different-not-less.jpg",
+      "alt": "Cover of Different, Not Less by Chloé Hayden.",
+      "attribution": "Different, Not Less by Chloé Hayden, published by Murdoch Books.",
+      "checked_on": "2026-09-24",
+      "rights_note": "Murdoch Books granted the requested ND Oracle web use and supplied the high-resolution cover. ND Oracle retains the exact supplied JPEG bytes unchanged; display sizing is CSS/browser-only. Murdoch supplied a usual credit line and said its details may be reworked to fit ND Oracle's format.",
+      "attribution_required": true,
+      "rights_research_state": "cleared-written-permission-exact-attached-cover",
       "rights_review_url": "https://www.murdochbooks.com/shopping-faq",
-      "permission_route": "enquiries@murdochbooks.com.au"
+      "permission_route": "Murdoch Books marketing/publicity reply to merrin@ndoracle.org",
+      "attribution_url": "https://www.murdochbooks.co.uk",
+      "rights_candidate_basis": "Written permission received from Murdoch Books on 2026-09-24.",
+      "asset_strategy": "Use the exact publisher-supplied JPEG bytes unchanged; resize only at presentation time with CSS/browser layout.",
+      "permission_evidence": "docs/RESOURCE_VISUAL_RIGHTS_DIFFERENT_NOT_LESS_v1.md"
     },
     "dirty-laundry": {
       "resource_id": "dirty-laundry",

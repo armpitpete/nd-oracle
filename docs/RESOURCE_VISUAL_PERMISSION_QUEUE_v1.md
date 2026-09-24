@@ -11,10 +11,11 @@ No entry in this queue may render until a **specific asset** has a recorded righ
 ## Queue summary
 
 - Useful visual candidates: **37**
-- Cleared for publication: **5**
+- Cleared for publication: **6**
 - Permission required: **25**
-- Rights/asset binding unresolved: **7**
+- Rights/asset binding unresolved: **6**
 - Resolved 2026-09-22: `a-kind-of-spark` moved to `cleared` on written Pan Macmillan permission with the exact supplied cover retained unaltered.
+- Resolved 2026-09-24: `different-not-less` moved to `cleared` on written Murdoch Books permission with the exact supplied high-resolution cover retained unaltered.
 
 ## Queue
 
@@ -28,7 +29,6 @@ No entry in this queue may render until a **specific asset** has a recorded righ
 | `cats-organized-neatly` — Cats Organized Neatly | game | `permission-required` | DU&I | official-product-imagery-found-no-public-reuse-licence | developer/publisher contact via official product site |
 | `cboard-aac` — Cboard AAC | app | `rights-unknown` | Assistive Technology LLC / Cboard contributors | mixed-open-license-assets-asset-binding-required | Cboard project contact / repository |
 | `cloud-gardens` — Cloud Gardens | game | `permission-required` | Noio | official-product-imagery-found-no-public-reuse-licence | developer/publisher contact via official product site |
-| `different-not-less` — Different, Not Less — Chloé Hayden | book | `rights-unknown` | Murdoch Books | official-cover-download-found-scope-unconfirmed | enquiries@murdochbooks.com.au |
 | `dirty-laundry` — Dirty Laundry — Richard Pink and Roxanne Emery | book | `permission-required` | Penguin Random House | permission-route-confirmed | Penguin Random House permissions request form |
 | `dorfromantik` — Dorfromantik | game | `permission-required` | Toukana Interactive | official-press-kit-found-scope-unconfirmed | press@toukana.com |
 | `front-of-the-class` — Front of the Class — Brad Cohen with Lisa Wysocky | book | `permission-required` | Macmillan Publishers / St. Martin's Press | permission-route-confirmed | Macmillan online Permission Request Form |
@@ -67,9 +67,8 @@ These still do not render because an exact compliant asset has not been bound an
 1. **Hachette / JKP / PLS Clear:** `caged-in-chaos`, `how-to-adhd`, `strong-female-character`, `were-all-neurodiverse`.
 2. **Penguin Random House:** `dirty-laundry`, `unmasking-autism`.
 3. **Macmillan:** `front-of-the-class`.
-4. **Murdoch Books:** `different-not-less` — confirm whether the downloadable cover is licensed for this editorial web use.
-5. **Games:** contact the relevant developer/publisher or press route for every game marked `permission-required`; where a press kit exists, ask for confirmation that ND Oracle may host the selected asset locally.
-6. **Apps/tools/media:** use each entry's recorded media/legal/contact route; where a conditional screenshot/open-licence route exists, bind a specific compliant asset before changing status.
+4. **Games:** contact the relevant developer/publisher or press route for every game marked `permission-required`; where a press kit exists, ask for confirmation that ND Oracle may host the selected asset locally.
+5. **Apps/tools/media:** use each entry's recorded media/legal/contact route; where a conditional screenshot/open-licence route exists, bind a specific compliant asset before changing status.
 
 ## Permission request payload
 

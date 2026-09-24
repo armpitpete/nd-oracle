@@ -73,7 +73,7 @@ Complete means every Resource has an explicit usefulness and rights state; it do
 | `communication-matters` — Communication Matters | organisation | no | `not-useful` | not-required-usefulness-gate-failed |
 | `contact-parent-carer-helpline-uk` — Contact — UK helpline for parents and carers of disabled children | service | no | `not-useful` | not-required-usefulness-gate-failed |
 | `dhcw-child-neurodevelopmental-assessments-wales` — NHS Wales — under-18 neurodevelopmental assessment pathway data standard | practical_guide | no | `not-useful` | not-required-usefulness-gate-failed |
-| `different-not-less` — Different, Not Less — Chloé Hayden | book | yes | `rights-unknown` | official-cover-download-found-scope-unconfirmed |
+| `different-not-less` — Different, Not Less — Chloé Hayden | book | yes | `cleared` | cleared-written-permission-exact-attached-cover |
 | `dirty-laundry` — Dirty Laundry — Richard Pink and Roxanne Emery | book | yes | `permission-required` | permission-route-confirmed |
 | `disability-wales-full-member-dpos` — Disability Wales full member Disabled People's Organisations | organisation | no | `not-useful` | not-required-usefulness-gate-failed |
 | `disabled-students-allowance` — Disabled Students' Allowance (England) | service | no | `not-useful` | not-required-usefulness-gate-failed |
