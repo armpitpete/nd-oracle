@@ -156,31 +156,6 @@ jobs:
                   encoding="utf-8",
               )
 
-              home_shortcuts_open = home.replace(
-                  '<details class="home-shortcuts">',
-                  '<details class="home-shortcuts" open>',
-                  1,
-              )
-              home_shortcuts_focus = """<style>
-          .site-header,
-          .site-footer,
-          .page-heading,
-          .home-start,
-          .home-needs,
-          .home-orientation,
-          .home-compatibility > :not(.home-shortcuts) {
-            display: none !important;
-          }
-          main { padding-top: 1rem !important; }
-          .home-compatibility { margin: 0 !important; padding: 0 !important; border: 0 !important; }
-          </style>"""
-              target = root / "home-shortcuts-open"
-              target.mkdir(parents=True, exist_ok=True)
-              (target / "index.html").write_text(
-                  home_shortcuts_open.replace("</head>", home_shortcuts_focus + "</head>", 1),
-                  encoding="utf-8",
-              )
-
               needs = (root / "needs" / "index.html").read_text(encoding="utf-8")
               target = root / "needs-measure"
               target.mkdir(parents=True, exist_ok=True)
@@ -240,6 +215,32 @@ jobs:
                   communication.replace("</body>", layout_probe + "</body>", 1),
                   encoding="utf-8",
               )
+
+          # Candidate-only visual fixture: keep the real resource page unchanged,
+          # but focus evidence on the exact published recognition image and force
+          # synchronous decoding so the screenshot proves pixels, not only layout.
+          candidate_root = Path("candidate/dist")
+          cover_page = (candidate_root / "resources" / "a-kind-of-spark" / "index.html").read_text(encoding="utf-8")
+          if '<figure class="resource-visual"' not in cover_page:
+              raise SystemExit("A Kind of Spark recognition visual missing from candidate page")
+          cover_focus = """<style>
+          .site-header,
+          .site-footer,
+          .page-heading,
+          main > :not(.resource-visual) {
+            display: none !important;
+          }
+          main { padding-top: 1rem !important; }
+          .resource-visual { max-width: 24rem !important; margin: 0 !important; }
+          .resource-visual img { max-height: none !important; width: 100% !important; height: auto !important; }
+          </style>"""
+          cover_page = cover_page.replace('decoding="async"', 'decoding="sync"', 1)
+          target = candidate_root / "resource-a-kind-of-spark-cover"
+          target.mkdir(parents=True, exist_ok=True)
+          (target / "index.html").write_text(
+              cover_page.replace("</head>", cover_focus + "</head>", 1),
+              encoding="utf-8",
+          )
           PY
 
       - name: Capture frozen baseline and exact candidate screenshots
@@ -275,11 +276,20 @@ jobs:
 
           grep -q 'class="resource-catalogue"' candidate/dist/resources/index.html
           ! grep -q 'class="resource-catalogue" open' candidate/dist/resources/index.html
-          test "$(grep -o 'choice-card choice-card--primary' candidate/dist/resources/index.html | wc -l)" -eq 4
-          grep -q 'Describe what you need' candidate/dist/resources/index.html
-          grep -q 'Start from a life problem' candidate/dist/resources/index.html
-          grep -q 'Check what applies where I live' candidate/dist/resources/index.html
-          grep -q 'Browse by kind of resource' candidate/dist/resources/index.html
+          grep -q 'Choose a category' candidate/dist/resources/index.html
+          ! grep -q 'choice-card choice-card--primary' candidate/dist/resources/index.html
+          ! grep -q 'choice-card choice-card--need' candidate/dist/resources/index.html
+          test "$(grep -o 'choice-card choice-card--family' candidate/dist/resources/index.html | wc -l)" -eq 5
+          grep -q 'href="/books/"' candidate/dist/resources/index.html
+          grep -q '>Books<' candidate/dist/resources/index.html
+          grep -q 'href="/games/"' candidate/dist/resources/index.html
+          grep -q '>Games<' candidate/dist/resources/index.html
+          grep -q 'href="/conditions/"' candidate/dist/resources/index.html
+          grep -q '>Conditions<' candidate/dist/resources/index.html
+          grep -q 'href="/apps-tools/"' candidate/dist/resources/index.html
+          grep -q 'Apps &amp; tools' candidate/dist/resources/index.html
+          grep -q 'href="/organisations/"' candidate/dist/resources/index.html
+          grep -q 'Organisations &amp; peer groups' candidate/dist/resources/index.html
 
           grep -q 'Start with what you notice' candidate/dist/understand/index.html
           grep -q 'New word? Break it down' candidate/dist/understand/index.html
@@ -296,14 +306,39 @@ jobs:
           ! grep -q '<details class="question-group" open' candidate/dist/questions/index.html
           test "$(grep -o '<article class="topic-row">' candidate/dist/questions/index.html | wc -l)" -eq 175
 
-          grep -q 'What do you need right now?' candidate/dist/index.html
-          test "$(grep -o 'choice-card home-start-card' candidate/dist/index.html | wc -l)" -eq 4
+          grep -q 'Browse things' candidate/dist/index.html
+          grep -q 'Get help with life' candidate/dist/index.html
+          grep -q 'Check evidence' candidate/dist/index.html
+          test "$(grep -o 'choice-card home-category-card' candidate/dist/index.html | wc -l)" -eq 9
+          grep -q 'href="/conditions/"' candidate/dist/index.html
+          grep -q 'href="/books/"' candidate/dist/index.html
+          grep -q 'href="/games/"' candidate/dist/index.html
+          grep -q 'href="/apps-tools/"' candidate/dist/index.html
+          grep -q 'href="/organisations/"' candidate/dist/index.html
+          grep -q 'href="/work-education/"' candidate/dist/index.html
+          grep -q 'href="/health-diagnosis/"' candidate/dist/index.html
+          grep -q 'href="/daily-living/"' candidate/dist/index.html
+          grep -q 'href="/evidence/"' candidate/dist/index.html
+          grep -q 'href="/start/"' candidate/dist/index.html
+          ! grep -q 'What do you need right now?' candidate/dist/index.html
+          ! grep -q 'I want something practical' candidate/dist/index.html
           ! grep -q '<article class="topic-row">' candidate/dist/index.html
+          grep -q 'href="/understand/autism/"' candidate/dist/conditions/index.html
+          grep -q 'href="/resources/a-kind-of-spark/"' candidate/dist/books/index.html
+          grep -q 'src="/resource-media/a-kind-of-spark.jpg"' candidate/dist/books/index.html
+          grep -q 'href="/resources/townscaper/"' candidate/dist/games/index.html
+          grep -q 'src="/resource-media/townscaper.jpg"' candidate/dist/games/index.html
+          grep -q 'href="/resources/focusmate/"' candidate/dist/apps-tools/index.html
+          grep -q 'src="/resource-media/focusmate.png"' candidate/dist/apps-tools/index.html
+          grep -q 'href="/resources/autistica/"' candidate/dist/organisations/index.html
+          grep -q 'href="/questions/workplace-support-great-britain/"' candidate/dist/work-education/index.html
+          grep -q 'href="/questions/adult-adhd-assessment-england/"' candidate/dist/health-diagnosis/index.html
+          grep -q 'href="/questions/phone-calls-are-difficult/"' candidate/dist/daily-living/index.html
+          test "$(grep -o 'home-category-card--start' candidate/dist/start/index.html | wc -l)" -eq 4
           test "$(grep -o 'choice-card need-index-card' candidate/dist/needs/index.html | wc -l)" -eq 8
           ! grep -q '<article class="topic-row">' candidate/dist/needs/index.html
           grep -q 'need-hub--communication' candidate/dist/needs/communication/index.html
           grep -q 'need-hub--health' candidate/dist/needs/health-wellbeing/index.html
-          grep -q '<details class="home-shortcuts" open>' candidate/dist/home-shortcuts-open/index.html
           grep -q '<details class="needs-complete-index" open>' candidate/dist/needs-complete-open/index.html
           test "$(grep -o 'href="/questions/' candidate/dist/needs-complete-open/index.html | wc -l)" -ge 175
           test "$(grep -o '<details class="need-disclosure' candidate/dist/needs/communication/index.html | wc -l)" -eq 3
@@ -402,9 +437,15 @@ jobs:
           )
           PY
 
+          grep -q 'src="/resource-media/a-kind-of-spark.jpg"' candidate/dist/resources/a-kind-of-spark/index.html
+          grep -q 'src="/resource-media/townscaper.jpg"' candidate/dist/resources/townscaper/index.html
+          grep -q 'src="/resource-media/minami-lane.jpg"' candidate/dist/resources/minami-lane/index.html
+          grep -q 'src="/resource-media/the-shape-of-things.jpg"' candidate/dist/resources/the-shape-of-things/index.html
+          grep -q 'src="/resource-media/focusmate.png"' candidate/dist/resources/focusmate/index.html
+          grep -q '<figcaption><a href="https://www.focusmate.com/">Focusmate</a></figcaption>' candidate/dist/resources/focusmate/index.html
+
           ROUTES=(
             "home|/"
-            "home-shortcuts-open|/home-shortcuts-open/"
             "needs-index|/needs/"
             "needs-complete-open|/needs-complete-open/"
             "need-communication|/needs/communication/"
@@ -419,6 +460,11 @@ jobs:
             "resources-index|/resources/"
             "resources-open|/resources-open/"
             "resource-goblin-tools|/resources/goblin-tools/"
+            "resource-a-kind-of-spark|/resources/a-kind-of-spark/"
+            "resource-townscaper|/resources/townscaper/"
+            "resource-minami-lane|/resources/minami-lane/"
+            "resource-shape-of-things|/resources/the-shape-of-things/"
+            "resource-focusmate|/resources/focusmate/"
             "topics-index|/understand/"
             "concept-autism|/understand/autism/"
             "concept-monotropism|/understand/monotropism/"
@@ -439,13 +485,7 @@ jobs:
               name="${spec%%|*}"
               route="${spec#*|}"
               effective_size="$size"
-              if [[ "$name" == "home-shortcuts-open" ]]; then
-                if [[ "$folder" == "desktop" ]]; then
-                  effective_size="1440,3200"
-                else
-                  effective_size="390,5200"
-                fi
-              elif [[ "$name" == "needs-complete-open" ]]; then
+              if [[ "$name" == "needs-complete-open" ]]; then
                 if [[ "$folder" == "desktop" ]]; then
                   effective_size="1440,4200"
                 else
@@ -493,6 +533,12 @@ jobs:
                 else
                   effective_size="390,3000"
                 fi
+              elif [[ "$name" == "resource-a-kind-of-spark" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,2600"
+                else
+                  effective_size="390,2600"
+                fi
               elif [[ "$name" == "resources-index" ]]; then
                 if [[ "$folder" == "desktop" ]]; then
                   effective_size="1440,3200"
@@ -539,8 +585,59 @@ jobs:
           capture candidate 8766 1440,1100 desktop
           capture candidate 8766 390,844 narrow
 
+          NAV_V1_ROUTES=(
+            "category-conditions|/conditions/"
+            "category-books|/books/"
+            "category-games|/games/"
+            "category-apps-tools|/apps-tools/"
+            "category-organisations|/organisations/"
+            "category-work-education|/work-education/"
+            "category-health-diagnosis|/health-diagnosis/"
+            "category-daily-living|/daily-living/"
+            "category-start|/start/"
+          )
+          for spec in "${NAV_V1_ROUTES[@]}"; do
+            name="${spec%%|*}"
+            route="${spec#*|}"
+            for folder in desktop narrow; do
+              if [[ "$folder" == "desktop" ]]; then
+                size="1440,3000"
+              else
+                size="390,4200"
+              fi
+              screenshot="ux-evidence/candidate/$folder/$name.png"
+              if ! timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+                --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+                --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
+                --window-size="$size" \
+                --screenshot="$screenshot" \
+                "http://127.0.0.1:8766$route"; then
+                test -s "$screenshot"
+              fi
+              test -s "$screenshot"
+            done
+          done
+
+          timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+            --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+            --run-all-compositor-stages-before-draw --virtual-time-budget=3000 \
+            --window-size=900,1100 \
+            --screenshot="ux-evidence/candidate/desktop/resource-a-kind-of-spark-cover.png" \
+            "http://127.0.0.1:8766/resource-a-kind-of-spark-cover/" || \
+            test -s "ux-evidence/candidate/desktop/resource-a-kind-of-spark-cover.png"
+          test -s "ux-evidence/candidate/desktop/resource-a-kind-of-spark-cover.png"
+
+          timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+            --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+            --run-all-compositor-stages-before-draw --virtual-time-budget=3000 \
+            --window-size=390,900 \
+            --screenshot="ux-evidence/candidate/narrow/resource-a-kind-of-spark-cover.png" \
+            "http://127.0.0.1:8766/resource-a-kind-of-spark-cover/" || \
+            test -s "ux-evidence/candidate/narrow/resource-a-kind-of-spark-cover.png"
+          test -s "ux-evidence/candidate/narrow/resource-a-kind-of-spark-cover.png"
+
           {
-            echo "contract=ND-UX-V2-4-COMPOSITION-LANGUAGE"
+            echo "contract=ND-UX-V2-5-PUBLIC-BASELINE"
             echo "baseline_sha=b165ebb88141a2ce4e0f92a1ca5b64537b6aae49"
             echo "candidate_sha=${{ github.event.pull_request.head.sha }}"
             echo "evidence_detail=$EVIDENCE_DETAIL"
@@ -548,7 +645,6 @@ jobs:
             echo "narrow=390x844"
             echo "find_state_capture_height=1800"
             echo "home_capture=1440x6000,390x9000"
-            echo "home_shortcuts_open_capture=1440x3200,390x5200"
             echo "needs_complete_open_capture=1440x4200,390x6200"
             echo "needs_index_capture=1440x4200,390x7000"
             echo "need_hub_capture=1440x3000,390x5000"
@@ -556,14 +652,22 @@ jobs:
             echo "questions_open_capture=1440x2600,390x3000"
             echo "resources_default_capture=1440x3200,390x6200"
             echo "resources_open_capture=1440x2400,390x2800"
+            echo "resource_a_kind_of_spark_capture=1440x2600,390x2600"
+            echo "resource_a_kind_of_spark_cover_focus=900x1100,390x900"
+            echo "resource_townscaper_capture=1440x1100,390x844"
+            echo "resource_minami_lane_capture=1440x1100,390x844"
+            echo "resource_shape_of_things_capture=1440x1100,390x844"
+            echo "resource_focusmate_capture=1440x1100,390x844"
+            echo "navigation_v1_categories=conditions,books,games,apps-tools,organisations,work-education,health-diagnosis,daily-living,start"
+            echo "navigation_v1_category_capture=1440x3000,390x4200"
             echo "topics_index_capture=1440x3600,390x5600"
             echo "concept_monotropism_capture=1440x2600,390x4200"
             echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
             echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
           } > ux-evidence/manifest.txt
 
-          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 48
-          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 48
+          test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 56
+          test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 76
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

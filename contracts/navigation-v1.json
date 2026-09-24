@@ -1,0 +1,275 @@
+{
+  "schema_version": "1",
+  "authority": "ND-UX-V2 navigation contract",
+  "status": "FROZEN_PHASE_1",
+  "acceptance_rule": "A new visitor can tell that ND Oracle contains things such as conditions, books, games and apps, and can reach them without first learning what “Resources”, “Topics”, “Needs” or similar internal categories mean.",
+  "applies_to": [
+    "desktop",
+    "narrow/mobile"
+  ],
+  "release_blocking_for_pr": 168,
+  "first_decision_area": {
+    "rule": "Concrete visitor-recognisable categories are primary. Internal information-architecture terms are not required knowledge.",
+    "max_prominent_choices": 9,
+    "groups": [
+      {
+        "id": "things",
+        "label": "Browse things",
+        "priority": 1
+      },
+      {
+        "id": "practical",
+        "label": "Get help with life",
+        "priority": 2
+      },
+      {
+        "id": "authority",
+        "label": "Check evidence",
+        "priority": 3
+      }
+    ]
+  },
+  "primary_categories": [
+    {
+      "id": "conditions",
+      "label": "Conditions",
+      "group": "things",
+      "purpose": "Learn about named neurodivergent or neurodevelopmental conditions and related explanations.",
+      "includes": [
+        "named conditions",
+        "condition-oriented explanations"
+      ],
+      "excludes": [
+        "diagnosis or screening",
+        "general site taxonomy"
+      ],
+      "target_route": "/conditions/",
+      "implementation_status": "phase-2-required"
+    },
+    {
+      "id": "books",
+      "label": "Books",
+      "group": "things",
+      "purpose": "Find fiction, memoir, practical and informational books in the governed Resource catalogue.",
+      "includes": [
+        "book Resources"
+      ],
+      "excludes": [
+        "general articles",
+        "Evidence records"
+      ],
+      "target_route": "/books/",
+      "implementation_status": "phase-2-required"
+    },
+    {
+      "id": "games",
+      "label": "Games",
+      "group": "things",
+      "purpose": "Find governed game Resources without first browsing the generic Resource catalogue.",
+      "includes": [
+        "game Resources"
+      ],
+      "excludes": [
+        "apps",
+        "general downtime Questions"
+      ],
+      "target_route": "/games/",
+      "implementation_status": "existing-or-phase-2-alias"
+    },
+    {
+      "id": "apps-tools",
+      "label": "Apps & tools",
+      "group": "things",
+      "purpose": "Find governed software, accessibility tools and practical tools.",
+      "includes": [
+        "app Resources",
+        "tool Resources"
+      ],
+      "excludes": [
+        "services",
+        "books"
+      ],
+      "target_route": "/apps-tools/",
+      "implementation_status": "phase-2-required"
+    },
+    {
+      "id": "organisations-peer-groups",
+      "label": "Organisations & peer groups",
+      "group": "things",
+      "purpose": "Find organisations, communities and peer-support routes.",
+      "includes": [
+        "organisation Resources",
+        "community Resources"
+      ],
+      "excludes": [
+        "commercial product catalogues",
+        "Evidence records"
+      ],
+      "target_route": "/organisations/",
+      "implementation_status": "phase-2-required"
+    },
+    {
+      "id": "work-education",
+      "label": "Work & education",
+      "group": "practical",
+      "purpose": "Find practical support for work, study, adjustments and education.",
+      "includes": [
+        "work Questions and Resources",
+        "education Questions and Resources"
+      ],
+      "excludes": [
+        "generic site taxonomy"
+      ],
+      "target_route": "/work-education/",
+      "implementation_status": "phase-2-required"
+    },
+    {
+      "id": "health-diagnosis",
+      "label": "Health & diagnosis",
+      "group": "practical",
+      "purpose": "Find assessment, diagnosis, healthcare access and health-support routes.",
+      "includes": [
+        "assessment and diagnosis",
+        "healthcare access"
+      ],
+      "excludes": [
+        "diagnostic decisions by ND Oracle"
+      ],
+      "target_route": "/health-diagnosis/",
+      "implementation_status": "phase-2-required"
+    },
+    {
+      "id": "daily-living",
+      "label": "Daily living",
+      "group": "practical",
+      "purpose": "Find practical help with everyday activities, sensory needs, communication, food, sleep, money and mobility.",
+      "includes": [
+        "daily-life Questions and Resources"
+      ],
+      "excludes": [
+        "diagnosis",
+        "generic Resource catalogue"
+      ],
+      "target_route": "/daily-living/",
+      "implementation_status": "phase-2-required"
+    },
+    {
+      "id": "evidence-research",
+      "label": "Evidence & research",
+      "group": "authority",
+      "purpose": "Inspect governed evidence, sources, uncertainty and authority boundaries.",
+      "includes": [
+        "Evidence routes",
+        "source/evidence explanations"
+      ],
+      "excludes": [
+        "recommendation ranking",
+        "product endorsement"
+      ],
+      "target_route": "/evidence/",
+      "implementation_status": "existing"
+    }
+  ],
+  "overlap_rules": [
+    "Resource-kind routes (Books, Games, Apps & tools, Organisations & peer groups) classify by governed Resource category; cross-links may expose the same item from a practical route without cloning authority.",
+    "Conditions is for learning about a named condition or condition-oriented explanation; Health & diagnosis is for assessment, diagnosis process, healthcare access or clinical support.",
+    "Work & education and Daily living are task/context routes. They may reference Resources and Questions but never duplicate the governed object.",
+    "Evidence & research is the authority/evidence route and never acts as a recommendation or ranking surface.",
+    "When more than one visitor route applies, retain one governed object and expose multiple deterministic links rather than creating duplicate content."
+  ],
+  "secondary_utilities": [
+    {
+      "id": "search",
+      "label": "Search",
+      "target_route": "/find/",
+      "role": "immediate utility"
+    },
+    {
+      "id": "a-z",
+      "label": "A–Z",
+      "target_route": "/a-z/",
+      "role": "alphabetical fallback"
+    },
+    {
+      "id": "browse-everything",
+      "label": "Browse everything",
+      "target_route": "/types/",
+      "role": "advanced/comprehensive browse"
+    },
+    {
+      "id": "not-sure",
+      "label": "Not sure where to start?",
+      "target_route": "/start/",
+      "role": "small uncertainty escape route",
+      "implementation_status": "phase-2-required"
+    }
+  ],
+  "uncertainty_route": {
+    "max_choices": 4,
+    "choices": [
+      "Something about me",
+      "Something I need help with",
+      "Something to read, watch or use",
+      "Somewhere or someone that can help"
+    ],
+    "rule": "Every choice resolves to existing governed content; this route must not become another full taxonomy."
+  },
+  "internal_terms": [
+    "Resources",
+    "Topics",
+    "Needs",
+    "Questions"
+  ],
+  "utility_term": "Find",
+  "terminology_rule": "Internal/system terms may remain as compatibility or specialist routes, but a new visitor must not need to understand them to reach ordinary content.",
+  "hierarchy_rule": "Primary content categories → secondary utilities → deeper/internal browsing tools.",
+  "direct_reachability": {
+    "target_pattern": "Home → category → item",
+    "avoidable_failure_pattern": "Home → Resources → catalogue → type → item",
+    "category_pages_require": [
+      "clear category identity",
+      "clear route back to Home",
+      "Search reachable",
+      "A–Z reachable"
+    ]
+  },
+  "visual_rules": [
+    "Use colour plus non-colour structure to separate meaningful sections.",
+    "Retain the readable base text size; use weight and hierarchy for importance.",
+    "Keep related information physically grouped.",
+    "Avoid whitespace that separates mutually dependent information.",
+    "No generic hero-and-card default grammar.",
+    "The Home surface communicates content types before project explanation or methodology.",
+    "Recognition imagery is secondary to the category label and remains rights-gated."
+  ],
+  "imagery_rule": "Render a cleared visual when it materially helps the user recognise, distinguish or understand the resource.",
+  "protected_boundaries": [
+    "objects/",
+    "schema/",
+    "discovery/",
+    "contracts/current-production.json",
+    ".github/workflows/deploy-cloudflare-pages.yml",
+    "governed Claims/Evidence/source/provenance content",
+    "ranking/recommendation logic",
+    "jurisdiction policy",
+    "DNS/Cloudflare/secrets"
+  ],
+  "implementation_boundary": "Phase 1 freezes presentation/navigation authority only. Actual Home/category route implementation belongs to Phase 2.",
+  "human_acceptance": {
+    "first_question": "Without clicking anything, what kinds of things do you think you can find on this website?",
+    "simple_outcomes": [
+      "Found it",
+      "Confusing",
+      "Couldn't find it"
+    ],
+    "representative_tasks": [
+      "find one condition",
+      "find one book",
+      "find one game",
+      "find one app/tool",
+      "find one organisation/peer group",
+      "find one practical-help route"
+    ],
+    "rule": "Automated tests and screenshots cannot satisfy the real-human gate; repair only demonstrated usability problems, not aesthetic preference alone."
+  }
+}

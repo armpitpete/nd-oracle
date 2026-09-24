@@ -39,20 +39,33 @@ class ContentNavigationV08CompatibilityTests(unittest.TestCase):
         for resource_id in V08_RESOURCE_IDS - claim_bearing:
             self.assertEqual([], self.resource_map[resource_id]["claims"])
 
-    def test_primary_navigation_preserves_v08_content_names(self) -> None:
-        page = (self.output / "index.html").read_text(encoding="utf-8")
-        self.assertIn('href="/questions/">Questions</a>', page)
-        self.assertIn('href="/understand/">Topics</a>', page)
-        self.assertIn('href="/resources/">Resources</a>', page)
-        self.assertIn("Tools &amp; practical help", page)
-        self.assertNotIn('>Explore</a>', page)
-
-    def test_resource_navigation_preserves_books_media_route(self) -> None:
+    def test_v08_routes_remain_available_but_are_not_required_home_vocabulary(self) -> None:
+        home = (self.output / "index.html").read_text(encoding="utf-8")
+        questions = (self.output / "questions" / "index.html").read_text(encoding="utf-8")
+        topics = (self.output / "understand" / "index.html").read_text(encoding="utf-8")
         resources = (self.output / "resources" / "index.html").read_text(encoding="utf-8")
+        tools = (self.output / "tools" / "index.html").read_text(encoding="utf-8")
+
+        self.assertIn("Browse things", home)
+        self.assertIn('href="/conditions/"', home)
+        self.assertIn('href="/books/"', home)
+        self.assertIn('href="/games/"', home)
+        self.assertIn('href="/apps-tools/"', home)
+        self.assertIn("<h1>Questions</h1>", questions)
+        self.assertIn("<h1>Understand</h1>", topics)
+        self.assertIn("<h1>Resources</h1>", resources)
+        self.assertIn("Tools &amp; practical help", tools)
+        self.assertNotIn('>Explore</a>', home)
+
+    def test_v08_resource_routes_remain_available_after_concrete_navigation(self) -> None:
+        resources = (self.output / "resources" / "index.html").read_text(encoding="utf-8")
+        for route in ("tools", "games", "books-media", "community"):
+            page = (self.output / route / "index.html").read_text(encoding="utf-8")
+            self.assertIn("<h1>", page)
         books = (self.output / "books-media" / "index.html").read_text(encoding="utf-8")
-        for href in ("/resources/", "/tools/", "/games/", "/books-media/", "/community/"):
-            self.assertIn(f'href="{href}"', resources)
         self.assertIn("<h1>Books &amp; media</h1>", books)
+        for href in ("/books/", "/games/", "/conditions/", "/apps-tools/", "/organisations/"):
+            self.assertIn(f'href="{href}"', resources)
 
     def test_v08_cross_link_example_remains_live(self) -> None:
         concept = (self.output / "understand" / "dyslexia" / "index.html").read_text(encoding="utf-8")
