@@ -96,18 +96,29 @@ class WebsiteBuildTests(unittest.TestCase):
                 self.assertIn(f'href="/understand/{target["id"]}/"', page)
                 self.assertIn(html.escape(target["name"], quote=True), page)
 
-    def test_confidence_scale_and_non_endorsement_boundary_are_explained(self):
+    def test_confidence_scale_and_resource_listing_boundary_are_explained(self):
         how = self.page("/how-it-works/")
+        about = self.page("/about/")
         self.assertIn('id="confidence"', how)
         for label in ("High", "Moderate", "Low", "Contested", "Not applicable"):
             self.assertIn(f"<dt>{label}</dt>", how)
         self.assertIn("high confidence does not mean certainty", how)
-        self.assertIn("Being listed is not being endorsed", how)
+        self.assertNotIn("Being listed is not being endorsed", how)
+        self.assertIn('id="resource-listings"', about)
+        self.assertIn("How resource listings work", about)
+        self.assertIn(
+            "ND Oracle includes resources so people can find, inspect and compare information about them.",
+            about,
+        )
         self.assertIn("Governed discovery", how)
 
     def test_resource_indexes_are_active_and_category_filtered(self):
         all_page, tools, games, community = self.page("/resources/"), self.page("/tools/"), self.page("/games/"), self.page("/community/")
-        for page in (all_page, tools, games, community): self.assertIn("Listed, not endorsed", page)
+        reminder = "ND Oracle describes resources; it does not recommend them."
+        self.assertIn(reminder, all_page)
+        for page in (tools, games, community):
+            self.assertNotIn(reminder, page)
+            self.assertNotIn("Listed, not endorsed", page)
         for resource in self.resources:
             name = html.escape(resource["name"], quote=True); self.assertIn(name, all_page)
             if resource["category"] == "game": self.assertIn(name, games)
@@ -133,7 +144,10 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn(f'href="{href}"', page)
             self.assertIn(label, page)
 
-        self.assertLess(page.index("Choose a category"), page.index("Listed, not endorsed"))
+        self.assertLess(
+            page.index("Choose a category"),
+            page.index("ND Oracle describes resources; it does not recommend them."),
+        )
         self.assertIn('<details class="resource-catalogue">', page)
         self.assertNotIn('<details class="resource-catalogue" open', page)
         self.assertIn(f"Show all {len(self.resources)} resources A–Z on this page", page)
@@ -163,7 +177,9 @@ class WebsiteBuildTests(unittest.TestCase):
     def test_every_resource_page_exposes_access_limits_scope_costs_conflicts_and_correct_claim_boundary(self):
         for resource in self.resources:
             page = self.page(f'/resources/{resource["id"]}/')
-            for marker in ("Listed, not endorsed", "Limitations and possible poor fit", "Cost and access notes", "Ownership and conflicts", "Evidence status", "Scope for navigation", "Questions that lead here"):
+            self.assertNotIn("Listed, not endorsed", page)
+            self.assertNotIn("ND Oracle describes resources; it does not recommend them.", page)
+            for marker in ("Limitations and possible poor fit", "Cost and access notes", "Ownership and conflicts", "Evidence status", "Scope for navigation", "Questions that lead here"):
                 self.assertIn(marker, page)
             if resource.get("claims"):
                 self.assertIn("Governed claims and evidence", page); self.assertIn("Evidence route", page); self.assertIn("Uncertainty and limits", page)
