@@ -578,139 +578,16 @@ jobs:
       - name: Verify V2.5 90 percent responsive shell
         run: |
           set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-
-          roots = {
-              "home": Path("candidate/dist/index.html"),
-              "question": Path("candidate/dist/questions/workplace-support-great-britain/index.html"),
-              "resource": Path("candidate/dist/resources/goblin-tools/index.html"),
-              "topic": Path("candidate/dist/understand/autism/index.html"),
-              "find": Path("candidate/dist/find/index.html"),
-              "about": Path("candidate/dist/about/index.html"),
-          }
-          probe = """<script>
-          window.addEventListener("load", () => {
-            const root = document.documentElement;
-            const shell = document.querySelector("main.site-shell");
-            const h1 = document.querySelector(".page-heading h1");
-            const secondary = document.querySelector(".question-secondary-grid");
-            document.body.dataset.layoutClientWidth = String(root.clientWidth);
-            document.body.dataset.layoutScrollWidth = String(root.scrollWidth);
-            document.body.dataset.layoutShellWidth = String(Math.round(shell.getBoundingClientRect().width));
-            document.body.dataset.layoutHeadingWidth = String(h1 ? Math.round(h1.getBoundingClientRect().width) : 0);
-            document.body.dataset.layoutSecondaryColumns = secondary
-              ? String(getComputedStyle(secondary).gridTemplateColumns.split(" ").filter(Boolean).length)
-              : "0";
-          });
-          </script>"""
-          for name, source in roots.items():
-              text = source.read_text(encoding="utf-8")
-              target = Path("candidate/dist") / f"__layout-{name}"
-              target.mkdir(parents=True, exist_ok=True)
-              (target / "index.html").write_text(
-                  text.replace("</body>", probe + "</body>", 1),
-                  encoding="utf-8",
-              )
-          PY
-
           python -m http.server 8767 --directory candidate/dist >/tmp/nd-responsive-http.log 2>&1 &
           PID=$!
           trap 'kill "$PID" 2>/dev/null || true' EXIT
           sleep 1
 
           mkdir -p ux-evidence/candidate/responsive
-          : > ux-evidence/responsive-layout-v2-5.txt
-
-          VIEWPORTS=(
-            "1920,1080"
-            "1440,900"
-            "1280,800"
-            "1024,768"
-            "768,1024"
-            "430,932"
-            "390,844"
-            "320,568"
-          )
-          PROBES=(home question resource topic find about)
-
-          for viewport in "${VIEWPORTS[@]}"; do
-            width="${viewport%,*}"
-            height="${viewport#*,}"
-            for name in "${PROBES[@]}"; do
-              out="/tmp/layout-${name}-${width}x${height}.html"
-              google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
-                --disable-background-networking --disable-component-update --disable-sync --no-first-run \
-                --run-all-compositor-stages-before-draw --virtual-time-budget=1000 \
-                --window-size="${width},${height}" --dump-dom \
-                "http://127.0.0.1:8767/__layout-${name}/" > "$out"
-            done
-
-            screenshot="ux-evidence/candidate/responsive/question-${width}x${height}.png"
-            google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
-              --disable-background-networking --disable-component-update --disable-sync --no-first-run \
-              --run-all-compositor-stages-before-draw --virtual-time-budget=1000 \
-              --window-size="${width},${height}" --screenshot="$screenshot" \
-              "http://127.0.0.1:8767/__layout-question/"
-            test -s "$screenshot"
-          done
-
-          python - <<'PY'
-          import re
-          from pathlib import Path
-
-          viewports = (
-              (1920, 1080), (1440, 900), (1280, 800), (1024, 768),
-              (768, 1024), (430, 932), (390, 844), (320, 568),
-          )
-          probes = ("home", "question", "resource", "topic", "find", "about")
-          rows = []
-
-          def attr(text, name):
-              match = re.search(fr'data-{name}="(\d+)"', text)
-              if not match:
-                  raise SystemExit(f"Missing responsive metric {name}")
-              return int(match.group(1))
-
-          for width, height in viewports:
-              for name in probes:
-                  path = Path(f"/tmp/layout-{name}-{width}x{height}.html")
-                  text = path.read_text(encoding="utf-8")
-                  client = attr(text, "layout-client-width")
-                  scroll = attr(text, "layout-scroll-width")
-                  shell = attr(text, "layout-shell-width")
-                  heading = attr(text, "layout-heading-width")
-                  columns = attr(text, "layout-secondary-columns")
-
-                  expected = min(client * 0.90, 1600)
-                  if abs(shell - expected) > 6:
-                      raise SystemExit(
-                          f"{name} {width}x{height}: shell {shell}px != 90%/1600 cap target {expected:.1f}px"
-                      )
-                  if scroll > client + 1:
-                      raise SystemExit(
-                          f"{name} {width}x{height}: horizontal overflow scroll={scroll}px client={client}px"
-                      )
-                  if name == "question" and client >= 1024 and heading < shell * 0.80:
-                      raise SystemExit(
-                          f"question {width}x{height}: heading remains pencil-narrow ({heading}px of {shell}px shell)"
-                      )
-                  if name == "question":
-                      expected_columns = 2 if client >= 1024 else 1
-                      if columns != expected_columns:
-                          raise SystemExit(
-                              f"question {width}x{height}: secondary grid columns={columns}, expected={expected_columns}"
-                          )
-                  rows.append(
-                      f"{name} {width}x{height} client={client} shell={shell} scroll={scroll} heading={heading} secondary_columns={columns}"
-                  )
-
-          Path("ux-evidence/responsive-layout-v2-5.txt").write_text(
-              "\n".join(rows) + "\n",
-              encoding="utf-8",
-          )
-          print("\n".join(rows))
-          PY
+          python candidate/scripts/verify_responsive_layout_v25.py \
+            --base-url http://127.0.0.1:8767 \
+            --output-dir ux-evidence/candidate/responsive \
+            --report ux-evidence/responsive-layout-v2-5.txt
 
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
