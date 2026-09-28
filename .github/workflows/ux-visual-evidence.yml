@@ -292,13 +292,20 @@ jobs:
           grep -q 'Organisations &amp; peer groups' candidate/dist/resources/index.html
 
           grep -q 'Start with what you notice' candidate/dist/understand/index.html
-          grep -q 'New word? Break it down' candidate/dist/understand/index.html
+          grep -q 'Unfamiliar word?' candidate/dist/understand/index.html
+          grep -q 'href="/glossary/"' candidate/dist/understand/index.html
+          ! grep -q 'class="topic-word-example"' candidate/dist/understand/index.html
           grep -q 'class="topic-group-grid"' candidate/dist/understand/index.html
           grep -q 'class="recognition-list"' candidate/dist/understand/index.html
-          grep -q 'class="word-guide"' candidate/dist/understand/monotropism/index.html
+          grep -q 'class="word-guide terminology-guide"' candidate/dist/understand/monotropism/index.html
+          grep -q 'data-term-id="monotropism"' candidate/dist/understand/monotropism/index.html
           grep -q 'class="word-part">mono</strong>' candidate/dist/understand/monotropism/index.html
           grep -q 'class="word-part">trop</strong>' candidate/dist/understand/monotropism/index.html
           grep -q 'class="word-part">ism</strong>' candidate/dist/understand/monotropism/index.html
+          grep -q 'Words made clearer' candidate/dist/glossary/index.html
+          test "$(grep -o 'class="glossary-entry"' candidate/dist/glossary/index.html | wc -l)" -eq 52
+          grep -q 'name="robots" content="noindex, follow"' candidate/dist/glossary/index.html
+          ! grep -q '/glossary/' candidate/dist/sitemap.xml
 
           grep -q 'Choose how to start' candidate/dist/questions/index.html
           test "$(grep -o 'question-start-card' candidate/dist/questions/index.html | wc -l)" -eq 3
@@ -466,8 +473,14 @@ jobs:
             "resource-shape-of-things|/resources/the-shape-of-things/"
             "resource-focusmate|/resources/focusmate/"
             "topics-index|/understand/"
+            "glossary|/glossary/"
             "concept-autism|/understand/autism/"
+            "concept-adhd|/understand/adhd/"
+            "concept-alexithymia|/understand/alexithymia/"
+            "concept-executive-function|/understand/executive-function/"
             "concept-monotropism|/understand/monotropism/"
+            "question-arfid|/questions/arfid-information-without-self-diagnosis/"
+            "resource-different-not-less|/resources/different-not-less/"
             "evidence-index|/evidence/"
             "evidence-detail|/evidence/$EVIDENCE_DETAIL/"
             "places|/places/"
@@ -557,11 +570,23 @@ jobs:
                 else
                   effective_size="390,5600"
                 fi
-              elif [[ "$name" == "concept-monotropism" ]]; then
+              elif [[ "$name" == "glossary" ]]; then
                 if [[ "$folder" == "desktop" ]]; then
-                  effective_size="1440,2600"
+                  effective_size="1440,16000"
                 else
-                  effective_size="390,4200"
+                  effective_size="390,24000"
+                fi
+              elif [[ "$name" == "concept-monotropism" || "$name" == "concept-adhd" || "$name" == "concept-alexithymia" || "$name" == "concept-executive-function" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,3200"
+                else
+                  effective_size="390,5200"
+                fi
+              elif [[ "$name" == "question-arfid" || "$name" == "resource-different-not-less" ]]; then
+                if [[ "$folder" == "desktop" ]]; then
+                  effective_size="1440,3400"
+                else
+                  effective_size="390,5600"
                 fi
               fi
               screenshot="ux-evidence/$label/$folder/$name.png"

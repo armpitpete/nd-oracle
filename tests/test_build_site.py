@@ -561,7 +561,8 @@ class WebsiteBuildTests(unittest.TestCase):
     def test_topics_v24_recognition_grouping_and_word_learning(self):
         page = self.page("/understand/")
         self.assertIn("Start with what you notice", page)
-        self.assertIn("New word? Break it down", page)
+        self.assertIn("Unfamiliar word?", page)
+        self.assertIn('href="/glossary/"', page)
         self.assertIn('class="recognition-list"', page)
         self.assertIn('class="topic-group-grid"', page)
         self.assertIn('class="topic-list topic-index-list"', page)
@@ -588,12 +589,13 @@ class WebsiteBuildTests(unittest.TestCase):
                 self.assertIn(f'href="/understand/{concept_id}/"', page)
 
         monotropism = self.page("/understand/monotropism/")
-        self.assertIn('class="word-guide"', monotropism)
-        self.assertIn("Break the term down", monotropism)
+        self.assertIn('class="word-guide terminology-guide"', monotropism)
+        self.assertIn("New word? Break it down", monotropism)
         for part in ("mono", "trop", "ism"):
             self.assertIn(f'class="word-part">{part}</strong>', monotropism)
-        self.assertIn("This breakdown is a learning aid", monotropism)
-        self.assertIn("Whole meaning:", monotropism)
+        self.assertIn("learning and memory aids", monotropism)
+        self.assertIn("What it means here:", monotropism)
+        self.assertIn('href="/glossary/#term-monotropism"', monotropism)
 
         accessibility = self.page("/accessibility/")
         self.assertIn("Language, overview and orientation", accessibility)

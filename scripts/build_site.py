@@ -2395,6 +2395,371 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
     return destination
 
 
+# ---- Terminology accessibility v1: canonical glossary + first meaningful use ----
+from scripts import terminology as _terminology_v1
+import html as _terminology_html
+import re as _terminology_re
+
+_TERMINOLOGY_V1_BASE_BUILD = build
+_TERMINOLOGY_V1_INDEX_EXAMPLE_RE = _terminology_re.compile(
+    r'\n<section class="topic-word-example".*?</section>\n',
+    _terminology_re.S,
+)
+_TERMINOLOGY_V1_OLD_GUIDE_RE = _terminology_re.compile(
+    r'\n<section class="word-guide".*?</section>\n',
+    _terminology_re.S,
+)
+_TERMINOLOGY_V1_PARAGRAPH_RE = _terminology_re.compile(
+    r'<p(?P<attrs>[^>]*)>(?P<body>.*?)</p>',
+    _terminology_re.S,
+)
+_TERMINOLOGY_V1_TAG_RE = _terminology_re.compile(r'<[^>]+>')
+
+
+def _terminology_v1_text(fragment: str) -> str:
+    return _terminology_html.unescape(
+        _TERMINOLOGY_V1_TAG_RE.sub(' ', fragment)
+    ).replace('\xa0', ' ')
+
+
+def _terminology_v1_matches(entry: dict, text: str) -> bool:
+    terms = [entry['term']] + list(entry.get('aliases', []))
+    full_form = entry.get('full_form')
+    if full_form:
+        terms.append(full_form)
+    for term in terms:
+        if not term:
+            continue
+        if term.isupper() and 2 <= len(term) <= 8:
+            pattern = (
+                r'(?<![A-Za-z0-9])'
+                + _terminology_re.escape(term)
+                + r'(?![A-Za-z0-9])'
+            )
+            if _terminology_re.search(pattern, text):
+                return True
+        else:
+            pattern = (
+                r'(?<![A-Za-z])'
+                + _terminology_re.escape(term)
+                + r'(?![A-Za-z])'
+            )
+            if _terminology_re.search(pattern, text, _terminology_re.I):
+                return True
+    return False
+
+
+def _terminology_v1_parts(entry: dict) -> tuple[str, str]:
+    build = (
+        '<span class="word-build">'
+        + '<span class="word-part-separator"> – </span>'.join(
+            f'<strong class="word-part">{_compat06__esc(part["label"])}</strong>'
+            for part in entry['parts']
+        )
+        + '</span>'
+    )
+    meanings = (
+        '<dl class="word-meanings">'
+        + ''.join(
+            f'<div><dt>{_compat06__esc(part["label"])}</dt>'
+            f'<dd>{_compat06__esc(part["meaning"])}</dd></div>'
+            for part in entry['parts']
+        )
+        + '</dl>'
+    )
+    return build, meanings
+
+
+def _terminology_v1_inline_entry(entry: dict) -> str:
+    build, meanings = _terminology_v1_parts(entry)
+    return f'''<div class="terminology-entry" data-term-id="{_compat06__esc(entry['id'])}">
+  <p class="word-guide-title"><strong>{_compat06__esc(entry['term'])}</strong> {build}</p>
+  {meanings}
+  <p class="word-guide-meaning"><strong>What it means here:</strong> {_compat06__esc(entry['meaning'])}</p>
+  <p class="terminology-links"><a href="/glossary/#term-{_compat06__esc(entry['id'])}">See this term in the glossary</a> · <a href="{_compat06__esc(entry['related_routes'][0])}">Related ND Oracle page</a></p>
+</div>'''
+
+
+def _terminology_v1_group(entries: list[dict], serial: int) -> str:
+    title = (
+        'New words? Break them down'
+        if len(entries) > 1
+        else 'New word? Break it down'
+    )
+    items = ''.join(
+        _terminology_v1_inline_entry(entry)
+        for entry in sorted(entries, key=lambda item: item['term'].casefold())
+    )
+    return f'''
+<section class="word-guide terminology-guide" aria-labelledby="terminology-guide-{serial}">
+  <h2 id="terminology-guide-{serial}">{title}</h2>
+  {items}
+  <p class="meta">The parts and expansions are learning and memory aids. The whole-term explanation above is the meaning to use here; word history and modern meaning do not always match exactly.</p>
+</section>
+'''
+
+
+def _terminology_v1_first_use(page: str, entries: list[dict]) -> str:
+    if '<main' not in page or '</main>' not in page:
+        return page
+    main_start = page.index('<main')
+    main_end = page.index('</main>', main_start)
+    main = page[main_start:main_end]
+    paragraphs = list(_TERMINOLOGY_V1_PARAGRAPH_RE.finditer(main))
+    core_match = _terminology_re.search(
+        r'<h1>(?P<title>.*?)</h1>.*?<p class="lede">(?P<lede>.*?)</p>',
+        main,
+        _terminology_re.S,
+    )
+    core_text = ''
+    if core_match:
+        core_text = _terminology_v1_text(
+            core_match.group('title') + ' ' + core_match.group('lede')
+        )
+
+    eligible: list[tuple[int, object, str]] = []
+    for index, paragraph in enumerate(paragraphs):
+        attrs = paragraph.group('attrs')
+        if any(
+            token in attrs
+            for token in (
+                'class="meta',
+                'class="back-link',
+                'class="terminology',
+            )
+        ):
+            continue
+        before = main[:paragraph.start()]
+        if before.rfind('<details') > before.rfind('</details>'):
+            continue
+        eligible.append(
+            (
+                index,
+                paragraph,
+                _terminology_v1_text(paragraph.group('body')),
+            )
+        )
+
+    placements: dict[int, list[dict]] = {}
+    for entry in entries:
+        matching = [
+            (index, paragraph)
+            for index, paragraph, text in eligible
+            if _terminology_v1_matches(entry, text)
+        ]
+        if not matching:
+            continue
+        is_core_term = _terminology_v1_matches(entry, core_text)
+        if not is_core_term and len(matching) < 2:
+            continue
+        first_index, _paragraph = matching[0]
+        placements.setdefault(first_index, []).append(entry)
+
+    if not placements:
+        return page
+
+    offset = 0
+    for serial, index in enumerate(sorted(placements), 1):
+        paragraph = paragraphs[index]
+        insertion = _terminology_v1_group(placements[index], serial)
+        position = paragraph.end() + offset
+        main = main[:position] + insertion + main[position:]
+        offset += len(insertion)
+    return page[:main_start] + main + page[main_end:]
+
+
+def _terminology_v1_glossary(entries: list[dict]) -> str:
+    grouped: dict[str, list[dict]] = {}
+    for entry in sorted(entries, key=lambda item: item['term'].casefold()):
+        letter = next(
+            (char.upper() for char in entry['term'] if char.isalnum()),
+            '#',
+        )
+        grouped.setdefault(letter, []).append(entry)
+
+    jump = ' '.join(
+        f'<a href="#glossary-{_compat06__esc(letter.lower())}">'
+        f'{_compat06__esc(letter)}</a>'
+        for letter in grouped
+    )
+    sections = []
+    for letter, items in grouped.items():
+        articles = []
+        for entry in items:
+            build, meanings = _terminology_v1_parts(entry)
+            aliases = []
+            seen_aliases = set()
+            for value in [entry.get('full_form')] + list(entry.get('aliases', [])):
+                if not value:
+                    continue
+                key = value.casefold()
+                if key in seen_aliases:
+                    continue
+                seen_aliases.add(key)
+                aliases.append(value)
+            alias_html = ''
+            if aliases:
+                alias_html = (
+                    '<p class="meta"><strong>Also:</strong> '
+                    + ', '.join(_compat06__esc(alias) for alias in aliases)
+                    + '</p>'
+                )
+            articles.append(
+                f'''<article class="glossary-entry" id="term-{_compat06__esc(entry['id'])}">
+  <h3>{_compat06__esc(entry['term'])}</h3>
+  {alias_html}
+  <p class="word-guide-title">{build}</p>
+  {meanings}
+  <p class="word-guide-meaning"><strong>What it means here:</strong> {_compat06__esc(entry['meaning'])}</p>
+  <p><a href="{_compat06__esc(entry['related_routes'][0])}">Open the related ND Oracle page →</a></p>
+</article>'''
+            )
+        sections.append(
+            f'''<section class="glossary-letter" aria-labelledby="glossary-{_compat06__esc(letter.lower())}">
+  <h2 id="glossary-{_compat06__esc(letter.lower())}">{_compat06__esc(letter)}</h2>
+  {''.join(articles)}
+</section>'''
+        )
+
+    body = f'''<p class="back-link"><a href="/">← Home</a></p>
+<section class="glossary-intro" aria-labelledby="glossary-intro-heading">
+  <h2 id="glossary-intro-heading">Words made clearer</h2>
+  <p>These are the technical or unfamiliar terms currently flagged by ND Oracle. The same explanation appears near the first meaningful use of a term on Topic, Question and Resource reading pages.</p>
+  <p class="meta">Use your browser's Find in page command to search this glossary. Word parts are learning aids, not substitutes for the whole meaning.</p>
+  <nav class="glossary-jump" aria-label="Glossary letters">{jump}</nav>
+</section>
+{''.join(sections)}'''
+    return _compat08__page_shell(
+        'Glossary',
+        f'{len(entries)} technical and unfamiliar terms explained in plain language and broken into useful parts.',
+        body,
+        path='/glossary/',
+        indexable=False,
+    )
+
+
+def _terminology_v1_patch_nav(page: str) -> str:
+    if '<a href="/glossary/">Glossary</a>' in page:
+        return page
+    return page.replace(
+        '<a href="/about/"',
+        '<a href="/glossary/">Glossary</a><a href="/about/"',
+    )
+
+
+def _terminology_v1_patch_understand_index(page: str) -> str:
+    page = _TERMINOLOGY_V1_INDEX_EXAMPLE_RE.sub('\n', page, count=1)
+    marker = '<section class="topic-recognition"'
+    section = '''<section class="terminology-route" aria-labelledby="terminology-route-heading">
+  <h2 id="terminology-route-heading">Unfamiliar word?</h2>
+  <p>Technical terms are explained where you meet them. You can also browse all current terminology in the <a href="/glossary/">Glossary</a>.</p>
+</section>
+
+'''
+    if marker in page and 'terminology-route-heading' not in page:
+        page = page.replace(marker, section + marker, 1)
+    return page
+
+
+def _terminology_v1_patch_az(page: str, entries: list[dict]) -> str:
+    if 'glossary-a-z-heading' in page:
+        return page
+    links = ''.join(
+        f'<li><a href="/glossary/#term-{_compat06__esc(entry["id"])}">'
+        f'{_compat06__esc(entry["term"])}</a> '
+        f'<span class="meta">Glossary</span></li>'
+        for entry in sorted(entries, key=lambda item: item['term'].casefold())
+    )
+    section = f'''<section class="glossary-a-z" aria-labelledby="glossary-a-z-heading">
+  <h2 id="glossary-a-z-heading">Glossary terms</h2>
+  <p>Technical and unfamiliar terms have one canonical explanation in the glossary.</p>
+  <ul>{links}</ul>
+</section>
+'''
+    return page.replace('</main>', section + '</main>', 1)
+
+
+def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
+    destination = _TERMINOLOGY_V1_BASE_BUILD(output_dir)
+    registry = _terminology_v1.load_registry()
+    _terminology_v1.validate_registry(registry)
+    entries = registry['entries']
+
+    understand_index = destination / 'understand' / 'index.html'
+    understand_index.write_text(
+        _terminology_v1_patch_understand_index(
+            understand_index.read_text(encoding='utf-8')
+        ),
+        encoding='utf-8',
+    )
+
+    for path in (destination / 'understand').glob('*/index.html'):
+        text = _TERMINOLOGY_V1_OLD_GUIDE_RE.sub(
+            '\n',
+            path.read_text(encoding='utf-8'),
+        )
+        path.write_text(text, encoding='utf-8')
+
+    reading_pages = []
+    reading_pages.extend((destination / 'understand').glob('*/index.html'))
+    reading_pages.extend((destination / 'questions').glob('*/index.html'))
+    reading_pages.extend((destination / 'resources').glob('*/index.html'))
+    for path in reading_pages:
+        text = path.read_text(encoding='utf-8')
+        path.write_text(
+            _terminology_v1_first_use(text, entries),
+            encoding='utf-8',
+        )
+
+    _compat06__write_route(
+        destination,
+        'glossary',
+        _terminology_v1_glossary(entries),
+    )
+    glossary_page = destination / 'glossary' / 'index.html'
+    if 'name="robots" content="noindex, follow"' not in glossary_page.read_text(
+        encoding='utf-8'
+    ):
+        raise ValueError(
+            '/glossary/ must remain noindex until protected route-count reconciliation'
+        )
+
+    az = destination / 'a-z' / 'index.html'
+    az.write_text(
+        _terminology_v1_patch_az(
+            az.read_text(encoding='utf-8'),
+            entries,
+        ),
+        encoding='utf-8',
+    )
+
+    for path in destination.rglob('*.html'):
+        text = path.read_text(encoding='utf-8')
+        patched = _terminology_v1_patch_nav(text)
+        if patched != text:
+            path.write_text(patched, encoding='utf-8')
+
+    accessibility = destination / 'accessibility' / 'index.html'
+    accessibility_text = accessibility.read_text(encoding='utf-8')
+    if 'terminology-accessibility-heading' not in accessibility_text:
+        section = '''<section aria-labelledby="terminology-accessibility-heading">
+  <h2 id="terminology-accessibility-heading">Unfamiliar language</h2>
+  <p>Technical or unfamiliar terms are explained near their first meaningful use on reading pages and collected in one <a href="/glossary/">Glossary</a>. The whole-term meaning is always shown; word parts and acronym expansions are learning aids.</p>
+</section>'''
+        accessibility.write_text(
+            accessibility_text.replace('</main>', section + '</main>', 1),
+            encoding='utf-8',
+        )
+
+    if '/glossary/' in sitemap_paths(
+        _compat06__load_concepts(),
+        _compat06__load_resources(),
+        _compat08__load_questions(),
+    ):
+        raise ValueError(
+            '/glossary/ must not enter the accepted canonical sitemap before protected reconciliation'
+        )
+    return destination
 render_index = render_home_navigation_v1
 
 

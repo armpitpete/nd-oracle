@@ -2815,3 +2815,68 @@ th {
     max-width: 10rem;
   }
 }
+
+
+/* Terminology accessibility v1 */
+.terminology-route,
+.glossary-intro {
+  margin-block: var(--space-6);
+}
+
+.terminology-guide {
+  margin-top: var(--space-5);
+}
+
+.terminology-entry + .terminology-entry {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+}
+
+.terminology-links {
+  margin-top: var(--space-3);
+  font-size: 0.95rem;
+}
+
+.glossary-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.75rem;
+  margin-top: var(--space-4);
+}
+
+.glossary-jump a {
+  font-weight: 800;
+}
+
+.glossary-letter {
+  margin-block: var(--space-7);
+}
+
+.glossary-entry {
+  margin-block: var(--space-5);
+  padding: var(--space-4) 0 var(--space-4) 1.1rem;
+  border-left: 0.32rem solid var(--wayfind-violet);
+}
+
+.glossary-entry h3 {
+  margin-top: 0;
+}
+
+.glossary-entry .word-guide-title {
+  display: block;
+}
+
+.glossary-a-z {
+  margin-top: var(--space-7);
+}
+
+@media (max-width: 42rem) {
+  .glossary-entry {
+    padding-left: 0.8rem;
+  }
+
+  .word-meanings {
+    grid-template-columns: 1fr;
+  }
+}
