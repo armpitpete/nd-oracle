@@ -761,8 +761,10 @@ li + li {
   font-weight: 700;
 }
 
-.resource-boundary {
+.resource-listing-policy {
   max-width: 62rem;
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 .resource-needs,

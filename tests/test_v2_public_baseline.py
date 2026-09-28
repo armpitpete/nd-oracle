@@ -1,4 +1,5 @@
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -105,6 +106,49 @@ class V2PublicBaselineTests(unittest.TestCase):
         self.assertNotIn("I want to understand something", page)
         self.assertNotIn("More question shortcuts", page)
         self.assertNotIn('class="home-shortcuts"', page)
+
+    def test_resource_listing_policy_is_canonical_not_repeated(self):
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp) / "site"
+            build_site.build(output)
+            pages = {
+                str(path.relative_to(output)).replace("\\", "/"): path.read_text(encoding="utf-8")
+                for path in output.rglob("*.html")
+            }
+
+        joined = "\n".join(pages.values())
+        canonical = (
+            "ND Oracle includes resources so people can find, inspect and compare information about them. "
+            "Inclusion does not mean ND Oracle recommends or endorses a resource, or has proved its "
+            "effectiveness, safety or suitability."
+        )
+        short = "ND Oracle describes resources; it does not recommend them."
+
+        self.assertEqual(0, joined.count("Listed, not endorsed."))
+        self.assertEqual(1, joined.count(canonical))
+        self.assertEqual(1, joined.count(short))
+        self.assertIn('id="resource-listings"', pages["about/index.html"])
+        self.assertIn('href="/about/#resource-listings"', pages["resources/index.html"])
+
+        for path in (
+            "resources/a-kind-of-spark/index.html",
+            "books/index.html",
+            "games/index.html",
+            "apps-tools/index.html",
+            "organisations/index.html",
+            "tools/index.html",
+            "community/index.html",
+            "books-media/index.html",
+        ):
+            self.assertNotIn(short, pages[path])
+            self.assertNotIn("Listed, not endorsed.", pages[path])
+
+        self.assertIn('class="resource-visual"', pages["resources/a-kind-of-spark/index.html"])
+        claimed_resource = next(item for item in build_site.load_resources() if item.get("claims"))
+        self.assertIn(
+            "A supported claim is not a recommendation or an individual decision.",
+            pages[f"resources/{claimed_resource['id']}/index.html"],
+        )
 
     def test_human_task_gate_cannot_be_satisfied_by_automation(self):
         text = USER_TEST.read_text(encoding="utf-8")

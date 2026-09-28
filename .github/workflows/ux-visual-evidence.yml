@@ -94,7 +94,7 @@ jobs:
           .resource-subnav,
           #resource-list-heading,
           .resource-start,
-          .resource-boundary,
+          .resource-listing-policy,
           .resource-needs,
           .resource-families,
           .resource-complete > :not(.resource-catalogue) {

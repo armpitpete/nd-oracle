@@ -250,7 +250,7 @@ def _compat06__render_concept(concept: dict, concept_map: dict[str, dict]) -> st
 def _compat06__render_resource_collection(resources: list[dict], *, title: str, intro: str, route: str, categories: set[str] | None=None) -> str:
     selected = [resource for resource in resources if categories is None or resource['category'] in categories]
     rows = ''.join((_compat06__resource_link(resource) for resource in selected))
-    body = f"""\n<section class="notice">\n  <strong>Listed, not endorsed.</strong> Inclusion means the resource was identified, checked and described. It does not mean ND Oracle has proved that it works or that it will suit you.\n</section>\n<nav class="resource-subnav" aria-label="Explore resources">\n  <a href="/resources/">Everything</a>\n  <a href="/tools/">Tools &amp; apps</a>\n  <a href="/games/">Games</a>\n  <a href="/community/">Support &amp; organisations</a>\n</nav>\n<section aria-labelledby="resource-list-heading">\n  <h2 id="resource-list-heading">{len(selected)} reviewed {('entry' if len(selected) == 1 else 'entries')}</h2>\n  <div class="resource-list">{rows}</div>\n</section>\n"""
+    body = f"""\n<nav class="resource-subnav" aria-label="Explore resources">\n  <a href="/resources/">Everything</a>\n  <a href="/tools/">Tools &amp; apps</a>\n  <a href="/games/">Games</a>\n  <a href="/community/">Support &amp; organisations</a>\n</nav>\n<section aria-labelledby="resource-list-heading">\n  <h2 id="resource-list-heading">{len(selected)} reviewed {('entry' if len(selected) == 1 else 'entries')}</h2>\n  <div class="resource-list">{rows}</div>\n</section>\n"""
     return _compat06__page_shell(title, intro, body, current='resources', path=f'/{route}/')
 def _compat06__render_resources_index(resources: list[dict]) -> str:
     return _compat06__render_resource_collection(resources, title='Explore', intro='Tools, apps, games, books, services and organisations, described with their limitations and access conditions visible.', route='resources')
@@ -278,7 +278,7 @@ def _compat06__render_resource(resource: dict, concept_map: dict[str, dict]) -> 
     related_html = '<ul>' + ''.join(related) + '</ul>' if related else '<p class="meta">No topic link recorded yet.</p>'
     reviewed = _compat06__human_date(resource['provenance'].get('last_reviewed'))
     claim_note = 'This resource currently has governed claim records. Open those claims only when their evidence routes are available.' if resource.get('claims') else 'This listing makes no efficacy or safety claim. It records what the resource is, what it is for, how to reach it and what limitations are already known.'
-    body = f"""\n<p class="back-link"><a href="/resources/">← All resources</a></p>\n<div class="resource-meta"><span class="resource-kind">{_compat06__esc(category)}</span><span>Last reviewed: <strong>{_compat06__esc(reviewed)}</strong></span></div>\n<section class="notice"><strong>Listed, not endorsed.</strong> ND Oracle is helping you inspect this resource, not telling you that it will work for you.</section>\n<section aria-labelledby="use-heading"><h2 id="use-heading">What it is for</h2><p>{_compat06__esc(resource['intended_use'])}</p></section>\n<section aria-labelledby="audience-heading"><h2 id="audience-heading">Who or what context</h2><p>{_compat06__esc(resource['audience_or_context'])}</p></section>\n<section aria-labelledby="access-heading"><h2 id="access-heading">Access</h2>{_compat06__resource_access_links(resource)}</section>\n<section aria-labelledby="related-heading"><h2 id="related-heading">Related topics</h2>{related_html}</section>\n<section aria-labelledby="limits-heading"><h2 id="limits-heading">Limitations and possible poor fit</h2>{_compat06__list_items(resource['limitations'])}</section>\n<section aria-labelledby="cost-heading"><h2 id="cost-heading">Cost and access notes</h2>{_compat06__list_items(resource['cost_or_access_notes'])}</section>\n<section aria-labelledby="conflict-heading"><h2 id="conflict-heading">Ownership and conflicts</h2>{_compat06__list_items(resource['conflicts_of_interest'])}</section>\n<section class="evidence-status" aria-labelledby="evidence-status-heading"><h2 id="evidence-status-heading">Evidence status</h2><p>{_compat06__esc(claim_note)}</p></section>\n<details class="provenance"><summary>Page provenance and review state</summary><p>{_compat06__esc(resource['provenance']['method'])}</p><div class="meta">Created {_compat06__esc(resource['provenance']['created'])} · last reviewed {_compat06__esc(reviewed)} · review state {_compat06__esc(resource['provenance']['review_state'])}</div></details>\n"""
+    body = f"""\n<p class="back-link"><a href="/resources/">← All resources</a></p>\n<div class="resource-meta"><span class="resource-kind">{_compat06__esc(category)}</span><span>Last reviewed: <strong>{_compat06__esc(reviewed)}</strong></span></div>\n<section aria-labelledby="use-heading"><h2 id="use-heading">What it is for</h2><p>{_compat06__esc(resource['intended_use'])}</p></section>\n<section aria-labelledby="audience-heading"><h2 id="audience-heading">Who or what context</h2><p>{_compat06__esc(resource['audience_or_context'])}</p></section>\n<section aria-labelledby="access-heading"><h2 id="access-heading">Access</h2>{_compat06__resource_access_links(resource)}</section>\n<section aria-labelledby="related-heading"><h2 id="related-heading">Related topics</h2>{related_html}</section>\n<section aria-labelledby="limits-heading"><h2 id="limits-heading">Limitations and possible poor fit</h2>{_compat06__list_items(resource['limitations'])}</section>\n<section aria-labelledby="cost-heading"><h2 id="cost-heading">Cost and access notes</h2>{_compat06__list_items(resource['cost_or_access_notes'])}</section>\n<section aria-labelledby="conflict-heading"><h2 id="conflict-heading">Ownership and conflicts</h2>{_compat06__list_items(resource['conflicts_of_interest'])}</section>\n<section class="evidence-status" aria-labelledby="evidence-status-heading"><h2 id="evidence-status-heading">Evidence status</h2><p>{_compat06__esc(claim_note)}</p></section>\n<details class="provenance"><summary>Page provenance and review state</summary><p>{_compat06__esc(resource['provenance']['method'])}</p><div class="meta">Created {_compat06__esc(resource['provenance']['created'])} · last reviewed {_compat06__esc(reviewed)} · review state {_compat06__esc(resource['provenance']['review_state'])}</div></details>\n"""
     return _compat06__page_shell(resource['name'], resource['description'], body, current='resources', path=f"/resources/{resource['id']}/")
 def _compat06__render_static_page(slug: str) -> str:
     page = _compat06__STATIC_PAGES[slug]
@@ -361,6 +361,13 @@ if _compat08__QUESTION_DISCOVERY_HOW_SECTION not in _compat06__STATIC_PAGES['how
 if _compat08__QUESTION_DISCOVERY_ABOUT_SECTION not in _compat06__STATIC_PAGES['about']['body']:
     _compat06__STATIC_PAGES['about']['body'] += _compat08__QUESTION_DISCOVERY_ABOUT_SECTION
 _compat06__STATIC_PAGES['oracle']['body'] = '<p>The current public interface exposes reviewed knowledge through topic, resource and governed question pages. Generated answers are not the source of truth. <a href="/questions/">Start with a governed question</a> or <a href="/how-it-works/">see how the evidence route works</a>.</p>'
+_RESOURCE_LISTING_HOW_SECTION = '<section><h2>Being listed is not being endorsed</h2><p>Tools, games, books, services and organisations are catalogued so you can judge them. Existence, popularity and marketing are not evidence that something works. Commercial interests, costs and known limitations stay visible. Any efficacy or safety claim needs its own governed evidence route.</p></section>'
+_RESOURCE_LISTING_ABOUT_SECTION = '<section id="resource-listings"><h2>How resource listings work</h2><p>ND Oracle includes resources so people can find, inspect and compare information about them. Inclusion does not mean ND Oracle recommends or endorses a resource, or has proved its effectiveness, safety or suitability.</p></section>'
+if _RESOURCE_LISTING_HOW_SECTION in _compat06__STATIC_PAGES['how-it-works']['body']:
+    _compat06__STATIC_PAGES['how-it-works']['body'] = _compat06__STATIC_PAGES['how-it-works']['body'].replace(_RESOURCE_LISTING_HOW_SECTION, '', 1)
+_compat06__STATIC_PAGES['about']['body'] = _compat06__STATIC_PAGES['about']['body'].replace('while a resource listing stays distinct from an endorsement.', 'while resource listings stay separate from evidence claims.', 1)
+if 'id="resource-listings"' not in _compat06__STATIC_PAGES['about']['body']:
+    _compat06__STATIC_PAGES['about']['body'] += _RESOURCE_LISTING_ABOUT_SECTION
 _compat08__STATIC_PAGES = _compat06__STATIC_PAGES
 _compat08___RESOURCE_SUBNAV_V06 = '<nav class="resource-subnav" aria-label="Explore resources">\n  <a href="/resources/">Everything</a>\n  <a href="/tools/">Tools &amp; apps</a>\n  <a href="/games/">Games</a>\n  <a href="/community/">Support &amp; organisations</a>\n</nav>'
 _compat08___RESOURCE_SUBNAV_V08 = '<nav class="resource-subnav" aria-label="Browse resources">\n  <a href="/resources/">All resources</a>\n  <a href="/tools/">Tools &amp; practical help</a>\n  <a href="/games/">Games</a>\n  <a href="/books-media/">Books &amp; media</a>\n  <a href="/community/">Support &amp; organisations</a>\n</nav>'
@@ -723,9 +730,7 @@ def _compat09__render_resources_index(resources: list[dict]) -> str:
   </div>
   <div class="choice-grid choice-grid--families">{category_cards}</div>
 </section>
-<section class="notice resource-boundary">
-  <strong>Listed, not endorsed.</strong> A listing means we have checked and described the resource. It does not mean we have proved it works or that it is right for you.
-</section>
+<p class="resource-listing-policy"><strong>ND Oracle describes resources; it does not recommend them.</strong> <a href="/about/#resource-listings">How listings work</a></p>
 <section class="resource-complete" aria-labelledby="resource-complete-heading">
   <h2 id="resource-complete-heading">All resources</h2>
   <p class="section-intro">If you know the name, use the alphabetical catalogue. Find remains available from the main navigation.</p>
@@ -963,9 +968,9 @@ def render_resource(resource: dict, concept_map: dict[str, dict], questions: lis
     page = _compat09__render_resource(resource, concept_map, questions)
     visual = _resource_visuals.render_resource_visual(resource)
     if visual:
-        marker = '<section class="notice"><strong>Listed, not endorsed.</strong>'
+        marker = '<section aria-labelledby="use-heading">'
         if marker not in page:
-            raise ValueError(f"{resource['id']}: cannot locate resource boundary for recognition visual")
+            raise ValueError(f"{resource['id']}: cannot locate resource detail anchor for recognition visual")
         page = page.replace(marker, visual + marker, 1)
     if evidence_map is None:
         evidence_map = {item['id']: item for item in load_evidence()}
@@ -2105,9 +2110,6 @@ def _nav_v1_resource_category_page(
     rows = ''.join(_nav_v1_resource_row(item) for item in selected)
     body = f'''
 <p class="back-link"><a href="/">← Home</a></p>
-<section class="notice">
-  <strong>Listed, not endorsed.</strong> These are governed listings for recognition and inspection. Inclusion does not mean ND Oracle has proved that something works or will suit you.
-</section>
 <section class="nav-v1-category-list" aria-labelledby="nav-v1-category-list-heading">
   <h2 id="nav-v1-category-list-heading">{len(selected)} {('item' if len(selected) == 1 else 'items')}</h2>
   <div class="resource-list">{rows}</div>
@@ -2256,9 +2258,7 @@ def render_resources_navigation_v1(resources: list[dict]) -> str:
   <p class="section-intro">Pick the kind of thing you are looking for.</p>
   <div class="choice-grid choice-grid--families">{cards}</div>
 </section>
-<section class="notice resource-boundary">
-  <strong>Listed, not endorsed.</strong> A listing means we have checked and described the resource. It does not mean we have proved it works or that it is right for you.
-</section>
+<p class="resource-listing-policy"><strong>ND Oracle describes resources; it does not recommend them.</strong> <a href="/about/#resource-listings">How listings work</a></p>
 <section class="resource-complete" aria-labelledby="resource-complete-heading">
   <h2 id="resource-complete-heading">All resources</h2>
   <p class="section-intro">If you know the name, use A–Z. The complete resource catalogue remains available here as a specialist route.</p>
