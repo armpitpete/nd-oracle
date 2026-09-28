@@ -22,7 +22,7 @@ class ResponsiveLayoutV25Tests(unittest.TestCase):
     def test_shared_90_percent_shell_contract(self) -> None:
         for marker in (
             "--page-width: 90%;",
-            "--page-max-width: 100rem;",
+            "--page-max-width: 1600px;",
             "--prose-max-width: 82ch;",
             "width: var(--page-width);",
             "max-width: var(--page-max-width);",
