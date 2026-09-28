@@ -65,6 +65,8 @@ Future terms use the same qualification rule; 52 is the starting audit, not a pe
 
 The public Glossary route is internally linked but remains **noindex, follow** and outside the accepted 450-route sitemap until a later protected production route-count reconciliation explicitly authorises a canonical-route change.
 
+Find links directly to the Glossary for readers who already know a technical term, but glossary entries do **not** enter the governed discovery ranking in v1. This preserves the accepted discovery authority and avoids converting terminology help into a new ranked knowledge route.
+
 ## Editorial workflow
 
 When adding a qualifying term:

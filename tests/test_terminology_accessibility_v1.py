@@ -152,6 +152,13 @@ class TerminologyAccessibilityV1Tests(unittest.TestCase):
             for word in words:
                 self.assertIn(word, block)
 
+    def test_find_exposes_glossary_without_adding_it_to_governed_ranking(self):
+        page = self.page("/find/")
+        self.assertIn('href="/glossary/"', page)
+        self.assertIn("look it up in the Glossary", page)
+        template = page.split('<template id="search-index">', 1)[1].split("</template>", 1)[0]
+        self.assertNotIn('/glossary/', template)
+
     def test_a_z_and_navigation_expose_glossary(self):
         az = self.page("/a-z/")
         self.assertIn("Glossary terms", az)

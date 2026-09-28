@@ -1006,7 +1006,7 @@ def render_find_page() -> str:
 <section class="notice"><strong>Local governed discovery.</strong> Your words stay in this browser page. ND Oracle does not submit the query to a server, AI model, analytics system or search provider.</section>
 <section aria-labelledby="find-heading">
   <h2 id="find-heading">Describe the problem in your own words</h2>
-  <p class="section-intro">You do not need to know the diagnosis, topic name or service name. Results are governed routes to inspect, not recommendations.</p>
+  <p class="section-intro">You do not need to know the diagnosis, topic name or service name. Results are governed routes to inspect, not recommendations. If you already know the technical term, you can also <a href="/glossary/">look it up in the Glossary</a>.</p>
   <div class="find-control">
     <div class="find-field">
       <label for="find-input">Problem or question</label>
