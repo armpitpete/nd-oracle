@@ -519,17 +519,27 @@ jobs:
                 fi
               fi
               screenshot="ux-evidence/$label/$folder/$name.png"
-              if ! timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
-                --disable-background-networking --disable-component-update --disable-sync --no-first-run \
-                --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
-                --window-size="$effective_size" \
-                --screenshot="$screenshot" \
-                "http://127.0.0.1:$port$route"; then
-                # Chrome can occasionally keep a background process alive after the
-                # screenshot is complete. Accept only a non-empty screenshot; a
-                # timeout before output remains a hard failure.
-                test -s "$screenshot"
-              fi
+              captured=0
+              for attempt in 1 2 3; do
+                rm -f "$screenshot"
+                if timeout --kill-after=5s 30s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+                  --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+                  --disable-features=OptimizationHints,MediaRouter,AutofillServerCommunication \
+                  --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
+                  --window-size="$effective_size" \
+                  --screenshot="$screenshot" \
+                  "http://127.0.0.1:$port$route"; then
+                  captured=1
+                  break
+                fi
+                if test -s "$screenshot"; then
+                  captured=1
+                  break
+                fi
+                pkill -9 -f '[g]oogle-chrome.*--headless' 2>/dev/null || true
+                sleep 1
+              done
+              test "$captured" -eq 1
               test -s "$screenshot"
             done
           }
@@ -565,10 +575,24 @@ jobs:
           test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 48
           test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 48
 
+      - name: Verify V2.5 90 percent responsive shell
+        run: |
+          set -euo pipefail
+          python -m http.server 8767 --directory candidate/dist >/tmp/nd-responsive-http.log 2>&1 &
+          PID=$!
+          trap 'kill "$PID" 2>/dev/null || true' EXIT
+          sleep 1
+
+          mkdir -p ux-evidence/candidate/responsive
+          python candidate/scripts/verify_responsive_layout_v25.py \
+            --base-url http://127.0.0.1:8767 \
+            --output-dir ux-evidence/candidate/responsive \
+            --report ux-evidence/responsive-layout-v2-5.txt
+
       - name: Upload UX evidence
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: nd-ux-v2-4-visual-evidence-${{ github.event.pull_request.head.sha }}
+          name: nd-ux-v2-5-visual-evidence-${{ github.event.pull_request.head.sha }}
           path: ux-evidence/
           if-no-files-found: error
           retention-days: 30

@@ -650,7 +650,20 @@ def _compat09__render_question(question: dict, concept_map: dict[str, dict], res
     marker = '<section aria-labelledby="evidence-needed-heading">'
     if marker not in page:
         raise ValueError(f"{question['id']}: cannot locate evidence-needed section")
-    return page.replace(marker, section + marker, 1)
+    page = page.replace(marker, section + marker, 1)
+    grid_start = '<section aria-labelledby="related-things-heading">'
+    grid_end = '<details class="provenance">'
+    start_index = page.find(grid_start)
+    end_index = page.find(grid_end)
+    if start_index < 0 or end_index < 0 or end_index <= start_index:
+        raise ValueError(f"{question['id']}: cannot locate responsive secondary question sections")
+    return (
+        page[:start_index]
+        + '<div class="question-secondary-grid" aria-label="Related and review information">\n'
+        + page[start_index:end_index]
+        + '</div>\n'
+        + page[end_index:]
+    )
 def _compat09__resource_scope(resource: dict) -> tuple[str, str]:
     audience = str(resource.get('audience_or_context', '')).casefold()
     whole = ' '.join([str(resource.get('description', '')), str(resource.get('audience_or_context', '')), *[str(item) for item in resource.get('limitations', [])], *[str(item) for item in resource.get('cost_or_access_notes', [])]]).casefold()
