@@ -30,6 +30,11 @@ class ResponsiveLayoutV25Tests(unittest.TestCase):
         ):
             self.assertIn(marker, CSS)
 
+    def test_reading_shell_keeps_global_large_screen_cap(self) -> None:
+        combined = re.search(r"\\.site-shell\\.reading-column\\s*\\{(?P<body>.*?)\\n\\}", CSS, re.S)
+        self.assertIsNotNone(combined)
+        self.assertIn("max-width: var(--page-max-width);", combined.group("body"))
+
     def test_heading_is_not_forced_into_a_pencil_measure(self) -> None:
         h1 = re.search(r"h1\s*\{(?P<body>.*?)\n\}", CSS, re.S)
         self.assertIsNotNone(h1)
