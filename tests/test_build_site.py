@@ -442,8 +442,8 @@ class WebsiteBuildTests(unittest.TestCase):
         start = page.index('<nav class="primary-nav" aria-label="Primary">')
         end = page.index("</nav>", start)
         nav = page[start:end]
-        self.assertEqual(4, nav.count("<a "))
-        for href in ("/", "/find/", "/a-z/", "/about/"):
+        self.assertEqual(5, nav.count("<a "))
+        for href in ("/", "/find/", "/a-z/", "/glossary/", "/about/"):
             self.assertIn(f'href="{href}"', nav)
         self.assertIn(">Home</a>", nav)
         self.assertIn(">Search</a>", nav)
