@@ -519,17 +519,27 @@ jobs:
                 fi
               fi
               screenshot="ux-evidence/$label/$folder/$name.png"
-              if ! timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
-                --disable-background-networking --disable-component-update --disable-sync --no-first-run \
-                --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
-                --window-size="$effective_size" \
-                --screenshot="$screenshot" \
-                "http://127.0.0.1:$port$route"; then
-                # Chrome can occasionally keep a background process alive after the
-                # screenshot is complete. Accept only a non-empty screenshot; a
-                # timeout before output remains a hard failure.
-                test -s "$screenshot"
-              fi
+              captured=0
+              for attempt in 1 2 3; do
+                rm -f "$screenshot"
+                if timeout --kill-after=5s 30s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+                  --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+                  --disable-features=OptimizationHints,MediaRouter,AutofillServerCommunication \
+                  --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
+                  --window-size="$effective_size" \
+                  --screenshot="$screenshot" \
+                  "http://127.0.0.1:$port$route"; then
+                  captured=1
+                  break
+                fi
+                if test -s "$screenshot"; then
+                  captured=1
+                  break
+                fi
+                pkill -9 -f '[g]oogle-chrome.*--headless' 2>/dev/null || true
+                sleep 1
+              done
+              test "$captured" -eq 1
               test -s "$screenshot"
             done
           }
