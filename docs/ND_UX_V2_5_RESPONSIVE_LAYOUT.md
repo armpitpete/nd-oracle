@@ -9,7 +9,7 @@ Prevent public pages from collapsing into a narrow desktop "pencil" while preser
 ## Layout contract
 
 - The shared public page shell uses **90% of the available viewport width**.
-- The shell is capped at **100rem / 1600px** on very large screens.
+- The shell is capped at **1600px** on very large screens.
 - Reading measure is controlled inside the shell with a default **82ch** prose limit.
 - The page canvas must not be narrowed merely to make prose readable.
 - Headings are not constrained to the former 20ch measure.
