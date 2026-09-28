@@ -37,7 +37,7 @@
   --scope: #315b74;
   --scope-soft: #e7f0f5;
   --page-width: 90%;
-  --page-max-width: 100rem;
+  --page-max-width: 1600px;
   --prose-max-width: 82ch;
   --measure: var(--prose-max-width);
   --content-wide: var(--page-max-width);
