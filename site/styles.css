@@ -2293,6 +2293,10 @@ th {
 }
 
 .word-meanings div {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 0.45rem;
   padding-top: 0.55rem;
   border-top: 1px solid var(--border);
 }
@@ -2302,8 +2306,14 @@ th {
   font-weight: 800;
 }
 
+.word-meanings dt::after {
+  content: " —";
+  color: var(--text-soft);
+}
+
 .word-meanings dd {
-  margin: 0.15rem 0 0;
+  margin: 0;
+  min-width: 0;
   color: var(--text-soft);
 }
 

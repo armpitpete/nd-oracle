@@ -203,6 +203,15 @@ class TerminologyAccessibilityV1Tests(unittest.TestCase):
                     path,
                 )
 
+    def test_part_labels_and_explanations_share_one_reading_line(self):
+        css = (ROOT / "site" / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(
+            ".word-meanings div {\n  display: grid;\n  grid-template-columns: max-content minmax(0, 1fr);",
+            css,
+        )
+        self.assertIn('.word-meanings dt::after {\n  content: " —";', css)
+        self.assertIn(".word-meanings dd {\n  margin: 0;", css)
+
     def test_first_use_guide_precedes_deeper_technical_detail(self):
         page = self.page("/understand/monotropism/")
         guide = page.index('data-term-id="monotropism"')
