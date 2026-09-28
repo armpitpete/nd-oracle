@@ -612,7 +612,20 @@ def _compat09___append_before_main_end(page: str, section: str) -> str:
     marker = '</main>'
     if marker not in page:
         raise ValueError('Cannot locate page main element')
-    return page.replace(marker, section + marker, 1)
+    page = page.replace(marker, section + marker, 1)
+    grid_start = '<section aria-labelledby="related-things-heading">'
+    grid_end = '<details class="provenance">'
+    start_index = page.find(grid_start)
+    end_index = page.find(grid_end)
+    if start_index < 0 or end_index < 0 or end_index <= start_index:
+        raise ValueError(f"{question['id']}: cannot locate responsive secondary question sections")
+    return (
+        page[:start_index]
+        + '<div class="question-secondary-grid" aria-label="Related and review information">\n'
+        + page[start_index:end_index]
+        + '</div>\n'
+        + page[end_index:]
+    )
 def _compat09__render_index(concepts: list[dict], resources: list[dict], questions: list[dict] | None=None) -> str:
     if questions is None:
         questions = _compat08__load_questions()
