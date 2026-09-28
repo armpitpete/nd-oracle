@@ -2494,6 +2494,10 @@ th {
  * 1600px on very large displays. Reading measure is controlled inside that
  * canvas; the page itself must not collapse into a narrow desktop column.
  */
+.site-shell.reading-column {
+  max-width: var(--page-max-width);
+}
+
 .page-heading .lede,
 .section-intro,
 .page--question section > p,
