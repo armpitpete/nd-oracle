@@ -38,6 +38,10 @@ The implementation uses content-driven breakpoints at 87.5rem, 62.5rem, 56rem, 4
 7. 390 × 844
 8. 320 × 568
 
+The browser gate uses Chrome DevTools Protocol device-metrics emulation so the
+430px, 390px and 320px cases are real CSS viewport widths rather than
+headless Chrome's approximately 500px minimum outer-window width.
+
 At every viewport the responsive browser gate must prove:
 
 - the main shell is approximately 90% of the browser client width until the 1600px cap is reached;
@@ -64,7 +68,7 @@ The contract is enforced in four layers:
 1. shared CSS tokens and shell rules;
 2. Question renderer structure;
 3. unit tests in `tests/test_responsive_layout_v25.py`;
-4. headless-browser width and overflow checks in `.github/workflows/ux-visual-evidence.yml`.
+4. exact-viewport Chrome DevTools Protocol width and overflow checks in `.github/workflows/ux-visual-evidence.yml` using `scripts/verify_responsive_layout_v25.py`.
 
 The existing UX screenshot evidence remains in place for representative public routes.
 
