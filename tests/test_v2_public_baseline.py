@@ -80,7 +80,7 @@ class V2PublicBaselineTests(unittest.TestCase):
         questions = build_site.load_questions()
         page = build_site.render_index(concepts, resources, questions)
 
-        self.assertIn("What are you looking for?", page)
+        self.assertNotIn("What are you looking for?", page)
         self.assertEqual(6, page.count("choice-card home-category-card home-category-card--primary"))
         for href in (
             "/conditions/",
