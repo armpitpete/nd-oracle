@@ -1932,6 +1932,8 @@ NAVIGATION_V1_ALIAS_ROUTES = (
     '/health-diagnosis/',
     '/daily-living/',
     '/start/',
+    '/everyday-help/',
+    '/games-apps/',
 )
 NAVIGATION_V1_CONDITION_IDS = (
     'adhd',
@@ -1944,19 +1946,16 @@ NAVIGATION_V1_CONDITION_IDS = (
     'tourette-syndrome',
 )
 NAVIGATION_V1_PRIMARY_CATEGORIES = (
-    ('conditions', 'Conditions', 'Learn about named neurodivergent or neurodevelopmental conditions and related explanations.', '/conditions/'),
-    ('books', 'Books', 'Find fiction, memoir, practical and informational books in the governed Resource catalogue.', '/books/'),
-    ('games', 'Games', 'Find governed game Resources without first browsing the generic Resource catalogue.', '/games/'),
-    ('apps-tools', 'Apps & tools', 'Find governed software, accessibility tools and practical tools.', '/apps-tools/'),
-    ('organisations-peer-groups', 'Organisations & peer groups', 'Find organisations, communities and peer-support routes.', '/organisations/'),
-    ('work-education', 'Work & education', 'Find practical support for work, study, adjustments and education.', '/work-education/'),
-    ('health-diagnosis', 'Health & diagnosis', 'Find assessment, diagnosis, healthcare access and health-support routes.', '/health-diagnosis/'),
-    ('daily-living', 'Daily living', 'Find practical help with everyday activities, sensory needs, communication, food, sleep, money and mobility.', '/daily-living/'),
-    ('evidence-research', 'Evidence & research', 'Inspect governed evidence, sources, uncertainty and authority boundaries.', '/evidence/'),
+    ('neurodivergence', 'ADHD, autism & other neurodivergence', 'Learn about ADHD, autism and other kinds of neurodivergence.', '/conditions/'),
+    ('everyday-help', 'Help with everyday life', 'School, work, communication, sensory needs, relationships and daily tasks.', '/everyday-help/'),
+    ('books-media', 'Books, films & media', 'Stories and information about neurodivergent lives.', '/books-media/'),
+    ('games-apps', 'Games & apps', 'Games, apps and digital tools.', '/games-apps/'),
+    ('find-support', 'Find support', 'Groups, services, charities and other places to get help.', '/organisations/'),
+    ('ask-question', 'Ask a question', 'Not sure where to start? Begin with what is happening.', '/questions/'),
 )
-NAVIGATION_V1_PRIMARY_NAV = [('find', 'Search'), ('a-z', 'A–Z'), ('about', 'About')]
+NAVIGATION_V1_PRIMARY_NAV = [('find', 'Search')]
 NAVIGATION_V1_APP_TOOL_CATEGORIES = {'app', 'tool', 'product'}
-NAVIGATION_V1_ORGANISATION_CATEGORIES = {'organisation', 'community'}
+NAVIGATION_V1_ORGANISATION_CATEGORIES = {'organisation', 'community', 'service'}
 
 
 def load_navigation_v1_contract() -> dict:
@@ -1964,11 +1963,25 @@ def load_navigation_v1_contract() -> dict:
 
 
 def _nav_v1_primary(current: str | None = None) -> str:
-    links = ['<a href="/">Home</a>']
-    for slug, label in NAVIGATION_V1_PRIMARY_NAV:
-        current_attr = ' aria-current="page"' if slug == current else ''
-        links.append(f'<a href="/{_compat06__esc(slug)}/"{current_attr}>{_compat06__esc(label)}</a>')
-    return '<nav class="primary-nav" aria-label="Primary">' + ''.join(links) + '</nav>'
+    search_current = ' aria-current="page"' if current == 'find' else ''
+    return f'''<nav class="primary-nav" aria-label="Primary">
+  <a href="/find/"{search_current}>Search</a>
+  <details class="site-menu">
+    <summary>Menu</summary>
+    <div class="site-menu-panel">
+      <a href="/">Home</a>
+      <a href="/needs/">Areas of life</a>
+      <a href="/a-z/">Browse A–Z</a>
+      <a href="/places/">Browse by place</a>
+      <a href="/questions/">Questions</a>
+      <a href="/understand/">Topics</a>
+      <a href="/resources/">All resources</a>
+      <a href="/evidence/">Evidence</a>
+      <a href="/about/">About</a>
+      <a href="/accessibility/">Accessibility</a>
+    </div>
+  </details>
+</nav>'''
 
 
 _compat06__PRIMARY_NAV = NAVIGATION_V1_PRIMARY_NAV
@@ -1979,8 +1992,8 @@ nav = _nav_v1_primary
 
 def _nav_v1_utility_links() -> str:
     return '''
-<nav class="nav-v1-utilities" aria-label="Other ways to find something">
-  <a href="/"><strong>Home</strong><span>Back to the main categories.</span></a>
+<nav class="nav-v1-utilities" aria-label="Change route">
+  <a href="/"><strong>Main choices</strong><span>Return to the six starting choices.</span></a>
   <a href="/find/"><strong>Search</strong><span>Describe what you need in your own words.</span></a>
   <a href="/a-z/"><strong>A–Z</strong><span>Find something when you already know its name.</span></a>
 </nav>
@@ -2002,72 +2015,35 @@ def render_home_navigation_v1(
     if questions is None:
         questions = _compat08__load_questions()
     validate_question_navigation(questions)
-    categories = {
-        item_id: {'label': label, 'purpose': purpose, 'target_route': target_route}
-        for item_id, label, purpose, target_route in NAVIGATION_V1_PRIMARY_CATEGORIES
-    }
-
-    things_order = ('conditions', 'books', 'games', 'apps-tools', 'organisations-peer-groups')
-    practical_order = ('work-education', 'health-diagnosis', 'daily-living')
-    authority_order = ('evidence-research',)
-
-    things = ''.join(
-        _nav_v1_category_card(
-            categories[item_id]['target_route'],
-            categories[item_id]['label'],
-            categories[item_id]['purpose'],
-            'things',
-        )
-        for item_id in things_order
-    )
-    practical = ''.join(
-        _nav_v1_category_card(
-            categories[item_id]['target_route'],
-            categories[item_id]['label'],
-            categories[item_id]['purpose'],
-            'practical',
-        )
-        for item_id in practical_order
-    )
-    authority = ''.join(
-        _nav_v1_category_card(
-            categories[item_id]['target_route'],
-            categories[item_id]['label'],
-            categories[item_id]['purpose'],
-            'authority',
-        )
-        for item_id in authority_order
+    cards = ''.join(
+        _nav_v1_category_card(target_route, label, purpose, 'primary')
+        for _item_id, label, purpose, target_route in NAVIGATION_V1_PRIMARY_CATEGORIES
     )
 
     body = f'''
-<section class="home-category-group home-category-group--things" aria-labelledby="home-things-heading">
-  <h2 id="home-things-heading">Browse things</h2>
-  <p class="section-intro">Choose the kind of thing you are looking for.</p>
-  <div class="choice-grid choice-grid--home-categories">{things}</div>
-</section>
-<section class="home-category-group home-category-group--practical" aria-labelledby="home-practical-heading">
-  <h2 id="home-practical-heading">Get help with life</h2>
-  <p class="section-intro">Start with the part of life where you need information or support.</p>
-  <div class="choice-grid choice-grid--home-categories">{practical}</div>
-</section>
-<section class="home-category-group home-category-group--authority" aria-labelledby="home-evidence-heading">
-  <h2 id="home-evidence-heading">Check evidence</h2>
-  <p class="section-intro">Use this when you want to inspect sources, uncertainty and evidence rather than browse a product or practical route.</p>
-  <div class="choice-grid choice-grid--home-categories">{authority}</div>
+<section class="home-category-group home-category-group--primary" aria-labelledby="home-primary-heading">
+  <h2 id="home-primary-heading">What are you looking for?</h2>
+  <p class="section-intro">Pick the closest choice. You can change route at any time.</p>
+  <div class="choice-grid choice-grid--home-categories">{cards}</div>
 </section>
 <section class="home-secondary" aria-labelledby="home-secondary-heading">
-  <h2 id="home-secondary-heading">Other ways to find something</h2>
-  <div class="home-route-grid">
-    <a href="/find/"><strong>Search</strong><span>Describe what you need in your own words.</span></a>
-    <a href="/a-z/"><strong>A–Z</strong><span>Use this when you already know the name.</span></a>
-    <a href="/types/"><strong>Browse everything</strong><span>Open the complete content-type catalogue.</span></a>
-    <a href="/start/"><strong>Not sure where to start?</strong><span>Choose from four simple starting points.</span></a>
-  </div>
+  <h2 id="home-secondary-heading" class="visually-hidden">More ways to explore</h2>
+  <details class="home-more">
+    <summary>More ways to explore</summary>
+    <div class="home-route-grid">
+      <a href="/needs/"><strong>Areas of life</strong><span>Browse practical areas such as work, communication and sensory needs.</span></a>
+      <a href="/a-z/"><strong>Browse A–Z</strong><span>Find something when you already know its name.</span></a>
+      <a href="/places/"><strong>Browse by place</strong><span>Find information for a country or area.</span></a>
+      <a href="/questions/"><strong>Questions</strong><span>Browse reviewed questions directly.</span></a>
+      <a href="/understand/"><strong>Topics</strong><span>Browse concepts and explanations.</span></a>
+      <a href="/resources/"><strong>All resources</strong><span>Open the complete resource catalogue.</span></a>
+    </div>
+  </details>
 </section>
 '''
     return _compat08__page_shell(
-        'What are you looking for?',
-        'Choose a clear category such as conditions, books, games, apps, organisations or practical help. You do not need to learn ND Oracle terminology first.',
+        'Understand neurodivergence without doing all the digging yourself.',
+        'Choose one place to start. Search is always available if you already know what you need.',
         body,
         path='/',
     )
@@ -2195,6 +2171,39 @@ def _nav_v1_question_groups_page(
     )
 
 
+def render_everyday_help_navigation_v1() -> str:
+    choices = (
+        ('/needs/daily-life/', 'Daily life', 'Tasks, routines, technology and ordinary activities.'),
+        ('/needs/communication/', 'Communication', 'Phone calls, processing time, speaking, AAC and communication access.'),
+        ('/needs/sensory-environment/', 'Sensory', 'Sound, light, touch, overload and changing the environment.'),
+        ('/needs/education-study/', 'School / education', 'Study, SEND, adjustments and education access.'),
+        ('/needs/work/', 'Work', 'Workplace support, adjustments, interviews and job-search support.'),
+        ('/needs/health-wellbeing/', 'Health & wellbeing', 'Health access, anxiety, sleep, burnout and wellbeing routes.'),
+        ('/needs/relationships-family/', 'Relationships & family', 'Family life, parenting, friendships and relationships.'),
+        ('/needs/assessment-diagnosis/', 'Assessment & diagnosis', 'Assessment and diagnosis routes without turning ND Oracle into a test.'),
+    )
+    cards = ''.join(
+        _nav_v1_category_card(href, label, description, 'practical')
+        for href, label, description in choices
+    )
+    body = f'''
+<p class="back-link"><a href="/">← Main choices</a></p>
+<section class="home-category-group home-category-group--practical" aria-labelledby="everyday-help-heading">
+  <h2 id="everyday-help-heading">Choose the part of life that is closest</h2>
+  <p class="section-intro">You do not need the perfect category. Pick the closest one and change route if needed.</p>
+  <div class="choice-grid choice-grid--home-categories">{cards}</div>
+</section>
+{_nav_v1_utility_links()}
+'''
+    return _compat08__page_shell(
+        'Help with everyday life',
+        'Practical routes for daily life, communication, sensory needs, school, work, health and relationships.',
+        body,
+        path='/everyday-help/',
+        indexable=False,
+    )
+
+
 def render_start_navigation_v1() -> str:
     choices = (
         ('/conditions/', 'Something about me', 'Start with named conditions and plain-language explanations.'),
@@ -2291,6 +2300,18 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
     _compat06__write_route(destination, 'resources', render_resources_navigation_v1(resources))
 
     _compat06__write_route(destination, 'conditions', render_conditions_navigation_v1(concepts))
+    _compat06__write_route(destination, 'everyday-help', render_everyday_help_navigation_v1())
+    _compat06__write_route(
+        destination,
+        'games-apps',
+        _nav_v1_resource_category_page(
+            resources,
+            title='Games & apps',
+            intro='Games, apps and digital tools with context, access notes and limitations kept visible.',
+            route='games-apps',
+            categories={'game'} | NAVIGATION_V1_APP_TOOL_CATEGORIES,
+        ),
+    )
     _compat06__write_route(
         destination,
         'books',
@@ -2331,8 +2352,8 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
         'organisations',
         _nav_v1_resource_category_page(
             resources,
-            title='Organisations & peer groups',
-            intro='Governed organisations and peer communities with scope, access and limitations kept visible.',
+            title='Find support',
+            intro='Groups, services, charities and peer communities with scope, access and limitations kept visible.',
             route='organisations',
             categories=NAVIGATION_V1_ORGANISATION_CATEGORIES,
         ),
