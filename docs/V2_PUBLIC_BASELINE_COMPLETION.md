@@ -58,9 +58,9 @@ Base: `0065ab8000bbb0020aa221f084525116f436b373`
 - [x] record and repair HF-006/HF-007 repeated navigation/index preamble burden without changing governed content authority;
 - [x] record HF-008 and restore compact visible route titles where full heading removal weakened orientation, without restoring ledes/heroes;
 - [x] exact-head CI GREEN recorded for pre-orientation-repair candidate f86e2c3608a4ff765893ff6a2448d697d5a6ba03 (validation #544);
-- [ ] require exact-head CI GREEN for the final compact-orientation candidate;
+- [x] compact-orientation implementation candidate `7f816d283777e8f46c3ea4a23139574c49834b85` passed exact-head validation #546;
 - [x] fresh desktop+narrow visual evidence GREEN recorded for pre-orientation-repair candidate f86e2c3608a4ff765893ff6a2448d697d5a6ba03 (UX visual evidence #169);
-- [ ] review fresh desktop+narrow visual evidence for the final compact-orientation candidate;
+- [x] compact-orientation implementation candidate `7f816d283777e8f46c3ea4a23139574c49834b85` passed UX visual evidence #171 plus direct desktop/narrow review and a 25-route narrow overflow audit;
 - [ ] run real ND first-impression, label-comprehension, representative task and wrong-choice recovery testing on the exact repaired candidate;
 - [ ] if actual minors are included, satisfy the protocol's consent/privacy/safeguarding requirements before YP testing;
 - [ ] disposition every human finding and repair only demonstrated problems;
@@ -93,9 +93,11 @@ No visual is preferable to an unlicensed, hotlinked or misleading visual. Imager
 
 ## Evidence gates not forgeable by repository edits
 
-- [ ] exact-head CI PASS on this updated candidate;
-- [ ] updated visual-evidence PASS and direct rendered-page review;
-- [ ] hostile final diff/no-drift review after CI;
+The final documentation-only reconciliation head must preserve these machine checks. Its exact SHA and workflow receipts are recorded on PR #168 after those checks complete, without changing the candidate tree again.
+
+- [x] exact-head CI PASS on compact-orientation implementation head `7f816d283777e8f46c3ea4a23139574c49834b85` (validation #546);
+- [x] updated visual-evidence PASS on the same implementation head (UX visual evidence #171), with direct rendered-page desktop+narrow review and no horizontal overflow across 25 navigation/index routes at narrow width;
+- [x] hostile final diff/no-drift review after CI: no governed `objects/` changes, no `contracts/current-production.json` change, accepted 450-route production authority preserved;
 - [ ] real ND participant task evidence using `docs/ND_UX_V2_USER_TEST_PROTOCOL.md`;
 - [ ] final human findings disposition;
 - [ ] protected exact-head merge authorization;
