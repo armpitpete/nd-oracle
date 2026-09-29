@@ -129,6 +129,7 @@ def _ux_page_kind(path: str | None) -> tuple[str, str]:
         ['types'], ['a-z'], ['tools'], ['games'], ['community'], ['books-media'],
         ['conditions'], ['books'], ['apps-tools'], ['organisations'],
         ['work-education'], ['health-diagnosis'], ['daily-living'], ['start'],
+        ['everyday-help'], ['games-apps'],
     ):
         return ('browse', 'Browse')
     return ('information', 'ND Oracle')
