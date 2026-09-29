@@ -268,36 +268,38 @@ class WebsiteBuildTests(unittest.TestCase):
 
     def test_home_uses_concrete_categories_before_internal_taxonomy(self):
         page = self.page("/")
-        self.assertIn("Browse things", page)
-        self.assertIn("Get help with life", page)
-        self.assertIn("Check evidence", page)
-        self.assertEqual(9, page.count("choice-card home-category-card"))
+        self.assertIn("What are you looking for?", page)
+        self.assertEqual(6, page.count("choice-card home-category-card home-category-card--primary"))
         for href, label in (
-            ("/conditions/", "Conditions"),
-            ("/books/", "Books"),
-            ("/games/", "Games"),
-            ("/apps-tools/", "Apps &amp; tools"),
-            ("/organisations/", "Organisations &amp; peer groups"),
-            ("/work-education/", "Work &amp; education"),
-            ("/health-diagnosis/", "Health &amp; diagnosis"),
-            ("/daily-living/", "Daily living"),
-            ("/evidence/", "Evidence &amp; research"),
+            ("/conditions/", "ADHD, autism &amp; other neurodivergence"),
+            ("/everyday-help/", "Help with everyday life"),
+            ("/books-media/", "Books, films &amp; media"),
+            ("/games-apps/", "Games &amp; apps"),
+            ("/organisations/", "Find support"),
+            ("/questions/", "Ask a question"),
         ):
             self.assertIn(f'href="{href}"', page)
             self.assertIn(label, page)
 
+        self.assertNotIn("Browse things", page)
+        self.assertNotIn("Get help with life", page)
+        self.assertNotIn("Check evidence", page)
         self.assertNotIn("What do you need right now?", page)
         self.assertNotIn("I want something practical", page)
         self.assertNotIn("I want to understand something", page)
         self.assertNotIn("Browse current topics", page)
         self.assertNotIn('<article class="topic-row">', page)
 
-        self.assertIn("Other ways to find something", page)
+        self.assertIn('<details class="home-more">', page)
+        self.assertNotIn('<details class="home-more" open', page)
+        self.assertIn("More ways to explore", page)
         for href, label in (
-            ("/find/", "Search"),
-            ("/a-z/", "A–Z"),
-            ("/types/", "Browse everything"),
-            ("/start/", "Not sure where to start?"),
+            ("/needs/", "Areas of life"),
+            ("/a-z/", "Browse A–Z"),
+            ("/places/", "Browse by place"),
+            ("/questions/", "Questions"),
+            ("/understand/", "Topics"),
+            ("/resources/", "All resources"),
         ):
             self.assertIn(f'href="{href}"', page)
             self.assertIn(label, page)
@@ -354,23 +356,21 @@ class WebsiteBuildTests(unittest.TestCase):
         home = self.page("/")
         journeys = (
             ("/conditions/", "/understand/autism/"),
-            ("/books/", "/resources/a-kind-of-spark/"),
-            ("/games/", "/resources/townscaper/"),
-            ("/apps-tools/", "/resources/focusmate/"),
+            ("/everyday-help/", "/needs/work/"),
+            ("/books-media/", "/resources/a-kind-of-spark/"),
+            ("/games-apps/", "/resources/townscaper/"),
             ("/organisations/", "/resources/autistica/"),
-            ("/work-education/", "/questions/workplace-support-great-britain/"),
-            ("/health-diagnosis/", "/questions/adult-adhd-assessment-england/"),
-            ("/daily-living/", "/questions/phone-calls-are-difficult/"),
+            ("/questions/", "/questions/phone-calls-are-difficult/"),
         )
         for category_route, item_route in journeys:
             self.assertIn(f'href="{category_route}"', home)
             category = self.page(category_route)
             self.assertIn(f'href="{item_route}"', category)
 
-        self.assertIn('href="/evidence/"', home)
         self.assertIn('href="/find/"', home)
+        self.assertIn('<details class="home-more">', home)
         self.assertIn('href="/a-z/"', home)
-        self.assertIn('href="/start/"', home)
+        self.assertIn('href="/needs/"', home)
 
     def test_every_indexable_page_has_accessibility_metadata_and_canonical_url(self):
         paths = build_site.sitemap_paths(self.concepts, self.resources, self.questions)
@@ -442,15 +442,13 @@ class WebsiteBuildTests(unittest.TestCase):
         start = page.index('<nav class="primary-nav" aria-label="Primary">')
         end = page.index("</nav>", start)
         nav = page[start:end]
-        self.assertEqual(5, nav.count("<a "))
-        for href in ("/", "/find/", "/a-z/", "/glossary/", "/about/"):
+        before_menu = nav.split('<details class="site-menu">', 1)[0]
+        self.assertEqual(1, before_menu.count("<a "))
+        self.assertIn('href="/find/"', before_menu)
+        self.assertIn(">Search</a>", before_menu)
+        self.assertIn('<summary>Menu</summary>', nav)
+        for href in ("/", "/needs/", "/a-z/", "/places/", "/questions/", "/understand/", "/resources/", "/evidence/", "/about/", "/accessibility/"):
             self.assertIn(f'href="{href}"', nav)
-        self.assertIn(">Home</a>", nav)
-        self.assertIn(">Search</a>", nav)
-        self.assertIn(">A–Z</a>", nav)
-        self.assertIn(">About</a>", nav)
-        for href in ("/questions/", "/understand/", "/resources/", "/needs/"):
-            self.assertNotIn(f'href="{href}"', nav)
         footer = page[page.index('aria-label="Footer"'):]
         self.assertIn('href="/about/"', footer)
         self.assertIn('href="/how-it-works/"', footer)
