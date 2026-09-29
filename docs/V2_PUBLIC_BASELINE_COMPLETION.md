@@ -39,6 +39,7 @@ Base: `0065ab8000bbb0020aa221f084525116f436b373`
 - [x] freeze ND-UX-V2 Navigation Contract v1 with the release-blocking concrete-category acceptance rule;
 - [x] record HF-003: the nine-choice Phase 2 Home still created excessive first-choice burden for ND/YP users;
 - [x] record and repair HF-004: remove redundant introductory instruction from the Areas of life page while preserving its eight choices and governed routes;
+- [x] record and repair HF-005: remove redundant explanatory copy from the geographic-scope page while preserving its jurisdiction groups and governed routes;
 - [x] revise the Home choice budget to exactly six primary routes rather than adding another navigation layer;
 - [x] freeze the six candidate labels: ADHD, autism & other neurodivergence; Help with everyday life; Books, films & media; Games & apps; Find support; Ask a question;
 - [x] keep Search separate from the six choices and collapse specialist routes under More ways to explore;

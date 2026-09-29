@@ -99,6 +99,27 @@ Human review of the Areas of life page found that the introductory instructions 
 
 This is a presentation-only repair. It does not change governed content, taxonomy, route authority or question classification.
 
+## HF-005 — Places-page explanatory clutter
+
+**Observed behaviour / feedback**
+
+Human review of the geographic-scope page found that the introductory lede and the separate “Scope is part of the information” panel repeated what the jurisdiction headings already make clear. They add reading before the useful country and jurisdiction choices.
+
+**Severity:** MINOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- keep the page identity **Browse by geographic scope**;
+- remove the visible explanatory lede;
+- remove the separate scope/eligibility explanatory panel;
+- move the jurisdiction groups directly under the page heading;
+- preserve every existing jurisdiction group, resource route and governed scope classification;
+- add regression coverage so the removed explanatory layer does not return.
+
+This is a presentation-only repair. It does not change eligibility advice, jurisdiction authority, governed resource data or classification.
+
 ## Human gate
 
 These findings are genuine human usability evidence. They do **not** by themselves satisfy all ten fixed journeys in `docs/ND_UX_V2_USER_TEST_PROTOCOL.md`.

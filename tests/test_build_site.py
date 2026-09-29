@@ -165,7 +165,14 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn('href="/questions/organising-study-and-assignments/"', education)
 
         places = self.page("/places/")
+        self.assertIn("<h1>Browse by geographic scope</h1>", places)
         self.assertIn("<h2>Wales</h2>", places)
+        self.assertNotIn('<p class="lede">', places)
+        for redundant in (
+            "Scope is part of the information",
+            "Navigation scope, not eligibility.",
+        ):
+            self.assertNotIn(redundant, places)
 
         communication = self.page("/needs/communication/")
         self.assertIn('href="/questions/phone-calls-are-difficult/"', communication)
