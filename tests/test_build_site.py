@@ -454,40 +454,52 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn('class="page-kind"', page, route)
             self.assertIn(label, page, route)
 
-    def test_navigation_and_index_pages_start_with_useful_content_not_visible_intro_panels(self):
-        routes = (
+    def test_navigation_and_index_pages_use_hidden_or_compact_identity_without_intro_panels(self):
+        headerless_routes = (
             "/",
             "/questions/",
             "/understand/",
             "/resources/",
             "/find/",
             "/needs/",
-            "/places/",
-            "/types/",
-            "/a-z/",
-            "/apps-tools/",
-            "/books/",
-            "/books-media/",
-            "/community/",
-            "/conditions/",
-            "/daily-living/",
-            "/everyday-help/",
-            "/games/",
-            "/games-apps/",
-            "/health-diagnosis/",
-            "/organisations/",
-            "/start/",
-            "/tools/",
-            "/work-education/",
-            "/glossary/",
-            "/evidence/",
         )
-        for route in routes:
+        compact_routes = {
+            "/places/": "Browse by geographic scope",
+            "/types/": "Browse by content type",
+            "/a-z/": "A–Z",
+            "/apps-tools/": "Apps & tools",
+            "/books/": "Books",
+            "/books-media/": "Books & media",
+            "/community/": "Support & organisations",
+            "/conditions/": "Conditions",
+            "/daily-living/": "Daily living",
+            "/everyday-help/": "Help with everyday life",
+            "/games/": "Games",
+            "/games-apps/": "Games & apps",
+            "/health-diagnosis/": "Health & diagnosis",
+            "/organisations/": "Find support",
+            "/start/": "Not sure where to start?",
+            "/tools/": "Tools & practical help",
+            "/work-education/": "Work & education",
+            "/glossary/": "Glossary",
+            "/evidence/": "Evidence",
+        }
+
+        for route in headerless_routes:
             page = self.page(route)
             self.assertNotIn('<header class="page-heading">', page, route)
-            self.assertIn('data-page-identity="true"', page, route)
+            self.assertNotIn('<header class="compact-page-heading"', page, route)
+            self.assertIn('<header class="visually-hidden" data-page-identity="true">', page, route)
             self.assertIn('class="page-kind"', page, route)
             self.assertIn("<h1>", page, route)
+
+        for route, title in compact_routes.items():
+            page = self.page(route)
+            self.assertNotIn('<header class="page-heading">', page, route)
+            self.assertIn('<header class="compact-page-heading" data-page-identity="true">', page, route)
+            self.assertIn(f"<h1>{html.escape(title, quote=True)}</h1>", page, route)
+            self.assertNotIn('<p class="lede">', page, route)
+            self.assertIn('class="visually-hidden page-kind"', page, route)
 
         self.assertNotIn("Orientation, not diagnosis.", self.page("/understand/"))
         self.assertNotIn("Local governed discovery.", self.page("/find/"))

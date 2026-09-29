@@ -142,6 +142,9 @@ LANDING_HEADERLESS_PATHS = frozenset({
     '/resources/',
     '/find/',
     '/needs/',
+})
+
+COMPACT_TITLE_PATHS = frozenset({
     '/places/',
     '/types/',
     '/a-z/',
@@ -175,6 +178,11 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
     if path in LANDING_HEADERLESS_PATHS:
         page_heading = f'''<header class="visually-hidden" data-page-identity="true">
     <div class="page-context"><span class="page-kind">{_compat06__esc(page_label)}</span></div>
+    <h1>{_compat06__esc(title)}</h1>
+  </header>'''
+    elif path in COMPACT_TITLE_PATHS:
+        page_heading = f'''<header class="compact-page-heading" data-page-identity="true">
+    <span class="visually-hidden page-kind">{_compat06__esc(page_label)}</span>
     <h1>{_compat06__esc(title)}</h1>
   </header>'''
     else:

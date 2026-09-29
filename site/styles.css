@@ -1949,6 +1949,20 @@ th {
   max-width: min(var(--content-wide), 100%);
 }
 
+/* Compact route titles preserve orientation without recreating a hero/lede block. */
+.page .compact-page-heading {
+  margin: 0 0 clamp(1.15rem, 2.5vw, 1.75rem);
+  padding: 0 0 0.55rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.page .compact-page-heading h1 {
+  max-width: none;
+  font-size: clamp(1.45rem, 2.8vw, 1.95rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
 /* A page heading is an orientation marker, not a hero card. */
 .page .page-heading {
   margin-bottom: clamp(2.2rem, 5vw, 3.5rem);

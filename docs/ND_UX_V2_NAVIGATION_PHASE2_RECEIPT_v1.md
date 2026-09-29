@@ -113,3 +113,15 @@ The exact candidate still requires:
 - YP safeguards if actual minors are included.
 
 Repairs after testing are limited to demonstrated problems.
+
+## Human-driven destination cleanup after the six-choice repair
+
+Subsequent real human review identified four bounded presentation issues beyond the Home surface:
+
+- HF-004 removed redundant instruction from the Areas-of-life index;
+- HF-005 removed redundant geographic-scope explanation;
+- HF-006 removed repeated landing-page introduction blocks;
+- HF-007 extended the same first-useful-content rule across navigation/catalogue surfaces;
+- HF-008 restored compact visible route names where the cleanup otherwise weakened orientation.
+
+These are evidence-driven presentation repairs, not a new taxonomy or architecture. They preserve governed objects, canonical route authority, discovery policy, evidence authority, jurisdiction data and production state. Ordinary Question, Topic, Resource and Evidence-record reading pages retain their visible identity and context.

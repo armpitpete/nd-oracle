@@ -170,6 +170,28 @@ After HF-006, a generated-site audit of all 462 current routes found the same in
 
 This remains a presentation-only repair. No governed object, route authority, evidence record, discovery/ranking rule, jurisdiction rule or production-state pointer is changed.
 
+
+## HF-008 — Over-cleaned route orientation after preamble removal
+
+**Observed behaviour / feedback**
+
+Review of the HF-006/HF-007 repair found that removing the large introductory blocks was correct, but hiding the page name entirely on some navigation and catalogue routes went too far. Pages such as A–Z, Books, Games, Glossary and Evidence could begin directly with lists, letters or warnings without an obvious visible answer to “what page am I on?”.
+
+**Severity:** MINOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- keep Home, Questions, Understand, Resources, Find and the Areas-of-life index free of a repeated visible route heading where the first content already supplies sufficient orientation;
+- restore only a compact visible H1 on navigation/catalogue routes where the page name materially helps reorientation;
+- do not restore page-type badges, ledes, hero panels or repeated “choose/pick/start here” instructions;
+- keep the compact title visually smaller than normal reading-page identity and immediately adjacent to the useful content;
+- preserve semantic page-kind identity, metadata, canonicals, indexing state and governed route authority;
+- add regression coverage binding the distinction between headerless, compact-title and full reading/detail page identity.
+
+This repair narrows the first-useful-content rule rather than reversing it: remove redundant explanation, but keep a concise visible page name when it materially helps the visitor know where they are.
+
 ## Human gate
 
 These findings are genuine human usability evidence. They do **not** by themselves satisfy all ten fixed journeys in `docs/ND_UX_V2_USER_TEST_PROTOCOL.md`.

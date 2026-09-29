@@ -55,8 +55,12 @@ Base: `0065ab8000bbb0020aa221f084525116f436b373`
 - [x] expand the human protocol with label-comprehension, deliberate wrong-route recovery, assistive-technology checks and YP safeguards;
 - [x] preserve the accepted 450-route production/sitemap identity by keeping new aliases noindex and outside the sitemap until a later protected production-state reconciliation;
 - [x] preserve existing rights-gated resource visuals and governed knowledge authority;
-- [ ] require exact-head CI GREEN for the repaired candidate;
-- [ ] review fresh desktop+narrow visual evidence for the six-choice Home and six primary first-hop routes;
+- [x] record and repair HF-006/HF-007 repeated navigation/index preamble burden without changing governed content authority;
+- [x] record HF-008 and restore compact visible route titles where full heading removal weakened orientation, without restoring ledes/heroes;
+- [x] exact-head CI GREEN recorded for pre-orientation-repair candidate f86e2c3608a4ff765893ff6a2448d697d5a6ba03 (validation #544);
+- [ ] require exact-head CI GREEN for the final compact-orientation candidate;
+- [x] fresh desktop+narrow visual evidence GREEN recorded for pre-orientation-repair candidate f86e2c3608a4ff765893ff6a2448d697d5a6ba03 (UX visual evidence #169);
+- [ ] review fresh desktop+narrow visual evidence for the final compact-orientation candidate;
 - [ ] run real ND first-impression, label-comprehension, representative task and wrong-choice recovery testing on the exact repaired candidate;
 - [ ] if actual minors are included, satisfy the protocol's consent/privacy/safeguarding requirements before YP testing;
 - [ ] disposition every human finding and repair only demonstrated problems;
