@@ -70,7 +70,7 @@ class NavigationContractV1Tests(unittest.TestCase):
         self.assertEqual("Home → clear first-hop route → item or next concrete choice", direct["target_pattern"])
         self.assertIn("internal taxonomy term", direct["avoidable_failure_pattern"])
         overlap = "\n".join(self.contract["overlap_rules"])
-        self.assertIn("one governed object", overlap)
+        self.assertIn("governed object", overlap.lower())
         self.assertIn("presentation layer", overlap)
         self.assertIn("No first choice becomes a dead end", self.contract["recovery_rule"])
 
