@@ -2830,6 +2830,112 @@ th {
 }
 
 
+
+/* ND-UX-V2 Home simplification repair — one first decision */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.primary-nav .site-menu {
+  position: relative;
+  margin-top: 0;
+}
+
+.primary-nav .site-menu > summary {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  padding: 0.3rem 0.65rem;
+  color: var(--text-soft);
+  border-radius: var(--radius-sm);
+  font-size: 0.91rem;
+  font-weight: 650;
+  list-style-position: inside;
+}
+
+.primary-nav .site-menu > summary:hover,
+.primary-nav .site-menu[open] > summary {
+  color: var(--text);
+  background: var(--surface-cool);
+}
+
+.site-menu-panel {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.4rem);
+  right: 0;
+  display: grid;
+  width: min(19rem, calc(100vw - 2rem));
+  padding: var(--space-2);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: 0 0.8rem 2rem rgb(24 35 31 / 0.14);
+}
+
+.primary-nav .site-menu-panel a {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.45rem 0.6rem;
+  color: var(--text);
+}
+
+.home-category-group--primary {
+  background: var(--surface-warm);
+}
+
+.home-category-card--primary {
+  border-left-color: var(--wayfind-green);
+}
+
+.home-more {
+  margin-top: 0;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+}
+
+.home-more > summary {
+  min-height: 3.5rem;
+  padding: var(--space-4);
+  color: var(--text);
+  font-weight: 750;
+}
+
+.home-more[open] > summary {
+  border-bottom: 1px solid var(--border);
+}
+
+.home-more .home-route-grid {
+  padding: var(--space-4);
+}
+
+@media (max-width: 40rem) {
+  .primary-nav .site-menu > summary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .site-menu-panel {
+    position: fixed;
+    top: auto;
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+  }
+}
+
+
 /* Terminology accessibility v1 */
 .terminology-route,
 .glossary-intro {
