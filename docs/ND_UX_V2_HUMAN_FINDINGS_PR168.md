@@ -120,6 +120,29 @@ Human review of the geographic-scope page found that the introductory lede and t
 
 This is a presentation-only repair. It does not change eligibility advice, jurisdiction authority, governed resource data or classification.
 
+
+## HF-006 — Repeated landing-page introduction burden
+
+**Observed behaviour / feedback**
+
+Human review across the Home, Questions, Understand, Resources, Find, Areas of life, geographic-scope and content-type landing pages found that the large title/intro blocks repeatedly restated what the route or following choices already made obvious. On the most task-oriented pages, a second instruction or notice then repeated the same orientation again before the useful controls or choices.
+
+**Severity:** MINOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- remove the visible page-heading/lede block from only these eight landing routes: `/`, `/questions/`, `/understand/`, `/resources/`, `/find/`, `/needs/`, `/places/` and `/types/`;
+- preserve each page's semantic identity with a visually hidden H1 and page-kind label, plus the existing document title, description and canonical metadata;
+- on Home, Questions and Resources, remove the extra "what/choose/pick" prompt immediately above choices so the choices become the first useful visible content;
+- on Understand, remove the repeated "Orientation, not diagnosis" landing notice;
+- on Find, remove the repeated "Local governed discovery" notice while preserving the privacy statement beside the search control that the query is processed only in the page;
+- leave detail pages, governed objects, routes, discovery policy, scope authority and production state unchanged;
+- bind the reduced-clutter composition in regression tests.
+
+This is a presentation-only repair. It does not remove page semantics or safety-critical information; it removes repeated orientation text before the user can act.
+
 ## Human gate
 
 These findings are genuine human usability evidence. They do **not** by themselves satisfy all ten fixed journeys in `docs/ND_UX_V2_USER_TEST_PROTOCOL.md`.
