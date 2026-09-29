@@ -30,7 +30,7 @@ grep -q 'class="scope-badge"' /tmp/candidate-find-results.html
 
 grep -q 'class="resource-catalogue"' candidate/dist/resources/index.html
 ! grep -q 'class="resource-catalogue" open' candidate/dist/resources/index.html
-grep -q 'Choose a category' candidate/dist/resources/index.html
+grep -q '<h1>Resources</h1>' candidate/dist/resources/index.html
 ! grep -q 'choice-card choice-card--primary' candidate/dist/resources/index.html
 ! grep -q 'choice-card choice-card--need' candidate/dist/resources/index.html
 test "$(grep -o 'choice-card choice-card--family' candidate/dist/resources/index.html | wc -l)" -eq 5
@@ -57,13 +57,13 @@ grep -q 'class="word-part">mono</strong>' candidate/dist/understand/monotropism/
 grep -q 'class="word-part">trop</strong>' candidate/dist/understand/monotropism/index.html
 grep -q 'class="word-part">ism</strong>' candidate/dist/understand/monotropism/index.html
 
-grep -q 'Choose how to start' candidate/dist/questions/index.html
+grep -q '<h1>Questions</h1>' candidate/dist/questions/index.html
 test "$(grep -o 'question-start-card' candidate/dist/questions/index.html | wc -l)" -eq 3
 test "$(grep -o '<details class="question-group"' candidate/dist/questions/index.html | wc -l)" -eq 19
 ! grep -q '<details class="question-group" open' candidate/dist/questions/index.html
 test "$(grep -o '<article class="topic-row">' candidate/dist/questions/index.html | wc -l)" -eq 175
 
-grep -q 'What are you looking for?' candidate/dist/index.html
+grep -q 'choice-grid choice-grid--home-categories' candidate/dist/index.html
 grep -q 'ADHD, autism &amp; other neurodivergence' candidate/dist/index.html
 grep -q 'Help with everyday life' candidate/dist/index.html
 grep -q 'Books, films &amp; media' candidate/dist/index.html
