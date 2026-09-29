@@ -37,10 +37,12 @@ class QuestionDiscoveryV07CompatibilityTests(unittest.TestCase):
     def test_home_keeps_practical_discovery_visible_after_navigation_repair(self):
         home = (self.output / "index.html").read_text(encoding="utf-8")
         questions = (self.output / "questions" / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Get help with life", home)
-        self.assertIn('href="/work-education/"', home)
-        self.assertIn('href="/daily-living/"', home)
-        self.assertLess(home.index("Get help with life"), home.index("Check evidence"))
+        self.assertIn("Help with everyday life", home)
+        self.assertIn('href="/everyday-help/"', home)
+        everyday = (self.output / "everyday-help" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('href="/needs/work/"', everyday)
+        self.assertIn('href="/needs/daily-life/"', everyday)
+        self.assertIn('href="/questions/"', home)
         for question_id in V07_QUESTION_IDS:
             question = self.question_map[question_id]
             self.assertIn(html.escape(question["question"], quote=True), questions)
