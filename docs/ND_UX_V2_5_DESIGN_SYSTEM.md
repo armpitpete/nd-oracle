@@ -12,6 +12,7 @@ V2.5 is not a new component library. It is a constraint system for composing ND 
 
 - Page first, components second.
 - No hero-and-card default grammar.
+- On obvious task/index landing pages, do not spend the first viewport restating the route name and purpose before useful choices or content. Preserve semantic H1/document metadata, but the visible page-identity block may be omitted when it adds no new information.
 - A border, panel or background requires a functional reason.
 - Prefer headings, bounded colour regions, rules and left-edge landmarks to repeated containers.
 - Discovery surfaces use the desktop viewport; reading surfaces keep a controlled measure.
