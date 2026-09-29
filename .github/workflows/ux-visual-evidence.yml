@@ -309,20 +309,23 @@ jobs:
           ! grep -q '<details class="question-group" open' candidate/dist/questions/index.html
           test "$(grep -o '<article class="topic-row">' candidate/dist/questions/index.html | wc -l)" -eq 175
 
-          grep -q 'Browse things' candidate/dist/index.html
-          grep -q 'Get help with life' candidate/dist/index.html
-          grep -q 'Check evidence' candidate/dist/index.html
-          test "$(grep -o 'choice-card home-category-card' candidate/dist/index.html | wc -l)" -eq 9
+          grep -q 'What are you looking for?' candidate/dist/index.html
+          grep -q 'ADHD, autism &amp; other neurodivergence' candidate/dist/index.html
+          grep -q 'Help with everyday life' candidate/dist/index.html
+          grep -q 'Books, films &amp; media' candidate/dist/index.html
+          grep -q 'Games &amp; apps' candidate/dist/index.html
+          grep -q '>Find support<' candidate/dist/index.html
+          grep -q '>Ask a question<' candidate/dist/index.html
+          test "$(grep -o 'choice-card home-category-card home-category-card--primary' candidate/dist/index.html | wc -l)" -eq 6
           grep -q 'href="/conditions/"' candidate/dist/index.html
-          grep -q 'href="/books/"' candidate/dist/index.html
-          grep -q 'href="/games/"' candidate/dist/index.html
-          grep -q 'href="/apps-tools/"' candidate/dist/index.html
+          grep -q 'href="/everyday-help/"' candidate/dist/index.html
+          grep -q 'href="/books-media/"' candidate/dist/index.html
+          grep -q 'href="/games-apps/"' candidate/dist/index.html
           grep -q 'href="/organisations/"' candidate/dist/index.html
-          grep -q 'href="/work-education/"' candidate/dist/index.html
-          grep -q 'href="/health-diagnosis/"' candidate/dist/index.html
-          grep -q 'href="/daily-living/"' candidate/dist/index.html
-          grep -q 'href="/evidence/"' candidate/dist/index.html
-          grep -q 'href="/start/"' candidate/dist/index.html
+          grep -q 'href="/questions/"' candidate/dist/index.html
+          grep -q '<details class="home-more">' candidate/dist/index.html
+          ! grep -q '<details class="home-more" open' candidate/dist/index.html
+          grep -q '>More ways to explore<' candidate/dist/index.html
           ! grep -q 'What do you need right now?' candidate/dist/index.html
           ! grep -q 'I want something practical' candidate/dist/index.html
           ! grep -q '<article class="topic-row">' candidate/dist/index.html
@@ -589,15 +592,12 @@ jobs:
           capture candidate 8766 390,844 narrow
 
           NAV_V1_ROUTES=(
-            "category-conditions|/conditions/"
-            "category-books|/books/"
-            "category-games|/games/"
-            "category-apps-tools|/apps-tools/"
-            "category-organisations|/organisations/"
-            "category-work-education|/work-education/"
-            "category-health-diagnosis|/health-diagnosis/"
-            "category-daily-living|/daily-living/"
-            "category-start|/start/"
+            "category-neurodivergence|/conditions/"
+            "category-everyday-help|/everyday-help/"
+            "category-books-media|/books-media/"
+            "category-games-apps|/games-apps/"
+            "category-support|/organisations/"
+            "category-questions|/questions/"
           )
           for spec in "${NAV_V1_ROUTES[@]}"; do
             name="${spec%%|*}"
