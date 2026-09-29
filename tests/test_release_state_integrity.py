@@ -127,7 +127,9 @@ class ReleaseStateIntegrityTests(unittest.TestCase):
             "contracts/current-production.json",
         ):
             self.assertIn(value, text)
-        self.assertIn("Current production is the accepted **Reference depth + international v1** deployment", text)
+        self.assertIn("The accepted governed-knowledge deployment is the **Reference depth + international v1** deployment", text)
+        self.assertIn("contracts/current-public-state.json", text)
+        self.assertIn("### Presentation baseline", text)
         self.assertIn("366 governed objects", text)
         self.assertIn("450 canonical", text)
 

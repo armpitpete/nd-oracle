@@ -20,6 +20,7 @@ from urllib.parse import urlsplit
 import sys
 from collections import defaultdict
 from scripts import discovery
+from scripts import resource_visuals as _resource_visuals
 from scripts.release_identity import PUBLIC_SITE_RELEASE
 
 # ---- v06 compatibility foundation ----
@@ -38,7 +39,7 @@ _compat06__TOOL_CATEGORIES = {'tool', 'app', 'accommodation', 'practical_guide',
 _compat06__COMMUNITY_CATEGORIES = {'organisation', 'community', 'service'}
 _compat06__SIMPLE_EXPLANATIONS = {'neurodiversity': "People's brains and nervous systems vary. Neurodiversity is a word for that variation, and it is also used when people talk about rights, disability, support and how neurological differences should be understood.", 'autism': 'Autistic people can experience communication, social situations, routines, interests and sensory input differently. Autism looks different from person to person, and support needs can vary.', 'adhd': 'ADHD can affect attention, activity, impulsivity and managing everyday tasks. It can look different between people and situations, and diagnosis needs more than a checklist or a single test.', 'executive-function': 'Executive functions help us hold things in mind, switch attention, pause responses and organise actions towards a goal. Difficulties with them can make starting, planning or finishing tasks hard, but they are not a diagnosis by themselves.', 'sensory-processing': 'People differ in how strongly they notice and respond to sound, light, touch, movement and other sensory input. These differences can affect comfort and everyday life, and they are not unique to one diagnosis.', 'dyslexia': 'Dyslexia mainly affects learning and using word reading and spelling. It can continue into adulthood, and it does not mean that someone has low intelligence.', 'developmental-coordination-disorder': 'Developmental co-ordination disorder (DCD) affects how easily someone learns and carries out coordinated movements. Everyday activities can take more effort, and the difficulties can continue into adulthood.', 'tourette-syndrome': 'Tourette syndrome involves motor and vocal tics that change over time. Swearing is not what defines Tourette syndrome, and support or treatment should depend on what is actually difficult for the person.', 'learning-disability': 'In the UK, a learning disability means lifelong difficulty learning or understanding new information together with difficulty managing everyday life independently. It is not the same thing as a specific learning difficulty such as dyslexia.', 'developmental-language-disorder': 'Developmental language disorder (DLD) is a persistent difficulty understanding and/or using language that affects everyday life. Bilingualism does not cause DLD, and DLD can occur alongside other developmental conditions.'}
 _compat06__COMMON_QUESTIONS = [('What does neurodiversity mean?', 'neurodiversity'), ('What is autism?', 'autism'), ('What is ADHD?', 'adhd'), ('Why can starting or organising tasks feel hard?', 'executive-function'), ('Why can sound, light or touch feel intense?', 'sensory-processing'), ('Why can reading or spelling stay difficult?', 'dyslexia'), ('Why can coordination and everyday movement be hard?', 'developmental-coordination-disorder'), ('What are tics and Tourette syndrome?', 'tourette-syndrome'), ('What does learning disability mean in the UK?', 'learning-disability'), ('Why can understanding or using language be difficult?', 'developmental-language-disorder')]
-_compat06__STATIC_PAGES = {'how-it-works': {'title': 'How this site works', 'intro': 'Start with what is useful. Open the evidence, uncertainty and provenance only when you want the deeper route.', 'body': '<section><h2>Useful first</h2><p>The public pages are written for people, not for navigating an internal database. Topics start with a deliberately simple explanation. Resources start with what they are, what they are for and what might make them a poor fit.</p></section><section id="confidence"><h2>What the confidence labels mean</h2><p>A confidence label applies only to the exact statement beside it. It is not a score for a whole topic, person or source, and high confidence does not mean certainty.</p><dl class="confidence-key"><dt>High</dt><dd>The bounded statement has strong, consistent support from the evidence used for it, with no known disagreement large enough to change the statement substantially.</dd><dt>Moderate</dt><dd>The statement is supported, but important limits, narrower evidence, transfer problems or remaining uncertainty mean it should be read with more caution.</dd><dt>Low</dt><dd>The statement has some support but the evidence is limited, indirect or fragile. Treat it as provisional.</dd><dt>Contested</dt><dd>Credible evidence or perspectives materially disagree. The label preserves that disagreement rather than forcing a false consensus.</dd><dt>Not applicable</dt><dd>An epistemic confidence score is not the right description for that statement; this must not be used merely to avoid assessing evidence.</dd></dl></section><section><h2>Being listed is not being endorsed</h2><p>Tools, games, books, services and organisations are catalogued so you can judge them. Existence, popularity and marketing are not evidence that something works. Commercial interests, costs and known limitations stay visible. Any efficacy or safety claim needs its own governed evidence route.</p></section><section><h2>Uncertainty stays visible</h2><p>If an important question is unresolved, the site keeps it unresolved. The aim is to save the next person from having to rediscover the same gap.</p></section><section><h2>Evidence is inspectable</h2><p>Evidence links sit behind the statements they support. Source details and provenance remain available without dominating the first read.</p></section><section><h2>Review dates are visible</h2><p>Pages show when their current record was last reviewed. A review date is not a promise that nothing newer exists; it tells you how fresh this site\'s review is.</p></section><section><h2>This is not a diagnosis service</h2><p>The site is for understanding, practical discovery and research traceability. It does not diagnose individuals or replace appropriate clinical, legal, educational or safeguarding judgement.</p></section>', 'indexable': True}, 'about': {'title': 'About', 'intro': 'Useful neurodiversity information is scattered across research, guidance, communities, tools, games and everyday experience. ND Oracle brings those routes together without hiding where they came from.', 'body': '<section><h2>What it is for</h2><p>You should not have to repeat the same research every time you need to understand a term, find a tool, check a service or work out whether a resource might suit you. ND Oracle keeps useful material connected to its evidence, limitations, disagreement and review state.</p></section><section><h2>More than a diagnosis encyclopaedia</h2><p>The project covers the wider neurodiversity ecosystem: concepts, practical tools, apps, games, books and media, services, organisations, communities and accommodations. Sections become public when they contain useful reviewed material rather than appearing as empty promises.</p></section><section><h2>Provenance first</h2><p>Underneath the simple reading layer is a provenance-first knowledge commons. That means a serious claim keeps its route back to evidence and uncertainty, while a resource listing stays distinct from an endorsement.</p></section><section><h2>What it is not</h2><p>It is not a diagnosis engine, a treatment marketplace, an AI authority or a replacement for professional judgement.</p></section>', 'indexable': True}, 'accessibility': {'title': 'Accessibility', 'intro': 'The site is designed to reduce cognitive and sensory burden rather than add to it.', 'body': '<section><h2>Current approach</h2><p>The site uses semantic HTML, visible keyboard focus, restrained colours, a reading-width content column and no required JavaScript.</p><p>Evidence and provenance use native disclosure controls so readers can choose depth without losing keyboard access.</p></section><section><h2>Accessibility problems are defects</h2><p>Future interactive features must preserve keyboard access, reduced-motion preferences, readable language and a usable no-script baseline wherever practical.</p><p>If something here is difficult to use, <a href="/feedback/">report the accessibility problem</a>.</p></section>', 'indexable': True}, 'privacy': {'title': 'Privacy', 'intro': 'The current public site is designed to collect no personal data.', 'body': "<section><h2>Current release</h2><p>There are no accounts, forms, analytics scripts, advertising trackers or personalised features in the generated site.</p><p>The feedback page links to the public GitHub issue tracker; following that link leaves this site and uses GitHub's service.</p></section><section><h2>External resources</h2><p>Resource pages can link to third-party websites and services. Following those links leaves ND Oracle and the destination's own privacy terms apply.</p></section><section><h2>Future features</h2><p>Anything that stores queries, profiles, health information or community submissions requires a separate privacy and threat-model review before release.</p></section>", 'indexable': True}, 'feedback': {'title': 'Feedback', 'intro': 'Found something inaccessible, unclear, outdated or broken? You can report it without adding tracking or a form to this site.', 'body': '<section><h2>Report a problem</h2><p>Use the public ND Oracle issue tracker for accessibility problems, factual concerns, confusing wording, broken links or other defects. Please do not include private health information, contact details or anything else you would not want published.</p><p><a href="https://github.com/armpitpete/nd-oracle/issues/new" rel="noopener noreferrer">Open the public issue tracker</a></p></section><section><h2>What helps</h2><ul><li>The page address.</li><li>What you expected to happen.</li><li>What actually happened or what was difficult to understand.</li><li>For an evidence concern, the exact statement you think needs checking.</li></ul></section><section class="notice"><h2>Current limitation</h2><p>This release does not yet offer a private feedback channel. If the public GitHub route is itself inaccessible to you, that is a known limitation rather than a reason to treat the problem as resolved.</p></section>', 'indexable': True}, 'oracle': {'title': 'Oracle', 'intro': 'The deeper provenance system is the foundation of these pages, not a chatbot presented as an authority.', 'body': '<p>The current public interface exposes reviewed knowledge through topic and resource pages. Generated answers are not the source of truth. <a href="/how-it-works/">See how the evidence route works</a>.</p>', 'indexable': False}}
+_compat06__STATIC_PAGES = {'how-it-works': {'title': 'How this site works', 'intro': 'Start with what is useful. Open the evidence, uncertainty and provenance only when you want the deeper route.', 'body': '<section><h2>Useful first</h2><p>The public pages are written for people, not for navigating an internal database. Topics start with a deliberately simple explanation. Resources start with what they are, what they are for and what might make them a poor fit.</p></section><section id="confidence"><h2>What the confidence labels mean</h2><p>A confidence label applies only to the exact statement beside it. It is not a score for a whole topic, person or source, and high confidence does not mean certainty.</p><dl class="confidence-key"><dt>High</dt><dd>The bounded statement has strong, consistent support from the evidence used for it, with no known disagreement large enough to change the statement substantially.</dd><dt>Moderate</dt><dd>The statement is supported, but important limits, narrower evidence, transfer problems or remaining uncertainty mean it should be read with more caution.</dd><dt>Low</dt><dd>The statement has some support but the evidence is limited, indirect or fragile. Treat it as provisional.</dd><dt>Contested</dt><dd>Credible evidence or perspectives materially disagree. The label preserves that disagreement rather than forcing a false consensus.</dd><dt>Not applicable</dt><dd>An epistemic confidence score is not the right description for that statement; this must not be used merely to avoid assessing evidence.</dd></dl></section><section><h2>Being listed is not being endorsed</h2><p>Tools, games, books, services and organisations are catalogued so you can judge them. Existence, popularity and marketing are not evidence that something works. Commercial interests, costs and known limitations stay visible. Any efficacy or safety claim needs its own governed evidence route.</p></section><section><h2>Uncertainty stays visible</h2><p>If an important question is unresolved, the site keeps it unresolved. The aim is to save the next person from having to rediscover the same gap.</p></section><section><h2>Evidence is inspectable</h2><p>Evidence links sit behind the statements they support. Source details and provenance remain available without dominating the first read.</p></section><section><h2>Review dates are visible</h2><p>Pages show when their current record was last reviewed. A review date is not a promise that nothing newer exists; it tells you how fresh this site\'s review is.</p></section><section><h2>This is not a diagnosis service</h2><p>The site is for understanding, practical discovery and research traceability. It does not diagnose individuals or replace appropriate clinical, legal, educational or safeguarding judgement.</p></section>', 'indexable': True}, 'about': {'title': 'About', 'intro': 'Useful neurodiversity information is scattered across research, guidance, communities, tools, games and everyday experience. ND Oracle brings those routes together without hiding where they came from.', 'body': '<section><h2>What it is for</h2><p>You should not have to repeat the same research every time you need to understand a term, find a tool, check a service or work out whether a resource might suit you. ND Oracle keeps useful material connected to its evidence, limitations, disagreement and review state.</p></section><section><h2>More than a diagnosis encyclopaedia</h2><p>The project covers the wider neurodiversity ecosystem: concepts, practical tools, apps, games, books and media, services, organisations, communities and accommodations. Sections become public when they contain useful reviewed material rather than appearing as empty promises.</p></section><section><h2>Provenance first</h2><p>Underneath the simple reading layer is a provenance-first knowledge commons. That means a serious claim keeps its route back to evidence and uncertainty, while a resource listing stays distinct from an endorsement.</p></section><section><h2>What it is not</h2><p>It is not a diagnosis engine, a treatment marketplace, an AI authority or a replacement for professional judgement.</p></section>', 'indexable': True}, 'accessibility': {'title': 'Accessibility', 'intro': 'The site is designed to reduce cognitive and sensory burden rather than add to it.', 'body': '<section><h2>Current approach</h2><p>The site uses semantic HTML, visible keyboard focus, restrained colours, controlled reading measures and no required JavaScript.</p><p>Evidence and provenance use native disclosure controls so readers can choose depth without losing keyboard access.</p></section><section><h2>Accessibility problems are defects</h2><p>Future interactive features must preserve keyboard access, reduced-motion preferences, readable language and a usable no-script baseline wherever practical.</p><p>If something here is difficult to use, <a href="/feedback/">report the accessibility problem</a>.</p></section>', 'indexable': True}, 'privacy': {'title': 'Privacy', 'intro': 'The current public site is designed to collect no personal data.', 'body': "<section><h2>Current release</h2><p>There are no accounts, forms, analytics scripts, advertising trackers or personalised features in the generated site.</p><p>The feedback page links to the public GitHub issue tracker; following that link leaves this site and uses GitHub's service.</p></section><section><h2>External resources</h2><p>Resource pages can link to third-party websites and services. Following those links leaves ND Oracle and the destination's own privacy terms apply.</p></section><section><h2>Future features</h2><p>Anything that stores queries, profiles, health information or community submissions requires a separate privacy and threat-model review before release.</p></section>", 'indexable': True}, 'feedback': {'title': 'Feedback', 'intro': 'Found something inaccessible, unclear, outdated or broken? You can report it without adding tracking or a form to this site.', 'body': '<section><h2>Report a problem</h2><p>Use the public ND Oracle issue tracker for accessibility problems, factual concerns, confusing wording, broken links or other defects. Please do not include private health information, contact details or anything else you would not want published.</p><p><a href="https://github.com/armpitpete/nd-oracle/issues/new" rel="noopener noreferrer">Open the public issue tracker</a></p></section><section><h2>What helps</h2><ul><li>The page address.</li><li>What you expected to happen.</li><li>What actually happened or what was difficult to understand.</li><li>For an evidence concern, the exact statement you think needs checking.</li></ul></section><section class="notice"><h2>Current limitation</h2><p>This release does not yet offer a private feedback channel. If the public GitHub route is itself inaccessible to you, that is a known limitation rather than a reason to treat the problem as resolved.</p></section>', 'indexable': True}, 'oracle': {'title': 'Oracle', 'intro': 'The deeper provenance system is the foundation of these pages, not a chatbot presented as an authority.', 'body': '<p>The current public interface exposes reviewed knowledge through topic and resource pages. Generated answers are not the source of truth. <a href="/how-it-works/">See how the evidence route works</a>.</p>', 'indexable': False}}
 _compat06__INDEXED_STATIC_PAGES = tuple((slug for slug, page in _compat06__STATIC_PAGES.items() if page.get('indexable', True)))
 def _compat06__esc(value: object) -> str:
     return html.escape(str(value), quote=True)
@@ -102,7 +103,9 @@ def _ux_page_kind(path: str | None) -> tuple[str, str]:
     if parts[:1] == ['understand']:
         return ('concept' if len(parts) > 1 else 'topics-index', 'Concept' if len(parts) > 1 else 'Topics')
     if parts[:1] == ['evidence']:
-        return ('evidence', 'Evidence record' if len(parts) > 1 else 'Evidence')
+        return ('evidence' if len(parts) > 1 else 'evidence-index', 'Evidence record' if len(parts) > 1 else 'Evidence')
+    if parts[:1] == ['glossary']:
+        return ('glossary-index', 'Glossary')
     if parts[:1] == ['find']:
         return ('find', 'Find')
     if parts[:1] == ['places']:
@@ -122,18 +125,72 @@ def _ux_page_kind(path: str | None) -> tuple[str, str]:
         }
         tone = tone_by_slug.get(parts[1], 'daily-life')
         return (f'need-hub page--need-{tone}', 'Area of life')
-    if parts[:1] in (['types'], ['a-z'], ['tools'], ['games'], ['community'], ['books-media']):
+    if parts[:1] in (
+        ['types'], ['a-z'], ['tools'], ['games'], ['community'], ['books-media'],
+        ['conditions'], ['books'], ['apps-tools'], ['organisations'],
+        ['work-education'], ['health-diagnosis'], ['daily-living'], ['start'],
+        ['everyday-help'], ['games-apps'],
+    ):
         return ('browse', 'Browse')
     return ('information', 'ND Oracle')
 
 
-def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | None=None, path: str | None=None, indexable: bool=True) -> str:
+LANDING_HEADERLESS_PATHS = frozenset({
+    '/',
+    '/questions/',
+    '/understand/',
+    '/resources/',
+    '/find/',
+    '/needs/',
+})
+
+COMPACT_TITLE_PATHS = frozenset({
+    '/places/',
+    '/types/',
+    '/a-z/',
+    '/apps-tools/',
+    '/books/',
+    '/books-media/',
+    '/community/',
+    '/conditions/',
+    '/daily-living/',
+    '/everyday-help/',
+    '/games/',
+    '/games-apps/',
+    '/health-diagnosis/',
+    '/organisations/',
+    '/start/',
+    '/tools/',
+    '/work-education/',
+    '/glossary/',
+    '/evidence/',
+})
+
+
+def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | None=None, path: str | None=None, indexable: bool=True, show_intro: bool=True) -> str:
     canonical = ''
     if path is not None:
         canonical_url = _compat06__PUBLIC_ORIGIN + path
         canonical = f'  <link rel="canonical" href="{_compat06__esc(canonical_url)}">\n'
     robots = '' if indexable else '  <meta name="robots" content="noindex, follow">\n'
     page_kind, page_label = _ux_page_kind(path)
+    lede = f'<p class="lede">{_compat06__esc(intro)}</p>' if show_intro else ''
+    if path in LANDING_HEADERLESS_PATHS:
+        page_heading = f'''<header class="visually-hidden" data-page-identity="true">
+    <div class="page-context"><span class="page-kind">{_compat06__esc(page_label)}</span></div>
+    <h1>{_compat06__esc(title)}</h1>
+  </header>'''
+    elif path in COMPACT_TITLE_PATHS:
+        page_heading = f'''<header class="compact-page-heading" data-page-identity="true">
+    <span class="visually-hidden page-kind">{_compat06__esc(page_label)}</span>
+    <h1>{_compat06__esc(title)}</h1>
+  </header>'''
+    else:
+        page_heading = f'''<header class="page-heading">
+    <div class="page-context"><span class="page-kind">{_compat06__esc(page_label)}</span></div>
+    <h1>{_compat06__esc(title)}</h1>
+    {lede}
+  </header>'''
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -157,11 +214,7 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
   </div>
 </header>
 <main id="main" class="site-shell reading-column">
-  <header class="page-heading">
-    <div class="page-context"><span class="page-kind">{_compat06__esc(page_label)}</span></div>
-    <h1>{_compat06__esc(title)}</h1>
-    <p class="lede">{_compat06__esc(intro)}</p>
-  </header>
+  {page_heading}
   {body}
 </main>
 <footer class="site-footer">
@@ -245,7 +298,7 @@ def _compat06__render_concept(concept: dict, concept_map: dict[str, dict]) -> st
 def _compat06__render_resource_collection(resources: list[dict], *, title: str, intro: str, route: str, categories: set[str] | None=None) -> str:
     selected = [resource for resource in resources if categories is None or resource['category'] in categories]
     rows = ''.join((_compat06__resource_link(resource) for resource in selected))
-    body = f"""\n<section class="notice">\n  <strong>Listed, not endorsed.</strong> Inclusion means the resource was identified, checked and described. It does not mean ND Oracle has proved that it works or that it will suit you.\n</section>\n<nav class="resource-subnav" aria-label="Explore resources">\n  <a href="/resources/">Everything</a>\n  <a href="/tools/">Tools &amp; apps</a>\n  <a href="/games/">Games</a>\n  <a href="/community/">Support &amp; organisations</a>\n</nav>\n<section aria-labelledby="resource-list-heading">\n  <h2 id="resource-list-heading">{len(selected)} reviewed {('entry' if len(selected) == 1 else 'entries')}</h2>\n  <div class="resource-list">{rows}</div>\n</section>\n"""
+    body = f"""\n<nav class="resource-subnav" aria-label="Explore resources">\n  <a href="/resources/">Everything</a>\n  <a href="/tools/">Tools &amp; apps</a>\n  <a href="/games/">Games</a>\n  <a href="/community/">Support &amp; organisations</a>\n</nav>\n<section aria-labelledby="resource-list-heading">\n  <h2 id="resource-list-heading">{len(selected)} reviewed {('entry' if len(selected) == 1 else 'entries')}</h2>\n  <div class="resource-list">{rows}</div>\n</section>\n"""
     return _compat06__page_shell(title, intro, body, current='resources', path=f'/{route}/')
 def _compat06__render_resources_index(resources: list[dict]) -> str:
     return _compat06__render_resource_collection(resources, title='Explore', intro='Tools, apps, games, books, services and organisations, described with their limitations and access conditions visible.', route='resources')
@@ -273,7 +326,7 @@ def _compat06__render_resource(resource: dict, concept_map: dict[str, dict]) -> 
     related_html = '<ul>' + ''.join(related) + '</ul>' if related else '<p class="meta">No topic link recorded yet.</p>'
     reviewed = _compat06__human_date(resource['provenance'].get('last_reviewed'))
     claim_note = 'This resource currently has governed claim records. Open those claims only when their evidence routes are available.' if resource.get('claims') else 'This listing makes no efficacy or safety claim. It records what the resource is, what it is for, how to reach it and what limitations are already known.'
-    body = f"""\n<p class="back-link"><a href="/resources/">← All resources</a></p>\n<div class="resource-meta"><span class="resource-kind">{_compat06__esc(category)}</span><span>Last reviewed: <strong>{_compat06__esc(reviewed)}</strong></span></div>\n<section class="notice"><strong>Listed, not endorsed.</strong> ND Oracle is helping you inspect this resource, not telling you that it will work for you.</section>\n<section aria-labelledby="use-heading"><h2 id="use-heading">What it is for</h2><p>{_compat06__esc(resource['intended_use'])}</p></section>\n<section aria-labelledby="audience-heading"><h2 id="audience-heading">Who or what context</h2><p>{_compat06__esc(resource['audience_or_context'])}</p></section>\n<section aria-labelledby="access-heading"><h2 id="access-heading">Access</h2>{_compat06__resource_access_links(resource)}</section>\n<section aria-labelledby="related-heading"><h2 id="related-heading">Related topics</h2>{related_html}</section>\n<section aria-labelledby="limits-heading"><h2 id="limits-heading">Limitations and possible poor fit</h2>{_compat06__list_items(resource['limitations'])}</section>\n<section aria-labelledby="cost-heading"><h2 id="cost-heading">Cost and access notes</h2>{_compat06__list_items(resource['cost_or_access_notes'])}</section>\n<section aria-labelledby="conflict-heading"><h2 id="conflict-heading">Ownership and conflicts</h2>{_compat06__list_items(resource['conflicts_of_interest'])}</section>\n<section class="evidence-status" aria-labelledby="evidence-status-heading"><h2 id="evidence-status-heading">Evidence status</h2><p>{_compat06__esc(claim_note)}</p></section>\n<details class="provenance"><summary>Page provenance and review state</summary><p>{_compat06__esc(resource['provenance']['method'])}</p><div class="meta">Created {_compat06__esc(resource['provenance']['created'])} · last reviewed {_compat06__esc(reviewed)} · review state {_compat06__esc(resource['provenance']['review_state'])}</div></details>\n"""
+    body = f"""\n<p class="back-link"><a href="/resources/">← All resources</a></p>\n<div class="resource-meta"><span class="resource-kind">{_compat06__esc(category)}</span><span>Last reviewed: <strong>{_compat06__esc(reviewed)}</strong></span></div>\n<section aria-labelledby="use-heading"><h2 id="use-heading">What it is for</h2><p>{_compat06__esc(resource['intended_use'])}</p></section>\n<section aria-labelledby="audience-heading"><h2 id="audience-heading">Who or what context</h2><p>{_compat06__esc(resource['audience_or_context'])}</p></section>\n<section aria-labelledby="access-heading"><h2 id="access-heading">Access</h2>{_compat06__resource_access_links(resource)}</section>\n<section aria-labelledby="related-heading"><h2 id="related-heading">Related topics</h2>{related_html}</section>\n<section aria-labelledby="limits-heading"><h2 id="limits-heading">Limitations and possible poor fit</h2>{_compat06__list_items(resource['limitations'])}</section>\n<section aria-labelledby="cost-heading"><h2 id="cost-heading">Cost and access notes</h2>{_compat06__list_items(resource['cost_or_access_notes'])}</section>\n<section aria-labelledby="conflict-heading"><h2 id="conflict-heading">Ownership and conflicts</h2>{_compat06__list_items(resource['conflicts_of_interest'])}</section>\n<section class="evidence-status" aria-labelledby="evidence-status-heading"><h2 id="evidence-status-heading">Evidence status</h2><p>{_compat06__esc(claim_note)}</p></section>\n<details class="provenance"><summary>Page provenance and review state</summary><p>{_compat06__esc(resource['provenance']['method'])}</p><div class="meta">Created {_compat06__esc(resource['provenance']['created'])} · last reviewed {_compat06__esc(reviewed)} · review state {_compat06__esc(resource['provenance']['review_state'])}</div></details>\n"""
     return _compat06__page_shell(resource['name'], resource['description'], body, current='resources', path=f"/resources/{resource['id']}/")
 def _compat06__render_static_page(slug: str) -> str:
     page = _compat06__STATIC_PAGES[slug]
@@ -356,6 +409,13 @@ if _compat08__QUESTION_DISCOVERY_HOW_SECTION not in _compat06__STATIC_PAGES['how
 if _compat08__QUESTION_DISCOVERY_ABOUT_SECTION not in _compat06__STATIC_PAGES['about']['body']:
     _compat06__STATIC_PAGES['about']['body'] += _compat08__QUESTION_DISCOVERY_ABOUT_SECTION
 _compat06__STATIC_PAGES['oracle']['body'] = '<p>The current public interface exposes reviewed knowledge through topic, resource and governed question pages. Generated answers are not the source of truth. <a href="/questions/">Start with a governed question</a> or <a href="/how-it-works/">see how the evidence route works</a>.</p>'
+_RESOURCE_LISTING_HOW_SECTION = '<section><h2>Being listed is not being endorsed</h2><p>Tools, games, books, services and organisations are catalogued so you can judge them. Existence, popularity and marketing are not evidence that something works. Commercial interests, costs and known limitations stay visible. Any efficacy or safety claim needs its own governed evidence route.</p></section>'
+_RESOURCE_LISTING_ABOUT_SECTION = '<section id="resource-listings"><h2>How resource listings work</h2><p>ND Oracle includes resources so people can find, inspect and compare information about them. Inclusion does not mean ND Oracle recommends or endorses a resource, or has proved its effectiveness, safety or suitability.</p></section>'
+if _RESOURCE_LISTING_HOW_SECTION in _compat06__STATIC_PAGES['how-it-works']['body']:
+    _compat06__STATIC_PAGES['how-it-works']['body'] = _compat06__STATIC_PAGES['how-it-works']['body'].replace(_RESOURCE_LISTING_HOW_SECTION, '', 1)
+_compat06__STATIC_PAGES['about']['body'] = _compat06__STATIC_PAGES['about']['body'].replace('while a resource listing stays distinct from an endorsement.', 'while resource listings stay separate from evidence claims.', 1)
+if 'id="resource-listings"' not in _compat06__STATIC_PAGES['about']['body']:
+    _compat06__STATIC_PAGES['about']['body'] += _RESOURCE_LISTING_ABOUT_SECTION
 _compat08__STATIC_PAGES = _compat06__STATIC_PAGES
 _compat08___RESOURCE_SUBNAV_V06 = '<nav class="resource-subnav" aria-label="Explore resources">\n  <a href="/resources/">Everything</a>\n  <a href="/tools/">Tools &amp; apps</a>\n  <a href="/games/">Games</a>\n  <a href="/community/">Support &amp; organisations</a>\n</nav>'
 _compat08___RESOURCE_SUBNAV_V08 = '<nav class="resource-subnav" aria-label="Browse resources">\n  <a href="/resources/">All resources</a>\n  <a href="/tools/">Tools &amp; practical help</a>\n  <a href="/games/">Games</a>\n  <a href="/books-media/">Books &amp; media</a>\n  <a href="/community/">Support &amp; organisations</a>\n</nav>'
@@ -364,6 +424,14 @@ def _compat08__render_resource_collection(resources: list[dict], *, title: str, 
     page = _compat08___render_resource_collection_v06(resources, title=title, intro=intro, route=route, categories=categories)
     if _compat08___RESOURCE_SUBNAV_V06 not in page:
         raise ValueError('Cannot locate v0.6 resource sub-navigation')
+    if route in {'tools', 'books-media', 'community'}:
+        page = page.replace(_compat08___RESOURCE_SUBNAV_V06, '', 1)
+        selected_count = sum(1 for resource in resources if categories is None or resource['category'] in categories)
+        visible_count = f'''<h2 id="resource-list-heading">{selected_count} reviewed {('entry' if selected_count == 1 else 'entries')}</h2>'''
+        semantic_heading = f'''<h2 id="resource-list-heading" class="visually-hidden">{_compat06__esc(title)}</h2>'''
+        if visible_count not in page:
+            raise ValueError(f'Cannot locate {route} resource count heading')
+        return page.replace(visible_count, semantic_heading, 1)
     return page.replace(_compat08___RESOURCE_SUBNAV_V06, _compat08___RESOURCE_SUBNAV_V08, 1)
 def _compat08__render_resources_index(resources: list[dict]) -> str:
     return _compat08__render_resource_collection(resources, title='Resources', intro='Tools, practical guides, games, books, services and organisations, described with their limitations and access conditions visible.', route='resources')
@@ -694,77 +762,35 @@ def _compat09__render_resources_index(resources: list[dict]) -> str:
 </section>'''
         for letter, rows in alpha_rows.items()
     ))
-    primary_choices = (
-        ('/find/', 'Describe what you need', 'Type what you need in your own words. Results come from the reviewed ND Oracle catalogue.', 'Open Find'),
-        ('/needs/', 'Start from a life problem', 'Choose an area such as daily life, communication, work, education or wellbeing.', 'Browse needs'),
-        ('/places/', 'Check what applies where I live', 'Check whether information is UK-wide, for one nation, or international before you act.', 'Browse by place'),
-        ('/types/', 'Browse by kind of resource', 'Choose services, organisations, tools, apps, games, books, guides and other content types.', 'Browse types'),
+    resource_categories = (
+        ('/books-media/', 'Books', 'Books and other media with context and limitations kept visible.'),
+        ('/games/', 'Games', 'Games with play characteristics and possible poor fit kept visible.'),
+        ('/understand/', 'Conditions & topics', 'Plain-language information about neurodivergence, conditions and related topics.'),
+        ('/tools/', 'Apps & tools', 'Apps, tools, guides and practical products.'),
+        ('/community/', 'Support & organisations', 'Services, organisations and peer communities.'),
     )
-    primary_cards = ''.join((
-        f'''<a class="choice-card choice-card--primary" href="{_compat06__esc(href)}">
-  <strong>{_compat06__esc(title)}</strong>
-  <span>{_compat06__esc(description)}</span>
-  <span class="choice-card-action">{_compat06__esc(action)} →</span>
-</a>'''
-        for href, title, description, action in primary_choices
-    ))
-    need_copy = {
-        'needs/daily-life': 'Planning, routines, getting started, technology and everyday tasks.',
-        'needs/sensory-environment': 'Noise, light, touch, overload and changing the environment around you.',
-        'needs/communication': 'Phone calls, processing time, speaking, AAC and written communication.',
-        'needs/work': 'Adjustments, interviews, disclosure, job-search support and staying in work.',
-        'needs/education-study': 'Organisation, study support, exams and school or college access.',
-        'needs/assessment-diagnosis': 'Assessment routes, waiting, private options and what happens next.',
-        'needs/health-wellbeing': 'Sleep, food, burnout, anxiety and healthcare access.',
-        'needs/relationships-family': 'Parenting, boundaries, family life and relationship communication.',
-    }
-    need_cards = ''.join((
-        f'''<a class="choice-card choice-card--need" href="/{_compat06__esc(route)}/">
-  <strong>{_compat06__esc(title)}</strong>
-  <span>{_compat06__esc(need_copy[route])}</span>
-</a>'''
-        for route, title, _intro, _groups in _compat09__HUB_DEFINITIONS
-    ))
-    resource_families = (
-        ('/tools/', 'Tools & practical help', 'Apps, tools, guides and practical products.'),
-        ('/games/', 'Games', 'Browse by play characteristics and possible poor fit, not as treatment.'),
-        ('/books-media/', 'Books & media', 'Books, podcasts and media with context and limitations visible.'),
-        ('/community/', 'Support & organisations', 'Services, organisations and communities with scope kept visible.'),
-    )
-    family_cards = ''.join((
+    category_cards = ''.join((
         f'''<a class="choice-card choice-card--family" href="{_compat06__esc(href)}">
   <strong>{_compat06__esc(title)}</strong>
   <span>{_compat06__esc(description)}</span>
 </a>'''
-        for href, title, description in resource_families
+        for href, title, description in resource_categories
     ))
     body = f'''
 <section class="resource-start" aria-labelledby="resource-start-heading">
   <div class="section-heading-row">
     <div>
-      <h2 id="resource-start-heading">Choose how to start</h2>
-      <p class="section-intro">You do not need to know a diagnosis or service name. Pick the route closest to what you already know.</p>
+      <h2 id="resource-start-heading">Choose a category</h2>
+      <p class="section-intro">Pick the kind of thing you are looking for.</p>
     </div>
   </div>
-  <div class="choice-grid choice-grid--primary">{primary_cards}</div>
+  <div class="choice-grid choice-grid--families">{category_cards}</div>
 </section>
-<section class="notice resource-boundary">
-  <strong>Listed, not endorsed.</strong> A listing means we have checked and described the resource. It does not mean we have proved it works or that it is right for you.
-</section>
-<section class="resource-needs" aria-labelledby="resource-needs-heading">
-  <h2 id="resource-needs-heading">Browse by area of life</h2>
-  <p class="section-intro">Choose the part of life closest to what you are dealing with. These routes take you to reviewed questions, topics and resources.</p>
-  <div class="choice-grid choice-grid--needs">{need_cards}</div>
-</section>
-<section class="resource-families" aria-labelledby="resource-families-heading">
-  <h2 id="resource-families-heading">Or browse a resource family</h2>
-  <p class="section-intro">Use this when you already know the kind of thing you want to inspect.</p>
-  <div class="choice-grid choice-grid--families">{family_cards}</div>
-</section>
+<p class="resource-listing-policy"><strong>ND Oracle describes resources; it does not recommend them.</strong> <a href="/about/#resource-listings">How listings work</a></p>
 <section class="resource-complete" aria-labelledby="resource-complete-heading">
-  <h2 id="resource-complete-heading">Need the complete catalogue?</h2>
-  <p class="section-intro">Nothing has been removed. The complete alphabetical catalogue is still available when you want it, without making everyone scan it first.</p>
-  <p><a class="standalone-action" href="/a-z/">Open the complete A–Z index</a></p>
+  <h2 id="resource-complete-heading">All resources</h2>
+  <p class="section-intro">If you know the name, use the alphabetical catalogue. Find remains available from the main navigation.</p>
+  <p><a class="standalone-action" href="/a-z/">Open the A–Z index</a></p>
   <details class="resource-catalogue">
     <summary><span>Show all {len(resources)} resources A–Z on this page</span></summary>
     <div class="resource-catalogue-body">{catalogue_groups}</div>
@@ -773,7 +799,7 @@ def _compat09__render_resources_index(resources: list[dict]) -> str:
 '''
     return _compat08__page_shell(
         'Resources',
-        'Find a useful starting point without scanning the whole catalogue. Start with what you need, where you live, the kind of resource, or your own words.',
+        'Choose a clear category: books, games, conditions and topics, apps and tools, or support and organisations.',
         body,
         current='resources',
         path='/resources/',
@@ -996,6 +1022,12 @@ def render_governed_resource_claims(resource: dict, evidence_map: dict[str, dict
     return '<section aria-labelledby="governed-resource-claims-heading"><h2 id="governed-resource-claims-heading">Governed claims and evidence</h2><section class="notice"><strong>A supported claim is not a recommendation or an individual decision.</strong> Read the exact wording, evidence context and open uncertainty together.</section>' + ''.join(rows) + '</section>'
 def render_resource(resource: dict, concept_map: dict[str, dict], questions: list[dict], evidence_map: dict[str, dict] | None=None) -> str:
     page = _compat09__render_resource(resource, concept_map, questions)
+    visual = _resource_visuals.render_resource_visual(resource)
+    if visual:
+        marker = '<section aria-labelledby="use-heading">'
+        if marker not in page:
+            raise ValueError(f"{resource['id']}: cannot locate resource detail anchor for recognition visual")
+        page = page.replace(marker, visual + marker, 1)
     if evidence_map is None:
         evidence_map = {item['id']: item for item in load_evidence()}
     claims = render_governed_resource_claims(resource, evidence_map)
@@ -1021,16 +1053,15 @@ def render_places_index(resources: list[dict]) -> str:
             continue
         links = ''.join((f"""<li><a href="/resources/{_compat06__esc(item['id'])}/">{_compat06__esc(item['name'])}</a></li>""" for item in items))
         sections.append(f'<section class="scope-group"><h2>{_compat06__esc(label)}</h2><p class="meta">{_compat06__esc(explanations[label])}</p><ul>{links}</ul></section>')
-    body = '<section class="scope-panel"><h2>Scope is part of the information</h2><p><strong>Navigation scope, not eligibility.</strong> Governed material keeps UK-wide, Great Britain, individual UK nations, Republic of Ireland, Australia, Canada, Ontario and cross-jurisdiction material distinct where the reviewed text supports that distinction.</p></section>' + ''.join(sections)
-    return _compat08__page_shell('Browse by geographic scope', 'See which governed resources are general and which depend on a particular country or jurisdiction before acting on them.', body, current='resources', path='/places/')
+    body = ''.join(sections)
+    return _compat08__page_shell('Browse by geographic scope', 'See which governed resources are general and which depend on a particular country or jurisdiction before acting on them.', body, current='resources', path='/places/', show_intro=False)
 FIND_JS = '(() => {\n  "use strict";\n  const input = document.getElementById("find-input");\n  const button = document.getElementById("find-button");\n  const output = document.getElementById("find-results");\n  const raw = document.getElementById("search-index").content.textContent;\n  const index = JSON.parse(raw);\n  const stop = new Set(["a","an","and","are","can","do","for","i","in","is","it","me","my","of","on","or","the","to","what","with","you","your"]);\n  const refusals = ["diagnose me","am i autistic","do i have autism","do i have adhd","what medication dose","what dose should i take","stop my medication","which medication should i take","tell me if i am autistic","tell me if i have adhd"];\n  const norm = s => (s || "").toLowerCase().match(/[a-z0-9]+/g)?.join(" ") || "";\n  const tokens = s => norm(s).split(" ").filter(t => t.length > 1 && !stop.has(t));\n  function score(query, record) {\n    const qn = norm(query); const qt = new Set(tokens(query));\n    const tn = norm(record.title); const bn = norm(record.body); let s = 0;\n    if (qn === tn) s += 120; else if (tn.includes(qn)) s += 55;\n    if (bn.includes(qn)) s += 20;\n    const tt = new Set(tokens(record.title)); const bt = new Set(tokens(record.body));\n    qt.forEach(t => { if (tt.has(t)) s += 12; if (bt.has(t)) s += 3; });\n    (record.intent || []).forEach(p => { const pn = norm(p); const pt = new Set(tokens(p));\n      if (qn === pn) s += 100; else if (pn.includes(qn) || qn.includes(pn)) s += 45;\n      qt.forEach(t => { if (pt.has(t)) s += 9; });\n    });\n    return s;\n  }\n  function run() {\n    const query = input.value.trim(); output.replaceChildren();\n    if (!query) { output.textContent = "Type a problem or question first."; return; }\n    const qn = norm(query);\n    if (refusals.some(p => qn.includes(p))) {\n      output.innerHTML = \'<h2>No governed answer</h2><p>ND Oracle cannot diagnose you, choose medication or make an individual clinical decision. Try browsing <a href="/questions/">Questions</a> or <a href="/needs/">needs</a> instead.</p>\';\n      return;\n    }\n    const ranked = index.map(r => [score(query,r),r]).filter(x => x[0] >= 12)\n      .sort((a,b) => b[0]-a[0] || a[1].kind.localeCompare(b[1].kind) || a[1].title.localeCompare(b[1].title)).slice(0,5);\n    if (!ranked.length) {\n      output.innerHTML = \'<h2>No governed answer yet</h2><p>The current catalogue does not have a strong enough route for that wording. Your query is not stored or sent to a search service. Try <a href="/needs/">browse by need</a>, <a href="/a-z/">A–Z</a>, or report a non-private content gap through <a href="/feedback/">feedback</a>.</p>\';\n      return;\n    }\n    const h = document.createElement("h2"); h.textContent = "Governed routes to inspect"; output.appendChild(h);\n    const note = document.createElement("p"); note.className="meta"; note.textContent="Ranked locally from reviewed ND Oracle content. Relevance is not recommendation."; output.appendChild(note);\n    const list = document.createElement("ol");\n    ranked.forEach(([s,r]) => { const li=document.createElement("li"); const a=document.createElement("a"); a.href=r.route; a.textContent=r.title; li.appendChild(a); const m=document.createElement("span"); m.className="meta"; m.textContent=` ${r.kind}`; li.appendChild(m); list.appendChild(li); });\n    output.appendChild(list);\n  }\n  button.addEventListener("click", run);\n  input.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); run(); } });\n})();\n'
 def render_find_page() -> str:
     index_json = html.escape(discovery.browser_index_json())
     body = f'''
-<section class="notice"><strong>Local governed discovery.</strong> Your words stay in this browser page. ND Oracle does not submit the query to a server, AI model, analytics system or search provider.</section>
 <section aria-labelledby="find-heading">
   <h2 id="find-heading">Describe the problem in your own words</h2>
-  <p class="section-intro">You do not need to know the diagnosis, topic name or service name. Results are governed routes to inspect, not recommendations.</p>
+  <p class="section-intro">You do not need to know the diagnosis, topic name or service name. Results are governed routes to inspect, not recommendations. If you already know the technical term, you can also <a href="/glossary/">look it up in the Glossary</a>.</p>
   <div class="find-control">
     <div class="find-field">
       <label for="find-input">Problem or question</label>
@@ -1165,9 +1196,7 @@ def render_questions_index_v2(questions: list[dict]) -> str:
         )
 
     body = f'''
-<section class="question-start" aria-labelledby="question-start-heading">
-  <h2 id="question-start-heading">Choose how to start</h2>
-  <p class="section-intro">You do not need to scan all {len(questions)} questions. Start with the route closest to what you already know.</p>
+<section class="question-start" aria-label="Question routes">
   <div class="choice-grid choice-grid--question-start">{primary_cards}</div>
 </section>
 <section class="notice question-boundary">
@@ -1288,20 +1317,6 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
     if questions is None:
         questions = _compat08__load_questions()
     validate_question_navigation(questions)
-    question_map = {item['id']: item for item in questions}
-    concept_ids = {item['id'] for item in concepts}
-    common_targets = [target for _question, target in _compat06__COMMON_QUESTIONS]
-    if concept_ids != set(common_targets) or len(common_targets) != len(set(common_targets)):
-        raise ValueError('V2.3 Home compatibility shortcuts must cover each current Concept exactly once')
-
-    practical_shortcuts = ''.join((
-        f'''<li><a href="/questions/{_compat06__esc(question_id)}/">{_compat06__esc(question_map[question_id]['question'])}</a></li>'''
-        for question_id in _compat09__V07_HOMEPAGE_COMPAT_QUESTION_IDS
-    ))
-    topic_shortcuts = ''.join((
-        f'''<li><a href="/understand/{_compat06__esc(target)}/">{_compat06__esc(question)}</a></li>'''
-        for question, target in _compat06__COMMON_QUESTIONS
-    ))
 
     primary = (
         ('/find/', 'Describe what is happening', 'Use your own words when you do not know the topic or service name.', 'Find a route', 'find'),
@@ -1346,19 +1361,10 @@ def render_home_v23(concepts: list[dict], resources: list[dict], questions: list
     <a href="/how-it-works/"><strong>How ND Oracle works</strong><span>See how evidence, uncertainty and resource listings are handled.</span></a>
   </div>
 </section>
-<section class="home-compatibility" aria-labelledby="home-more-shortcuts-heading">
-  <h2 id="home-more-shortcuts-heading">More question shortcuts</h2>
-  <p class="section-intro">These older entry points remain available without making the homepage show every shortcut at once.</p>
-  <details class="home-shortcuts">
-    <summary>Show more question shortcuts</summary>
-    <div class="home-shortcut-content">
-      <h3>Start with something you need to do</h3>
-      <ul>{practical_shortcuts}</ul>
-      <h3>Start with a question</h3>
-      <p>{len(concepts)} evidence-linked topics are available now.</p>
-      <ul>{topic_shortcuts}</ul>
-    </div>
-  </details>
+<section class="home-complete-route" aria-labelledby="home-complete-route-heading">
+  <h2 id="home-complete-route-heading">Want the whole catalogue?</h2>
+  <p class="section-intro">The homepage stays short on purpose. Open the complete A–Z when you want to scan every governed Topic, Question and Resource.</p>
+  <p><a href="/a-z/">Open the complete A–Z →</a></p>
 </section>
 '''
     return _compat08__page_shell(
@@ -1392,12 +1398,7 @@ def render_needs_index_v23(questions: list[dict]) -> str:
         )
 
     body = f'''
-<section class="notice">
-  <strong>Start with the need, not the label.</strong> These are navigation areas, not diagnoses or recommendations.
-</section>
-<section class="needs-overview" aria-labelledby="needs-overview-heading">
-  <h2 id="needs-overview-heading">Choose an area of life</h2>
-  <p class="section-intro">Open one area first. The full Questions, Resources and A–Z indexes remain available if you want everything.</p>
+<section class="needs-overview" aria-label="Areas of life">
   <div class="choice-grid choice-grid--needs-index">{''.join(cards)}</div>
 </section>
 <section class="home-orientation" aria-labelledby="needs-other-heading">
@@ -1423,6 +1424,7 @@ def render_needs_index_v23(questions: list[dict]) -> str:
         body,
         current='questions',
         path='/needs/',
+        show_intro=False,
     )
 
 def render_need_hub_v23(route: str, title: str, intro: str, group_names: set[str], questions: list[dict], concept_map: dict[str, dict], resource_map: dict[str, dict]) -> str:
@@ -1441,20 +1443,16 @@ def render_need_hub_v23(route: str, title: str, intro: str, group_names: set[str
 
     body = f'''
 <p class="back-link"><a href="/needs/">← All areas of life</a></p>
-<section class="need-hub need-hub--{_compat06__esc(tone)}" aria-labelledby="need-hub-start-heading">
-  <h2 id="need-hub-start-heading">Start here</h2>
-  <p>Open the practical Questions first. Topics and Resources are secondary routes for when you want more context or something to inspect.</p>
+<section class="need-primary need-hub need-hub--{_compat06__esc(tone)}" aria-labelledby="need-questions-heading">
+  <h2 id="need-questions-heading">Practical questions</h2>
+  <details class="need-disclosure need-disclosure--questions">
+    <summary><span>Show {len(selected)} practical questions</span></summary>
+    <div class="topic-list">{question_rows}</div>
+  </details>
   <p><a class="quiet-link" href="/find/">Not sure which question fits? Describe the problem instead →</a></p>
 </section>
 <section class="notice">
   <strong>Relevant to inspect, not recommended.</strong> This page groups reviewed routes. It does not infer a diagnosis, eligibility or the right support for an individual.
-</section>
-<section class="need-primary" aria-labelledby="need-questions-heading">
-  <h2 id="need-questions-heading">Practical questions</h2>
-  <details class="need-disclosure need-disclosure--questions">
-    <summary><span>Show {len(selected)} practical questions</span><span class="summary-meta">Start here</span></summary>
-    <div class="topic-list">{question_rows}</div>
-  </details>
 </section>
 <section class="need-secondary" aria-labelledby="need-secondary-heading">
   <h2 id="need-secondary-heading">More context when you want it</h2>
@@ -1477,6 +1475,7 @@ def render_need_hub_v23(route: str, title: str, intro: str, group_names: set[str
         body,
         current='questions',
         path=f'/{route}/',
+        show_intro=False,
     )
 
 _compat09__render_index = render_home_v23
@@ -1695,10 +1694,6 @@ def render_understand_index_v24(concepts: list[dict]) -> str:
     topics = ''.join(_compat06__topic_link(concept) for concept in concepts)
     mono_parts = V24_TERM_GUIDES['monotropism']
     body = f'''
-<section class="notice topic-orientation">
-  <strong>Orientation, not diagnosis.</strong> These pages explain concepts and preserve their evidence routes. They do not diagnose individuals or replace appropriate professional judgement.
-</section>
-
 <section class="topic-word-example" aria-labelledby="topic-word-example-heading">
   <h2 id="topic-word-example-heading">New word? Break it down</h2>
   <p>Unfamiliar words do not have to stay opaque. A word can be split into useful parts, then connected back to its full meaning.</p>
@@ -1809,6 +1804,7 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
     concepts = _compat06__load_concepts()
     resources = _compat06__load_resources()
     evidence = load_evidence()
+    _resource_visuals.publish_resource_visual_assets(destination, resources)
     concept_map = {item['id']: item for item in concepts}
     evidence_map = {item['id']: item for item in evidence}
     for resource in resources:
@@ -1955,6 +1951,869 @@ def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
     if generated_script.exists():
         generated_script.unlink()
     return destination
+
+
+
+# ---- ND-UX-V2 Navigation Contract v1 implementation ----
+#
+# These visitor-facing category routes are presentation aliases over existing
+# governed Concepts, Questions and Resources. They do not alter object
+# authority, ranking, discovery policy or the accepted 450-route production
+# sitemap identity. Until a later protected production-state reconciliation
+# explicitly changes that identity, the new aliases are public/directly
+# reachable but noindex and absent from the canonical sitemap.
+
+_NAV_V1_BASE_BUILD = build
+NAVIGATION_V1_CONTRACT_PATH = _compat06__ROOT / 'contracts' / 'navigation-v1.json'
+NAVIGATION_V1_ALIAS_ROUTES = (
+    '/conditions/',
+    '/books/',
+    '/apps-tools/',
+    '/organisations/',
+    '/work-education/',
+    '/health-diagnosis/',
+    '/daily-living/',
+    '/start/',
+    '/everyday-help/',
+    '/games-apps/',
+)
+NAVIGATION_V1_CONDITION_IDS = (
+    'adhd',
+    'autism',
+    'dyslexia',
+    'dyscalculia',
+    'developmental-coordination-disorder',
+    'developmental-language-disorder',
+    'learning-disability',
+    'tourette-syndrome',
+)
+NAVIGATION_V1_PRIMARY_CATEGORIES = (
+    ('neurodivergence', 'ADHD, autism & other neurodivergence', 'Learn about ADHD, autism and other kinds of neurodivergence.', '/conditions/'),
+    ('everyday-help', 'Help with everyday life', 'School, work, communication, sensory needs, relationships and daily tasks.', '/everyday-help/'),
+    ('books-media', 'Books, films & media', 'Stories and information about neurodivergent lives.', '/books-media/'),
+    ('games-apps', 'Games & apps', 'Games, apps and digital tools.', '/games-apps/'),
+    ('find-support', 'Find support', 'Groups, services, charities and other places to get help.', '/organisations/'),
+    ('ask-question', 'Ask a question', 'Not sure where to start? Begin with what is happening.', '/questions/'),
+)
+NAVIGATION_V1_PRIMARY_NAV = [('find', 'Search')]
+NAVIGATION_V1_APP_TOOL_CATEGORIES = {'app', 'tool', 'product'}
+NAVIGATION_V1_ORGANISATION_CATEGORIES = {'organisation', 'community', 'service'}
+
+
+def load_navigation_v1_contract() -> dict:
+    return json.loads(NAVIGATION_V1_CONTRACT_PATH.read_text(encoding='utf-8'))
+
+
+def _nav_v1_primary(current: str | None = None) -> str:
+    search_current = ' aria-current="page"' if current == 'find' else ''
+    return f'''<nav class="primary-nav" aria-label="Primary">
+  <a href="/find/"{search_current}>Search</a>
+  <details class="site-menu">
+    <summary>Menu</summary>
+    <div class="site-menu-panel">
+      <a href="/">Home</a>
+      <a href="/needs/">Areas of life</a>
+      <a href="/a-z/">Browse A–Z</a>
+      <a href="/places/">Browse by place</a>
+      <a href="/questions/">Questions</a>
+      <a href="/understand/">Topics</a>
+      <a href="/resources/">All resources</a>
+      <a href="/evidence/">Evidence</a>
+      <a href="/about/">About</a>
+      <a href="/accessibility/">Accessibility</a>
+    </div>
+  </details>
+</nav>'''
+
+
+_compat06__PRIMARY_NAV = NAVIGATION_V1_PRIMARY_NAV
+_compat06__nav = _nav_v1_primary
+PRIMARY_NAV = NAVIGATION_V1_PRIMARY_NAV
+nav = _nav_v1_primary
+
+
+def _nav_v1_utility_links() -> str:
+    return '''
+<nav class="nav-v1-utilities" aria-label="Change route">
+  <a href="/"><strong>Main choices</strong><span>Return to the six starting choices.</span></a>
+  <a href="/find/"><strong>Search</strong><span>Describe what you need in your own words.</span></a>
+  <a href="/a-z/"><strong>A–Z</strong><span>Find something when you already know its name.</span></a>
+</nav>
+'''
+
+
+def _nav_v1_category_card(href: str, label: str, description: str, tone: str) -> str:
+    return f'''<a class="choice-card home-category-card home-category-card--{_compat06__esc(tone)}" href="{_compat06__esc(href)}">
+  <strong>{_compat06__esc(label)}</strong>
+  <span>{_compat06__esc(description)}</span>
+</a>'''
+
+
+def render_home_navigation_v1(
+    concepts: list[dict],
+    resources: list[dict],
+    questions: list[dict] | None = None,
+) -> str:
+    if questions is None:
+        questions = _compat08__load_questions()
+    validate_question_navigation(questions)
+    cards = ''.join(
+        _nav_v1_category_card(target_route, label, purpose, 'primary')
+        for _item_id, label, purpose, target_route in NAVIGATION_V1_PRIMARY_CATEGORIES
+    )
+
+    body = f'''
+<section class="home-category-group home-category-group--primary" aria-label="Main choices">
+  <div class="choice-grid choice-grid--home-categories">{cards}</div>
+</section>
+<section class="home-secondary" aria-labelledby="home-secondary-heading">
+  <h2 id="home-secondary-heading" class="visually-hidden">More ways to explore</h2>
+  <details class="home-more">
+    <summary>More ways to explore</summary>
+    <div class="home-route-grid">
+      <a href="/needs/"><strong>Areas of life</strong><span>Browse practical areas such as work, communication and sensory needs.</span></a>
+      <a href="/a-z/"><strong>Browse A–Z</strong><span>Find something when you already know its name.</span></a>
+      <a href="/places/"><strong>Browse by place</strong><span>Find information for a country or area.</span></a>
+      <a href="/questions/"><strong>Questions</strong><span>Browse reviewed questions directly.</span></a>
+      <a href="/understand/"><strong>Topics</strong><span>Browse concepts and explanations.</span></a>
+      <a href="/resources/"><strong>All resources</strong><span>Open the complete resource catalogue.</span></a>
+    </div>
+  </details>
+</section>
+'''
+    return _compat08__page_shell(
+        'Understand neurodivergence without doing all the digging yourself.',
+        'Choose one place to start. Search is always available if you already know what you need.',
+        body,
+        path='/',
+    )
+
+
+def _nav_v1_resource_row(resource: dict) -> str:
+    category = _compat06__RESOURCE_CATEGORY_LABELS.get(
+        resource['category'],
+        resource['category'].replace('_', ' ').title(),
+    )
+    visual = _resource_visuals.render_resource_visual(resource)
+    visual_html = f'<div class="nav-v1-resource-visual">{visual}</div>' if visual else ''
+    return f'''<article class="resource-row nav-v1-resource-row">
+  {visual_html}
+  <div class="nav-v1-resource-copy">
+    <div class="resource-row-head">
+      <h3><a href="/resources/{_compat06__esc(resource['id'])}/">{_compat06__esc(resource['name'])}</a></h3>
+      <span class="resource-kind">{_compat06__esc(category)}</span>
+    </div>
+    <p>{_compat06__esc(resource['description'])}</p>
+    <p class="meta">For: {_compat06__esc(resource['audience_or_context'])}</p>
+  </div>
+</article>'''
+
+
+def _nav_v1_resource_category_page(
+    resources: list[dict],
+    *,
+    title: str,
+    intro: str,
+    route: str,
+    categories: set[str],
+    current: str | None = None,
+    indexable: bool = False,
+) -> str:
+    selected = sorted(
+        (item for item in resources if item['category'] in categories),
+        key=lambda item: item['name'].casefold(),
+    )
+    rows = ''.join(_nav_v1_resource_row(item) for item in selected)
+    body = f'''
+<p class="back-link"><a href="/">← Home</a></p>
+<section class="nav-v1-category-list" aria-labelledby="nav-v1-category-list-heading">
+  <h2 id="nav-v1-category-list-heading" class="visually-hidden">{_compat06__esc(title)}</h2>
+  <div class="resource-list">{rows}</div>
+</section>
+{_nav_v1_utility_links()}
+'''
+    return _compat08__page_shell(
+        title,
+        intro,
+        body,
+        current=current,
+        path=f'/{route}/',
+        indexable=indexable,
+    )
+
+
+def render_conditions_navigation_v1(concepts: list[dict]) -> str:
+    concept_map = {item['id']: item for item in concepts}
+    selected = [concept_map[item_id] for item_id in NAVIGATION_V1_CONDITION_IDS if item_id in concept_map]
+    rows = ''.join(_compat06__topic_link(item) for item in selected)
+    body = f'''
+<p class="back-link"><a href="/">← Home</a></p>
+<section class="nav-v1-category-list" aria-labelledby="condition-list-heading">
+  <h2 id="condition-list-heading" class="visually-hidden">Conditions</h2>
+  <div class="topic-list">{rows}</div>
+</section>
+<section class="notice">
+  <strong>Information, not diagnosis.</strong> These pages explain named conditions and keep evidence and uncertainty available. They do not diagnose a person.
+</section>
+<p><a href="/understand/">See related concepts and experiences →</a></p>
+{_nav_v1_utility_links()}
+'''
+    return _compat08__page_shell(
+        'Conditions',
+        'Plain-language information about named neurodevelopmental and neurodivergent conditions.',
+        body,
+        path='/conditions/',
+        indexable=False,
+    )
+
+
+def _nav_v1_question_groups_page(
+    questions: list[dict],
+    *,
+    title: str,
+    intro: str,
+    route: str,
+    group_names: tuple[str, ...],
+) -> str:
+    question_map = {item['id']: item for item in questions}
+    group_map = {name: ids for name, ids in QUESTION_GROUPS}
+    sections = []
+    for group_name in group_names:
+        ids = group_map.get(group_name, [])
+        rows = ''.join(
+            _compat08__question_link(question_map[question_id])
+            for question_id in ids
+            if question_id in question_map
+        )
+        sections.append(
+            f'''<details class="nav-v1-subgroup">
+  <summary><span>{_compat06__esc(group_name)}</span><span class="summary-meta">{len(ids)} routes</span></summary>
+  <div class="topic-list">{rows}</div>
+</details>'''
+        )
+    body = f'''
+<p class="back-link"><a href="/">← Home</a></p>
+<section class="nav-v1-practical-groups" aria-labelledby="nav-v1-practical-heading">
+  <h2 id="nav-v1-practical-heading" class="visually-hidden">{_compat06__esc(title)}</h2>
+  <div class="nav-v1-subgroup-stack">{''.join(sections)}</div>
+</section>
+<section class="notice">
+  <strong>Relevant to inspect, not recommended.</strong> These links group reviewed routes; they do not infer diagnosis, eligibility or the right support for an individual.
+</section>
+{_nav_v1_utility_links()}
+'''
+    return _compat08__page_shell(
+        title,
+        intro,
+        body,
+        path=f'/{route}/',
+        indexable=False,
+    )
+
+
+def render_everyday_help_navigation_v1() -> str:
+    choices = (
+        ('/needs/daily-life/', 'Daily life', 'Tasks, routines, technology and ordinary activities.'),
+        ('/needs/communication/', 'Communication', 'Phone calls, processing time, speaking, AAC and communication access.'),
+        ('/needs/sensory-environment/', 'Sensory', 'Sound, light, touch, overload and changing the environment.'),
+        ('/needs/education-study/', 'School / education', 'Study, SEND, adjustments and education access.'),
+        ('/needs/work/', 'Work', 'Workplace support, adjustments, interviews and job-search support.'),
+        ('/needs/health-wellbeing/', 'Health & wellbeing', 'Health access, anxiety, sleep, burnout and wellbeing routes.'),
+        ('/needs/relationships-family/', 'Relationships & family', 'Family life, parenting, friendships and relationships.'),
+        ('/needs/assessment-diagnosis/', 'Assessment & diagnosis', 'Assessment and diagnosis routes without turning ND Oracle into a test.'),
+    )
+    cards = ''.join(
+        _nav_v1_category_card(href, label, description, 'practical')
+        for href, label, description in choices
+    )
+    body = f'''
+<p class="back-link"><a href="/">← Main choices</a></p>
+<section class="home-category-group home-category-group--practical" aria-label="Everyday-life choices">
+  <div class="choice-grid choice-grid--home-categories">{cards}</div>
+</section>
+{_nav_v1_utility_links()}
+'''
+    return _compat08__page_shell(
+        'Help with everyday life',
+        'Practical routes for daily life, communication, sensory needs, school, work, health and relationships.',
+        body,
+        path='/everyday-help/',
+        indexable=False,
+    )
+
+
+def render_start_navigation_v1() -> str:
+    choices = (
+        ('/conditions/', 'Something about me', 'Start with named conditions and plain-language explanations.'),
+        ('/daily-living/', 'Something I need help with', 'Start with an everyday-life area such as communication, food, sleep, sensory needs, money or travel.'),
+        ('/resources/', 'Something to read, watch or use', 'Choose books, games, apps, tools and other governed resources.'),
+        ('/organisations/', 'Somewhere or someone that can help', 'Find organisations and peer groups without scanning the whole catalogue.'),
+    )
+    cards = ''.join(
+        _nav_v1_category_card(href, label, description, 'start')
+        for href, label, description in choices
+    )
+    body = f'''
+<p class="back-link"><a href="/">← Home</a></p>
+<section class="home-category-group home-category-group--start" aria-label="Starting choices">
+  <div class="choice-grid choice-grid--start">{cards}</div>
+</section>
+{_nav_v1_utility_links()}
+'''
+    return _compat08__page_shell(
+        'Not sure where to start?',
+        'Four simple starting points when you do not know the site structure or the right term.',
+        body,
+        path='/start/',
+        indexable=False,
+    )
+
+
+def render_resources_navigation_v1(resources: list[dict]) -> str:
+    alpha_rows: dict[str, list[str]] = {}
+    for resource in resources:
+        first = resource['name'].strip()[:1].upper()
+        letter = first if first.isalnum() else '#'
+        alpha_rows.setdefault(letter, []).append(_compat06__resource_link(resource))
+    catalogue_groups = ''.join(
+        f'''<section class="resource-alpha-group" aria-labelledby="resource-letter-{_compat06__esc(letter.lower() if letter != '#' else 'other')}">
+  <h3 id="resource-letter-{_compat06__esc(letter.lower() if letter != '#' else 'other')}">{_compat06__esc(letter)}</h3>
+  <div class="resource-list">{''.join(rows)}</div>
+</section>'''
+        for letter, rows in alpha_rows.items()
+    )
+    categories = (
+        ('/books/', 'Books', 'Books with context, access notes and limitations kept visible.'),
+        ('/games/', 'Games', 'Games with play characteristics, accessibility and possible poor fit kept visible.'),
+        ('/conditions/', 'Conditions', 'Plain-language information about named conditions.'),
+        ('/apps-tools/', 'Apps & tools', 'Apps and practical tools that may help with access or everyday tasks.'),
+        ('/organisations/', 'Organisations & peer groups', 'Organisations and peer communities with scope and limitations visible.'),
+    )
+    cards = ''.join(
+        f'''<a class="choice-card choice-card--family" href="{_compat06__esc(href)}">
+  <strong>{_compat06__esc(label)}</strong>
+  <span>{_compat06__esc(description)}</span>
+</a>'''
+        for href, label, description in categories
+    )
+    body = f'''
+<p class="back-link"><a href="/">← Home</a></p>
+<section class="resource-start" aria-label="Resource categories">
+  <div class="choice-grid choice-grid--families">{cards}</div>
+</section>
+<p class="resource-listing-policy"><strong>ND Oracle describes resources; it does not recommend them.</strong> <a href="/about/#resource-listings">How listings work</a></p>
+<section class="resource-complete" aria-labelledby="resource-complete-heading">
+  <h2 id="resource-complete-heading">All resources</h2>
+  <p class="section-intro">If you know the name, use A–Z. The complete resource catalogue remains available here as a specialist route.</p>
+  <p><a class="standalone-action" href="/a-z/">Open the A–Z index</a></p>
+  <details class="resource-catalogue">
+    <summary><span>Show all {len(resources)} resources A–Z on this page</span></summary>
+    <div class="resource-catalogue-body">{catalogue_groups}</div>
+  </details>
+</section>
+'''
+    return _compat08__page_shell(
+        'Resources',
+        'Choose books, games, conditions, apps and tools, or organisations and peer groups without learning the catalogue structure first.',
+        body,
+        current='resources',
+        path='/resources/',
+    )
+
+
+def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
+    destination = _NAV_V1_BASE_BUILD(output_dir)
+    concepts = _compat06__load_concepts()
+    resources = _compat06__load_resources()
+    questions = _compat08__load_questions()
+
+    (destination / 'index.html').write_text(
+        render_home_navigation_v1(concepts, resources, questions),
+        encoding='utf-8',
+    )
+    _compat06__write_route(destination, 'resources', render_resources_navigation_v1(resources))
+
+    _compat06__write_route(destination, 'conditions', render_conditions_navigation_v1(concepts))
+    _compat06__write_route(destination, 'everyday-help', render_everyday_help_navigation_v1())
+    _compat06__write_route(
+        destination,
+        'games-apps',
+        _nav_v1_resource_category_page(
+            resources,
+            title='Games & apps',
+            intro='Games, apps and digital tools with context, access notes and limitations kept visible.',
+            route='games-apps',
+            categories={'game'} | NAVIGATION_V1_APP_TOOL_CATEGORIES,
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'books',
+        _nav_v1_resource_category_page(
+            resources,
+            title='Books',
+            intro='Governed book listings with recognition images where ND Oracle has a cleared lawful asset.',
+            route='books',
+            categories={'book'},
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'games',
+        _nav_v1_resource_category_page(
+            resources,
+            title='Games',
+            intro='Governed game listings described for inspection rather than as treatment or recommendation.',
+            route='games',
+            categories={'game'},
+            current='games',
+            indexable=True,
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'apps-tools',
+        _nav_v1_resource_category_page(
+            resources,
+            title='Apps & tools',
+            intro='Governed apps and practical tools with access, limitations and conflicts kept visible.',
+            route='apps-tools',
+            categories=NAVIGATION_V1_APP_TOOL_CATEGORIES,
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'organisations',
+        _nav_v1_resource_category_page(
+            resources,
+            title='Find support',
+            intro='Groups, services, charities and peer communities with scope, access and limitations kept visible.',
+            route='organisations',
+            categories=NAVIGATION_V1_ORGANISATION_CATEGORIES,
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'work-education',
+        _nav_v1_question_groups_page(
+            questions,
+            title='Work & education',
+            intro='Practical routes for work, study, adjustments, education and access.',
+            route='work-education',
+            group_names=('Work', 'Education & study'),
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'health-diagnosis',
+        _nav_v1_question_groups_page(
+            questions,
+            title='Health & diagnosis',
+            intro='Assessment, diagnosis, healthcare access and health-support routes without turning ND Oracle into a diagnostic service.',
+            route='health-diagnosis',
+            group_names=('Assessment & diagnosis', 'Healthcare access', 'Health & wellbeing'),
+        ),
+    )
+    _compat06__write_route(
+        destination,
+        'daily-living',
+        _nav_v1_question_groups_page(
+            questions,
+            title='Daily living',
+            intro='Practical everyday-life routes covering tasks, sensory needs, communication, food, sleep, money and travel.',
+            route='daily-living',
+            group_names=(
+                'Daily life & technology',
+                'Sensory & environment',
+                'Communication',
+                'Food & eating',
+                'Sleep',
+                'Money & administration',
+                'Mobility & travel',
+            ),
+        ),
+    )
+    _compat06__write_route(destination, 'start', render_start_navigation_v1())
+
+    for route in NAVIGATION_V1_ALIAS_ROUTES:
+        generated = destination / route.strip('/') / 'index.html'
+        if not generated.is_file():
+            raise ValueError(f'Navigation v1 alias route was not generated: {route}')
+        text = generated.read_text(encoding='utf-8')
+        if 'name="robots" content="noindex, follow"' not in text:
+            raise ValueError(f'Navigation v1 alias route must remain noindex until protected route-count reconciliation: {route}')
+
+    games_page = (destination / 'games' / 'index.html').read_text(encoding='utf-8')
+    if 'name="robots" content="noindex, follow"' in games_page:
+        raise ValueError('/games/ must remain indexable')
+
+    return destination
+
+
+# ---- Terminology accessibility v1: canonical glossary + first meaningful use ----
+from scripts import terminology as _terminology_v1
+import html as _terminology_html
+import re as _terminology_re
+
+_TERMINOLOGY_V1_BASE_BUILD = build
+_TERMINOLOGY_V1_INDEX_EXAMPLE_RE = _terminology_re.compile(
+    r'\n<section class="topic-word-example".*?</section>\n',
+    _terminology_re.S,
+)
+_TERMINOLOGY_V1_OLD_GUIDE_RE = _terminology_re.compile(
+    r'\n<section class="word-guide".*?</section>\n',
+    _terminology_re.S,
+)
+_TERMINOLOGY_V1_PARAGRAPH_RE = _terminology_re.compile(
+    r'<p(?P<attrs>[^>]*)>(?P<body>.*?)</p>',
+    _terminology_re.S,
+)
+_TERMINOLOGY_V1_TAG_RE = _terminology_re.compile(r'<[^>]+>')
+
+
+def _terminology_v1_text(fragment: str) -> str:
+    return _terminology_html.unescape(
+        _TERMINOLOGY_V1_TAG_RE.sub(' ', fragment)
+    ).replace('\xa0', ' ')
+
+
+def _terminology_v1_matches(entry: dict, text: str) -> bool:
+    terms = [entry['term']] + list(entry.get('aliases', []))
+    full_form = entry.get('full_form')
+    if full_form:
+        terms.append(full_form)
+    for term in terms:
+        if not term:
+            continue
+        if term.isupper() and 2 <= len(term) <= 8:
+            pattern = (
+                r'(?<![A-Za-z0-9])'
+                + _terminology_re.escape(term)
+                + r'(?![A-Za-z0-9])'
+            )
+            if _terminology_re.search(pattern, text):
+                return True
+        else:
+            pattern = (
+                r'(?<![A-Za-z])'
+                + _terminology_re.escape(term)
+                + r'(?![A-Za-z])'
+            )
+            if _terminology_re.search(pattern, text, _terminology_re.I):
+                return True
+    return False
+
+
+def _terminology_v1_parts(entry: dict) -> tuple[str, str]:
+    build = (
+        '<span class="word-build">'
+        + '<span class="word-part-separator"> – </span>'.join(
+            f'<strong class="word-part">{_compat06__esc(part["label"])}</strong>'
+            for part in entry['parts']
+        )
+        + '</span>'
+    )
+    meanings = (
+        '<dl class="word-meanings">'
+        + ''.join(
+            f'<div><dt>{_compat06__esc(part["label"])}</dt>'
+            f'<dd>{_compat06__esc(part["meaning"])}</dd></div>'
+            for part in entry['parts']
+        )
+        + '</dl>'
+    )
+    return build, meanings
+
+
+def _terminology_v1_inline_entry(entry: dict) -> str:
+    build, meanings = _terminology_v1_parts(entry)
+    return f'''<div class="terminology-entry" data-term-id="{_compat06__esc(entry['id'])}">
+  <p class="word-guide-title"><strong>{_compat06__esc(entry['term'])}</strong> {build}</p>
+  {meanings}
+  <p class="word-guide-meaning"><strong>What it means here:</strong> {_compat06__esc(entry['meaning'])}</p>
+  <p class="terminology-links"><a href="/glossary/#term-{_compat06__esc(entry['id'])}">See this term in the glossary</a> · <a href="{_compat06__esc(entry['related_routes'][0])}">Related ND Oracle page</a></p>
+</div>'''
+
+
+def _terminology_v1_group(entries: list[dict], serial: int) -> str:
+    title = (
+        'New words? Break them down'
+        if len(entries) > 1
+        else 'New word? Break it down'
+    )
+    items = ''.join(
+        _terminology_v1_inline_entry(entry)
+        for entry in sorted(entries, key=lambda item: item['term'].casefold())
+    )
+    return f'''
+<section class="word-guide terminology-guide" aria-labelledby="terminology-guide-{serial}">
+  <h2 id="terminology-guide-{serial}">{title}</h2>
+  {items}
+  <p class="meta">The parts and expansions are learning and memory aids. The whole-term explanation above is the meaning to use here; word history and modern meaning do not always match exactly.</p>
+</section>
+'''
+
+
+def _terminology_v1_first_use(page: str, entries: list[dict]) -> str:
+    if '<main' not in page or '</main>' not in page:
+        return page
+    main_start = page.index('<main')
+    main_end = page.index('</main>', main_start)
+    main = page[main_start:main_end]
+    paragraphs = list(_TERMINOLOGY_V1_PARAGRAPH_RE.finditer(main))
+    core_match = _terminology_re.search(
+        r'<h1>(?P<title>.*?)</h1>.*?<p class="lede">(?P<lede>.*?)</p>',
+        main,
+        _terminology_re.S,
+    )
+    core_text = ''
+    if core_match:
+        core_text = _terminology_v1_text(
+            core_match.group('title') + ' ' + core_match.group('lede')
+        )
+
+    eligible: list[tuple[int, object, str]] = []
+    for index, paragraph in enumerate(paragraphs):
+        attrs = paragraph.group('attrs')
+        if any(
+            token in attrs
+            for token in (
+                'class="meta',
+                'class="back-link',
+                'class="terminology',
+            )
+        ):
+            continue
+        before = main[:paragraph.start()]
+        if before.rfind('<details') > before.rfind('</details>'):
+            continue
+        eligible.append(
+            (
+                index,
+                paragraph,
+                _terminology_v1_text(paragraph.group('body')),
+            )
+        )
+
+    placements: dict[int, list[dict]] = {}
+    for entry in entries:
+        matching = [
+            (index, paragraph)
+            for index, paragraph, text in eligible
+            if _terminology_v1_matches(entry, text)
+        ]
+        if not matching:
+            continue
+        is_core_term = _terminology_v1_matches(entry, core_text)
+        if not is_core_term and len(matching) < 2:
+            continue
+        first_index, _paragraph = matching[0]
+        placements.setdefault(first_index, []).append(entry)
+
+    if not placements:
+        return page
+
+    offset = 0
+    for serial, index in enumerate(sorted(placements), 1):
+        paragraph = paragraphs[index]
+        insertion = _terminology_v1_group(placements[index], serial)
+        position = paragraph.end() + offset
+        main = main[:position] + insertion + main[position:]
+        offset += len(insertion)
+    return page[:main_start] + main + page[main_end:]
+
+
+def _terminology_v1_glossary(entries: list[dict]) -> str:
+    grouped: dict[str, list[dict]] = {}
+    for entry in sorted(entries, key=lambda item: item['term'].casefold()):
+        letter = next(
+            (char.upper() for char in entry['term'] if char.isalnum()),
+            '#',
+        )
+        grouped.setdefault(letter, []).append(entry)
+
+    jump = ' '.join(
+        f'<a href="#glossary-{_compat06__esc(letter.lower())}">'
+        f'{_compat06__esc(letter)}</a>'
+        for letter in grouped
+    )
+    sections = []
+    for letter, items in grouped.items():
+        articles = []
+        for entry in items:
+            build, meanings = _terminology_v1_parts(entry)
+            aliases = []
+            seen_aliases = set()
+            for value in [entry.get('full_form')] + list(entry.get('aliases', [])):
+                if not value:
+                    continue
+                key = value.casefold()
+                if key in seen_aliases:
+                    continue
+                seen_aliases.add(key)
+                aliases.append(value)
+            alias_html = ''
+            if aliases:
+                alias_html = (
+                    '<p class="meta"><strong>Also:</strong> '
+                    + ', '.join(_compat06__esc(alias) for alias in aliases)
+                    + '</p>'
+                )
+            articles.append(
+                f'''<article class="glossary-entry" id="term-{_compat06__esc(entry['id'])}">
+  <h3>{_compat06__esc(entry['term'])}</h3>
+  {alias_html}
+  <p class="word-guide-title">{build}</p>
+  {meanings}
+  <p class="word-guide-meaning"><strong>What it means here:</strong> {_compat06__esc(entry['meaning'])}</p>
+  <p><a href="{_compat06__esc(entry['related_routes'][0])}">Open the related ND Oracle page →</a></p>
+</article>'''
+            )
+        sections.append(
+            f'''<section class="glossary-letter" aria-labelledby="glossary-{_compat06__esc(letter.lower())}">
+  <h2 id="glossary-{_compat06__esc(letter.lower())}">{_compat06__esc(letter)}</h2>
+  {''.join(articles)}
+</section>'''
+        )
+
+    body = f'''<p class="back-link"><a href="/">← Home</a></p>
+<section class="glossary-intro" aria-label="Glossary navigation">
+  <p class="meta">Use your browser's Find in page command to search this glossary. Word parts are learning aids, not substitutes for the whole meaning.</p>
+  <nav class="glossary-jump" aria-label="Glossary letters">{jump}</nav>
+</section>
+{''.join(sections)}'''
+    return _compat08__page_shell(
+        'Glossary',
+        f'{len(entries)} technical and unfamiliar terms explained in plain language and broken into useful parts.',
+        body,
+        path='/glossary/',
+        indexable=False,
+    )
+
+
+def _terminology_v1_patch_nav(page: str) -> str:
+    if '<a href="/glossary/">Glossary</a>' in page:
+        return page
+    return page.replace(
+        '<a href="/about/"',
+        '<a href="/glossary/">Glossary</a><a href="/about/"',
+    )
+
+
+def _terminology_v1_patch_understand_index(page: str) -> str:
+    page = _TERMINOLOGY_V1_INDEX_EXAMPLE_RE.sub('\n', page, count=1)
+    marker = '<section class="topic-groups"'
+    section = '''<section class="terminology-route" aria-labelledby="terminology-route-heading">
+  <h2 id="terminology-route-heading">Unfamiliar word?</h2>
+  <p>Technical terms are explained where you meet them. You can also browse all current terminology in the <a href="/glossary/">Glossary</a>.</p>
+</section>
+
+'''
+    if marker in page and 'terminology-route-heading' not in page:
+        page = page.replace(marker, section + marker, 1)
+    return page
+
+
+def _terminology_v1_patch_az(page: str, entries: list[dict]) -> str:
+    if 'glossary-a-z-heading' in page:
+        return page
+    links = ''.join(
+        f'<li><a href="/glossary/#term-{_compat06__esc(entry["id"])}">'
+        f'{_compat06__esc(entry["term"])}</a> '
+        f'<span class="meta">Glossary</span></li>'
+        for entry in sorted(entries, key=lambda item: item['term'].casefold())
+    )
+    section = f'''<section class="glossary-a-z" aria-labelledby="glossary-a-z-heading">
+  <h2 id="glossary-a-z-heading">Glossary terms</h2>
+  <p>Technical and unfamiliar terms have one canonical explanation in the glossary.</p>
+  <ul>{links}</ul>
+</section>
+'''
+    return page.replace('</main>', section + '</main>', 1)
+
+
+def build(output_dir=_compat06__DEFAULT_OUTPUT_DIR):
+    destination = _TERMINOLOGY_V1_BASE_BUILD(output_dir)
+    registry = _terminology_v1.load_registry()
+    _terminology_v1.validate_registry(registry)
+    entries = registry['entries']
+
+    understand_index = destination / 'understand' / 'index.html'
+    understand_index.write_text(
+        _terminology_v1_patch_understand_index(
+            understand_index.read_text(encoding='utf-8')
+        ),
+        encoding='utf-8',
+    )
+
+    for path in (destination / 'understand').glob('*/index.html'):
+        text = _TERMINOLOGY_V1_OLD_GUIDE_RE.sub(
+            '\n',
+            path.read_text(encoding='utf-8'),
+        )
+        path.write_text(text, encoding='utf-8')
+
+    reading_pages = []
+    reading_pages.extend((destination / 'understand').glob('*/index.html'))
+    reading_pages.extend((destination / 'questions').glob('*/index.html'))
+    reading_pages.extend((destination / 'resources').glob('*/index.html'))
+    for path in reading_pages:
+        text = path.read_text(encoding='utf-8')
+        path.write_text(
+            _terminology_v1_first_use(text, entries),
+            encoding='utf-8',
+        )
+
+    _compat06__write_route(
+        destination,
+        'glossary',
+        _terminology_v1_glossary(entries),
+    )
+    glossary_page = destination / 'glossary' / 'index.html'
+    if 'name="robots" content="noindex, follow"' not in glossary_page.read_text(
+        encoding='utf-8'
+    ):
+        raise ValueError(
+            '/glossary/ must remain noindex until protected route-count reconciliation'
+        )
+
+    az = destination / 'a-z' / 'index.html'
+    az.write_text(
+        _terminology_v1_patch_az(
+            az.read_text(encoding='utf-8'),
+            entries,
+        ),
+        encoding='utf-8',
+    )
+
+    for path in destination.rglob('*.html'):
+        text = path.read_text(encoding='utf-8')
+        patched = _terminology_v1_patch_nav(text)
+        if patched != text:
+            path.write_text(patched, encoding='utf-8')
+
+    accessibility = destination / 'accessibility' / 'index.html'
+    accessibility_text = accessibility.read_text(encoding='utf-8')
+    if 'terminology-accessibility-heading' not in accessibility_text:
+        section = '''<section aria-labelledby="terminology-accessibility-heading">
+  <h2 id="terminology-accessibility-heading">Unfamiliar language</h2>
+  <p>Technical or unfamiliar terms are explained near their first meaningful use on reading pages and collected in one <a href="/glossary/">Glossary</a>. The whole-term meaning is always shown; word parts and acronym expansions are learning aids.</p>
+</section>'''
+        accessibility.write_text(
+            accessibility_text.replace('</main>', section + '</main>', 1),
+            encoding='utf-8',
+        )
+
+    if '/glossary/' in sitemap_paths(
+        _compat06__load_concepts(),
+        _compat06__load_resources(),
+        _compat08__load_questions(),
+    ):
+        raise ValueError(
+            '/glossary/ must not enter the accepted canonical sitemap before protected reconciliation'
+        )
+    return destination
+render_index = render_home_navigation_v1
 
 
 # ---- command-line entrypoint ----

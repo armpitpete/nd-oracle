@@ -1,0 +1,446 @@
+#!/usr/bin/env bash
+set -euo pipefail
+command -v google-chrome
+mkdir -p ux-evidence/baseline/{desktop,narrow} ux-evidence/candidate/{desktop,narrow,responsive}
+
+python -m http.server 8765 --directory baseline/dist >/tmp/nd-baseline-http.log 2>&1 &
+BASE_PID=$!
+python -m http.server 8766 --directory candidate/dist >/tmp/nd-candidate-http.log 2>&1 &
+CANDIDATE_PID=$!
+trap 'kill "$BASE_PID" "$CANDIDATE_PID" 2>/dev/null || true' EXIT
+sleep 1
+
+EVIDENCE_DETAIL="$(find candidate/dist/evidence -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | LC_ALL=C sort | head -n1)"
+test -n "$EVIDENCE_DETAIL"
+
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200 --dump-dom \
+  "http://127.0.0.1:8765/find-no-result/" > /tmp/baseline-find-no-result.html
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200 --dump-dom \
+  "http://127.0.0.1:8766/find-no-result/" > /tmp/candidate-find-no-result.html
+grep -q "No governed answer yet" /tmp/baseline-find-no-result.html
+grep -q "No governed answer yet" /tmp/candidate-find-no-result.html
+
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200 --dump-dom \
+  "http://127.0.0.1:8765/find-results/" > /tmp/baseline-find-results.html
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200 --dump-dom \
+  "http://127.0.0.1:8766/find-results/" > /tmp/candidate-find-results.html
+grep -q "Governed routes to inspect" /tmp/baseline-find-results.html
+grep -q "Governed routes to inspect" /tmp/candidate-find-results.html
+grep -q 'class="scope-badge"' /tmp/candidate-find-results.html
+
+grep -q 'class="resource-catalogue"' candidate/dist/resources/index.html
+! grep -q 'class="resource-catalogue" open' candidate/dist/resources/index.html
+grep -q '<h1>Resources</h1>' candidate/dist/resources/index.html
+! grep -q 'choice-card choice-card--primary' candidate/dist/resources/index.html
+! grep -q 'choice-card choice-card--need' candidate/dist/resources/index.html
+test "$(grep -o 'choice-card choice-card--family' candidate/dist/resources/index.html | wc -l)" -eq 5
+grep -q 'href="/books/"' candidate/dist/resources/index.html
+grep -q '>Books<' candidate/dist/resources/index.html
+grep -q 'href="/games/"' candidate/dist/resources/index.html
+grep -q '>Games<' candidate/dist/resources/index.html
+grep -q 'href="/conditions/"' candidate/dist/resources/index.html
+grep -q '>Conditions<' candidate/dist/resources/index.html
+grep -q 'href="/apps-tools/"' candidate/dist/resources/index.html
+grep -q 'Apps &amp; tools' candidate/dist/resources/index.html
+grep -q 'href="/organisations/"' candidate/dist/resources/index.html
+grep -q 'Organisations &amp; peer groups' candidate/dist/resources/index.html
+
+grep -q 'Start with what you notice' candidate/dist/understand/index.html
+grep -q 'Unfamiliar word?' candidate/dist/understand/index.html
+grep -q 'href="/glossary/"' candidate/dist/understand/index.html
+! grep -q 'class="topic-word-example"' candidate/dist/understand/index.html
+grep -q 'class="topic-group-grid"' candidate/dist/understand/index.html
+grep -q 'class="recognition-list"' candidate/dist/understand/index.html
+grep -q 'class="word-guide terminology-guide"' candidate/dist/understand/monotropism/index.html
+grep -q 'data-term-id="monotropism"' candidate/dist/understand/monotropism/index.html
+grep -q 'class="word-part">mono</strong>' candidate/dist/understand/monotropism/index.html
+grep -q 'class="word-part">trop</strong>' candidate/dist/understand/monotropism/index.html
+grep -q 'class="word-part">ism</strong>' candidate/dist/understand/monotropism/index.html
+
+grep -q '<h1>Questions</h1>' candidate/dist/questions/index.html
+test "$(grep -o 'question-start-card' candidate/dist/questions/index.html | wc -l)" -eq 3
+test "$(grep -o '<details class="question-group"' candidate/dist/questions/index.html | wc -l)" -eq 19
+! grep -q '<details class="question-group" open' candidate/dist/questions/index.html
+test "$(grep -o '<article class="topic-row">' candidate/dist/questions/index.html | wc -l)" -eq 175
+
+grep -q 'choice-grid choice-grid--home-categories' candidate/dist/index.html
+grep -q 'ADHD, autism &amp; other neurodivergence' candidate/dist/index.html
+grep -q 'Help with everyday life' candidate/dist/index.html
+grep -q 'Books, films &amp; media' candidate/dist/index.html
+grep -q 'Games &amp; apps' candidate/dist/index.html
+grep -q '>Find support<' candidate/dist/index.html
+grep -q '>Ask a question<' candidate/dist/index.html
+test "$(grep -o 'choice-card home-category-card home-category-card--primary' candidate/dist/index.html | wc -l)" -eq 6
+grep -q 'href="/conditions/"' candidate/dist/index.html
+grep -q 'href="/everyday-help/"' candidate/dist/index.html
+grep -q 'href="/books-media/"' candidate/dist/index.html
+grep -q 'href="/games-apps/"' candidate/dist/index.html
+grep -q 'href="/organisations/"' candidate/dist/index.html
+grep -q 'href="/questions/"' candidate/dist/index.html
+grep -q '<details class="home-more">' candidate/dist/index.html
+! grep -q '<details class="home-more" open' candidate/dist/index.html
+grep -q '>More ways to explore<' candidate/dist/index.html
+! grep -q 'What do you need right now?' candidate/dist/index.html
+! grep -q 'I want something practical' candidate/dist/index.html
+! grep -q '<article class="topic-row">' candidate/dist/index.html
+grep -q 'href="/understand/autism/"' candidate/dist/conditions/index.html
+grep -q 'href="/resources/a-kind-of-spark/"' candidate/dist/books/index.html
+grep -q 'src="/resource-media/a-kind-of-spark.jpg"' candidate/dist/books/index.html
+grep -q 'href="/resources/townscaper/"' candidate/dist/games/index.html
+grep -q 'src="/resource-media/townscaper.jpg"' candidate/dist/games/index.html
+grep -q 'href="/resources/focusmate/"' candidate/dist/apps-tools/index.html
+grep -q 'src="/resource-media/focusmate.png"' candidate/dist/apps-tools/index.html
+grep -q 'href="/resources/autistica/"' candidate/dist/organisations/index.html
+grep -q 'href="/questions/workplace-support-great-britain/"' candidate/dist/work-education/index.html
+grep -q 'href="/questions/adult-adhd-assessment-england/"' candidate/dist/health-diagnosis/index.html
+grep -q 'href="/questions/phone-calls-are-difficult/"' candidate/dist/daily-living/index.html
+test "$(grep -o 'home-category-card--start' candidate/dist/start/index.html | wc -l)" -eq 4
+test "$(grep -o 'choice-card need-index-card' candidate/dist/needs/index.html | wc -l)" -eq 8
+! grep -q '<article class="topic-row">' candidate/dist/needs/index.html
+grep -q 'need-hub--communication' candidate/dist/needs/communication/index.html
+grep -q 'need-hub--health' candidate/dist/needs/health-wellbeing/index.html
+grep -q '<details class="needs-complete-index" open>' candidate/dist/needs-complete-open/index.html
+test "$(grep -o 'href="/questions/' candidate/dist/needs-complete-open/index.html | wc -l)" -ge 175
+test "$(grep -o '<details class="need-disclosure' candidate/dist/needs/communication/index.html | wc -l)" -eq 3
+! grep -q '<details class="need-disclosure need-disclosure--questions" open' candidate/dist/needs/communication/index.html
+
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/need-communication-layout/" > /tmp/candidate-need-communication-layout.html
+python - <<'PY'
+import re
+from pathlib import Path
+text = Path("/tmp/candidate-need-communication-layout.html").read_text(encoding="utf-8")
+sw = re.search(r'data-layout-scroll-width="(\d+)"', text)
+cw = re.search(r'data-layout-client-width="(\d+)"', text)
+if not sw or not cw:
+    raise SystemExit("Missing V2.3 narrow-layout width probe")
+scroll_width = int(sw.group(1))
+client_width = int(cw.group(1))
+print(f"Need communication narrow width: scroll={scroll_width}px client={client_width}px")
+if scroll_width > client_width:
+    raise SystemExit(
+        f"V2.3 need-hub horizontal overflow: scroll={scroll_width}px client={client_width}px"
+    )
+PY
+
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8765/questions-measure/" > /tmp/baseline-questions-measure.html
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/questions-measure/" > /tmp/candidate-questions-measure.html
+
+python - <<'PY'
+import re
+from pathlib import Path
+
+def height(path):
+    text = Path(path).read_text(encoding="utf-8")
+    match = re.search(r'data-scroll-height="(\d+)"', text)
+    if not match:
+        raise SystemExit(f"Missing scroll-height measurement in {path}")
+    return int(match.group(1))
+
+baseline = height("/tmp/baseline-questions-measure.html")
+candidate = height("/tmp/candidate-questions-measure.html")
+ratio = candidate / baseline
+print(f"Questions narrow non-regression height: baseline={baseline}px candidate={candidate}px ratio={ratio:.4f}")
+if candidate > baseline * 1.03:
+    raise SystemExit(
+        f"V2.3 materially regressed the accepted Questions page height: {candidate}px vs baseline {baseline}px"
+    )
+if candidate > 9000:
+    raise SystemExit(f"Accepted Questions default narrow page exceeds 9000px: {candidate}px")
+Path("ux-evidence/questions-height.txt").write_text(
+    f"baseline_narrow_scroll_height={baseline}\n"
+    f"candidate_narrow_scroll_height={candidate}\n"
+    f"ratio={ratio:.4f}\n",
+    encoding="utf-8",
+)
+PY
+
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8765/home-measure/" > /tmp/baseline-home-measure.html
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/home-measure/" > /tmp/candidate-home-measure.html
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8765/needs-measure/" > /tmp/baseline-needs-measure.html
+google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200             --window-size=390,844 --dump-dom             "http://127.0.0.1:8766/needs-measure/" > /tmp/candidate-needs-measure.html
+
+python - <<'PY'
+import re
+from pathlib import Path
+
+def height(path):
+    text = Path(path).read_text(encoding="utf-8")
+    match = re.search(r'data-scroll-height="(\d+)"', text)
+    if not match:
+        raise SystemExit(f"Missing scroll-height measurement in {path}")
+    return int(match.group(1))
+
+measurements = []
+for name, baseline_path, candidate_path, max_ratio, hard_limit in (
+    ("Home", "/tmp/baseline-home-measure.html", "/tmp/candidate-home-measure.html", 1.05, 7000),
+    ("Needs index", "/tmp/baseline-needs-measure.html", "/tmp/candidate-needs-measure.html", 1.05, 7000),
+):
+    baseline = height(baseline_path)
+    candidate = height(candidate_path)
+    ratio = candidate / baseline
+    print(f"{name} narrow full-page height: baseline={baseline}px candidate={candidate}px ratio={ratio:.4f}")
+    if ratio > max_ratio:
+        raise SystemExit(
+            f"V2.4 materially regressed {name} narrow page height: {candidate}px vs baseline {baseline}px"
+        )
+    if candidate > hard_limit:
+        raise SystemExit(f"V2.4 {name} exceeds {hard_limit}px: {candidate}px")
+    measurements.append(
+        f"{name.lower().replace(' ', '_')}_baseline={baseline}\n"
+        f"{name.lower().replace(' ', '_')}_candidate={candidate}\n"
+        f"{name.lower().replace(' ', '_')}_ratio={ratio:.4f}\n"
+    )
+
+Path("ux-evidence/v2-4-height.txt").write_text(
+    "".join(measurements),
+    encoding="utf-8",
+)
+PY
+
+grep -q 'src="/resource-media/a-kind-of-spark.jpg"' candidate/dist/resources/a-kind-of-spark/index.html
+grep -q 'src="/resource-media/townscaper.jpg"' candidate/dist/resources/townscaper/index.html
+grep -q 'src="/resource-media/minami-lane.jpg"' candidate/dist/resources/minami-lane/index.html
+grep -q 'src="/resource-media/the-shape-of-things.jpg"' candidate/dist/resources/the-shape-of-things/index.html
+grep -q 'src="/resource-media/focusmate.png"' candidate/dist/resources/focusmate/index.html
+grep -q '<figcaption><a href="https://www.focusmate.com/">Focusmate</a></figcaption>' candidate/dist/resources/focusmate/index.html
+
+ROUTES=(
+  "home|/"
+  "needs-index|/needs/"
+  "needs-complete-open|/needs-complete-open/"
+  "need-communication|/needs/communication/"
+  "need-health|/needs/health-wellbeing/"
+  "need-communication-open|/need-communication-open/"
+  "find|/find/"
+  "find-no-result|/find-no-result/"
+  "find-results|/find-results/"
+  "questions-index|/questions/"
+  "questions-open|/questions-open/"
+  "question-workplace-gb|/questions/workplace-support-great-britain/"
+  "resources-index|/resources/"
+  "resources-open|/resources-open/"
+  "resource-goblin-tools|/resources/goblin-tools/"
+  "resource-a-kind-of-spark|/resources/a-kind-of-spark/"
+  "resource-townscaper|/resources/townscaper/"
+  "resource-minami-lane|/resources/minami-lane/"
+  "resource-shape-of-things|/resources/the-shape-of-things/"
+  "resource-focusmate|/resources/focusmate/"
+  "topics-index|/understand/"
+  "concept-autism|/understand/autism/"
+  "concept-monotropism|/understand/monotropism/"
+  "evidence-index|/evidence/"
+  "evidence-detail|/evidence/$EVIDENCE_DETAIL/"
+  "places|/places/"
+  "about|/about/"
+  "not-found|/404.html"
+)
+
+capture() {
+  local label="$1"
+  local port="$2"
+  local size="$3"
+  local folder="$4"
+  local spec name route
+  for spec in "${ROUTES[@]}"; do
+    name="${spec%%|*}"
+    route="${spec#*|}"
+    effective_size="$size"
+    if [[ "$name" == "needs-complete-open" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,4200"
+      else
+        effective_size="390,6200"
+      fi
+    elif [[ "$name" == "home" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,6000"
+      else
+        effective_size="390,9000"
+      fi
+    elif [[ "$name" == "needs-index" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,4200"
+      else
+        effective_size="390,7000"
+      fi
+    elif [[ "$name" == "need-communication" || "$name" == "need-health" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,3000"
+      else
+        effective_size="390,5000"
+      fi
+    elif [[ "$name" == "need-communication-open" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,3200"
+      else
+        effective_size="390,5200"
+      fi
+    elif [[ "$name" == "find-results" || "$name" == "find-no-result" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,1800"
+      else
+        effective_size="390,1800"
+      fi
+    elif [[ "$name" == "questions-index" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,5200"
+      else
+        effective_size="390,9000"
+      fi
+    elif [[ "$name" == "questions-open" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,2600"
+      else
+        effective_size="390,3000"
+      fi
+    elif [[ "$name" == "resource-a-kind-of-spark" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,2600"
+      else
+        effective_size="390,2600"
+      fi
+    elif [[ "$name" == "resources-index" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,3200"
+      else
+        effective_size="390,6200"
+      fi
+    elif [[ "$name" == "resources-open" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,2400"
+      else
+        effective_size="390,2800"
+      fi
+    elif [[ "$name" == "topics-index" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,3600"
+      else
+        effective_size="390,5600"
+      fi
+    elif [[ "$name" == "concept-monotropism" ]]; then
+      if [[ "$folder" == "desktop" ]]; then
+        effective_size="1440,2600"
+      else
+        effective_size="390,4200"
+      fi
+    fi
+    screenshot="ux-evidence/$label/$folder/$name.png"
+    if ! timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+      --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+      --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
+      --window-size="$effective_size" \
+      --screenshot="$screenshot" \
+      "http://127.0.0.1:$port$route"; then
+      # Chrome can occasionally keep a background process alive after the
+      # screenshot is complete. Accept only a non-empty screenshot; a
+      # timeout before output remains a hard failure.
+      test -s "$screenshot"
+    fi
+    test -s "$screenshot"
+  done
+}
+
+capture baseline 8765 1440,1100 desktop
+capture baseline 8765 390,844 narrow
+capture candidate 8766 1440,1100 desktop
+capture candidate 8766 390,844 narrow
+
+for spec in \
+  "large-phone|430,1000" \
+  "tablet-portrait|768,1400" \
+  "tablet-landscape|1024,1400" \
+  "wide-desktop|1920,1600"; do
+  name="${spec%%|*}"
+  size="${spec#*|}"
+  screenshot="ux-evidence/candidate/responsive/home-$name.png"
+  if ! timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+    --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+    --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
+    --window-size="$size" \
+    --screenshot="$screenshot" \
+    "http://127.0.0.1:8766/"; then
+    test -s "$screenshot"
+  fi
+  test -s "$screenshot"
+done
+
+NAV_V1_ROUTES=(
+  "category-neurodivergence|/conditions/"
+  "category-everyday-help|/everyday-help/"
+  "category-books-media|/books-media/"
+  "category-games-apps|/games-apps/"
+  "category-support|/organisations/"
+  "category-questions|/questions/"
+)
+for spec in "${NAV_V1_ROUTES[@]}"; do
+  name="${spec%%|*}"
+  route="${spec#*|}"
+  for folder in desktop narrow; do
+    if [[ "$folder" == "desktop" ]]; then
+      size="1440,3000"
+    else
+      size="390,4200"
+    fi
+    screenshot="ux-evidence/candidate/$folder/$name.png"
+    if ! timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+      --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+      --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
+      --window-size="$size" \
+      --screenshot="$screenshot" \
+      "http://127.0.0.1:8766$route"; then
+      test -s "$screenshot"
+    fi
+    test -s "$screenshot"
+  done
+done
+
+timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+  --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+  --run-all-compositor-stages-before-draw --virtual-time-budget=3000 \
+  --window-size=900,1100 \
+  --screenshot="ux-evidence/candidate/desktop/resource-a-kind-of-spark-cover.png" \
+  "http://127.0.0.1:8766/resource-a-kind-of-spark-cover/" || \
+  test -s "ux-evidence/candidate/desktop/resource-a-kind-of-spark-cover.png"
+test -s "ux-evidence/candidate/desktop/resource-a-kind-of-spark-cover.png"
+
+timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+  --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+  --run-all-compositor-stages-before-draw --virtual-time-budget=3000 \
+  --window-size=390,900 \
+  --screenshot="ux-evidence/candidate/narrow/resource-a-kind-of-spark-cover.png" \
+  "http://127.0.0.1:8766/resource-a-kind-of-spark-cover/" || \
+  test -s "ux-evidence/candidate/narrow/resource-a-kind-of-spark-cover.png"
+test -s "ux-evidence/candidate/narrow/resource-a-kind-of-spark-cover.png"
+
+{
+  echo "contract=ND-UX-V2-5-PUBLIC-BASELINE"
+  echo "baseline_sha=b165ebb88141a2ce4e0f92a1ca5b64537b6aae49"
+  echo "candidate_sha=$(git -C candidate rev-parse HEAD)"
+  echo "evidence_detail=$EVIDENCE_DETAIL"
+  echo "desktop=1440x1100"
+  echo "narrow=390x844"
+  echo "find_state_capture_height=1800"
+  echo "home_capture=1440x6000,390x9000"
+  echo "needs_complete_open_capture=1440x4200,390x6200"
+  echo "needs_index_capture=1440x4200,390x7000"
+  echo "need_hub_capture=1440x3000,390x5000"
+  echo "questions_default_capture=1440x5200,390x9000"
+  echo "questions_open_capture=1440x2600,390x3000"
+  echo "resources_default_capture=1440x3200,390x6200"
+  echo "resources_open_capture=1440x2400,390x2800"
+  echo "resource_a_kind_of_spark_capture=1440x2600,390x2600"
+  echo "resource_a_kind_of_spark_cover_focus=900x1100,390x900"
+  echo "resource_townscaper_capture=1440x1100,390x844"
+  echo "resource_minami_lane_capture=1440x1100,390x844"
+  echo "resource_shape_of_things_capture=1440x1100,390x844"
+  echo "resource_focusmate_capture=1440x1100,390x844"
+  echo "navigation_v1_categories=neurodivergence,everyday-help,books-media,games-apps,support,questions"
+  echo "navigation_v1_category_capture=1440x3000,390x4200"
+  echo "topics_index_capture=1440x3600,390x5600"
+  echo "concept_monotropism_capture=1440x2600,390x4200"
+  echo "baseline_pngs=$(find ux-evidence/baseline -name '*.png' | wc -l)"
+  echo "candidate_pngs=$(find ux-evidence/candidate -name '*.png' | wc -l)"
+} > ux-evidence/manifest.txt
+
+test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 56
+test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 74
