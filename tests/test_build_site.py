@@ -451,7 +451,7 @@ class WebsiteBuildTests(unittest.TestCase):
         for route, body_class, label in cases:
             page = self.page(route)
             self.assertIn(body_class, page, route)
-            self.assertIn('class="page-kind"', page, route)
+            self.assertRegex(page, r'class="[^"]*\bpage-kind\b[^"]*"', route)
             self.assertIn(label, page, route)
 
     def test_navigation_and_index_pages_use_hidden_or_compact_identity_without_intro_panels(self):
