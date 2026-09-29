@@ -439,6 +439,12 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn('class="page-kind"', page, route)
             self.assertIn(label, page, route)
 
+    def test_navigation_alias_pages_use_browse_layout_identity(self):
+        for route in ("/everyday-help/", "/games-apps/"):
+            page = self.page(route)
+            self.assertIn('class="page page--browse"', page, route)
+            self.assertNotIn('page--information', page, route)
+
     def test_primary_navigation_is_bounded_and_utility_only(self):
         page = self.page("/")
         start = page.index('<nav class="primary-nav" aria-label="Primary">')
