@@ -38,6 +38,7 @@
   --scope-soft: #e7f0f5;
   --measure: 68ch;
   --content-wide: 76rem;
+  --content-reference: 90rem;
   --radius-sm: 0.42rem;
   --radius: 0.7rem;
   --radius-lg: 1rem;
@@ -3011,5 +3012,90 @@ th {
 
   .word-meanings {
     grid-template-columns: 1fr;
+  }
+}
+
+
+/* ND-UX-V2 human repair: use wide screens without turning prose into long lines.
+ * Reference and information surfaces use up to 90rem, then distribute bounded
+ * reading blocks across two columns. Long-form concept/question/resource pages
+ * keep the normal reading measure.
+ */
+.page--information .site-shell,
+.page--evidence-index .site-shell,
+.page--glossary-index .site-shell {
+  width: min(90vw, var(--content-reference));
+}
+
+.page--information .reading-column,
+.page--evidence-index .reading-column,
+.page--glossary-index .reading-column {
+  max-width: none;
+}
+
+.page--information .page-heading,
+.page--evidence-index .page-heading,
+.page--glossary-index .page-heading,
+.page--glossary-index .glossary-intro {
+  max-width: var(--measure);
+}
+
+.page--evidence-index .notice,
+.page--evidence-index main > section[aria-labelledby="evidence-search-heading"] {
+  max-width: var(--measure);
+}
+
+@media (min-width: 58rem) {
+  .page--information .reading-column {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .page--information .reading-column > .page-heading {
+    grid-column: 1 / -1;
+  }
+
+  .page--information .reading-column > section {
+    min-width: 0;
+    margin-top: 0;
+    margin-bottom: var(--space-6);
+  }
+
+  .page--evidence-index #evidence-results {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-5) var(--space-6);
+    align-items: start;
+  }
+
+  .page--evidence-index #evidence-results .evidence-row {
+    min-width: 0;
+    margin: 0;
+  }
+
+  .page--glossary-index .glossary-letter {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-6);
+    align-items: start;
+  }
+
+  .page--glossary-index .glossary-letter > h2 {
+    grid-column: 1 / -1;
+  }
+
+  .page--glossary-index .glossary-entry {
+    min-width: 0;
+    margin-block: var(--space-3);
+  }
+}
+
+@media (max-width: 57.99rem) {
+  .page--information .reading-column > section,
+  .page--evidence-index .reading-column > section,
+  .page--glossary-index .reading-column > section {
+    max-width: var(--measure);
   }
 }
