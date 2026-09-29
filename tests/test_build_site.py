@@ -127,7 +127,8 @@ class WebsiteBuildTests(unittest.TestCase):
 
     def test_resources_index_uses_navigation_v1_categories_without_hiding_catalogue(self):
         page = self.page("/resources/")
-        self.assertIn("Choose a category", page)
+        self.assertNotIn("Choose a category", page)
+        self.assertNotIn("Pick the kind of thing you are looking for.", page)
         self.assertNotIn("Choose how to start", page)
         self.assertNotIn("Browse by area of life", page)
         self.assertEqual(0, page.count("choice-card choice-card--primary"))
@@ -144,10 +145,7 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn(f'href="{href}"', page)
             self.assertIn(label, page)
 
-        self.assertLess(
-            page.index("Choose a category"),
-            page.index("ND Oracle describes resources; it does not recommend them."),
-        )
+        self.assertIn("ND Oracle describes resources; it does not recommend them.", page)
         self.assertIn('<details class="resource-catalogue">', page)
         self.assertNotIn('<details class="resource-catalogue" open', page)
         self.assertIn(f"Show all {len(self.resources)} resources A–Z on this page", page)
@@ -213,7 +211,8 @@ class WebsiteBuildTests(unittest.TestCase):
 
     def test_questions_index_reduces_first_choice_load_without_hiding_questions(self):
         page = self.page("/questions/")
-        self.assertIn("Choose how to start", page)
+        self.assertNotIn("Choose how to start", page)
+        self.assertNotIn("You do not need to scan all", page)
         self.assertEqual(3, page.count("question-start-card"))
         for href, label in (
             ("/find/", "Describe the problem"),
@@ -224,7 +223,6 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn(label, page)
 
         self.assertIn("Relevant to inspect, not recommended.", page)
-        self.assertLess(page.index("Choose how to start"), page.index("Relevant to inspect, not recommended."))
         self.assertIn("Choose an area of life", page)
         self.assertIn("Need the complete index?", page)
         self.assertIn('href="/a-z/"', page)
@@ -275,7 +273,8 @@ class WebsiteBuildTests(unittest.TestCase):
 
     def test_home_uses_concrete_categories_before_internal_taxonomy(self):
         page = self.page("/")
-        self.assertIn("What are you looking for?", page)
+        self.assertNotIn("What are you looking for?", page)
+        self.assertNotIn("Pick the closest choice.", page)
         self.assertEqual(6, page.count("choice-card home-category-card home-category-card--primary"))
         for href, label in (
             ("/conditions/", "ADHD, autism &amp; other neurodivergence"),
@@ -453,6 +452,27 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn('class="page-kind"', page, route)
             self.assertIn(label, page, route)
 
+    def test_primary_landing_pages_remove_visible_intro_panels_but_keep_semantic_identity(self):
+        routes = (
+            "/",
+            "/questions/",
+            "/understand/",
+            "/resources/",
+            "/find/",
+            "/needs/",
+            "/places/",
+            "/types/",
+        )
+        for route in routes:
+            page = self.page(route)
+            self.assertNotIn('<header class="page-heading">', page, route)
+            self.assertIn('data-page-identity="true"', page, route)
+            self.assertIn('class="page-kind"', page, route)
+            self.assertIn("<h1>", page, route)
+
+        self.assertNotIn("Orientation, not diagnosis.", self.page("/understand/"))
+        self.assertNotIn("Local governed discovery.", self.page("/find/"))
+
     def test_navigation_alias_pages_use_browse_layout_identity(self):
         for route in ("/everyday-help/", "/games-apps/"):
             page = self.page(route)
@@ -480,7 +500,7 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn('href="/find/" aria-current="page">Search</a>', page)
         self.assertIn('aria-describedby="find-help"', page)
         self.assertIn('role="region" aria-label="Find results"', page)
-        self.assertIn("Local governed discovery.", page)
+        self.assertNotIn("Local governed discovery.", page)
         self.assertIn("processed only in this page", page)
         self.assertIn('<script src="/find.js" defer></script>', page)
         find_js = (self.output / "find.js").read_text(encoding="utf-8")
