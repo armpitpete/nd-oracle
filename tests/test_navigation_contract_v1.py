@@ -8,6 +8,7 @@ CONTRACT_MD = ROOT / "docs" / "ND_UX_V2_NAVIGATION_CONTRACT_v1.md"
 DESIGN = ROOT / "docs" / "ND_UX_V2_5_DESIGN_SYSTEM.md"
 USER_TEST = ROOT / "docs" / "ND_UX_V2_USER_TEST_PROTOCOL.md"
 EVIDENCE_WORKFLOW = ROOT / ".github" / "workflows" / "ux-visual-evidence.yml"
+EVIDENCE_RUNNER = ROOT / "scripts" / "run_ux_visual_evidence.sh"
 
 EXPECTED_PRIMARY = [
     "ADHD, autism & other neurodivergence",
@@ -94,11 +95,13 @@ class NavigationContractV1Tests(unittest.TestCase):
 
     def test_existing_visual_evidence_already_covers_home_desktop_and_narrow(self):
         workflow = EVIDENCE_WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn('"home|/"', workflow)
-        self.assertIn("capture baseline 8765 1440,1100 desktop", workflow)
-        self.assertIn("capture baseline 8765 390,844 narrow", workflow)
-        self.assertIn("capture candidate 8766 1440,1100 desktop", workflow)
-        self.assertIn("capture candidate 8766 390,844 narrow", workflow)
+        runner = EVIDENCE_RUNNER.read_text(encoding="utf-8")
+        self.assertIn("bash candidate/scripts/run_ux_visual_evidence.sh", workflow)
+        self.assertIn('"home|/"', runner)
+        self.assertIn("capture baseline 8765 1440,1100 desktop", runner)
+        self.assertIn("capture baseline 8765 390,844 narrow", runner)
+        self.assertIn("capture candidate 8766 1440,1100 desktop", runner)
+        self.assertIn("capture candidate 8766 390,844 narrow", runner)
 
     def test_design_authority_points_to_navigation_contract(self):
         design = DESIGN.read_text(encoding="utf-8")
