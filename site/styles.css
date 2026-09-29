@@ -3045,6 +3045,26 @@ th {
   max-width: var(--measure);
 }
 
+.page--evidence-index .page-heading,
+.page--glossary-index .page-heading {
+  margin-bottom: clamp(1.5rem, 2.5vw, 2.2rem);
+}
+
+.page--evidence-index main > section > h2,
+.page--glossary-index .glossary-intro > h2,
+.page--glossary-index .glossary-letter > h2 {
+  margin-top: 0;
+}
+
+.page--evidence-index main > section,
+.page--glossary-index .glossary-intro {
+  margin-top: clamp(1.4rem, 2.5vw, 2.2rem);
+}
+
+.page--glossary-index .glossary-letter {
+  margin-block: clamp(1.8rem, 3vw, 2.8rem);
+}
+
 @media (min-width: 58rem) {
   .page--information .reading-column {
     display: grid;
@@ -3060,7 +3080,15 @@ th {
   .page--information .reading-column > section {
     min-width: 0;
     margin-top: 0;
-    margin-bottom: var(--space-6);
+    margin-bottom: clamp(1.5rem, 2.5vw, 2.2rem);
+  }
+
+  .page--information .page-heading {
+    margin-bottom: clamp(1.5rem, 2.5vw, 2.2rem);
+  }
+
+  .page--information .reading-column > section > h2 {
+    margin-top: 0;
   }
 
   .page--evidence-index #evidence-results {
