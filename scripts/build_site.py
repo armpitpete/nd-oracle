@@ -135,6 +135,18 @@ def _ux_page_kind(path: str | None) -> tuple[str, str]:
     return ('information', 'ND Oracle')
 
 
+LANDING_HEADERLESS_PATHS = frozenset({
+    '/',
+    '/questions/',
+    '/understand/',
+    '/resources/',
+    '/find/',
+    '/needs/',
+    '/places/',
+    '/types/',
+})
+
+
 def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | None=None, path: str | None=None, indexable: bool=True, show_intro: bool=True) -> str:
     canonical = ''
     if path is not None:
@@ -143,6 +155,17 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
     robots = '' if indexable else '  <meta name="robots" content="noindex, follow">\n'
     page_kind, page_label = _ux_page_kind(path)
     lede = f'<p class="lede">{_compat06__esc(intro)}</p>' if show_intro else ''
+    if path in LANDING_HEADERLESS_PATHS:
+        page_heading = f'''<header class="visually-hidden" data-page-identity="true">
+    <div class="page-context"><span class="page-kind">{_compat06__esc(page_label)}</span></div>
+    <h1>{_compat06__esc(title)}</h1>
+  </header>'''
+    else:
+        page_heading = f'''<header class="page-heading">
+    <div class="page-context"><span class="page-kind">{_compat06__esc(page_label)}</span></div>
+    <h1>{_compat06__esc(title)}</h1>
+    {lede}
+  </header>'''
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -166,11 +189,7 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
   </div>
 </header>
 <main id="main" class="site-shell reading-column">
-  <header class="page-heading">
-    <div class="page-context"><span class="page-kind">{_compat06__esc(page_label)}</span></div>
-    <h1>{_compat06__esc(title)}</h1>
-    {lede}
-  </header>
+  {page_heading}
   {body}
 </main>
 <footer class="site-footer">
@@ -1007,7 +1026,6 @@ FIND_JS = '(() => {\n  "use strict";\n  const input = document.getElementById("f
 def render_find_page() -> str:
     index_json = html.escape(discovery.browser_index_json())
     body = f'''
-<section class="notice"><strong>Local governed discovery.</strong> Your words stay in this browser page. ND Oracle does not submit the query to a server, AI model, analytics system or search provider.</section>
 <section aria-labelledby="find-heading">
   <h2 id="find-heading">Describe the problem in your own words</h2>
   <p class="section-intro">You do not need to know the diagnosis, topic name or service name. Results are governed routes to inspect, not recommendations. If you already know the technical term, you can also <a href="/glossary/">look it up in the Glossary</a>.</p>
@@ -1145,9 +1163,7 @@ def render_questions_index_v2(questions: list[dict]) -> str:
         )
 
     body = f'''
-<section class="question-start" aria-labelledby="question-start-heading">
-  <h2 id="question-start-heading">Choose how to start</h2>
-  <p class="section-intro">You do not need to scan all {len(questions)} questions. Start with the route closest to what you already know.</p>
+<section class="question-start" aria-label="Question routes">
   <div class="choice-grid choice-grid--question-start">{primary_cards}</div>
 </section>
 <section class="notice question-boundary">
@@ -1648,10 +1664,6 @@ def render_understand_index_v24(concepts: list[dict]) -> str:
     topics = ''.join(_compat06__topic_link(concept) for concept in concepts)
     mono_parts = V24_TERM_GUIDES['monotropism']
     body = f'''
-<section class="notice topic-orientation">
-  <strong>Orientation, not diagnosis.</strong> These pages explain concepts and preserve their evidence routes. They do not diagnose individuals or replace appropriate professional judgement.
-</section>
-
 <section class="topic-word-example" aria-labelledby="topic-word-example-heading">
   <h2 id="topic-word-example-heading">New word? Break it down</h2>
   <p>Unfamiliar words do not have to stay opaque. A word can be split into useful parts, then connected back to its full meaning.</p>
@@ -2021,9 +2033,7 @@ def render_home_navigation_v1(
     )
 
     body = f'''
-<section class="home-category-group home-category-group--primary" aria-labelledby="home-primary-heading">
-  <h2 id="home-primary-heading">What are you looking for?</h2>
-  <p class="section-intro">Pick the closest choice. You can change route at any time.</p>
+<section class="home-category-group home-category-group--primary" aria-label="Main choices">
   <div class="choice-grid choice-grid--home-categories">{cards}</div>
 </section>
 <section class="home-secondary" aria-labelledby="home-secondary-heading">
@@ -2262,9 +2272,7 @@ def render_resources_navigation_v1(resources: list[dict]) -> str:
     )
     body = f'''
 <p class="back-link"><a href="/">← Home</a></p>
-<section class="resource-start" aria-labelledby="resource-start-heading">
-  <h2 id="resource-start-heading">Choose a category</h2>
-  <p class="section-intro">Pick the kind of thing you are looking for.</p>
+<section class="resource-start" aria-label="Resource categories">
   <div class="choice-grid choice-grid--families">{cards}</div>
 </section>
 <p class="resource-listing-policy"><strong>ND Oracle describes resources; it does not recommend them.</strong> <a href="/about/#resource-listings">How listings work</a></p>
