@@ -1,7 +1,7 @@
 # ND-UX-V2 Navigation Contract v1
 
-Date: 2026-09-23  
-Status: **FROZEN — PHASE 1**  
+Date: 2026-09-29  
+Status: **REVISED — PHASE 2 REPAIR CANDIDATE**  
 Authority: presentation/navigation only  
 PR: #168
 
@@ -9,148 +9,210 @@ PR: #168
 
 > **A new visitor can tell that ND Oracle contains things such as conditions, books, games and apps, and can reach them without first learning what “Resources”, “Topics”, “Needs” or similar internal categories mean.**
 
-This applies to desktop and narrow/mobile layouts. Automated route checks are necessary but cannot by themselves satisfy the human usability gate.
+This applies to desktop and narrow/mobile layouts. Automated checks are necessary but cannot satisfy the human usability gate.
 
-## Visitor model
+## Home choice budget
 
-The visitor sees concrete things and practical contexts. ND Oracle's internal taxonomy remains implementation machinery.
+The Home page presents **one first decision only**.
 
-### Primary categories
+Rules:
 
-| Group | Visitor label | Purpose | Target |
-| --- | --- | --- | --- |
-| Browse things | **Conditions** | Learn about named conditions and condition-oriented explanations. | `/conditions/` |
-| Browse things | **Books** | Find governed book Resources. | `/books/` |
-| Browse things | **Games** | Find governed game Resources. | `/games/` |
-| Browse things | **Apps & tools** | Find governed apps, software and practical tools. | `/apps-tools/` |
-| Browse things | **Organisations & peer groups** | Find organisations, communities and peer-support routes. | `/organisations/` |
-| Get help with life | **Work & education** | Find work, study, adjustment and education support. | `/work-education/` |
-| Get help with life | **Health & diagnosis** | Find assessment, diagnosis, healthcare access and health-support routes. | `/health-diagnosis/` |
-| Get help with life | **Daily living** | Find practical everyday-life support. | `/daily-living/` |
-| Check evidence | **Evidence & research** | Inspect evidence, sources, uncertainty and authority boundaries. | `/evidence/` |
+- exactly **six primary Home routes**;
+- Search is a separate escape route, not a seventh category card;
+- only one primary classification system is visible at a time;
+- one short description per primary route;
+- deeper browsing is collapsed or visually subordinate by default;
+- adding a new primary route requires replacing or merging an existing route rather than increasing the count.
 
-Nine is the hard maximum for prominent category choices. They are not visually equal: the five concrete "Browse things" categories form the first recognition group; practical-life categories form a second group; Evidence & research is a quieter authority route.
+### Six primary routes
 
-### Category boundaries
+| Visitor label | Purpose | Target |
+| --- | --- | --- |
+| **ADHD, autism & other neurodivergence** | Learn about ADHD, autism and other kinds of neurodivergence. | `/conditions/` |
+| **Help with everyday life** | School, work, communication, sensory needs, relationships and daily tasks. | `/everyday-help/` |
+| **Books, films & media** | Stories and information about neurodivergent lives. | `/books-media/` |
+| **Games & apps** | Games, apps and digital tools. | `/games-apps/` |
+| **Find support** | Groups, services, charities and other places to get help. | `/organisations/` |
+| **Ask a question** | Not sure where to start? Begin with what is happening. | `/questions/` |
 
-**Conditions** is for learning about a named condition or condition-oriented explanation. It is not a diagnostic tool. **Health & diagnosis** is for assessment, diagnosis processes, healthcare access and clinical support.
+The labels are intentionally concrete. The visitor is not asked to classify their own search behaviour before reaching content.
 
-**Books, Games, Apps & tools, Organisations & peer groups** are resource-kind views over existing governed Resources. They do not create duplicate Resource authority.
+## Search and secondary exploration
 
-**Work & education** and **Daily living** are practical/context routes. They may surface existing Questions and Resources without cloning them.
+**Search ND Oracle** remains visible as an immediate escape route.
 
-**Evidence & research** exposes authority and evidence. It does not rank products or act as a recommendation surface.
+The Home page then provides one collapsed **More ways to explore** disclosure containing:
 
-If an item belongs in more than one visitor route, ND Oracle keeps one governed object and exposes deterministic links from each applicable route.
+- Areas of life;
+- Browse A–Z;
+- Browse by place;
+- Questions;
+- Topics;
+- All resources.
 
-## Secondary utilities
+These routes preserve power-user and compatibility access without competing with the six first choices.
 
-Secondary utilities are **Search**, **A–Z**, **Browse everything**, and **Not sure where to start?** They are visually subordinate to the primary categories.
+The header is intentionally minimal: site identity, **Search**, and a native **Menu** disclosure. The menu does not repeat the six Home choices as another visible decision wall.
 
-- **Search** → `/find/`;
-- **A–Z** → `/a-z/`;
-- **Browse everything** → `/types/`;
-- **Not sure where to start?** → `/start/` (Phase 2 implementation target).
+## Navigation taxonomy is not content taxonomy
 
-The uncertainty route is capped at four concrete choices:
+The six Home routes are a **presentation layer**, not a replacement for ND Oracle's governed content model.
 
-1. Something about me
-2. Something I need help with
-3. Something to read, watch or use
-4. Somewhere or someone that can help
+A governed object may be reachable from more than one visitor route without:
 
-It must not grow into another full taxonomy.
+- cloning the object;
+- changing its canonical URL;
+- changing its governed category merely to fit the Home page;
+- changing Claims, Evidence, provenance, ranking or discovery authority.
 
-## Internal terminology boundary
+For example, one tool may be reachable from practical-help and digital-tool routes while remaining one governed Resource.
 
-`Resources`, `Topics`, `Needs` and `Questions` are internal/specialist information-architecture terms. `Find` is a utility concept.
+## First-hop boundary
 
-These routes may remain for compatibility and specialist browsing, but **none may be prerequisite vocabulary for reaching ordinary content**. Vague replacements such as "Explore" or "Discover" must not become primary category labels.
+This tranche does **not** authorise a broad destination-page redesign.
 
-The hierarchy is:
+The allowed implementation surface is:
 
-**Primary content categories → secondary utilities → deeper/internal browsing tools.**
+- Home;
+- minimal header/Search;
+- collapsed secondary exploration;
+- first-hop presentation routes required by the six Home choices;
+- tests and evidence needed to validate those changes.
+
+Existing destination architecture is preserved unless human testing demonstrates a specific blocker.
+
+Unrelated destination-page, typography or taxonomy improvements are recorded for a later tranche rather than absorbed here.
+
+## Wrong-choice recovery
+
+> **No first choice becomes a dead end.**
+
+Every primary journey must allow the visitor to:
+
+- return to the six Home choices;
+- reach Search;
+- use normal browser Back;
+- change to a related route without restarting the whole journey.
+
+Human testing includes a deliberate wrong-first-route recovery task.
 
 ## Direct reachability
 
 The target pattern is:
 
-**Home → category → item**
+**Home → clear first-hop route → item or next concrete choice**
 
 An avoidable chain such as:
 
-**Home → Resources → catalogue → type → item**
+**Home → internal taxonomy term → catalogue → type → item**
 
-fails the contract when a direct category route can expose the same governed item safely.
+fails the contract when a clearer route can expose the same governed content safely.
 
-Every category landing page must identify the category clearly, provide a clear route Home, and keep Search and A–Z reachable.
+## Internal terminology boundary
+
+`Resources`, `Topics`, `Needs` and `Questions` may remain as compatibility, specialist or secondary routes. A new visitor must not need to understand those terms to make the first decision.
+
+Vague replacements such as “Explore” or “Discover” must not become another primary classification layer.
 
 ## Visual hierarchy
 
 The existing V2.5 rules remain authoritative:
 
-- calm colour/surface changes mark real section boundaries and are paired with non-colour cues;
-- retain the readable base text size;
-- use typographic weight and headings to communicate importance;
-- keep related content in the same visual field where practical;
-- do not use whitespace to split mutually dependent information;
-- do not regress to a generic hero or card wall;
-- communicate what kinds of content exist before explaining project methodology.
-
-Recognition imagery remains secondary to the category label.
+- colour is paired with non-colour structure;
+- retain the accepted readable base text size;
+- use typographic weight and headings for importance;
+- keep related information physically grouped;
+- avoid whitespace that separates mutually dependent information;
+- recognition imagery remains secondary to the route label and rights-gated.
 
 > **Render a cleared visual when it materially helps the user recognise, distinguish or understand the resource.**
 
-Rights/provenance remain fail-closed. Imagery is recognition/navigation material, never Evidence, endorsement or ranking authority. The publisher-supplied *A Kind of Spark* cover remains governed by its recorded no-alteration and editorial re-review conditions.
+The separate book/textbook typography research is useful design-system work, but it is **not a dependency or scope expansion for this Home repair**.
 
 ## Protected authority boundary
 
-Phase 1 changes presentation/navigation authority only. It must not modify:
+This repair must not modify:
 
-- governed Resource, Concept, Question, Claim, Evidence or source content;
+- governed Resource, Concept, Question, Claim, Evidence or source content merely to fit the Home;
 - schemas or discovery/ranking policy;
 - provenance or jurisdiction authority;
 - `contracts/current-production.json`;
 - production deployment workflow, DNS, Cloudflare project/configuration, secrets or domains.
 
-A discovered content problem is opened separately rather than silently repaired inside navigation work.
-
-## Machine acceptance
-
-Repository tests bind this contract by requiring:
-
-- the exact release-blocking acceptance rule;
-- the exact nine visitor-facing categories and grouping;
-- the four secondary utilities;
-- the four-choice uncertainty-route cap;
-- separation of internal terminology from primary labels;
-- the direct-reachability rule;
-- protected boundaries;
-- the existing desktop and narrow Home screenshot capture in the visual-evidence workflow;
-- the human-test question and outcome vocabulary.
-
-The tests intentionally do **not** claim that Phase 2 routes already exist. Phase 1 freezes the implementation target; Phase 2 will bind those routes to rendered output.
-
 ## Human acceptance
 
-Before the fixed journeys, ask:
+Before fixed journeys, ask:
 
 > **Without clicking anything, what kinds of things do you think you can find on this website?**
 
-A participant should be able to identify concrete categories such as conditions, books, games or apps without being taught ND Oracle terminology.
+For each primary heading, also ask:
 
-Then test direct attempts to find one condition, one book, one game, one app/tool, one organisation/peer group and one practical-help route.
+> **What would you expect to find here?**
 
-For the participant-facing record use only:
+Do not explain the route first.
 
-- **Found it**
-- **Confusing**
-- **Couldn't find it**
+Record:
 
-The moderator may retain the existing detailed journey fields and map these outcomes to PASS/PARTIAL/FAIL for release evidence.
+- first choice;
+- hesitation;
+- wrong route;
+- backtracking;
+- label confusion;
+- whether the correct option was visible without prompting;
+- whether Search was obvious;
+- whether wrong-choice recovery succeeded;
+- **Found it / Confusing / Couldn't find it**.
 
-Aesthetic preference alone does not block release. Repair only demonstrated failures such as wrong first choice, category ambiguity, excessive backtracking, hidden content, loss of orientation, inaccessible controls or task failure.
+Representative tasks include ADHD, a book, an app, sensory help, local peer support, school/study, work, starting without the correct term, and deliberate wrong-route recovery.
 
-## Phase 1 exit
+A repeated pattern of confusion is evidence of a design defect. Aesthetic preference alone is not.
 
-Phase 1 is complete when this contract and its machine-readable companion are committed, regression-bound, reflected in V2 authority/completion documents, and validated at one exact candidate SHA. Actual Home/category implementation is Phase 2.
+## Young-person testing safeguard
+
+If actual minors are included:
+
+- define the age range first;
+- use appropriate parent/guardian consent and participant assent where required;
+- do not request diagnosis proof or unnecessary health disclosure;
+- minimise identifiable data;
+- obtain explicit permission before recording;
+- define storage/deletion rules;
+- prepare an appropriate safeguarding/escalation procedure before testing.
+
+The interface can be tested without collecting a young person's medical history.
+
+## Mandatory acceptance
+
+The repair cannot pass unless:
+
+- exactly six primary Home routes are rendered;
+- Search remains separate;
+- secondary exploration is collapsed or clearly subordinate;
+- primary labels are understandable without teaching ND Oracle taxonomy;
+- no repeated severe misrouting remains around one label;
+- representative tasks can be completed without facilitator guidance;
+- wrong-choice recovery succeeds;
+- no blocking accessibility defect remains;
+- canonical routes and protected authority remain intact.
+
+## Machine acceptance
+
+Repository tests bind:
+
+- the six-route choice budget;
+- exact primary labels and routes;
+- Search as a separate utility;
+- collapsed secondary exploration;
+- minimal Search + Menu header;
+- first-hop route generation;
+- wrong-choice recovery links;
+- noindex treatment for new presentation aliases;
+- preservation of the accepted canonical sitemap identity.
+
+Machine checks do not satisfy the human gate.
+
+## Exit
+
+The Phase 2 repair candidate is ready for human acceptance only after exact-head CI, visual/accessibility review and no-drift validation pass.
+
+After real ND/YP testing: record and disposition findings, repair only demonstrated problems, re-run exact-head evidence, then continue through the existing protected merge and deployment gates.
