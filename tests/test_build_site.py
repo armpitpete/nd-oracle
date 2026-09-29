@@ -347,7 +347,8 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn("More context when you want it", page)
             self.assertEqual(3, page.count('<details class="need-disclosure'), route)
             self.assertLess(page.index("Practical questions"), page.index("More context when you want it"))
-            self.assertEqual(2, page.count('href="/needs/">'))
+            # Search + Menu adds one global Areas-of-life route; the need hub itself keeps its two orientation links.
+            self.assertEqual(3, page.count('href="/needs/">'), route)
             for question_id in ids:
                 self.assertIn(f'href="/questions/{question_id}/"', page)
                 self.assertIn(html.escape(question_map[question_id]["question"], quote=True), page)
