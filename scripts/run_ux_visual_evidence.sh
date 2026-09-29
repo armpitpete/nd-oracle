@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 command -v google-chrome
-mkdir -p ux-evidence/baseline/{desktop,narrow} ux-evidence/candidate/{desktop,narrow}
+mkdir -p ux-evidence/baseline/{desktop,narrow} ux-evidence/candidate/{desktop,narrow,responsive}
 
 python -m http.server 8765 --directory baseline/dist >/tmp/nd-baseline-http.log 2>&1 &
 BASE_PID=$!
@@ -345,6 +345,25 @@ capture baseline 8765 390,844 narrow
 capture candidate 8766 1440,1100 desktop
 capture candidate 8766 390,844 narrow
 
+for spec in \
+  "large-phone|430,1000" \
+  "tablet-portrait|768,1400" \
+  "tablet-landscape|1024,1400" \
+  "wide-desktop|1920,1600"; do
+  name="${spec%%|*}"
+  size="${spec#*|}"
+  screenshot="ux-evidence/candidate/responsive/home-$name.png"
+  if ! timeout 45s google-chrome --headless=new --no-sandbox --disable-gpu --hide-scrollbars \
+    --disable-background-networking --disable-component-update --disable-sync --no-first-run \
+    --run-all-compositor-stages-before-draw --virtual-time-budget=1200 \
+    --window-size="$size" \
+    --screenshot="$screenshot" \
+    "http://127.0.0.1:8766/"; then
+    test -s "$screenshot"
+  fi
+  test -s "$screenshot"
+done
+
 NAV_V1_ROUTES=(
   "category-neurodivergence|/conditions/"
   "category-everyday-help|/everyday-help/"
@@ -424,4 +443,4 @@ test -s "ux-evidence/candidate/narrow/resource-a-kind-of-spark-cover.png"
 } > ux-evidence/manifest.txt
 
 test "$(find ux-evidence/baseline -name '*.png' | wc -l)" -eq 56
-test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 70
+test "$(find ux-evidence/candidate -name '*.png' | wc -l)" -eq 74
