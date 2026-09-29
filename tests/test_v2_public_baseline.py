@@ -80,27 +80,30 @@ class V2PublicBaselineTests(unittest.TestCase):
         questions = build_site.load_questions()
         page = build_site.render_index(concepts, resources, questions)
 
-        self.assertIn("Browse things", page)
-        self.assertIn("Get help with life", page)
-        self.assertIn("Check evidence", page)
-        self.assertEqual(9, page.count("choice-card home-category-card"))
+        self.assertIn("What are you looking for?", page)
+        self.assertEqual(6, page.count("choice-card home-category-card home-category-card--primary"))
         for href in (
             "/conditions/",
-            "/books/",
-            "/games/",
-            "/apps-tools/",
+            "/everyday-help/",
+            "/books-media/",
+            "/games-apps/",
             "/organisations/",
-            "/work-education/",
-            "/health-diagnosis/",
-            "/daily-living/",
-            "/evidence/",
+            "/questions/",
             "/find/",
+            "/needs/",
             "/a-z/",
-            "/types/",
-            "/start/",
+            "/places/",
+            "/understand/",
+            "/resources/",
         ):
             self.assertIn(f'href="{href}"', page)
 
+        self.assertIn('<details class="home-more">', page)
+        self.assertNotIn('<details class="home-more" open', page)
+        self.assertIn("More ways to explore", page)
+        self.assertNotIn("Browse things", page)
+        self.assertNotIn("Get help with life", page)
+        self.assertNotIn("Check evidence", page)
         self.assertNotIn("What do you need right now?", page)
         self.assertNotIn("I want something practical", page)
         self.assertNotIn("I want to understand something", page)
