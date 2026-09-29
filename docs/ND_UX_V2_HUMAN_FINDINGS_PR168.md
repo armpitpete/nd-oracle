@@ -52,6 +52,32 @@ The current navigation model still makes abstract/internal labels too prominent.
 
 Phase 2 now implements the frozen contract with direct concrete-category Home choices and direct category routes over existing governed content. Machine and visual evidence must pass at one exact SHA, but HF-002 remains open for real-human validation; implementation alone is not a human PASS.
 
+## HF-003 — Home first-choice overload
+
+**Observed behaviour / feedback**
+
+A direct human review of the Phase 2 Home surface found that the page still presented too many prominent choices for neurodivergent users or young people. The issue is not that any one route is unreasonable; it is that nine primary choices plus multiple secondary ways in require the visitor to process several classification ideas before acting.
+
+**Severity:** MAJOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- reduce the Home first decision to exactly six concrete routes;
+- use one visible classification system rather than separate “Browse things / Get help with life / Check evidence” groups;
+- keep Search separate rather than treating it as a seventh category;
+- collapse the specialist routes under **More ways to explore**;
+- use a minimal **Search + Menu** header rather than duplicating another visible category system;
+- preserve the governed content taxonomy and canonical destinations;
+- add only the two first-hop presentation aliases needed by the new six-route model;
+- require wrong-choice recovery so a mistaken first click is not a dead end;
+- keep wider destination-page redesign and the separate book/textbook typography research outside this tranche unless testing demonstrates a blocker.
+
+The six candidate labels are **ADHD, autism & other neurodivergence**, **Help with everyday life**, **Books, films & media**, **Games & apps**, **Find support**, and **Ask a question**.
+
+This finding justifies a bounded Home/navigation repair. It does **not** justify a general ND Oracle information-architecture rewrite.
+
 ## Human gate
 
 This finding is genuine human evidence for the Resources surface. It does **not** by itself satisfy all ten fixed journeys in `docs/ND_UX_V2_USER_TEST_PROTOCOL.md`.
