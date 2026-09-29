@@ -342,7 +342,7 @@ class WebsiteBuildTests(unittest.TestCase):
 
     def test_need_hubs_put_questions_first_and_secondary_material_behind_disclosure(self):
         question_map = {question["id"]: question for question in self.questions}
-        for route, _title, _intro, groups, tone in build_site.V23_HUB_DEFINITIONS:
+        for route, _title, intro, groups, tone in build_site.V23_HUB_DEFINITIONS:
             page = self.page(f"/{route}/")
             ids = [
                 question_id
@@ -352,13 +352,15 @@ class WebsiteBuildTests(unittest.TestCase):
             ]
             self.assertIn(f"need-hub--{tone}", page)
             self.assertIn(f"page--need-{tone}", page)
-            self.assertIn("Start here", page)
+            self.assertNotIn("Start here", page)
+            self.assertNotIn(f'<p class="lede">{html.escape(intro, quote=True)}</p>', page)
             self.assertIn("Relevant to inspect, not recommended.", page)
             self.assertIn(f"Show {len(ids)} practical questions", page)
             self.assertIn('<details class="need-disclosure need-disclosure--questions">', page)
             self.assertNotIn('<details class="need-disclosure need-disclosure--questions" open', page)
             self.assertIn("More context when you want it", page)
             self.assertEqual(3, page.count('<details class="need-disclosure'), route)
+            self.assertLess(page.index("Practical questions"), page.index("Relevant to inspect, not recommended."))
             self.assertLess(page.index("Practical questions"), page.index("More context when you want it"))
             # Search + Menu adds one global Areas-of-life route; the need hub itself keeps its two orientation links.
             self.assertEqual(3, page.count('href="/needs/">'), route)
@@ -452,7 +454,7 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn('class="page-kind"', page, route)
             self.assertIn(label, page, route)
 
-    def test_primary_landing_pages_remove_visible_intro_panels_but_keep_semantic_identity(self):
+    def test_navigation_and_index_pages_start_with_useful_content_not_visible_intro_panels(self):
         routes = (
             "/",
             "/questions/",
@@ -462,6 +464,23 @@ class WebsiteBuildTests(unittest.TestCase):
             "/needs/",
             "/places/",
             "/types/",
+            "/a-z/",
+            "/apps-tools/",
+            "/books/",
+            "/books-media/",
+            "/community/",
+            "/conditions/",
+            "/daily-living/",
+            "/everyday-help/",
+            "/games/",
+            "/games-apps/",
+            "/health-diagnosis/",
+            "/organisations/",
+            "/start/",
+            "/tools/",
+            "/work-education/",
+            "/glossary/",
+            "/evidence/",
         )
         for route in routes:
             page = self.page(route)
@@ -472,6 +491,41 @@ class WebsiteBuildTests(unittest.TestCase):
 
         self.assertNotIn("Orientation, not diagnosis.", self.page("/understand/"))
         self.assertNotIn("Local governed discovery.", self.page("/find/"))
+
+    def test_direct_navigation_routes_remove_repeated_instruction_and_competing_catalogue_nav(self):
+        everyday = self.page("/everyday-help/")
+        self.assertNotIn("Choose the part of life that is closest", everyday)
+        self.assertNotIn("You do not need the perfect category.", everyday)
+        self.assertIn("Daily life", everyday)
+
+        start = self.page("/start/")
+        self.assertNotIn("Pick the closest one", start)
+        self.assertNotIn("You do not need to know the right ND Oracle category.", start)
+        self.assertIn("Something about me", start)
+
+        for route in ("/daily-living/", "/health-diagnosis/", "/work-education/"):
+            page = self.page(route)
+            self.assertNotIn(">Choose an area</h2>", page, route)
+            self.assertLess(page.index('class="nav-v1-subgroup-stack"'), page.index("Relevant to inspect, not recommended."), route)
+
+        for route in ("/tools/", "/books-media/", "/community/"):
+            page = self.page(route)
+            self.assertNotIn('class="resource-subnav"', page, route)
+            self.assertNotRegex(page, r'<h2 id="resource-list-heading">\d+ reviewed entr')
+
+        for route in ("/apps-tools/", "/books/", "/games/", "/games-apps/", "/organisations/"):
+            page = self.page(route)
+            self.assertNotRegex(page, r'<h2 id="nav-v1-category-list-heading">\d+ items?</h2>')
+
+        conditions = self.page("/conditions/")
+        self.assertLess(conditions.index('class="topic-list"'), conditions.index("Information, not diagnosis."))
+
+        glossary = self.page("/glossary/")
+        self.assertNotIn("Words made clearer", glossary)
+        self.assertIn('aria-label="Glossary navigation"', glossary)
+
+        evidence = self.page("/evidence/")
+        self.assertIn("Evidence is not proof and source count is not a vote.", evidence)
 
     def test_navigation_alias_pages_use_browse_layout_identity(self):
         for route in ("/everyday-help/", "/games-apps/"):
@@ -603,6 +657,7 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn("Start with what you notice", page)
         self.assertIn("Unfamiliar word?", page)
         self.assertIn('href="/glossary/"', page)
+        self.assertLess(page.index("Start with what you notice"), page.index("Unfamiliar word?"))
         self.assertIn('class="recognition-list"', page)
         self.assertIn('class="topic-group-grid"', page)
         self.assertIn('class="topic-list topic-index-list"', page)

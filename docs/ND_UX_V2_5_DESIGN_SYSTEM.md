@@ -13,6 +13,8 @@ V2.5 is not a new component library. It is a constraint system for composing ND 
 - Page first, components second.
 - No hero-and-card default grammar.
 - On obvious task/index landing pages, do not spend the first viewport restating the route name and purpose before useful choices or content. Preserve semantic H1/document metadata, but the visible page-identity block may be omitted when it adds no new information.
+- On navigation, index and catalogue pages, the first useful choices or content should precede explanatory boundaries, counts or secondary navigation unless that material changes how the user must safely interpret the page. Do not make a visitor classify the same intent twice.
+- This first-useful-content rule does not remove orientation from ordinary reading/detail pages: Question, Topic, Resource and Evidence-record pages keep their visible identity and necessary context.
 - A border, panel or background requires a functional reason.
 - Prefer headings, bounded colour regions, rules and left-edge landmarks to repeated containers.
 - Discovery surfaces use the desktop viewport; reading surfaces keep a controlled measure.

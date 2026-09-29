@@ -144,6 +144,23 @@ LANDING_HEADERLESS_PATHS = frozenset({
     '/needs/',
     '/places/',
     '/types/',
+    '/a-z/',
+    '/apps-tools/',
+    '/books/',
+    '/books-media/',
+    '/community/',
+    '/conditions/',
+    '/daily-living/',
+    '/everyday-help/',
+    '/games/',
+    '/games-apps/',
+    '/health-diagnosis/',
+    '/organisations/',
+    '/start/',
+    '/tools/',
+    '/work-education/',
+    '/glossary/',
+    '/evidence/',
 })
 
 
@@ -399,6 +416,14 @@ def _compat08__render_resource_collection(resources: list[dict], *, title: str, 
     page = _compat08___render_resource_collection_v06(resources, title=title, intro=intro, route=route, categories=categories)
     if _compat08___RESOURCE_SUBNAV_V06 not in page:
         raise ValueError('Cannot locate v0.6 resource sub-navigation')
+    if route in {'tools', 'books-media', 'community'}:
+        page = page.replace(_compat08___RESOURCE_SUBNAV_V06, '', 1)
+        selected_count = sum(1 for resource in resources if categories is None or resource['category'] in categories)
+        visible_count = f'''<h2 id="resource-list-heading">{selected_count} reviewed {('entry' if selected_count == 1 else 'entries')}</h2>'''
+        semantic_heading = f'''<h2 id="resource-list-heading" class="visually-hidden">{_compat06__esc(title)}</h2>'''
+        if visible_count not in page:
+            raise ValueError(f'Cannot locate {route} resource count heading')
+        return page.replace(visible_count, semantic_heading, 1)
     return page.replace(_compat08___RESOURCE_SUBNAV_V06, _compat08___RESOURCE_SUBNAV_V08, 1)
 def _compat08__render_resources_index(resources: list[dict]) -> str:
     return _compat08__render_resource_collection(resources, title='Resources', intro='Tools, practical guides, games, books, services and organisations, described with their limitations and access conditions visible.', route='resources')
@@ -1410,20 +1435,16 @@ def render_need_hub_v23(route: str, title: str, intro: str, group_names: set[str
 
     body = f'''
 <p class="back-link"><a href="/needs/">← All areas of life</a></p>
-<section class="need-hub need-hub--{_compat06__esc(tone)}" aria-labelledby="need-hub-start-heading">
-  <h2 id="need-hub-start-heading">Start here</h2>
-  <p>Open the practical Questions first. Topics and Resources are secondary routes for when you want more context or something to inspect.</p>
+<section class="need-primary need-hub need-hub--{_compat06__esc(tone)}" aria-labelledby="need-questions-heading">
+  <h2 id="need-questions-heading">Practical questions</h2>
+  <details class="need-disclosure need-disclosure--questions">
+    <summary><span>Show {len(selected)} practical questions</span></summary>
+    <div class="topic-list">{question_rows}</div>
+  </details>
   <p><a class="quiet-link" href="/find/">Not sure which question fits? Describe the problem instead →</a></p>
 </section>
 <section class="notice">
   <strong>Relevant to inspect, not recommended.</strong> This page groups reviewed routes. It does not infer a diagnosis, eligibility or the right support for an individual.
-</section>
-<section class="need-primary" aria-labelledby="need-questions-heading">
-  <h2 id="need-questions-heading">Practical questions</h2>
-  <details class="need-disclosure need-disclosure--questions">
-    <summary><span>Show {len(selected)} practical questions</span><span class="summary-meta">Start here</span></summary>
-    <div class="topic-list">{question_rows}</div>
-  </details>
 </section>
 <section class="need-secondary" aria-labelledby="need-secondary-heading">
   <h2 id="need-secondary-heading">More context when you want it</h2>
@@ -1446,6 +1467,7 @@ def render_need_hub_v23(route: str, title: str, intro: str, group_names: set[str
         body,
         current='questions',
         path=f'/{route}/',
+        show_intro=False,
     )
 
 _compat09__render_index = render_home_v23
@@ -2097,7 +2119,7 @@ def _nav_v1_resource_category_page(
     body = f'''
 <p class="back-link"><a href="/">← Home</a></p>
 <section class="nav-v1-category-list" aria-labelledby="nav-v1-category-list-heading">
-  <h2 id="nav-v1-category-list-heading">{len(selected)} {('item' if len(selected) == 1 else 'items')}</h2>
+  <h2 id="nav-v1-category-list-heading" class="visually-hidden">{_compat06__esc(title)}</h2>
   <div class="resource-list">{rows}</div>
 </section>
 {_nav_v1_utility_links()}
@@ -2118,12 +2140,12 @@ def render_conditions_navigation_v1(concepts: list[dict]) -> str:
     rows = ''.join(_compat06__topic_link(item) for item in selected)
     body = f'''
 <p class="back-link"><a href="/">← Home</a></p>
+<section class="nav-v1-category-list" aria-labelledby="condition-list-heading">
+  <h2 id="condition-list-heading" class="visually-hidden">Conditions</h2>
+  <div class="topic-list">{rows}</div>
+</section>
 <section class="notice">
   <strong>Information, not diagnosis.</strong> These pages explain named conditions and keep evidence and uncertainty available. They do not diagnose a person.
-</section>
-<section class="nav-v1-category-list" aria-labelledby="condition-list-heading">
-  <h2 id="condition-list-heading">Conditions</h2>
-  <div class="topic-list">{rows}</div>
 </section>
 <p><a href="/understand/">See related concepts and experiences →</a></p>
 {_nav_v1_utility_links()}
@@ -2163,12 +2185,12 @@ def _nav_v1_question_groups_page(
         )
     body = f'''
 <p class="back-link"><a href="/">← Home</a></p>
-<section class="notice">
-  <strong>Relevant to inspect, not recommended.</strong> Choose the closest area, then open a reviewed route. These links do not infer diagnosis, eligibility or the right support for an individual.
-</section>
 <section class="nav-v1-practical-groups" aria-labelledby="nav-v1-practical-heading">
-  <h2 id="nav-v1-practical-heading">Choose an area</h2>
+  <h2 id="nav-v1-practical-heading" class="visually-hidden">{_compat06__esc(title)}</h2>
   <div class="nav-v1-subgroup-stack">{''.join(sections)}</div>
+</section>
+<section class="notice">
+  <strong>Relevant to inspect, not recommended.</strong> These links group reviewed routes; they do not infer diagnosis, eligibility or the right support for an individual.
 </section>
 {_nav_v1_utility_links()}
 '''
@@ -2198,9 +2220,7 @@ def render_everyday_help_navigation_v1() -> str:
     )
     body = f'''
 <p class="back-link"><a href="/">← Main choices</a></p>
-<section class="home-category-group home-category-group--practical" aria-labelledby="everyday-help-heading">
-  <h2 id="everyday-help-heading">Choose the part of life that is closest</h2>
-  <p class="section-intro">You do not need the perfect category. Pick the closest one and change route if needed.</p>
+<section class="home-category-group home-category-group--practical" aria-label="Everyday-life choices">
   <div class="choice-grid choice-grid--home-categories">{cards}</div>
 </section>
 {_nav_v1_utility_links()}
@@ -2227,9 +2247,7 @@ def render_start_navigation_v1() -> str:
     )
     body = f'''
 <p class="back-link"><a href="/">← Home</a></p>
-<section class="home-category-group home-category-group--start" aria-labelledby="start-simple-heading">
-  <h2 id="start-simple-heading">Pick the closest one</h2>
-  <p class="section-intro">You do not need to know the right ND Oracle category. Choose the closest description and change route whenever you need to.</p>
+<section class="home-category-group home-category-group--start" aria-label="Starting choices">
   <div class="choice-grid choice-grid--start">{cards}</div>
 </section>
 {_nav_v1_utility_links()}
@@ -2651,9 +2669,7 @@ def _terminology_v1_glossary(entries: list[dict]) -> str:
         )
 
     body = f'''<p class="back-link"><a href="/">← Home</a></p>
-<section class="glossary-intro" aria-labelledby="glossary-intro-heading">
-  <h2 id="glossary-intro-heading">Words made clearer</h2>
-  <p>These are the technical or unfamiliar terms currently flagged by ND Oracle. The same explanation appears near the first meaningful use of a term on Topic, Question and Resource reading pages.</p>
+<section class="glossary-intro" aria-label="Glossary navigation">
   <p class="meta">Use your browser's Find in page command to search this glossary. Word parts are learning aids, not substitutes for the whole meaning.</p>
   <nav class="glossary-jump" aria-label="Glossary letters">{jump}</nav>
 </section>
@@ -2678,7 +2694,7 @@ def _terminology_v1_patch_nav(page: str) -> str:
 
 def _terminology_v1_patch_understand_index(page: str) -> str:
     page = _TERMINOLOGY_V1_INDEX_EXAMPLE_RE.sub('\n', page, count=1)
-    marker = '<section class="topic-recognition"'
+    marker = '<section class="topic-groups"'
     section = '''<section class="terminology-route" aria-labelledby="terminology-route-heading">
   <h2 id="terminology-route-heading">Unfamiliar word?</h2>
   <p>Technical terms are explained where you meet them. You can also browse all current terminology in the <a href="/glossary/">Glossary</a>.</p>

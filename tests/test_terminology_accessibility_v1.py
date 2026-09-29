@@ -69,7 +69,8 @@ class TerminologyAccessibilityV1Tests(unittest.TestCase):
 
     def test_glossary_has_every_entry_and_is_stably_linkable(self):
         page = self.page("/glossary/")
-        self.assertIn("Words made clearer", page)
+        self.assertNotIn("Words made clearer", page)
+        self.assertIn('aria-label="Glossary navigation"', page)
         self.assertIn(
             'name="robots" content="noindex, follow"',
             page,

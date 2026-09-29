@@ -143,6 +143,33 @@ Human review across the Home, Questions, Understand, Resources, Find, Areas of l
 
 This is a presentation-only repair. It does not remove page semantics or safety-critical information; it removes repeated orientation text before the user can act.
 
+
+## HF-007 — Cross-site navigation/index preamble burden
+
+**Observed behaviour / feedback**
+
+After HF-006, a generated-site audit of all 462 current routes found the same interaction pattern on additional navigation and catalogue surfaces: visible route title/lede blocks, repeated “choose/pick/start here” instructions, count headings and secondary catalogue navigation were still appearing before the useful choices or content. The problem was concentrated in index/route-selection pages rather than normal reading/detail pages.
+
+**Severity:** MINOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- apply the first-useful-content rule to the remaining navigation/catalogue surfaces: A–Z, apps/tools, books, books/media, community/support, conditions, daily living, everyday help, games, games/apps, health/diagnosis, organisations, start, tools, work/education, glossary and evidence;
+- preserve semantic H1/page-kind identity, metadata, canonicals and indexability state while removing visible title/lede blocks where they add no new information;
+- remove the extra “Pick the closest one” / “Choose the part of life…” instruction layers from Start and Everyday Help;
+- on Daily living, Health & diagnosis and Work & education, put the actual grouped choices before the non-recommendation boundary and remove the duplicate visible “Choose an area” heading;
+- on Tools, Books & media and Community, remove the competing resource-family subnavigation before the catalogue;
+- make resource-category count headings semantic rather than another visible gate before the list;
+- on the eight individual Areas of life pages, keep the page title for orientation but remove the repeated lede and “Start here” instruction panel so Practical questions becomes the first content section;
+- move Understand’s terminology-help route below “Start with what you notice” so word-help does not precede the actual topic choices;
+- simplify Glossary to its search/jump controls and entries rather than repeating “Glossary / Words made clearer / explanation”;
+- keep the Evidence interpretation warning because it changes how the material should be read, but remove the redundant visible Evidence title/lede block;
+- do not apply this rule to ordinary Question, Topic, Resource or Evidence-record reading pages, or to About, Accessibility, Privacy, Feedback and How this site works.
+
+This remains a presentation-only repair. No governed object, route authority, evidence record, discovery/ranking rule, jurisdiction rule or production-state pointer is changed.
+
 ## Human gate
 
 These findings are genuine human usability evidence. They do **not** by themselves satisfy all ten fixed journeys in `docs/ND_UX_V2_USER_TEST_PROTOCOL.md`.
