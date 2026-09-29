@@ -46,7 +46,7 @@ class ContentNavigationV08CompatibilityTests(unittest.TestCase):
         resources = (self.output / "resources" / "index.html").read_text(encoding="utf-8")
         tools = (self.output / "tools" / "index.html").read_text(encoding="utf-8")
 
-        self.assertIn("What are you looking for?", home)
+        self.assertNotIn("What are you looking for?", home)
         self.assertIn('href="/conditions/"', home)
         self.assertIn('href="/books-media/"', home)
         self.assertIn('href="/games-apps/"', home)
