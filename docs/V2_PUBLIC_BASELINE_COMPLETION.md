@@ -37,27 +37,28 @@ Base: `0065ab8000bbb0020aa221f084525116f436b373`
 - [x] expand exact-head A Kind of Spark visual capture so the supplied cover itself is visible in desktop and narrow evidence.
 
 - [x] freeze ND-UX-V2 Navigation Contract v1 with the release-blocking concrete-category acceptance rule;
-- [x] freeze the nine visitor categories, their purpose/scope/exclusions and deterministic overlap rules;
-- [x] freeze Search, A–Z, Browse everything and Not sure where to start? as secondary utilities;
-- [x] demote Resources, Topics, Needs and Questions from prerequisite first-level visitor vocabulary while preserving compatibility/specialist authority;
-- [x] freeze the four-choice uncertainty-route contract;
-- [x] freeze Home hierarchy, direct-reachability, terminology, visual hierarchy and rights-gated imagery rules;
-- [x] bind Phase 1 to presentation/navigation authority only and enumerate protected knowledge/production paths;
-- [x] add machine-readable `contracts/navigation-v1.json` plus regression tests for the navigation contract;
-- [x] bind the human protocol to an unprompted first-impression question and Found it / Confusing / Couldn't find it outcomes;
-- [x] confirm the existing visual-evidence workflow already captures Home at desktop and narrow widths and bind that coverage in regression tests;
-- [x] record the Phase 1 decision and HF-002 rationale without claiming Phase 2 implementation or final human acceptance.
-- [x] implement the frozen Navigation Contract v1 on Home with nine concrete visitor-facing category choices;
-- [x] implement direct Conditions, Books, Apps & tools, Organisations & peer groups, Work & education, Health & diagnosis, Daily living and Not sure where to start? routes as presentation aliases over existing governed content;
-- [x] preserve /games/ and /evidence/ as existing canonical category routes;
-- [x] update the Resources specialist route to the same concrete category labels;
-- [x] surface cleared recognition imagery on Books, Games and Apps & tools category listings without changing source assets or rights authority;
+- [x] record HF-003: the nine-choice Phase 2 Home still created excessive first-choice burden for ND/YP users;
+- [x] revise the Home choice budget to exactly six primary routes rather than adding another navigation layer;
+- [x] freeze the six candidate labels: ADHD, autism & other neurodivergence; Help with everyday life; Books, films & media; Games & apps; Find support; Ask a question;
+- [x] keep Search separate from the six choices and collapse specialist routes under More ways to explore;
+- [x] reduce the visible global header to Search + native Menu while preserving site identity as the Home route;
+- [x] separate the six-route presentation layer from the canonical governed content taxonomy;
+- [x] add an explicit wrong-choice recovery rule: Home/main choices + Search + browser Back must remain available;
+- [x] bound the repair to Home/header/secondary navigation/first-hop presentation routes; broader destination redesign and book/textbook typography research remain separate;
+- [x] add `/everyday-help/` and `/games-apps/` as noindex presentation aliases over existing governed content;
+- [x] keep existing specialist aliases and canonical routes intact rather than deleting compatibility routes;
+- [x] extend the support presentation alias to governed organisation, community and service Resources without reclassifying them;
+- [x] update machine-readable `contracts/navigation-v1.json`, navigation tests and visual-evidence assertions for the six-choice model;
+- [x] update live-verifier Home markers to the six-choice contract;
+- [x] expand the human protocol with label-comprehension, deliberate wrong-route recovery, assistive-technology checks and YP safeguards;
 - [x] preserve the accepted 450-route production/sitemap identity by keeping new aliases noindex and outside the sitemap until a later protected production-state reconciliation;
-- [x] add Phase 2 regression coverage for direct Home → category → item reachability and uncertainty-route cardinality;
-- [x] update current live-verifier Home markers to the concrete-category contract;
-- [x] expand exact-head visual evidence with desktop+narrow captures for all Navigation v1 category/escape routes;
-- [ ] run the real-human first-impression/category test and ten fixed journeys on the exact Phase 2 candidate;
-- [ ] disposition human findings and repair only demonstrated problems;
+- [x] preserve existing rights-gated resource visuals and governed knowledge authority;
+- [ ] require exact-head CI GREEN for the repaired candidate;
+- [ ] review fresh desktop+narrow visual evidence for the six-choice Home and six primary first-hop routes;
+- [ ] run real ND first-impression, label-comprehension, representative task and wrong-choice recovery testing on the exact repaired candidate;
+- [ ] if actual minors are included, satisfy the protocol's consent/privacy/safeguarding requirements before YP testing;
+- [ ] disposition every human finding and repair only demonstrated problems;
+- [ ] rerun affected human tasks plus fresh exact-head machine/accessibility evidence after any repair;
 
 ## Existing accepted work reused
 
