@@ -52,8 +52,11 @@ class ContentNavigationV09CompatibilityTests(unittest.TestCase):
         home = self.page("/")
         questions = self.page("/questions/")
         az = self.page("/a-z/")
-        self.assertIn('href="/daily-living/"', home)
-        self.assertNotIn('href="/questions/">Questions</a>', home[home.index('<nav class="primary-nav"'):home.index('</nav>', home.index('<nav class="primary-nav"'))])
+        self.assertIn('href="/everyday-help/"', home)
+        self.assertIn('href="/questions/"', home)
+        primary = home[home.index('<nav class="primary-nav"'):home.index('</nav>', home.index('<nav class="primary-nav"'))]
+        before_menu = primary.split('<details class="site-menu">', 1)[0]
+        self.assertNotIn('href="/questions/"', before_menu)
         question_map = {item["id"]: item for item in self.questions}
         for question_id in FIXTURE["v07"]["question_ids"]:
             self.assertIn(question_id, question_map)
