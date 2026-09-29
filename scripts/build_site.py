@@ -135,13 +135,14 @@ def _ux_page_kind(path: str | None) -> tuple[str, str]:
     return ('information', 'ND Oracle')
 
 
-def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | None=None, path: str | None=None, indexable: bool=True) -> str:
+def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | None=None, path: str | None=None, indexable: bool=True, show_intro: bool=True) -> str:
     canonical = ''
     if path is not None:
         canonical_url = _compat06__PUBLIC_ORIGIN + path
         canonical = f'  <link rel="canonical" href="{_compat06__esc(canonical_url)}">\n'
     robots = '' if indexable else '  <meta name="robots" content="noindex, follow">\n'
     page_kind, page_label = _ux_page_kind(path)
+    lede = f'<p class="lede">{_compat06__esc(intro)}</p>' if show_intro else ''
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -168,7 +169,7 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
   <header class="page-heading">
     <div class="page-context"><span class="page-kind">{_compat06__esc(page_label)}</span></div>
     <h1>{_compat06__esc(title)}</h1>
-    <p class="lede">{_compat06__esc(intro)}</p>
+    {lede}
   </header>
   {body}
 </main>
@@ -1348,12 +1349,7 @@ def render_needs_index_v23(questions: list[dict]) -> str:
         )
 
     body = f'''
-<section class="notice">
-  <strong>Start with the need, not the label.</strong> These are navigation areas, not diagnoses or recommendations.
-</section>
-<section class="needs-overview" aria-labelledby="needs-overview-heading">
-  <h2 id="needs-overview-heading">Choose an area of life</h2>
-  <p class="section-intro">Open one area first. The full Questions, Resources and A–Z indexes remain available if you want everything.</p>
+<section class="needs-overview" aria-label="Areas of life">
   <div class="choice-grid choice-grid--needs-index">{''.join(cards)}</div>
 </section>
 <section class="home-orientation" aria-labelledby="needs-other-heading">
@@ -1379,6 +1375,7 @@ def render_needs_index_v23(questions: list[dict]) -> str:
         body,
         current='questions',
         path='/needs/',
+        show_intro=False,
     )
 
 def render_need_hub_v23(route: str, title: str, intro: str, group_names: set[str], questions: list[dict], concept_map: dict[str, dict], resource_map: dict[str, dict]) -> str:

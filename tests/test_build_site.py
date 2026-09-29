@@ -306,7 +306,14 @@ class WebsiteBuildTests(unittest.TestCase):
 
     def test_needs_index_is_eight_clear_areas_not_a_question_wall(self):
         page = self.page("/needs/")
-        self.assertIn("Choose an area of life", page)
+        self.assertIn("Browse by area of life", page)
+        for redundant in (
+            "Start with the need, not the label.",
+            "These are navigation areas, not diagnoses or recommendations.",
+            "Choose an area of life",
+            "Open one area first.",
+        ):
+            self.assertNotIn(redundant, page)
         self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("choice-card need-index-card"))
         self.assertNotIn('<article class="topic-row">', page)
         self.assertNotIn('<details class="need-disclosure"', page)

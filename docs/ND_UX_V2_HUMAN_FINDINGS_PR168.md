@@ -78,8 +78,29 @@ The six candidate labels are **ADHD, autism & other neurodivergence**, **Help wi
 
 This finding justifies a bounded Home/navigation repair. It does **not** justify a general ND Oracle information-architecture rewrite.
 
+## HF-004 — Needs-page redundant instruction burden
+
+**Observed behaviour / feedback**
+
+Human review of the Areas of life page found that the introductory instructions repeated what the page already made visually obvious. The extra explanation delayed the eight useful choices and was experienced as irritating rather than helpful.
+
+**Severity:** MINOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- keep the page identity and the existing eight Areas of life choices;
+- remove the explanatory lede from the visible page;
+- remove the “Start with the need, not the label” notice;
+- remove the duplicate “Choose an area of life” heading and “Open one area first” instruction;
+- preserve the governed Question groups, routes, counts and complete-index escape route;
+- add regression coverage so this redundant instruction layer does not silently return.
+
+This is a presentation-only repair. It does not change governed content, taxonomy, route authority or question classification.
+
 ## Human gate
 
-This finding is genuine human evidence for the Resources surface. It does **not** by itself satisfy all ten fixed journeys in `docs/ND_UX_V2_USER_TEST_PROTOCOL.md`.
+These findings are genuine human usability evidence. They do **not** by themselves satisfy all ten fixed journeys in `docs/ND_UX_V2_USER_TEST_PROTOCOL.md`.
 
 The final human gate therefore remains OPEN until the fixed journeys are run on the repaired exact-head candidate and their results are recorded and dispositioned. Do not infer or fabricate PASS from automated checks or screenshots.
