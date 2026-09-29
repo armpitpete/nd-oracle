@@ -1,7 +1,7 @@
 {
   "schema_version": "1",
   "authority": "ND-UX-V2 navigation contract",
-  "status": "FROZEN_PHASE_1",
+  "status": "PHASE_2_REPAIR_CANDIDATE",
   "acceptance_rule": "A new visitor can tell that ND Oracle contains things such as conditions, books, games and apps, and can reach them without first learning what “Resources”, “Topics”, “Needs” or similar internal categories mean.",
   "applies_to": [
     "desktop",
@@ -9,32 +9,22 @@
   ],
   "release_blocking_for_pr": 168,
   "first_decision_area": {
-    "rule": "Concrete visitor-recognisable categories are primary. Internal information-architecture terms are not required knowledge.",
-    "max_prominent_choices": 9,
+    "rule": "The Home page presents one first decision only: six concrete visitor-recognisable routes. Search is a separate escape route; deeper browsing stays collapsed or secondary.",
+    "max_prominent_choices": 6,
     "groups": [
       {
-        "id": "things",
-        "label": "Browse things",
+        "id": "primary",
+        "label": "What are you looking for?",
         "priority": 1
-      },
-      {
-        "id": "practical",
-        "label": "Get help with life",
-        "priority": 2
-      },
-      {
-        "id": "authority",
-        "label": "Check evidence",
-        "priority": 3
       }
     ]
   },
   "primary_categories": [
     {
-      "id": "conditions",
-      "label": "Conditions",
-      "group": "things",
-      "purpose": "Learn about named neurodivergent or neurodevelopmental conditions and related explanations.",
+      "id": "neurodivergence",
+      "label": "ADHD, autism & other neurodivergence",
+      "group": "primary",
+      "purpose": "Learn about ADHD, autism and other kinds of neurodivergence.",
       "includes": [
         "named conditions",
         "condition-oriented explanations"
@@ -44,167 +34,108 @@
         "general site taxonomy"
       ],
       "target_route": "/conditions/",
-      "implementation_status": "phase-2-required"
+      "implementation_status": "existing-phase-2-alias"
     },
     {
-      "id": "books",
-      "label": "Books",
-      "group": "things",
-      "purpose": "Find fiction, memoir, practical and informational books in the governed Resource catalogue.",
+      "id": "everyday-help",
+      "label": "Help with everyday life",
+      "group": "primary",
+      "purpose": "School, work, communication, sensory needs, relationships and daily tasks.",
       "includes": [
-        "book Resources"
+        "existing life-area hubs",
+        "practical Question routes"
       ],
       "excludes": [
-        "general articles",
-        "Evidence records"
+        "generic Resource catalogue",
+        "diagnostic decisions by ND Oracle"
       ],
-      "target_route": "/books/",
-      "implementation_status": "phase-2-required"
+      "target_route": "/everyday-help/",
+      "implementation_status": "phase-2-repair-required"
     },
     {
-      "id": "games",
-      "label": "Games",
-      "group": "things",
-      "purpose": "Find governed game Resources without first browsing the generic Resource catalogue.",
+      "id": "books-media",
+      "label": "Books, films & media",
+      "group": "primary",
+      "purpose": "Stories and information about neurodivergent lives.",
       "includes": [
-        "game Resources"
+        "book Resources",
+        "media Resources"
       ],
       "excludes": [
-        "apps",
-        "general downtime Questions"
+        "Evidence records",
+        "general articles"
       ],
-      "target_route": "/games/",
-      "implementation_status": "existing-or-phase-2-alias"
+      "target_route": "/books-media/",
+      "implementation_status": "existing"
     },
     {
-      "id": "apps-tools",
-      "label": "Apps & tools",
-      "group": "things",
-      "purpose": "Find governed software, accessibility tools and practical tools.",
+      "id": "games-apps",
+      "label": "Games & apps",
+      "group": "primary",
+      "purpose": "Games, apps and digital tools.",
       "includes": [
+        "game Resources",
         "app Resources",
-        "tool Resources"
+        "tool Resources",
+        "product Resources"
       ],
       "excludes": [
         "services",
         "books"
       ],
-      "target_route": "/apps-tools/",
-      "implementation_status": "phase-2-required"
+      "target_route": "/games-apps/",
+      "implementation_status": "phase-2-repair-required"
     },
     {
-      "id": "organisations-peer-groups",
-      "label": "Organisations & peer groups",
-      "group": "things",
-      "purpose": "Find organisations, communities and peer-support routes.",
+      "id": "find-support",
+      "label": "Find support",
+      "group": "primary",
+      "purpose": "Groups, services, charities and other places to get help.",
       "includes": [
         "organisation Resources",
-        "community Resources"
+        "community Resources",
+        "service Resources"
       ],
       "excludes": [
         "commercial product catalogues",
         "Evidence records"
       ],
       "target_route": "/organisations/",
-      "implementation_status": "phase-2-required"
+      "implementation_status": "phase-2-repair-required"
     },
     {
-      "id": "work-education",
-      "label": "Work & education",
-      "group": "practical",
-      "purpose": "Find practical support for work, study, adjustments and education.",
+      "id": "ask-question",
+      "label": "Ask a question",
+      "group": "primary",
+      "purpose": "Not sure where to start? Begin with what is happening.",
       "includes": [
-        "work Questions and Resources",
-        "education Questions and Resources"
+        "governed Question routes",
+        "ordinary-language problem routes"
       ],
       "excludes": [
-        "generic site taxonomy"
+        "diagnosis by ND Oracle",
+        "open-ended AI advice"
       ],
-      "target_route": "/work-education/",
-      "implementation_status": "phase-2-required"
-    },
-    {
-      "id": "health-diagnosis",
-      "label": "Health & diagnosis",
-      "group": "practical",
-      "purpose": "Find assessment, diagnosis, healthcare access and health-support routes.",
-      "includes": [
-        "assessment and diagnosis",
-        "healthcare access"
-      ],
-      "excludes": [
-        "diagnostic decisions by ND Oracle"
-      ],
-      "target_route": "/health-diagnosis/",
-      "implementation_status": "phase-2-required"
-    },
-    {
-      "id": "daily-living",
-      "label": "Daily living",
-      "group": "practical",
-      "purpose": "Find practical help with everyday activities, sensory needs, communication, food, sleep, money and mobility.",
-      "includes": [
-        "daily-life Questions and Resources"
-      ],
-      "excludes": [
-        "diagnosis",
-        "generic Resource catalogue"
-      ],
-      "target_route": "/daily-living/",
-      "implementation_status": "phase-2-required"
-    },
-    {
-      "id": "evidence-research",
-      "label": "Evidence & research",
-      "group": "authority",
-      "purpose": "Inspect governed evidence, sources, uncertainty and authority boundaries.",
-      "includes": [
-        "Evidence routes",
-        "source/evidence explanations"
-      ],
-      "excludes": [
-        "recommendation ranking",
-        "product endorsement"
-      ],
-      "target_route": "/evidence/",
+      "target_route": "/questions/",
       "implementation_status": "existing"
     }
   ],
   "overlap_rules": [
-    "Resource-kind routes (Books, Games, Apps & tools, Organisations & peer groups) classify by governed Resource category; cross-links may expose the same item from a practical route without cloning authority.",
-    "Conditions is for learning about a named condition or condition-oriented explanation; Health & diagnosis is for assessment, diagnosis process, healthcare access or clinical support.",
-    "Work & education and Daily living are task/context routes. They may reference Resources and Questions but never duplicate the governed object.",
-    "Evidence & research is the authority/evidence route and never acts as a recommendation or ranking surface.",
-    "When more than one visitor route applies, retain one governed object and expose multiple deterministic links rather than creating duplicate content."
+    "Home navigation is a presentation layer, not the canonical content taxonomy.",
+    "One governed object may be reachable from more than one visitor route without cloning or reclassifying its authority.",
+    "The six Home routes do not require changes to canonical URLs, object categories, Claims, Evidence, discovery policy or ranking.",
+    "If a first-hop destination is confusing, repair only the demonstrated blocker; do not redesign unrelated destination architecture inside this tranche."
   ],
   "secondary_utilities": [
     {
       "id": "search",
-      "label": "Search",
+      "label": "Search ND Oracle",
       "target_route": "/find/",
-      "role": "immediate utility"
-    },
-    {
-      "id": "a-z",
-      "label": "A–Z",
-      "target_route": "/a-z/",
-      "role": "alphabetical fallback"
-    },
-    {
-      "id": "browse-everything",
-      "label": "Browse everything",
-      "target_route": "/types/",
-      "role": "advanced/comprehensive browse"
-    },
-    {
-      "id": "not-sure",
-      "label": "Not sure where to start?",
-      "target_route": "/start/",
-      "role": "small uncertainty escape route",
-      "implementation_status": "phase-2-required"
+      "role": "immediate escape route"
     }
   ],
   "uncertainty_route": {
+    "status": "compatibility-route",
     "max_choices": 4,
     "choices": [
       "Something about me",
@@ -212,7 +143,7 @@
       "Something to read, watch or use",
       "Somewhere or someone that can help"
     ],
-    "rule": "Every choice resolves to existing governed content; this route must not become another full taxonomy."
+    "rule": "The existing /start/ route remains available for compatibility, but it is not another prominent Home decision set."
   },
   "internal_terms": [
     "Resources",
@@ -222,15 +153,15 @@
   ],
   "utility_term": "Find",
   "terminology_rule": "Internal/system terms may remain as compatibility or specialist routes, but a new visitor must not need to understand them to reach ordinary content.",
-  "hierarchy_rule": "Primary content categories → secondary utilities → deeper/internal browsing tools.",
+  "hierarchy_rule": "Six primary Home routes → separate Search → collapsed secondary exploration → deeper/internal browsing tools.",
   "direct_reachability": {
-    "target_pattern": "Home → category → item",
-    "avoidable_failure_pattern": "Home → Resources → catalogue → type → item",
+    "target_pattern": "Home → clear first-hop route → item or next concrete choice",
+    "avoidable_failure_pattern": "Home → internal taxonomy term → catalogue → type → item",
     "category_pages_require": [
       "clear category identity",
-      "clear route back to Home",
+      "clear route back to the six Home choices",
       "Search reachable",
-      "A–Z reachable"
+      "wrong-choice recovery without restarting the journey"
     ]
   },
   "visual_rules": [
@@ -254,22 +185,78 @@
     "jurisdiction policy",
     "DNS/Cloudflare/secrets"
   ],
-  "implementation_boundary": "Phase 1 freezes presentation/navigation authority only. Actual Home/category route implementation belongs to Phase 2.",
+  "implementation_boundary": "Presentation/navigation authority only: Home, minimal header/search, collapsed secondary exploration, first-hop aliases and the tests/evidence needed to validate them. Governed knowledge and production authority stay protected.",
   "human_acceptance": {
     "first_question": "Without clicking anything, what kinds of things do you think you can find on this website?",
+    "label_check": "For each primary heading, ask what the participant expects to find there before explaining the description.",
     "simple_outcomes": [
       "Found it",
       "Confusing",
       "Couldn't find it"
     ],
     "representative_tasks": [
-      "find one condition",
-      "find one book",
-      "find one game",
-      "find one app/tool",
-      "find one organisation/peer group",
-      "find one practical-help route"
+      "find information about ADHD",
+      "find a book about an autistic young person",
+      "find something that could help with starting tasks",
+      "find an app",
+      "find help with sensory overload",
+      "find a local support group",
+      "find help with school or study",
+      "find help with work",
+      "start when you do not know the correct term",
+      "recover after deliberately choosing the wrong first route"
     ],
-    "rule": "Automated tests and screenshots cannot satisfy the real-human gate; repair only demonstrated usability problems, not aesthetic preference alone."
-  }
+    "rule": "Automated tests and screenshots cannot satisfy the real-human gate; repair only demonstrated usability or accessibility problems, not aesthetic preference alone."
+  },
+  "secondary_exploration": [
+    {
+      "id": "areas-of-life",
+      "label": "Areas of life",
+      "target_route": "/needs/"
+    },
+    {
+      "id": "a-z",
+      "label": "Browse A–Z",
+      "target_route": "/a-z/"
+    },
+    {
+      "id": "place",
+      "label": "Browse by place",
+      "target_route": "/places/"
+    },
+    {
+      "id": "questions",
+      "label": "Questions",
+      "target_route": "/questions/"
+    },
+    {
+      "id": "topics",
+      "label": "Topics",
+      "target_route": "/understand/"
+    },
+    {
+      "id": "all-resources",
+      "label": "All resources",
+      "target_route": "/resources/"
+    }
+  ],
+  "recovery_rule": "No first choice becomes a dead end. A visitor can return to the six Home choices, use Search, or follow a clearly related route without restarting the journey.",
+  "scope_guard": [
+    "This tranche changes Home, minimal header/search, collapsed secondary navigation and only the first-hop presentation routes needed by the six choices.",
+    "Do not restructure the wider ND Oracle taxonomy or canonical destination architecture unless human testing demonstrates a blocker.",
+    "Do not change governed content merely to make it fit a Home category.",
+    "Record unrelated destination or typography findings for a separate tranche."
+  ],
+  "mandatory_acceptance": [
+    "exactly six primary Home routes",
+    "Search is available separately and is not a seventh category card",
+    "only one primary classification system is visible on Home",
+    "secondary exploration is collapsed or visually subordinate by default",
+    "all six labels are understandable without teaching ND Oracle taxonomy",
+    "no repeated severe misrouting around the same label",
+    "representative tasks can be completed without facilitator guidance",
+    "wrong-route recovery succeeds",
+    "no blocking accessibility defect",
+    "no broken canonical route or protected-authority change"
+  ]
 }
