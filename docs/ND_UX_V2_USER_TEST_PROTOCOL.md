@@ -5,7 +5,7 @@ Status: required before final V2 Public Baseline freeze
 
 ## Rule
 
-Automated route tests, screenshots and AI review are not substitutes for real neurodivergent task evidence.
+Automated route tests, screenshots and AI review are not a substitute for real neurodivergent task evidence. Do not mark this gate PASS from automated checks, screenshots or AI simulation.
 
 The current Home repair is deliberately bounded: test the six first choices, Search, secondary exploration and first-hop recovery. Do not turn this test into a general redesign of ND Oracle.
 
