@@ -430,7 +430,8 @@ class WebsiteBuildTests(unittest.TestCase):
             ("/questions/workplace-support-great-britain/", "page--question", ">Question</span>"),
             ("/resources/goblin-tools/", "page--resource", ">Resource</span>"),
             ("/understand/autism/", "page--concept", ">Concept</span>"),
-            ("/evidence/", "page--evidence", ">Evidence</span>"),
+            ("/evidence/", "page--evidence-index", ">Evidence</span>"),
+            ("/glossary/", "page--glossary-index", ">Glossary</span>"),
         ]
         for route, body_class, label in cases:
             page = self.page(route)
@@ -600,6 +601,30 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn("Language, overview and orientation", accessibility)
         self.assertIn("Discovery and index pages use more of the desktop viewport", accessibility)
         self.assertIn("Colour is used with headings, position and text labels", accessibility)
+
+    def test_reference_and_information_pages_use_wide_bounded_layout(self):
+        css = (self.output / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("ND-UX-V2 human repair: use wide screens", css)
+        for selector in (
+            ".page--information .site-shell",
+            ".page--evidence-index .site-shell",
+            ".page--glossary-index .site-shell",
+            ".page--information .reading-column",
+            ".page--evidence-index #evidence-results",
+            ".page--glossary-index .glossary-letter",
+        ):
+            self.assertIn(selector, css)
+        self.assertIn("width: min(90vw, var(--content-reference));", css)
+        self.assertIn("grid-template-columns: repeat(2, minmax(0, 1fr));", css)
+
+        about = self.page("/about/")
+        accessibility = self.page("/accessibility/")
+        evidence = self.page("/evidence/")
+        glossary = self.page("/glossary/")
+        self.assertIn("page--information", about)
+        self.assertIn("controlled reading measures", accessibility)
+        self.assertIn("page--evidence-index", evidence)
+        self.assertIn("page--glossary-index", glossary)
 
     def test_v24_composition_css_is_wide_flat_and_directional(self):
         css = (self.output / "styles.css").read_text(encoding="utf-8")
