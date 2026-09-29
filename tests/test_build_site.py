@@ -345,7 +345,7 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn('<details class="need-disclosure need-disclosure--questions">', page)
             self.assertNotIn('<details class="need-disclosure need-disclosure--questions" open', page)
             self.assertIn("More context when you want it", page)
-            self.assertEqual(3, page.count('<details class="need-disclosure'))
+            self.assertEqual(3, page.count('<details class="need-disclosure'), route)
             self.assertLess(page.index("Practical questions"), page.index("More context when you want it"))
             self.assertEqual(2, page.count('href="/needs/">'))
             for question_id in ids:
