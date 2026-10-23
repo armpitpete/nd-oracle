@@ -10,6 +10,8 @@ on:
       - "scripts/evidence_public.py"
       - "scripts/discovery_browser.js"
       - "scripts/run_ux_visual_evidence.sh"
+      - "scripts/verify_responsive_layout_v25.py"
+      - "requirements-dev.txt"
       - "tests/**"
       - "docs/ND_UX_V1_*.md"
       - "docs/ND_UX_V2_*.md"
