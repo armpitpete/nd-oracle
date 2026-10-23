@@ -36,8 +36,11 @@
   --boundary-soft: #f4e9df;
   --scope: #315b74;
   --scope-soft: #e7f0f5;
-  --measure: 68ch;
-  --content-wide: 76rem;
+  --page-width: 90%;
+  --page-max-width: 1600px;
+  --prose-max-width: 82ch;
+  --measure: var(--prose-max-width);
+  --content-wide: var(--page-max-width);
   --content-reference: 90rem;
   --radius-sm: 0.42rem;
   --radius: 0.7rem;
@@ -110,12 +113,14 @@ summary:focus-visible {
 }
 
 .site-shell {
-  width: min(100% - 2.5rem, var(--content-wide));
+  width: var(--page-width);
+  max-width: var(--page-max-width);
+  min-width: 0;
   margin-inline: auto;
 }
 
 .reading-column {
-  max-width: var(--measure);
+  max-width: 100%;
 }
 
 .page--home .reading-column,
@@ -318,7 +323,7 @@ h3 {
 
 h1 {
   margin: 0;
-  max-width: 20ch;
+  max-width: none;
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 650;
   letter-spacing: -0.035em;
@@ -1754,7 +1759,8 @@ th {
   }
 
   .site-shell {
-    width: min(100% - 1.6rem, 72rem);
+    width: var(--page-width);
+    max-width: var(--page-max-width);
   }
 
   .header-row {
@@ -3140,4 +3146,120 @@ th {
   .page--glossary-index .reading-column > section {
     max-width: var(--measure);
   }
+}
+
+
+
+/* ND-UX-V2.5: 90% fluid responsive layout standard
+ *
+ * The page canvas owns 90% of the available viewport at every size, capped at
+ * 1600px on very large displays. Reading measure is controlled inside that
+ * canvas; the page itself must not collapse into a narrow desktop column.
+ */
+.site-shell.reading-column {
+  max-width: var(--page-max-width);
+}
+
+.page-heading .lede,
+.section-intro,
+.page--question section > p,
+.page--concept section > p,
+.page--resource section > p,
+.page--evidence section > p,
+.page--information section > p {
+  max-width: var(--prose-max-width);
+}
+
+.page--question .page-heading h1 {
+  max-width: 100%;
+}
+
+.question-secondary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
+  align-items: start;
+  margin-top: var(--space-6);
+}
+
+.question-secondary-grid > section {
+  min-width: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-strong);
+}
+
+.question-secondary-grid h2 {
+  margin-top: 0;
+}
+
+.question-secondary-grid ul {
+  max-width: var(--prose-max-width);
+}
+
+@media (max-width: 87.5rem) {
+  .site-shell {
+    width: var(--page-width);
+  }
+}
+
+@media (max-width: 62.5rem) {
+  .choice-grid--home-start,
+  .choice-grid--home-needs,
+  .choice-grid--needs-index,
+  .choice-grid--primary,
+  .choice-grid--needs,
+  .choice-grid--families,
+  .home-route-grid,
+  .topic-group-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 56rem) {
+  .question-secondary-grid,
+  .question-cluster-list,
+  .need-secondary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 43.75rem) {
+  .choice-grid--home-start,
+  .choice-grid--home-needs,
+  .choice-grid--needs-index,
+  .choice-grid--primary,
+  .choice-grid--needs,
+  .choice-grid--families,
+  .choice-grid--question-start,
+  .choice-grid--question-areas,
+  .home-route-grid,
+  .need-secondary-grid,
+  .recognition-list,
+  .topic-group-grid,
+  .topic-index-list {
+    grid-template-columns: 1fr;
+  }
+
+  .page .page-heading {
+    padding-left: 0.85rem;
+  }
+}
+
+@media (max-width: 28rem) {
+  .site-shell {
+    width: var(--page-width);
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 9vw, 2.35rem);
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Combined V2: the previous information-page 90rem limit must not narrow the 90%/1600px shell. */
+.page--information .site-shell,
+.page--evidence-index .site-shell,
+.page--glossary-index .site-shell {
+  width: var(--page-width);
+  max-width: var(--page-max-width);
 }
