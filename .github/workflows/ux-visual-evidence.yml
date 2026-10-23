@@ -263,6 +263,7 @@ jobs:
             --report ux-evidence/responsive-layout-v2-5.txt
 
       - name: Upload UX evidence
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: nd-ux-v2-5-integrated-evidence-${{ github.event.pull_request.head.sha }}
