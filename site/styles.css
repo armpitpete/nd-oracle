@@ -3254,6 +3254,16 @@ th {
     font-size: clamp(1.8rem, 9vw, 2.35rem);
     overflow-wrap: anywhere;
   }
+
+  /* At 320px, definitions must not be squeezed beside a long term. */
+  .word-meanings div {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.2rem;
+  }
+
+  .word-meanings dt::after {
+    content: none;
+  }
 }
 
 /* Combined V2: the previous information-page 90rem limit must not narrow the 90%/1600px shell. */
@@ -3262,4 +3272,10 @@ th {
 .page--glossary-index .site-shell {
   width: var(--page-width);
   max-width: var(--page-max-width);
+}
+
+/* Keep provenance identifiers readable even when disclosures are expanded. */
+.provenance p,
+.provenance code {
+  overflow-wrap: anywhere;
 }
