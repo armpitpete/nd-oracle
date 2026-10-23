@@ -65,11 +65,15 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertNotIn('href="/oracle/"', page)
         self.assertIn('href="/find/"', page)
 
-    def test_home_has_one_ordinary_language_route_for_every_topic(self):
-        page = self.page("/"); concept_ids = {item["id"] for item in self.concepts}; target_ids = [target for _q, target in build_site.COMMON_QUESTIONS]
-        self.assertEqual(concept_ids, set(target_ids)); self.assertEqual(len(concept_ids), len(target_ids))
-        for question, target in build_site.COMMON_QUESTIONS:
-            self.assertIn(html.escape(question, quote=True), page); self.assertIn(f'href="/understand/{target}/"', page)
+    def test_topics_index_reaches_every_current_topic_and_conditions_route_to_topics(self):
+        home = self.page("/")
+        conditions = self.page("/conditions/")
+        topics = self.page("/understand/")
+        self.assertIn('href="/conditions/"', home)
+        self.assertIn('href="/understand/"', conditions)
+        for concept in self.concepts:
+            self.assertIn(f'href="/understand/{concept["id"]}/"', topics)
+            self.assertIn(html.escape(concept["name"], quote=True), topics)
 
     def test_reading_layer_and_topic_evidence_routes_cover_current_concepts(self):
         self.assertEqual({item["id"] for item in self.concepts}, set(build_site.SIMPLE_EXPLANATIONS)); build_site.validate_reading_layer(self.concepts)
@@ -92,89 +96,95 @@ class WebsiteBuildTests(unittest.TestCase):
                 self.assertIn(f'href="/understand/{target["id"]}/"', page)
                 self.assertIn(html.escape(target["name"], quote=True), page)
 
-    def test_confidence_scale_and_non_endorsement_boundary_are_explained(self):
+    def test_confidence_scale_and_resource_listing_boundary_are_explained(self):
         how = self.page("/how-it-works/")
+        about = self.page("/about/")
         self.assertIn('id="confidence"', how)
         for label in ("High", "Moderate", "Low", "Contested", "Not applicable"):
             self.assertIn(f"<dt>{label}</dt>", how)
         self.assertIn("high confidence does not mean certainty", how)
-        self.assertIn("Being listed is not being endorsed", how)
+        self.assertNotIn("Being listed is not being endorsed", how)
+        self.assertIn('id="resource-listings"', about)
+        self.assertIn("How resource listings work", about)
+        self.assertIn(
+            "ND Oracle includes resources so people can find, inspect and compare information about them.",
+            about,
+        )
         self.assertIn("Governed discovery", how)
 
     def test_resource_indexes_are_active_and_category_filtered(self):
         all_page, tools, games, community = self.page("/resources/"), self.page("/tools/"), self.page("/games/"), self.page("/community/")
-        for page in (all_page, tools, games, community): self.assertIn("Listed, not endorsed", page)
+        reminder = "ND Oracle describes resources; it does not recommend them."
+        self.assertIn(reminder, all_page)
+        for page in (tools, games, community):
+            self.assertNotIn(reminder, page)
+            self.assertNotIn("Listed, not endorsed", page)
         for resource in self.resources:
             name = html.escape(resource["name"], quote=True); self.assertIn(name, all_page)
             if resource["category"] == "game": self.assertIn(name, games)
             if resource["category"] in build_site.TOOL_CATEGORIES: self.assertIn(name, tools)
             if resource["category"] in build_site.COMMUNITY_CATEGORIES: self.assertIn(name, community)
 
-    def test_resources_index_reduces_first_choice_load_without_hiding_catalogue(self):
+    def test_resources_index_uses_navigation_v1_categories_without_hiding_catalogue(self):
         page = self.page("/resources/")
-        self.assertIn("Choose how to start", page)
-        self.assertEqual(4, page.count("choice-card choice-card--primary"))
+        self.assertNotIn("Choose a category", page)
+        self.assertNotIn("Pick the kind of thing you are looking for.", page)
+        self.assertNotIn("Choose how to start", page)
+        self.assertNotIn("Browse by area of life", page)
+        self.assertEqual(0, page.count("choice-card choice-card--primary"))
+        self.assertEqual(0, page.count("choice-card choice-card--need"))
+        self.assertEqual(5, page.count("choice-card choice-card--family"))
+
         for href, label in (
-            ("/find/", "Describe what you need"),
-            ("/needs/", "Start from a life problem"),
-            ("/places/", "Check what applies where I live"),
-            ("/types/", "Browse by kind of resource"),
+            ("/books/", "Books"),
+            ("/games/", "Games"),
+            ("/conditions/", "Conditions"),
+            ("/apps-tools/", "Apps &amp; tools"),
+            ("/organisations/", "Organisations &amp; peer groups"),
         ):
             self.assertIn(f'href="{href}"', page)
             self.assertIn(label, page)
-        self.assertLess(page.index("Choose how to start"), page.index("Listed, not endorsed"))
-        self.assertLess(page.index('href="/find/"'), page.index(f"Show all {len(self.resources)} resources A–Z on this page"))
+
+        self.assertIn("ND Oracle describes resources; it does not recommend them.", page)
         self.assertIn('<details class="resource-catalogue">', page)
         self.assertNotIn('<details class="resource-catalogue" open', page)
         self.assertIn(f"Show all {len(self.resources)} resources A–Z on this page", page)
         details_start = page.index('<details class="resource-catalogue">')
         self.assertEqual(len(self.resources), page[details_start:].count('<article class="resource-row">'))
         self.assertIn('class="resource-alpha-group"', page[details_start:])
-        for route, title, _intro, _groups in build_site.HUB_DEFINITIONS:
-            self.assertIn(f'href="/{route}/"', page)
-            self.assertIn(html.escape(title, quote=True), page)
-        for href in ("/tools/", "/games/", "/books-media/", "/community/", "/a-z/"):
-            self.assertIn(f'href="{href}"', page)
+        self.assertIn('href="/a-z/"', page)
 
-    def test_resources_v2_task_journeys_have_short_routes(self):
+    def test_resources_direct_categories_preserve_specialist_need_and_place_routes(self):
         resources_page = self.page("/resources/")
+        for href in ("/books/", "/games/", "/conditions/", "/apps-tools/", "/organisations/"):
+            self.assertIn(f'href="{href}"', resources_page)
 
-        # 1. School/college organisation: one visible need route, then a governed question.
-        self.assertIn('href="/needs/education-study/"', resources_page)
         education = self.page("/needs/education-study/")
         self.assertIn('href="/questions/organising-study-and-assignments/"', education)
 
-        # 2. Wales applicability: place is a first-screen choice and Wales is a visible scope group.
-        self.assertIn('href="/places/"', resources_page)
         places = self.page("/places/")
+        self.assertIn("<h1>Browse by geographic scope</h1>", places)
         self.assertIn("<h2>Wales</h2>", places)
+        self.assertNotIn('<p class="lede">', places)
+        for redundant in (
+            "Scope is part of the information",
+            "Navigation scope, not eligibility.",
+        ):
+            self.assertNotIn(redundant, places)
 
-        # 3. Difficult phone calls: communication is visible and the governed question is one step on.
-        self.assertIn('href="/needs/communication/"', resources_page)
         communication = self.page("/needs/communication/")
         self.assertIn('href="/questions/phone-calls-are-difficult/"', communication)
 
-        # 4. Low-pressure games: ordinary-language Find reaches the governed question.
-        _boundary, game_results = discovery.search(
-            "I want a game with little or no time pressure",
-            limit=10,
-        )
-        self.assertIn(
-            "/questions/low-time-pressure-games/",
-            [result.route for result in game_results],
-        )
-
-        # 5. A reader who wants everything still has both a complete index and inline A-Z disclosure.
-        self.assertIn('href="/a-z/"', resources_page)
-        self.assertIn(
-            f"Show all {len(self.resources)} resources A–Z on this page",
-            resources_page,
-        )
+        types = self.page("/types/")
+        for resource in self.resources:
+            self.assertIn(f'href="/resources/{resource["id"]}/"', types)
 
     def test_every_resource_page_exposes_access_limits_scope_costs_conflicts_and_correct_claim_boundary(self):
         for resource in self.resources:
             page = self.page(f'/resources/{resource["id"]}/')
-            for marker in ("Listed, not endorsed", "Limitations and possible poor fit", "Cost and access notes", "Ownership and conflicts", "Evidence status", "Scope for navigation", "Questions that lead here"):
+            self.assertNotIn("Listed, not endorsed", page)
+            self.assertNotIn("ND Oracle describes resources; it does not recommend them.", page)
+            for marker in ("Limitations and possible poor fit", "Cost and access notes", "Ownership and conflicts", "Evidence status", "Scope for navigation", "Questions that lead here"):
                 self.assertIn(marker, page)
             if resource.get("claims"):
                 self.assertIn("Governed claims and evidence", page); self.assertIn("Evidence route", page); self.assertIn("Uncertainty and limits", page)
@@ -201,7 +211,8 @@ class WebsiteBuildTests(unittest.TestCase):
 
     def test_questions_index_reduces_first_choice_load_without_hiding_questions(self):
         page = self.page("/questions/")
-        self.assertIn("Choose how to start", page)
+        self.assertNotIn("Choose how to start", page)
+        self.assertNotIn("You do not need to scan all", page)
         self.assertEqual(3, page.count("question-start-card"))
         for href, label in (
             ("/find/", "Describe the problem"),
@@ -212,7 +223,6 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn(label, page)
 
         self.assertIn("Relevant to inspect, not recommended.", page)
-        self.assertLess(page.index("Choose how to start"), page.index("Relevant to inspect, not recommended."))
         self.assertIn("Choose an area of life", page)
         self.assertIn("Need the complete index?", page)
         self.assertIn('href="/a-z/"', page)
@@ -261,40 +271,55 @@ class WebsiteBuildTests(unittest.TestCase):
             [result.route for result in phone_results],
         )
 
-    def test_home_is_orientation_first_not_inventory_first(self):
+    def test_home_uses_concrete_categories_before_internal_taxonomy(self):
         page = self.page("/")
-        self.assertIn("What do you need right now?", page)
-        self.assertEqual(4, page.count("choice-card home-start-card"))
+        self.assertNotIn("What are you looking for?", page)
+        self.assertNotIn("Pick the closest choice.", page)
+        self.assertEqual(6, page.count("choice-card home-category-card home-category-card--primary"))
         for href, label in (
-            ("/find/", "Describe what is happening"),
-            ("/questions/", "I know what I need help with"),
-            ("/resources/", "I want something practical"),
-            ("/understand/", "I want to understand something"),
+            ("/conditions/", "ADHD, autism &amp; other neurodivergence"),
+            ("/everyday-help/", "Help with everyday life"),
+            ("/books-media/", "Books, films &amp; media"),
+            ("/games-apps/", "Games &amp; apps"),
+            ("/organisations/", "Find support"),
+            ("/questions/", "Ask a question"),
         ):
             self.assertIn(f'href="{href}"', page)
             self.assertIn(label, page)
 
-        self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("choice-card home-need-card"))
-        for route, title, _intro, _groups, tone in build_site.V23_HUB_DEFINITIONS:
-            self.assertIn(f'href="/{route}/"', page)
-            self.assertIn(f"home-need-card--{tone}", page)
-            self.assertIn(html.escape(title, quote=True), page)
-
+        self.assertNotIn("Browse things", page)
+        self.assertNotIn("Get help with life", page)
+        self.assertNotIn("Check evidence", page)
+        self.assertNotIn("What do you need right now?", page)
+        self.assertNotIn("I want something practical", page)
+        self.assertNotIn("I want to understand something", page)
         self.assertNotIn("Browse current topics", page)
         self.assertNotIn('<article class="topic-row">', page)
-        self.assertIn('<details class="home-shortcuts">', page)
-        self.assertNotIn('<details class="home-shortcuts" open', page)
-        self.assertIn("Start with something you need to do", page)
-        self.assertIn("Start with a question", page)
-        self.assertIn(f"{len(self.concepts)} evidence-linked topics are available now", page)
-        self.assertIn("Need another way in?", page)
-        self.assertIn('href="/places/"', page)
-        self.assertIn('href="/a-z/"', page)
-        self.assertIn('href="/how-it-works/"', page)
+
+        self.assertIn('<details class="home-more">', page)
+        self.assertNotIn('<details class="home-more" open', page)
+        self.assertIn("More ways to explore", page)
+        for href, label in (
+            ("/needs/", "Areas of life"),
+            ("/a-z/", "Browse A–Z"),
+            ("/places/", "Browse by place"),
+            ("/questions/", "Questions"),
+            ("/understand/", "Topics"),
+            ("/resources/", "All resources"),
+        ):
+            self.assertIn(f'href="{href}"', page)
+            self.assertIn(label, page)
 
     def test_needs_index_is_eight_clear_areas_not_a_question_wall(self):
         page = self.page("/needs/")
-        self.assertIn("Choose an area of life", page)
+        self.assertIn("Browse by area of life", page)
+        for redundant in (
+            "Start with the need, not the label.",
+            "These are navigation areas, not diagnoses or recommendations.",
+            "Choose an area of life",
+            "Open one area first.",
+        ):
+            self.assertNotIn(redundant, page)
         self.assertEqual(len(build_site.V23_HUB_DEFINITIONS), page.count("choice-card need-index-card"))
         self.assertNotIn('<article class="topic-row">', page)
         self.assertNotIn('<details class="need-disclosure"', page)
@@ -317,7 +342,7 @@ class WebsiteBuildTests(unittest.TestCase):
 
     def test_need_hubs_put_questions_first_and_secondary_material_behind_disclosure(self):
         question_map = {question["id"]: question for question in self.questions}
-        for route, _title, _intro, groups, tone in build_site.V23_HUB_DEFINITIONS:
+        for route, _title, intro, groups, tone in build_site.V23_HUB_DEFINITIONS:
             page = self.page(f"/{route}/")
             ids = [
                 question_id
@@ -327,38 +352,41 @@ class WebsiteBuildTests(unittest.TestCase):
             ]
             self.assertIn(f"need-hub--{tone}", page)
             self.assertIn(f"page--need-{tone}", page)
-            self.assertIn("Start here", page)
+            self.assertNotIn("Start here", page)
+            self.assertNotIn(f'<p class="lede">{html.escape(intro, quote=True)}</p>', page)
             self.assertIn("Relevant to inspect, not recommended.", page)
             self.assertIn(f"Show {len(ids)} practical questions", page)
             self.assertIn('<details class="need-disclosure need-disclosure--questions">', page)
             self.assertNotIn('<details class="need-disclosure need-disclosure--questions" open', page)
             self.assertIn("More context when you want it", page)
-            self.assertEqual(3, page.count('<details class="need-disclosure'))
+            self.assertEqual(3, page.count('<details class="need-disclosure'), route)
+            self.assertLess(page.index("Practical questions"), page.index("Relevant to inspect, not recommended."))
             self.assertLess(page.index("Practical questions"), page.index("More context when you want it"))
-            self.assertEqual(2, page.count('href="/needs/">'))
+            # Search + Menu adds one global Areas-of-life route; the need hub itself keeps its two orientation links.
+            self.assertEqual(3, page.count('href="/needs/">'), route)
             for question_id in ids:
                 self.assertIn(f'href="/questions/{question_id}/"', page)
                 self.assertIn(html.escape(question_map[question_id]["question"], quote=True), page)
 
-    def test_home_and_need_hub_task_journeys_are_short(self):
+    def test_home_concrete_category_journeys_are_direct(self):
         home = self.page("/")
         journeys = (
-            ("needs/communication", "/questions/phone-calls-are-difficult/"),
-            ("needs/education-study", "/questions/organising-study-and-assignments/"),
-            ("needs/work", "/questions/workplace-support-great-britain/"),
-            ("needs/assessment-diagnosis", "/questions/adult-autism-assessment-england/"),
-            ("needs/sensory-environment", "/questions/sensory-overload-what-can-i-change/"),
-            ("needs/health-wellbeing", "/questions/low-mood-depression-where-start/"),
-            ("needs/relationships-family", "/questions/communication-needs-in-relationships/"),
+            ("/conditions/", "/understand/autism/"),
+            ("/everyday-help/", "/needs/work/"),
+            ("/books-media/", "/resources/a-kind-of-spark/"),
+            ("/games-apps/", "/resources/townscaper/"),
+            ("/organisations/", "/resources/autistica/"),
+            ("/questions/", "/questions/phone-calls-are-difficult/"),
         )
-        for hub_route, question_route in journeys:
-            self.assertIn(f'href="/{hub_route}/"', home)
-            hub = self.page(f"/{hub_route}/")
-            self.assertIn(f'href="{question_route}"', hub)
+        for category_route, item_route in journeys:
+            self.assertIn(f'href="{category_route}"', home)
+            category = self.page(category_route)
+            self.assertIn(f'href="{item_route}"', category)
 
+        self.assertIn('href="/find/"', home)
+        self.assertIn('<details class="home-more">', home)
         self.assertIn('href="/a-z/"', home)
-        self.assertIn('href="/questions/"', home)
-        self.assertIn('href="/resources/"', home)
+        self.assertIn('href="/needs/"', home)
 
     def test_every_indexable_page_has_accessibility_metadata_and_canonical_url(self):
         paths = build_site.sitemap_paths(self.concepts, self.resources, self.questions)
@@ -417,35 +445,128 @@ class WebsiteBuildTests(unittest.TestCase):
             ("/questions/workplace-support-great-britain/", "page--question", ">Question</span>"),
             ("/resources/goblin-tools/", "page--resource", ">Resource</span>"),
             ("/understand/autism/", "page--concept", ">Concept</span>"),
-            ("/evidence/", "page--evidence", ">Evidence</span>"),
+            ("/evidence/", "page--evidence-index", ">Evidence</span>"),
+            ("/glossary/", "page--glossary-index", ">Glossary</span>"),
         ]
         for route, body_class, label in cases:
             page = self.page(route)
             self.assertIn(body_class, page, route)
-            self.assertIn('class="page-kind"', page, route)
+            self.assertRegex(page, r'class="[^"]*\bpage-kind\b[^"]*"', route)
             self.assertIn(label, page, route)
 
-    def test_primary_navigation_is_bounded_and_find_first(self):
+    def test_navigation_and_index_pages_use_hidden_or_compact_identity_without_intro_panels(self):
+        headerless_routes = (
+            "/",
+            "/questions/",
+            "/understand/",
+            "/resources/",
+            "/find/",
+            "/needs/",
+        )
+        compact_routes = {
+            "/places/": "Browse by geographic scope",
+            "/types/": "Browse by content type",
+            "/a-z/": "A–Z",
+            "/apps-tools/": "Apps & tools",
+            "/books/": "Books",
+            "/books-media/": "Books & media",
+            "/community/": "Support & organisations",
+            "/conditions/": "Conditions",
+            "/daily-living/": "Daily living",
+            "/everyday-help/": "Help with everyday life",
+            "/games/": "Games",
+            "/games-apps/": "Games & apps",
+            "/health-diagnosis/": "Health & diagnosis",
+            "/organisations/": "Find support",
+            "/start/": "Not sure where to start?",
+            "/tools/": "Tools & practical help",
+            "/work-education/": "Work & education",
+            "/glossary/": "Glossary",
+            "/evidence/": "Evidence",
+        }
+
+        for route in headerless_routes:
+            page = self.page(route)
+            self.assertNotIn('<header class="page-heading">', page, route)
+            self.assertNotIn('<header class="compact-page-heading"', page, route)
+            self.assertIn('<header class="visually-hidden" data-page-identity="true">', page, route)
+            self.assertIn('class="page-kind"', page, route)
+            self.assertIn("<h1>", page, route)
+
+        for route, title in compact_routes.items():
+            page = self.page(route)
+            self.assertNotIn('<header class="page-heading">', page, route)
+            self.assertIn('<header class="compact-page-heading" data-page-identity="true">', page, route)
+            self.assertIn(f"<h1>{html.escape(title, quote=True)}</h1>", page, route)
+            self.assertNotIn('<p class="lede">', page, route)
+            self.assertIn('class="visually-hidden page-kind"', page, route)
+
+        self.assertNotIn("Orientation, not diagnosis.", self.page("/understand/"))
+        self.assertNotIn("Local governed discovery.", self.page("/find/"))
+
+    def test_direct_navigation_routes_remove_repeated_instruction_and_competing_catalogue_nav(self):
+        everyday = self.page("/everyday-help/")
+        self.assertNotIn("Choose the part of life that is closest", everyday)
+        self.assertNotIn("You do not need the perfect category.", everyday)
+        self.assertIn("Daily life", everyday)
+
+        start = self.page("/start/")
+        self.assertNotIn("Pick the closest one", start)
+        self.assertNotIn("You do not need to know the right ND Oracle category.", start)
+        self.assertIn("Something about me", start)
+
+        for route in ("/daily-living/", "/health-diagnosis/", "/work-education/"):
+            page = self.page(route)
+            self.assertNotIn(">Choose an area</h2>", page, route)
+            self.assertLess(page.index('class="nav-v1-subgroup-stack"'), page.index("Relevant to inspect, not recommended."), route)
+
+        for route in ("/tools/", "/books-media/", "/community/"):
+            page = self.page(route)
+            self.assertNotIn('class="resource-subnav"', page, route)
+            self.assertNotRegex(page, r'<h2 id="resource-list-heading">\d+ reviewed entr')
+
+        for route in ("/apps-tools/", "/books/", "/games/", "/games-apps/", "/organisations/"):
+            page = self.page(route)
+            self.assertNotRegex(page, r'<h2 id="nav-v1-category-list-heading">\d+ items?</h2>')
+
+        conditions = self.page("/conditions/")
+        self.assertLess(conditions.index('class="topic-list"'), conditions.index("Information, not diagnosis."))
+
+        glossary = self.page("/glossary/")
+        self.assertNotIn("Words made clearer", glossary)
+        self.assertIn('aria-label="Glossary navigation"', glossary)
+
+        evidence = self.page("/evidence/")
+        self.assertIn("Evidence is not proof and source count is not a vote.", evidence)
+
+    def test_navigation_alias_pages_use_browse_layout_identity(self):
+        for route in ("/everyday-help/", "/games-apps/"):
+            page = self.page(route)
+            self.assertIn('class="page page--browse"', page, route)
+            self.assertNotIn('page--information', page, route)
+
+    def test_primary_navigation_is_bounded_and_utility_only(self):
         page = self.page("/")
         start = page.index('<nav class="primary-nav" aria-label="Primary">')
         end = page.index("</nav>", start)
         nav = page[start:end]
-        self.assertEqual(4, nav.count("<a "))
-        self.assertLess(nav.index('href="/find/"'), nav.index('href="/questions/"'))
-        for href in ("/find/", "/questions/", "/understand/", "/resources/"):
+        before_menu = nav.split('<details class="site-menu">', 1)[0]
+        self.assertEqual(1, before_menu.count("<a "))
+        self.assertIn('href="/find/"', before_menu)
+        self.assertIn(">Search</a>", before_menu)
+        self.assertIn('<summary>Menu</summary>', nav)
+        for href in ("/", "/needs/", "/a-z/", "/places/", "/questions/", "/understand/", "/resources/", "/evidence/", "/about/", "/accessibility/"):
             self.assertIn(f'href="{href}"', nav)
-        self.assertNotIn('href="/about/"', nav)
-        self.assertNotIn('href="/how-it-works/"', nav)
         footer = page[page.index('aria-label="Footer"'):]
         self.assertIn('href="/about/"', footer)
         self.assertIn('href="/how-it-works/"', footer)
 
-    def test_find_is_primary_navigation_and_has_accessible_local_controls(self):
+    def test_search_is_global_utility_navigation_and_has_accessible_local_controls(self):
         page = self.page("/find/")
-        self.assertIn('href="/find/" aria-current="page">Find</a>', page)
+        self.assertIn('href="/find/" aria-current="page">Search</a>', page)
         self.assertIn('aria-describedby="find-help"', page)
         self.assertIn('role="region" aria-label="Find results"', page)
-        self.assertIn("Local governed discovery.", page)
+        self.assertNotIn("Local governed discovery.", page)
         self.assertIn("processed only in this page", page)
         self.assertIn('<script src="/find.js" defer></script>', page)
         find_js = (self.output / "find.js").read_text(encoding="utf-8")
@@ -546,7 +667,9 @@ class WebsiteBuildTests(unittest.TestCase):
     def test_topics_v24_recognition_grouping_and_word_learning(self):
         page = self.page("/understand/")
         self.assertIn("Start with what you notice", page)
-        self.assertIn("New word? Break it down", page)
+        self.assertIn("Unfamiliar word?", page)
+        self.assertIn('href="/glossary/"', page)
+        self.assertLess(page.index("Start with what you notice"), page.index("Unfamiliar word?"))
         self.assertIn('class="recognition-list"', page)
         self.assertIn('class="topic-group-grid"', page)
         self.assertIn('class="topic-list topic-index-list"', page)
@@ -573,17 +696,42 @@ class WebsiteBuildTests(unittest.TestCase):
                 self.assertIn(f'href="/understand/{concept_id}/"', page)
 
         monotropism = self.page("/understand/monotropism/")
-        self.assertIn('class="word-guide"', monotropism)
-        self.assertIn("Break the term down", monotropism)
+        self.assertIn('class="word-guide terminology-guide"', monotropism)
+        self.assertIn("New word? Break it down", monotropism)
         for part in ("mono", "trop", "ism"):
             self.assertIn(f'class="word-part">{part}</strong>', monotropism)
-        self.assertIn("This breakdown is a learning aid", monotropism)
-        self.assertIn("Whole meaning:", monotropism)
+        self.assertIn("learning and memory aids", monotropism)
+        self.assertIn("What it means here:", monotropism)
+        self.assertIn('href="/glossary/#term-monotropism"', monotropism)
 
         accessibility = self.page("/accessibility/")
         self.assertIn("Language, overview and orientation", accessibility)
         self.assertIn("Discovery and index pages use more of the desktop viewport", accessibility)
         self.assertIn("Colour is used with headings, position and text labels", accessibility)
+
+    def test_reference_and_information_pages_use_wide_bounded_layout(self):
+        css = (self.output / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("ND-UX-V2 human repair: use wide screens", css)
+        for selector in (
+            ".page--information .site-shell",
+            ".page--evidence-index .site-shell",
+            ".page--glossary-index .site-shell",
+            ".page--information .reading-column",
+            ".page--evidence-index #evidence-results",
+            ".page--glossary-index .glossary-letter",
+        ):
+            self.assertIn(selector, css)
+        self.assertIn("width: min(90vw, var(--content-reference));", css)
+        self.assertIn("grid-template-columns: repeat(2, minmax(0, 1fr));", css)
+
+        about = self.page("/about/")
+        accessibility = self.page("/accessibility/")
+        evidence = self.page("/evidence/")
+        glossary = self.page("/glossary/")
+        self.assertIn("page--information", about)
+        self.assertIn("controlled reading measures", accessibility)
+        self.assertIn("page--evidence-index", evidence)
+        self.assertIn("page--glossary-index", glossary)
 
     def test_v24_composition_css_is_wide_flat_and_directional(self):
         css = (self.output / "styles.css").read_text(encoding="utf-8")

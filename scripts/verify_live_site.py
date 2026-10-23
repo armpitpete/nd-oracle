@@ -173,19 +173,22 @@ def verify_v06_reading_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     # contract below, but verify the currently accepted home discovery routes
     # rather than obsolete visible inventory markers.
     for marker in (
-        "What do you need right now?",
-        "Describe what is happening",
-        "I know what I need help with",
-        "I want something practical",
-        "I want to understand something",
-        "Need another way in?",
-        'href="/find/"',
+        "What are you looking for?",
+        "ADHD, autism &amp; other neurodivergence",
+        "Help with everyday life",
+        "Books, films &amp; media",
+        "Games &amp; apps",
+        "Find support",
+        "Ask a question",
+        "More ways to explore",
+        'href="/conditions/"',
+        'href="/everyday-help/"',
+        'href="/books-media/"',
+        'href="/games-apps/"',
+        'href="/organisations/"',
         'href="/questions/"',
-        'href="/resources/"',
-        'href="/understand/"',
-        'href="/places/"',
+        'href="/find/"',
         'href="/a-z/"',
-        'href="/how-it-works/"',
     ):
         if marker not in home.body: failures.append(f"/: current home discovery marker missing: {marker!r}")
     for path,first in TOPIC_FIRST_READ_MARKERS.items():
@@ -268,13 +271,18 @@ def verify_v10_resource_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
 def verify_v10_navigation_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     failures=[]; home=fetcher(expected_url(origin,"/"))
     for marker in (
+        'href="/conditions/"',
+        'href="/books/"',
+        'href="/games/"',
+        'href="/apps-tools/"',
+        'href="/organisations/"',
+        'href="/work-education/"',
+        'href="/health-diagnosis/"',
+        'href="/daily-living/"',
+        'href="/evidence/"',
         'href="/find/"',
-        'href="/questions/"',
-        'href="/resources/"',
-        'href="/understand/"',
-        'href="/places/"',
         'href="/a-z/"',
-        'href="/how-it-works/"',
+        'href="/start/"',
     ):
         if marker not in home.body: failures.append(f"/: current navigation marker missing {marker!r}")
     needs=fetcher(expected_url(origin,"/needs/"))
