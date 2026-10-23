@@ -158,8 +158,8 @@ def _metrics(cdp: CDP) -> dict[str, Any]:
           text: (node.innerText || "").replace(/\\s+/g, " ").slice(0, 60)
         };
       })
-      .filter((node) => node.right > root.clientWidth + 1 || node.left < -1)
-      .sort((a, b) => b.right - a.right)
+      .filter((node) => node.scrollWidth > node.clientWidth + 1 || node.right > root.clientWidth + 1 || node.left < -1)
+      .sort((a, b) => (b.scrollWidth - b.clientWidth) - (a.scrollWidth - a.clientWidth) || b.right - a.right)
       .slice(0, 12)
   };
 })()
