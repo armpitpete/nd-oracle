@@ -72,6 +72,15 @@ class ResponsiveLayoutV25Tests(unittest.TestCase):
             ),
         )
 
+    def test_small_screen_terminology_and_provenance_do_not_force_overflow(self) -> None:
+        # The 320px Autism route previously overflowed when a long
+        # definition was squeezed beside its term in the glossary aid.
+        mobile = CSS.split("@media (max-width: 28rem)", 1)[1]
+        self.assertIn(".word-meanings div {", mobile)
+        self.assertIn("grid-template-columns: minmax(0, 1fr);", mobile)
+        self.assertIn(".provenance p,", CSS)
+        self.assertIn("overflow-wrap: anywhere;", CSS)
+
     def test_no_top_level_reading_column_reintroduces_narrow_page_shell(self) -> None:
         first = re.search(r"\.reading-column\s*\{(?P<body>.*?)\n\}", CSS, re.S)
         self.assertIsNotNone(first)
