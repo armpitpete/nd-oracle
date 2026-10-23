@@ -155,7 +155,9 @@ def _metrics(cdp: CDP) -> dict[str, Any]:
           right: Math.round(rect.right),
           scrollWidth: node.scrollWidth,
           clientWidth: node.clientWidth,
-          text: (node.innerText || "").replace(/\\s+/g, " ").slice(0, 60)
+          text: (node.innerText || "").replace(/\s+/g, " ").slice(0, 60),
+          markup: node.outerHTML.slice(0, 320),
+          parent: node.parentElement ? node.parentElement.tagName.toLowerCase() + "." + node.parentElement.className : ""
         };
       })
       .filter((node) => node.scrollWidth > node.clientWidth + 1 || node.right > root.clientWidth + 1 || node.left < -1)
@@ -300,7 +302,21 @@ def run(base_url: str, output_dir: Path, report_path: Path, chrome_bin: str | No
                     # Allow layout/style calculation to settle after the load event.
                     time.sleep(0.05)
                     metrics = _metrics(cdp)
-                    rows.append(_assert_metrics(name, width, height, metrics))
+                    try:
+                        rows.append(_assert_metrics(name, width, height, metrics))
+                    except AssertionError:
+                        # Preserve a visual artifact when a responsive assertion fails.
+                        shot = cdp.command("Page.captureScreenshot", {
+                            "format": "png",
+                            "fromSurface": True,
+                            "captureBeyondViewport": False,
+                        })
+                        data = shot.get("data")
+                        if isinstance(data, str) and data:
+                            (output_dir / f"failure-{name}-{width}x{height}.png").write_bytes(
+                                base64.b64decode(data)
+                            )
+                        raise
 
                     if name == "question":
                         shot = cdp.command(
