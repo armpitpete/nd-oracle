@@ -144,7 +144,23 @@ def _metrics(cdp: CDP) -> dict[str, Any]:
     scrollWidth: root.scrollWidth,
     shellWidth: shell ? Math.round(shell.getBoundingClientRect().width) : 0,
     headingWidth: heading ? Math.round(heading.getBoundingClientRect().width) : 0,
-    secondaryColumns: columns
+    secondaryColumns: columns,
+    overflowCandidates: Array.from(document.querySelectorAll("body *"))
+      .map((node) => {
+        const rect = node.getBoundingClientRect();
+        return {
+          tag: node.tagName.toLowerCase(),
+          className: typeof node.className === "string" ? node.className.slice(0, 80) : "",
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+          scrollWidth: node.scrollWidth,
+          clientWidth: node.clientWidth,
+          text: (node.innerText || "").replace(/\\s+/g, " ").slice(0, 60)
+        };
+      })
+      .filter((node) => node.right > root.clientWidth + 1 || node.left < -1)
+      .sort((a, b) => b.right - a.right)
+      .slice(0, 12)
   };
 })()
 """
@@ -186,7 +202,8 @@ def _assert_metrics(name: str, requested_width: int, requested_height: int, metr
     if scroll > client + 1:
         raise AssertionError(
             f"{name} {requested_width}x{requested_height}: horizontal overflow "
-            f"scroll={scroll}px client={client}px"
+            f"scroll={scroll}px client={client}px; "
+            f"overflow candidates={metrics.get('overflowCandidates', [])!r}"
         )
 
     if heading > shell + 1:
