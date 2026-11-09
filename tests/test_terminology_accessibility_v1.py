@@ -97,7 +97,8 @@ class TerminologyAccessibilityV1Tests(unittest.TestCase):
     def test_old_one_off_understand_example_is_removed(self):
         page = self.page("/understand/")
         self.assertNotIn('class="topic-word-example"', page)
-        self.assertIn('href="/glossary/"', page)
+        main = page.split('<main', 1)[1].split('</main>', 1)[0]
+        self.assertNotIn('href="/glossary/"', main)
 
     def test_representative_first_use_guides_cover_modes(self):
         cases = (
@@ -153,10 +154,11 @@ class TerminologyAccessibilityV1Tests(unittest.TestCase):
             for word in words:
                 self.assertIn(word, block)
 
-    def test_find_exposes_glossary_without_adding_it_to_governed_ranking(self):
+    def test_find_keeps_glossary_in_global_nav_not_in_search_ui(self):
         page = self.page("/find/")
         self.assertIn('href="/glossary/"', page)
-        self.assertIn("look it up in the Glossary", page)
+        main = page.split('<main', 1)[1].split('</main>', 1)[0]
+        self.assertNotIn('href="/glossary/"', main)
         template = page.split('<template id="search-index">', 1)[1].split("</template>", 1)[0]
         self.assertNotIn('/glossary/', template)
 

@@ -52,7 +52,7 @@ class ContentNavigationV08CompatibilityTests(unittest.TestCase):
         self.assertIn('href="/games-apps/"', home)
         self.assertIn('href="/everyday-help/"', home)
         self.assertIn("<h1>Questions</h1>", questions)
-        self.assertIn("<h1>Understand</h1>", topics)
+        self.assertIn("<h1>Topics</h1>", topics)
         self.assertIn("<h1>Resources</h1>", resources)
         self.assertIn("Tools &amp; practical help", tools)
         self.assertNotIn('>Explore</a>', home)
@@ -64,7 +64,7 @@ class ContentNavigationV08CompatibilityTests(unittest.TestCase):
             self.assertIn("<h1>", page)
         books = (self.output / "books-media" / "index.html").read_text(encoding="utf-8")
         self.assertIn("<h1>Books &amp; media</h1>", books)
-        for href in ("/books/", "/games/", "/conditions/", "/apps-tools/", "/organisations/"):
+        for href in ("/books-media/", "/games/", "/tools/", "/community/"):
             self.assertIn(f'href="{href}"', resources)
 
     def test_v08_cross_link_example_remains_live(self) -> None:

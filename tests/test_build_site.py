@@ -133,14 +133,13 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertNotIn("Browse by area of life", page)
         self.assertEqual(0, page.count("choice-card choice-card--primary"))
         self.assertEqual(0, page.count("choice-card choice-card--need"))
-        self.assertEqual(5, page.count("choice-card choice-card--family"))
+        self.assertEqual(4, page.count("choice-card choice-card--family"))
 
         for href, label in (
-            ("/books/", "Books"),
+            ("/books-media/", "Books &amp; media"),
             ("/games/", "Games"),
-            ("/conditions/", "Conditions"),
-            ("/apps-tools/", "Apps &amp; tools"),
-            ("/organisations/", "Organisations &amp; peer groups"),
+            ("/tools/", "Apps &amp; tools"),
+            ("/community/", "Support &amp; organisations"),
         ):
             self.assertIn(f'href="{href}"', page)
             self.assertIn(label, page)
@@ -152,11 +151,11 @@ class WebsiteBuildTests(unittest.TestCase):
         details_start = page.index('<details class="resource-catalogue">')
         self.assertEqual(len(self.resources), page[details_start:].count('<article class="resource-row">'))
         self.assertIn('class="resource-alpha-group"', page[details_start:])
-        self.assertIn('href="/a-z/"', page)
+        self.assertNotIn('href="/a-z/"', page.split('<main', 1)[1].split('</main>', 1)[0])
 
     def test_resources_direct_categories_preserve_specialist_need_and_place_routes(self):
         resources_page = self.page("/resources/")
-        for href in ("/books/", "/games/", "/conditions/", "/apps-tools/", "/organisations/"):
+        for href in ("/books-media/", "/games/", "/tools/", "/community/"):
             self.assertIn(f'href="{href}"', resources_page)
 
         education = self.page("/needs/education-study/")
@@ -213,19 +212,13 @@ class WebsiteBuildTests(unittest.TestCase):
         page = self.page("/questions/")
         self.assertNotIn("Choose how to start", page)
         self.assertNotIn("You do not need to scan all", page)
-        self.assertEqual(3, page.count("question-start-card"))
-        for href, label in (
-            ("/find/", "Describe the problem"),
-            ("#question-areas", "Browse by area of life"),
-            ("/a-z/", "I know what I am looking for"),
-        ):
-            self.assertIn(f'href="{href}"', page)
-            self.assertIn(label, page)
-
+        self.assertEqual(0, page.count("question-start-card"))
+        self.assertIn("What do you need help with?", page)
+        self.assertNotIn("Need the complete index?", page)
+        main = page.split('<main', 1)[1].split('</main>', 1)[0]
+        self.assertNotIn('href="/find/"', main)
+        self.assertNotIn('href="/a-z/"', main)
         self.assertIn("Relevant to inspect, not recommended.", page)
-        self.assertIn("Choose an area of life", page)
-        self.assertIn("Need the complete index?", page)
-        self.assertIn('href="/a-z/"', page)
 
         source_groups = [name for name, _ids in build_site.QUESTION_GROUPS]
         clustered_groups = [
@@ -262,8 +255,8 @@ class WebsiteBuildTests(unittest.TestCase):
             self.assertIn(group_label, page)
             self.assertIn(f'href="{route}"', page)
 
-        self.assertIn('href="/a-z/"', page)
-        self.assertIn("Open the complete A–Z index", page)
+        main = page.split('<main', 1)[1].split('</main>', 1)[0]
+        self.assertNotIn('href="/a-z/"', main)
 
         _boundary, phone_results = discovery.search("phone calls are difficult", limit=10)
         self.assertIn(
@@ -664,16 +657,15 @@ class WebsiteBuildTests(unittest.TestCase):
         self.assertIn("background: var(--accent-soft)", css)
         self.assertIn('.primary-nav a[aria-current="page"]', css)
 
-    def test_topics_v24_recognition_grouping_and_word_learning(self):
+    def test_topics_v24_unique_grouping_and_word_learning(self):
         page = self.page("/understand/")
-        self.assertIn("Start with what you notice", page)
-        self.assertIn("Unfamiliar word?", page)
-        self.assertIn('href="/glossary/"', page)
-        self.assertLess(page.index("Start with what you notice"), page.index("Unfamiliar word?"))
-        self.assertIn('class="recognition-list"', page)
+        self.assertIn("Choose a topic", page)
+        main = page.split("<main",1)[1].split("</main>",1)[0]
+        self.assertNotIn('href="/glossary/"', main)
+        self.assertNotIn('href="/find/"', main)
+        self.assertNotIn('class="recognition-list"', page)
         self.assertIn('class="topic-group-grid"', page)
-        self.assertIn('class="topic-list topic-index-list"', page)
-        self.assertIn('href="/find/"', page)
+        self.assertNotIn('class="topic-list topic-index-list"', page)
 
         concept_ids = {concept["id"] for concept in self.concepts}
         grouped = [
@@ -683,11 +675,9 @@ class WebsiteBuildTests(unittest.TestCase):
         ]
         self.assertEqual(concept_ids, set(grouped))
         self.assertEqual(len(grouped), len(set(grouped)))
-        self.assertEqual(len(self.concepts), page.count('<article class="topic-row">'))
-
-        for label, target in build_site.V24_RECOGNITION_ROUTES:
-            self.assertIn(html.escape(label, quote=True), page)
-            self.assertIn(f'href="/understand/{target}/"', page)
+        self.assertEqual(0, page.count('<article class="topic-row">'))
+        for concept in self.concepts:
+            self.assertEqual(1, main.count(f'href="/understand/{concept["id"]}/"'))
 
         for _slug, title, description, ids in build_site.V24_TOPIC_GROUPS:
             self.assertIn(html.escape(title, quote=True), page)

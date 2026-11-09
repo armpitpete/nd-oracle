@@ -1073,23 +1073,22 @@ def render_find_page() -> str:
     index_json = html.escape(discovery.browser_index_json())
     body = f'''
 <section aria-labelledby="find-heading">
-  <h2 id="find-heading">Describe the problem in your own words</h2>
-  <p class="section-intro">You do not need to know the diagnosis, topic name or service name. Results are governed routes to inspect, not recommendations. If you already know the technical term, you can also <a href="/glossary/">look it up in the Glossary</a>.</p>
+  <h2 id="find-heading">What are you looking for?</h2>
   <div class="find-control">
     <div class="find-field">
-      <label for="find-input">Problem or question</label>
+      <label for="find-input">Search words</label>
       <input id="find-input" type="search" autocomplete="off" spellcheck="true" maxlength="500" aria-describedby="find-help">
     </div>
-    <button id="find-button" type="button">Find governed routes</button>
+    <button id="find-button" type="button">Search</button>
   </div>
-  <p id="find-help" class="meta">Examples: “work is too noisy”, “I keep putting off paperwork”, “phone calls are hard”. Your query is processed only in this page.</p>
+  <p id="find-help" class="meta">Try “noisy classroom”, “phone calls” or “getting started”. Your words stay in this browser.</p>
 </section>
-<section id="find-results" role="region" aria-label="Find results" aria-live="polite" aria-atomic="false"><p>Results will appear here. Relevance means worth inspecting, not recommended.</p></section>
-<noscript><section class="boundary-panel"><h2>Discovery needs JavaScript</h2><p>The rest of ND Oracle works without JavaScript. Use <a href="/questions/">Questions</a>, <a href="/needs/">browse by need</a> or the <a href="/a-z/">A–Z</a> instead.</p></section></noscript>
+<section id="find-results" role="region" aria-label="Search results" aria-live="polite" aria-atomic="false"><p>Search results will appear here. A match is not a personal recommendation.</p></section>
+<noscript><section class="boundary-panel"><h2>Search needs JavaScript</h2><p>Turn on JavaScript to use this search box. The rest of the website still works without it.</p></section></noscript>
 <template id="search-index">{index_json}</template>
 <script src="/find.js" defer></script>
 '''
-    return _compat08__page_shell('Find a governed route', 'Start with ordinary language. Matching happens locally in your browser and points only to governed ND Oracle pages.', body, current='find', path='/find/')
+    return _compat08__page_shell('Find', 'Search the website using your own words.', body, current='find', path='/find/')
 
 QUESTION_DISCOVERY_CLUSTERS = [
     (
@@ -1145,35 +1144,6 @@ def render_questions_index_v2(questions: list[dict]) -> str:
             f'unexpected={sorted(set(clustered) - set(group_map))}'
         )
 
-    primary_choices = (
-        (
-            '/find/',
-            'Describe the problem',
-            'Use your own words when you do not know the name of the question or topic.',
-            'Open Find',
-        ),
-        (
-            '#question-areas',
-            'Browse by area of life',
-            'Start with the part of life closest to what you are dealing with.',
-            'Choose an area',
-        ),
-        (
-            '/a-z/',
-            'I know what I am looking for',
-            'Use the complete A–Z when you already know the wording or subject.',
-            'Open A–Z',
-        ),
-    )
-    primary_cards = ''.join((
-        f'''<a class="choice-card choice-card--primary question-start-card" href="{_compat06__esc(href)}">
-  <strong>{_compat06__esc(title)}</strong>
-  <span>{_compat06__esc(description)}</span>
-  <span class="choice-card-action">{_compat06__esc(action)} →</span>
-</a>'''
-        for href, title, description, action in primary_choices
-    ))
-
     area_cards = []
     cluster_sections = []
     for slug, title, description, group_names in QUESTION_DISCOVERY_CLUSTERS:
@@ -1209,29 +1179,21 @@ def render_questions_index_v2(questions: list[dict]) -> str:
         )
 
     body = f'''
-<section class="question-start" aria-label="Question routes">
-  <div class="choice-grid choice-grid--question-start">{primary_cards}</div>
+<section class="question-area-overview" id="question-areas" aria-labelledby="question-areas-heading">
+  <h2 id="question-areas-heading">What do you need help with?</h2>
+  <p class="section-intro">Choose one area, then open a group to see its questions.</p>
+  <div class="choice-grid choice-grid--question-areas">{''.join(area_cards)}</div>
 </section>
 <section class="notice question-boundary">
   <strong>Relevant to inspect, not recommended.</strong> These pages route ordinary needs through reviewed ND Oracle material. They do not diagnose you, choose for you or turn a resource listing into proof that it works.
 </section>
-<section class="question-area-overview" id="question-areas" aria-labelledby="question-areas-heading">
-  <h2 id="question-areas-heading">Choose an area of life</h2>
-  <p class="section-intro">Each area contains smaller groups. Open only the group you need; all governed Questions remain available.</p>
-  <div class="choice-grid choice-grid--question-areas">{''.join(area_cards)}</div>
-</section>
 <section class="question-cluster-list" aria-label="Questions grouped by area of life">
   {''.join(cluster_sections)}
-</section>
-<section class="question-complete" aria-labelledby="question-complete-heading">
-  <h2 id="question-complete-heading">Need the complete index?</h2>
-  <p class="section-intro">Nothing has been removed. Use the A–Z when you want to scan the full governed knowledge base rather than browse by area.</p>
-  <p><a class="standalone-action" href="/a-z/">Open the complete A–Z index</a></p>
 </section>
 '''
     return _compat08__page_shell(
         'Questions',
-        'Start with an everyday problem and follow a reviewed route to relevant topics, tools, games, services or organisations.',
+        'Find clear answers to everyday questions.',
         body,
         current='questions',
         path='/questions/',
@@ -1505,8 +1467,8 @@ _compat09__render_need_hub = render_need_hub_v23
 V24_TOPIC_GROUPS = [
     (
         'conditions-neurotypes',
-        'Conditions & neurotypes',
-        'Names used for diagnoses, neurotypes and developmental conditions.',
+        'ADHD, autism and other conditions',
+        'Learn about different conditions and how they can affect people.',
         (
             'adhd',
             'autism',
@@ -1520,26 +1482,26 @@ V24_TOPIC_GROUPS = [
     ),
     (
         'attention-doing',
-        'Attention, focus & getting started',
-        'Ways attention, planning and starting actions can work.',
+        'Attention and getting started',
+        'Learn about focus, planning and starting tasks.',
         ('executive-function', 'task-initiation', 'monotropism'),
     ),
     (
         'sensory-body',
-        'Sensory & body signals',
-        'How sensory input and signals from inside the body can be noticed and handled.',
+        'Senses and body signals',
+        'Learn about sound, light, touch and feelings inside your body.',
         ('sensory-processing', 'sensory-overload', 'interoception', 'stimming'),
     ),
     (
         'communication-feelings',
-        'Communication, feelings & social effort',
-        'Understanding communication, emotions, social adaptation and exhaustion.',
+        'Communication and feelings',
+        'Learn about talking, emotions and being around other people.',
         ('communication-differences', 'alexithymia', 'masking', 'autistic-burnout'),
     ),
     (
         'big-picture',
-        'Big-picture language',
-        'A wider idea used to talk about neurological variation and society.',
+        'Big ideas',
+        'Learn what neurodiversity means.',
         ('neurodiversity',),
     ),
 ]
@@ -1685,13 +1647,6 @@ def render_understand_index_v24(concepts: list[dict]) -> str:
     _v24_validate_topics(concepts)
     concept_map = {concept['id']: concept for concept in concepts}
 
-    recognition = ''.join(
-        f'<li><a href="/understand/{_compat06__esc(target)}/">'
-        f'{_compat06__esc(label)}</a>'
-        f'<span>{_compat06__esc(concept_map[target]["name"])}</span></li>'
-        for label, target in V24_RECOGNITION_ROUTES
-    )
-
     groups = []
     for slug, title, description, ids in V24_TOPIC_GROUPS:
         links = ''.join(_v24_topic_group_link(concept_map[concept_id]) for concept_id in ids)
@@ -1704,39 +1659,16 @@ def render_understand_index_v24(concepts: list[dict]) -> str:
 </section>'''
         )
 
-    topics = ''.join(_compat06__topic_link(concept) for concept in concepts)
-    mono_parts = V24_TERM_GUIDES['monotropism']
     body = f'''
-<section class="topic-word-example" aria-labelledby="topic-word-example-heading">
-  <h2 id="topic-word-example-heading">New word? Break it down</h2>
-  <p>Unfamiliar words do not have to stay opaque. A word can be split into useful parts, then connected back to its full meaning.</p>
-  <p class="word-example-line"><strong>Monotropism</strong> {_v24_word_build(mono_parts)}</p>
-  {_v24_word_meanings(mono_parts)}
-  <p class="meta">Word parts are a learning and memory aid, not the formal definition. Historical word roots and modern meanings do not always match exactly.</p>
-</section>
-
-<section class="topic-recognition" aria-labelledby="topic-recognition-heading">
-  <h2 id="topic-recognition-heading">Start with what you notice</h2>
-  <p class="section-intro">You do not need to know the technical term. Choose a description that sounds close to what you are trying to understand.</p>
-  <ul class="recognition-list">{recognition}</ul>
-  <p class="topic-find-route"><a href="/find/">Or describe it in your own words with Find →</a></p>
-</section>
-
 <section class="topic-groups" aria-labelledby="topic-groups-heading">
-  <h2 id="topic-groups-heading">Browse by kind of topic</h2>
-  <p class="section-intro">These groups are for navigation. Some ideas overlap; the grouping does not create a diagnostic boundary.</p>
+  <h2 id="topic-groups-heading">Choose a topic</h2>
+  <p class="section-intro">Choose something you want to understand. Each topic has a plain-language explanation.</p>
   <div class="topic-group-grid">{''.join(groups)}</div>
-</section>
-
-<section class="topic-complete" aria-labelledby="concepts-heading">
-  <h2 id="concepts-heading">All topics A–Z</h2>
-  <p class="section-intro">All {len(concepts)} reviewed Topics remain visible here when you already know the term or want the complete index.</p>
-  <div class="topic-list topic-index-list">{topics}</div>
 </section>
 '''
     return _compat08__page_shell(
-        'Understand',
-        'Plain-language explanations of neurodivergence, experiences and concepts, with evidence and uncertainty available when you want them.',
+        'Topics',
+        'Learn about neurodivergence, experiences and everyday differences.',
         body,
         current='understand',
         path='/understand/',
@@ -2296,11 +2228,10 @@ def render_resources_navigation_v1(resources: list[dict]) -> str:
         for letter, rows in alpha_rows.items()
     )
     categories = (
-        ('/books/', 'Books', 'Books with context, access notes and limitations kept visible.'),
-        ('/games/', 'Games', 'Games with play characteristics, accessibility and possible poor fit kept visible.'),
-        ('/conditions/', 'Conditions', 'Plain-language information about named conditions.'),
-        ('/apps-tools/', 'Apps & tools', 'Apps and practical tools that may help with access or everyday tasks.'),
-        ('/organisations/', 'Organisations & peer groups', 'Organisations and peer communities with scope and limitations visible.'),
+        ('/books-media/', 'Books & media', 'Books, podcasts and other media.'),
+        ('/games/', 'Games', 'Games and ways to play.'),
+        ('/tools/', 'Apps & tools', 'Apps, guides and practical tools.'),
+        ('/community/', 'Support & organisations', 'Services, groups and organisations.'),
     )
     cards = ''.join(
         f'''<a class="choice-card choice-card--family" href="{_compat06__esc(href)}">
@@ -2310,15 +2241,14 @@ def render_resources_navigation_v1(resources: list[dict]) -> str:
         for href, label, description in categories
     )
     body = f'''
-<p class="back-link"><a href="/">← Home</a></p>
 <section class="resource-start" aria-label="Resource categories">
+  <h2>Find something useful</h2>
+  <p class="section-intro">Choose what you are looking for.</p>
   <div class="choice-grid choice-grid--families">{cards}</div>
 </section>
-<p class="resource-listing-policy"><strong>ND Oracle describes resources; it does not recommend them.</strong> <a href="/about/#resource-listings">How listings work</a></p>
+<p class="resource-listing-policy"><strong>ND Oracle describes resources; it does not recommend them.</strong></p>
 <section class="resource-complete" aria-labelledby="resource-complete-heading">
-  <h2 id="resource-complete-heading">All resources</h2>
-  <p class="section-intro">If you know the name, use A–Z. The complete resource catalogue remains available here as a specialist route.</p>
-  <p><a class="standalone-action" href="/a-z/">Open the A–Z index</a></p>
+  <h2 id="resource-complete-heading">All resources A–Z</h2>
   <details class="resource-catalogue">
     <summary><span>Show all {len(resources)} resources A–Z on this page</span></summary>
     <div class="resource-catalogue-body">{catalogue_groups}</div>
@@ -2327,7 +2257,7 @@ def render_resources_navigation_v1(resources: list[dict]) -> str:
 '''
     return _compat08__page_shell(
         'Resources',
-        'Choose books, games, conditions, apps and tools, or organisations and peer groups without learning the catalogue structure first.',
+        'Find books, apps, games, tools and support.',
         body,
         current='resources',
         path='/resources/',
@@ -2714,17 +2644,7 @@ def _terminology_v1_patch_nav(page: str) -> str:
 
 
 def _terminology_v1_patch_understand_index(page: str) -> str:
-    page = _TERMINOLOGY_V1_INDEX_EXAMPLE_RE.sub('\n', page, count=1)
-    marker = '<section class="topic-groups"'
-    section = '''<section class="terminology-route" aria-labelledby="terminology-route-heading">
-  <h2 id="terminology-route-heading">Unfamiliar word?</h2>
-  <p>Technical terms are explained where you meet them. You can also browse all current terminology in the <a href="/glossary/">Glossary</a>.</p>
-</section>
-
-'''
-    if marker in page and 'terminology-route-heading' not in page:
-        page = page.replace(marker, section + marker, 1)
-    return page
+    return _TERMINOLOGY_V1_INDEX_EXAMPLE_RE.sub('\n', page, count=1)
 
 
 def _terminology_v1_patch_az(page: str, entries: list[dict]) -> str:

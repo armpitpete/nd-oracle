@@ -25,7 +25,7 @@ google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=12
 google-chrome --headless=new --no-sandbox --disable-gpu --virtual-time-budget=1200 --dump-dom \
   "http://127.0.0.1:8766/find-results/" > /tmp/candidate-find-results.html
 grep -q "Governed routes to inspect" /tmp/baseline-find-results.html
-grep -q "Governed routes to inspect" /tmp/candidate-find-results.html
+grep -q "Search results" /tmp/candidate-find-results.html
 grep -q 'class="scope-badge"' /tmp/candidate-find-results.html
 
 grep -q 'class="resource-catalogue"' candidate/dist/resources/index.html
@@ -33,24 +33,23 @@ grep -q 'class="resource-catalogue"' candidate/dist/resources/index.html
 grep -q '<h1>Resources</h1>' candidate/dist/resources/index.html
 ! grep -q 'choice-card choice-card--primary' candidate/dist/resources/index.html
 ! grep -q 'choice-card choice-card--need' candidate/dist/resources/index.html
-test "$(grep -o 'choice-card choice-card--family' candidate/dist/resources/index.html | wc -l)" -eq 5
-grep -q 'href="/books/"' candidate/dist/resources/index.html
-grep -q '>Books<' candidate/dist/resources/index.html
+test "$(grep -o 'choice-card choice-card--family' candidate/dist/resources/index.html | wc -l)" -eq 4
+grep -q 'href="/books-media/"' candidate/dist/resources/index.html
+grep -q '>Books &amp; media<' candidate/dist/resources/index.html
 grep -q 'href="/games/"' candidate/dist/resources/index.html
 grep -q '>Games<' candidate/dist/resources/index.html
-grep -q 'href="/conditions/"' candidate/dist/resources/index.html
-grep -q '>Conditions<' candidate/dist/resources/index.html
-grep -q 'href="/apps-tools/"' candidate/dist/resources/index.html
+! grep -q 'href="/conditions/"' candidate/dist/resources/index.html
+grep -q 'href="/tools/"' candidate/dist/resources/index.html
 grep -q 'Apps &amp; tools' candidate/dist/resources/index.html
-grep -q 'href="/organisations/"' candidate/dist/resources/index.html
-grep -q 'Organisations &amp; peer groups' candidate/dist/resources/index.html
+grep -q 'href="/community/"' candidate/dist/resources/index.html
+grep -q 'Support &amp; organisations' candidate/dist/resources/index.html
 
-grep -q 'Start with what you notice' candidate/dist/understand/index.html
-grep -q 'Unfamiliar word?' candidate/dist/understand/index.html
-grep -q 'href="/glossary/"' candidate/dist/understand/index.html
+grep -q 'Choose a topic' candidate/dist/understand/index.html
+! grep -q 'class="topic-complete"' candidate/dist/understand/index.html
+! grep -q 'class="terminology-route"' candidate/dist/understand/index.html
 ! grep -q 'class="topic-word-example"' candidate/dist/understand/index.html
 grep -q 'class="topic-group-grid"' candidate/dist/understand/index.html
-grep -q 'class="recognition-list"' candidate/dist/understand/index.html
+! grep -q 'class="recognition-list"' candidate/dist/understand/index.html
 grep -q 'class="word-guide terminology-guide"' candidate/dist/understand/monotropism/index.html
 grep -q 'data-term-id="monotropism"' candidate/dist/understand/monotropism/index.html
 grep -q 'class="word-part">mono</strong>' candidate/dist/understand/monotropism/index.html
@@ -58,7 +57,7 @@ grep -q 'class="word-part">trop</strong>' candidate/dist/understand/monotropism/
 grep -q 'class="word-part">ism</strong>' candidate/dist/understand/monotropism/index.html
 
 grep -q '<h1>Questions</h1>' candidate/dist/questions/index.html
-test "$(grep -o 'question-start-card' candidate/dist/questions/index.html | wc -l)" -eq 3
+test "$(grep -o 'question-start-card' candidate/dist/questions/index.html | wc -l)" -eq 0
 test "$(grep -o '<details class="question-group"' candidate/dist/questions/index.html | wc -l)" -eq 19
 ! grep -q '<details class="question-group" open' candidate/dist/questions/index.html
 test "$(grep -o '<article class="topic-row">' candidate/dist/questions/index.html | wc -l)" -eq 175
