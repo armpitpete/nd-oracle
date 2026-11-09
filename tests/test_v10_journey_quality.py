@@ -29,7 +29,9 @@ class V10JourneyQualityTests(unittest.TestCase):
         home = self.page("/")
         self.assertIn('href="/find/"', home)
         find = self.page("/find/")
-        self.assertIn("Describe the problem in your own words", find)
+        self.assertIn("What are you looking for?", find)
+        self.assertIn('id="find-input"', find)
+        self.assertIn('id="find-button"', find)
         self.assertIn('src="/find.js"', find)
         self.assertNotIn("<form", find.casefold())
 

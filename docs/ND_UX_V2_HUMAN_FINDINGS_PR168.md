@@ -1,0 +1,199 @@
+# ND-UX-V2 human findings — PR #168
+
+Date: 2026-09-22
+Candidate before repair: `2bf24ca0b7009df2b493ce702e7b8c3090ebcf46`
+Status: targeted human finding recorded; full fixed-journey human gate remains OPEN
+
+## Privacy
+
+The repository stores only the minimum usability evidence needed for disposition. Participant identity and diagnostic/medical details are not stored here.
+
+## HF-001 — Resources first-choice overload
+
+**Observed behaviour / feedback**
+
+The Resources surface presented too many competing ways to begin: strategy choices, life-area choices and resource-family choices. The human feedback requested direct recognisable choices such as books, games and conditions instead of repeated “do this / do that” decisions.
+
+**Severity:** MAJOR
+
+**Disposition:** REPAIR
+
+**Smallest justified repair**
+
+- make the first Resources choice a single category set;
+- use five direct recognition labels: **Books**, **Games**, **Conditions & topics**, **Apps & tools**, **Support & organisations**;
+- remove the competing first-screen strategy grid and life-area grid from the Resources page;
+- preserve Find, Needs, Places, Types and A–Z as existing governed routes rather than deleting capability;
+- add regression coverage so the overloaded composition cannot silently return.
+
+**Visual-evidence repair**
+
+The prior A Kind of Spark viewport proved the route rendered but did not show the supplied cover within the screenshot. Exact-head visual evidence must use a taller A Kind of Spark capture so the authorised cover itself is directly reviewable.
+
+
+## HF-002 — Home requires concrete categories before internal taxonomy
+
+**Observed behaviour / feedback**
+
+The current navigation model still makes abstract/internal labels too prominent. Human feedback states that choices should be recognisable things such as **books, games and conditions**, and freezes this acceptance criterion:
+
+> **A new visitor can tell that ND Oracle contains things such as conditions, books, games and apps, and can reach them without first learning what “Resources”, “Topics”, “Needs” or similar internal categories mean.**
+
+**Severity:** MAJOR
+
+**Disposition:** CONTRACT REPAIR APPLIED / PHASE 2 IMPLEMENTATION APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified Phase 1 repair**
+
+- freeze the concrete visitor-category contract;
+- separate primary categories from secondary utilities and internal taxonomy;
+- bind direct reachability and human acceptance criteria;
+- do not modify governed knowledge or production state in this phase.
+
+Phase 2 now implements the frozen contract with direct concrete-category Home choices and direct category routes over existing governed content. Machine and visual evidence must pass at one exact SHA, but HF-002 remains open for real-human validation; implementation alone is not a human PASS.
+
+## HF-003 — Home first-choice overload
+
+**Observed behaviour / feedback**
+
+A direct human review of the Phase 2 Home surface found that the page still presented too many prominent choices for neurodivergent users or young people. The issue is not that any one route is unreasonable; it is that nine primary choices plus multiple secondary ways in require the visitor to process several classification ideas before acting.
+
+**Severity:** MAJOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- reduce the Home first decision to exactly six concrete routes;
+- use one visible classification system rather than separate “Browse things / Get help with life / Check evidence” groups;
+- keep Search separate rather than treating it as a seventh category;
+- collapse the specialist routes under **More ways to explore**;
+- use a minimal **Search + Menu** header rather than duplicating another visible category system;
+- preserve the governed content taxonomy and canonical destinations;
+- add only the two first-hop presentation aliases needed by the new six-route model;
+- require wrong-choice recovery so a mistaken first click is not a dead end;
+- keep wider destination-page redesign and the separate book/textbook typography research outside this tranche unless testing demonstrates a blocker.
+
+The six candidate labels are **ADHD, autism & other neurodivergence**, **Help with everyday life**, **Books, films & media**, **Games & apps**, **Find support**, and **Ask a question**.
+
+This finding justifies a bounded Home/navigation repair. It does **not** justify a general ND Oracle information-architecture rewrite.
+
+## HF-004 — Needs-page redundant instruction burden
+
+**Observed behaviour / feedback**
+
+Human review of the Areas of life page found that the introductory instructions repeated what the page already made visually obvious. The extra explanation delayed the eight useful choices and was experienced as irritating rather than helpful.
+
+**Severity:** MINOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- keep the page identity and the existing eight Areas of life choices;
+- remove the explanatory lede from the visible page;
+- remove the “Start with the need, not the label” notice;
+- remove the duplicate “Choose an area of life” heading and “Open one area first” instruction;
+- preserve the governed Question groups, routes, counts and complete-index escape route;
+- add regression coverage so this redundant instruction layer does not silently return.
+
+This is a presentation-only repair. It does not change governed content, taxonomy, route authority or question classification.
+
+## HF-005 — Places-page explanatory clutter
+
+**Observed behaviour / feedback**
+
+Human review of the geographic-scope page found that the introductory lede and the separate “Scope is part of the information” panel repeated what the jurisdiction headings already make clear. They add reading before the useful country and jurisdiction choices.
+
+**Severity:** MINOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- keep the page identity **Browse by geographic scope**;
+- remove the visible explanatory lede;
+- remove the separate scope/eligibility explanatory panel;
+- move the jurisdiction groups directly under the page heading;
+- preserve every existing jurisdiction group, resource route and governed scope classification;
+- add regression coverage so the removed explanatory layer does not return.
+
+This is a presentation-only repair. It does not change eligibility advice, jurisdiction authority, governed resource data or classification.
+
+
+## HF-006 — Repeated landing-page introduction burden
+
+**Observed behaviour / feedback**
+
+Human review across the Home, Questions, Understand, Resources, Find, Areas of life, geographic-scope and content-type landing pages found that the large title/intro blocks repeatedly restated what the route or following choices already made obvious. On the most task-oriented pages, a second instruction or notice then repeated the same orientation again before the useful controls or choices.
+
+**Severity:** MINOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- remove the visible page-heading/lede block from only these eight landing routes: `/`, `/questions/`, `/understand/`, `/resources/`, `/find/`, `/needs/`, `/places/` and `/types/`;
+- preserve each page's semantic identity with a visually hidden H1 and page-kind label, plus the existing document title, description and canonical metadata;
+- on Home, Questions and Resources, remove the extra "what/choose/pick" prompt immediately above choices so the choices become the first useful visible content;
+- on Understand, remove the repeated "Orientation, not diagnosis" landing notice;
+- on Find, remove the repeated "Local governed discovery" notice while preserving the privacy statement beside the search control that the query is processed only in the page;
+- leave detail pages, governed objects, routes, discovery policy, scope authority and production state unchanged;
+- bind the reduced-clutter composition in regression tests.
+
+This is a presentation-only repair. It does not remove page semantics or safety-critical information; it removes repeated orientation text before the user can act.
+
+
+## HF-007 — Cross-site navigation/index preamble burden
+
+**Observed behaviour / feedback**
+
+After HF-006, a generated-site audit of all 462 current routes found the same interaction pattern on additional navigation and catalogue surfaces: visible route title/lede blocks, repeated “choose/pick/start here” instructions, count headings and secondary catalogue navigation were still appearing before the useful choices or content. The problem was concentrated in index/route-selection pages rather than normal reading/detail pages.
+
+**Severity:** MINOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- apply the first-useful-content rule to the remaining navigation/catalogue surfaces: A–Z, apps/tools, books, books/media, community/support, conditions, daily living, everyday help, games, games/apps, health/diagnosis, organisations, start, tools, work/education, glossary and evidence;
+- preserve semantic H1/page-kind identity, metadata, canonicals and indexability state while removing visible title/lede blocks where they add no new information;
+- remove the extra “Pick the closest one” / “Choose the part of life…” instruction layers from Start and Everyday Help;
+- on Daily living, Health & diagnosis and Work & education, put the actual grouped choices before the non-recommendation boundary and remove the duplicate visible “Choose an area” heading;
+- on Tools, Books & media and Community, remove the competing resource-family subnavigation before the catalogue;
+- make resource-category count headings semantic rather than another visible gate before the list;
+- on the eight individual Areas of life pages, keep the page title for orientation but remove the repeated lede and “Start here” instruction panel so Practical questions becomes the first content section;
+- move Understand’s terminology-help route below “Start with what you notice” so word-help does not precede the actual topic choices;
+- simplify Glossary to its search/jump controls and entries rather than repeating “Glossary / Words made clearer / explanation”;
+- keep the Evidence interpretation warning because it changes how the material should be read, but remove the redundant visible Evidence title/lede block;
+- do not apply this rule to ordinary Question, Topic, Resource or Evidence-record reading pages, or to About, Accessibility, Privacy, Feedback and How this site works.
+
+This remains a presentation-only repair. No governed object, route authority, evidence record, discovery/ranking rule, jurisdiction rule or production-state pointer is changed.
+
+
+## HF-008 — Over-cleaned route orientation after preamble removal
+
+**Observed behaviour / feedback**
+
+Review of the HF-006/HF-007 repair found that removing the large introductory blocks was correct, but hiding the page name entirely on some navigation and catalogue routes went too far. Pages such as A–Z, Books, Games, Glossary and Evidence could begin directly with lists, letters or warnings without an obvious visible answer to “what page am I on?”.
+
+**Severity:** MINOR
+
+**Disposition:** REPAIR APPLIED / HUMAN VALIDATION PENDING
+
+**Smallest justified repair**
+
+- keep Home, Questions, Understand, Resources, Find and the Areas-of-life index free of a repeated visible route heading where the first content already supplies sufficient orientation;
+- restore only a compact visible H1 on navigation/catalogue routes where the page name materially helps reorientation;
+- do not restore page-type badges, ledes, hero panels or repeated “choose/pick/start here” instructions;
+- keep the compact title visually smaller than normal reading-page identity and immediately adjacent to the useful content;
+- preserve semantic page-kind identity, metadata, canonicals, indexing state and governed route authority;
+- add regression coverage binding the distinction between headerless, compact-title and full reading/detail page identity.
+
+This repair narrows the first-useful-content rule rather than reversing it: remove redundant explanation, but keep a concise visible page name when it materially helps the visitor know where they are.
+
+## Human gate
+
+These findings are genuine human usability evidence. They do **not** by themselves satisfy all ten fixed journeys in `docs/ND_UX_V2_USER_TEST_PROTOCOL.md`.
+
+The final human gate therefore remains OPEN until the fixed journeys are run on the repaired exact-head candidate and their results are recorded and dispositioned. Do not infer or fabricate PASS from automated checks or screenshots.

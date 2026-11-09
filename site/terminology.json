@@ -1,0 +1,933 @@
+{
+  "schema_version": "1",
+  "policy": "docs/TERMINOLOGY_ACCESSIBILITY_POLICY_v1.md",
+  "audit": "docs/TERMINOLOGY_AUDIT_v1.md",
+  "rule": "Technical or unfamiliar terms should be understandable where the reader first encounters them and have one canonical glossary entry.",
+  "entries": [
+    {
+      "id": "adhd",
+      "term": "ADHD",
+      "kind": "acronym",
+      "aliases": [
+        "attention deficit hyperactivity disorder"
+      ],
+      "full_form": "Attention deficit hyperactivity disorder",
+      "parts": [
+        {
+          "label": "Attention",
+          "meaning": "what attention is directed towards and sustained on"
+        },
+        {
+          "label": "Deficit",
+          "meaning": "part of the historical diagnostic name; it does not mean a person has no attention"
+        },
+        {
+          "label": "Hyperactivity",
+          "meaning": "unusually high activity or restlessness in this context"
+        },
+        {
+          "label": "Disorder",
+          "meaning": "the formal diagnostic label"
+        }
+      ],
+      "meaning": "ADHD is the abbreviation for attention deficit hyperactivity disorder, a neurodevelopmental condition involving patterns of attention, activity and/or impulsivity that can affect everyday life.",
+      "related_routes": [
+        "/understand/adhd/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review"
+    },
+    {
+      "id": "autism",
+      "term": "Autism",
+      "kind": "word",
+      "aliases": [
+        "autistic"
+      ],
+      "parts": [
+        {
+          "label": "autism",
+          "meaning": "the current name of a neurodevelopmental condition"
+        }
+      ],
+      "meaning": "Autism is a neurodevelopmental condition associated with differences in social communication, sensory experience, patterns of interest and behaviour, with substantial variation between autistic people.",
+      "related_routes": [
+        "/understand/autism/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "alexithymia",
+      "term": "Alexithymia",
+      "kind": "word",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "a",
+          "meaning": "without or lacking"
+        },
+        {
+          "label": "lexi",
+          "meaning": "words"
+        },
+        {
+          "label": "thymia",
+          "meaning": "emotion or feeling"
+        }
+      ],
+      "meaning": "Alexithymia describes difficulty identifying or describing emotions. It is not the same thing as autism and can occur in autistic and non-autistic people.",
+      "related_routes": [
+        "/understand/alexithymia/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "interoception",
+      "term": "Interoception",
+      "kind": "word",
+      "aliases": [
+        "interoceptive"
+      ],
+      "parts": [
+        {
+          "label": "intero",
+          "meaning": "inside or internal"
+        },
+        {
+          "label": "ception",
+          "meaning": "sensing or perceiving"
+        }
+      ],
+      "meaning": "Interoception is how the nervous system senses and interprets signals from inside the body, such as hunger, heartbeat, temperature or needing the toilet.",
+      "related_routes": [
+        "/understand/interoception/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "monotropism",
+      "term": "Monotropism",
+      "kind": "word",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "mono",
+          "meaning": "one or single"
+        },
+        {
+          "label": "trop",
+          "meaning": "turning, direction or orientation"
+        },
+        {
+          "label": "ism",
+          "meaning": "a concept, system or theory name"
+        }
+      ],
+      "meaning": "Monotropism is a theory that describes attention as tending to concentrate deeply on a smaller number of interests or demands at once.",
+      "related_routes": [
+        "/understand/monotropism/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "neurodiversity",
+      "term": "Neurodiversity",
+      "kind": "word",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "neuro",
+          "meaning": "brain and nervous system"
+        },
+        {
+          "label": "diversity",
+          "meaning": "variation or difference"
+        }
+      ],
+      "meaning": "Neurodiversity describes variation in human brains, minds and nervous systems across a population.",
+      "related_routes": [
+        "/understand/neurodiversity/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "neurodivergence",
+      "term": "Neurodivergence",
+      "kind": "word",
+      "aliases": [
+        "neurodivergent"
+      ],
+      "parts": [
+        {
+          "label": "neuro",
+          "meaning": "brain and nervous system"
+        },
+        {
+          "label": "divergence",
+          "meaning": "difference from a typical or expected pattern"
+        }
+      ],
+      "meaning": "Neurodivergence is an umbrella term for ways a person's brain or nervous system differs from what is treated as typical. Neurodivergent is the corresponding adjective.",
+      "related_routes": [
+        "/understand/neurodiversity/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "neurodevelopmental",
+      "term": "Neurodevelopmental",
+      "kind": "word",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "neuro",
+          "meaning": "brain and nervous system"
+        },
+        {
+          "label": "developmental",
+          "meaning": "connected with development over time"
+        }
+      ],
+      "meaning": "Neurodevelopmental describes conditions or differences involving how the brain and nervous system develop and function.",
+      "related_routes": [
+        "/conditions/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "neurotype",
+      "term": "Neurotype / neurotypical",
+      "kind": "phrase",
+      "aliases": [
+        "neurotype",
+        "neurotypical"
+      ],
+      "parts": [
+        {
+          "label": "neuro",
+          "meaning": "brain and nervous system"
+        },
+        {
+          "label": "type",
+          "meaning": "a pattern or kind"
+        },
+        {
+          "label": "typical",
+          "meaning": "treated as common or expected in a given context"
+        }
+      ],
+      "meaning": "Neurotype means a pattern of neurological functioning. Neurotypical is commonly used for people whose neurological development is not identified as neurodivergent.",
+      "related_routes": [
+        "/understand/neurodiversity/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "dyslexia",
+      "term": "Dyslexia",
+      "kind": "word",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "dys",
+          "meaning": "difficulty or impairment"
+        },
+        {
+          "label": "lexia",
+          "meaning": "words or reading"
+        }
+      ],
+      "meaning": "Dyslexia is a learning difference or difficulty mainly affecting accurate and fluent word reading and spelling, with individual profiles varying.",
+      "related_routes": [
+        "/understand/dyslexia/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "dyscalculia",
+      "term": "Dyscalculia",
+      "kind": "word",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "dys",
+          "meaning": "difficulty or impairment"
+        },
+        {
+          "label": "calculia",
+          "meaning": "calculation or number work"
+        }
+      ],
+      "meaning": "Dyscalculia is a persistent difficulty learning and using number and arithmetic skills; it is not the same as simply being bad at maths.",
+      "related_routes": [
+        "/understand/dyscalculia/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "dyspraxia",
+      "term": "Dyspraxia",
+      "kind": "word",
+      "aliases": [
+        "dyspraxic"
+      ],
+      "parts": [
+        {
+          "label": "dys",
+          "meaning": "difficulty or impairment"
+        },
+        {
+          "label": "praxia",
+          "meaning": "action or movement planning"
+        }
+      ],
+      "meaning": "Dyspraxia is a commonly used name associated with developmental coordination disorder and difficulties with coordination and movement planning.",
+      "related_routes": [
+        "/understand/developmental-coordination-disorder/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "dysphagia",
+      "term": "Dysphagia",
+      "kind": "word",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "dys",
+          "meaning": "difficulty or impairment"
+        },
+        {
+          "label": "phagia",
+          "meaning": "eating or swallowing"
+        }
+      ],
+      "meaning": "Dysphagia means difficulty swallowing. It can affect eating or drinking safety and is different from sensory food preferences or restricted food range.",
+      "related_routes": [
+        "/questions/swallowing-difficulty-food-safety/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "tourette-syndrome",
+      "term": "Tourette syndrome",
+      "kind": "phrase",
+      "aliases": [
+        "Tourette"
+      ],
+      "parts": [
+        {
+          "label": "Tourette",
+          "meaning": "an eponym: a name derived from a person's surname"
+        },
+        {
+          "label": "syndrome",
+          "meaning": "a recognised group of features that occur together"
+        }
+      ],
+      "meaning": "Tourette syndrome is a neurological condition characterised by multiple motor tics and at least one vocal tic over time.",
+      "related_routes": [
+        "/understand/tourette-syndrome/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "stimming",
+      "term": "Stimming",
+      "kind": "word",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "stim",
+          "meaning": "stimulation"
+        },
+        {
+          "label": "ing",
+          "meaning": "an activity or process"
+        }
+      ],
+      "meaning": "Stimming means repetitive movements, sounds or sensory actions that can serve many functions, including enjoyment, expression or regulation.",
+      "related_routes": [
+        "/understand/stimming/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "masking",
+      "term": "Masking",
+      "kind": "word",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "mask",
+          "meaning": "to hide or cover"
+        },
+        {
+          "label": "ing",
+          "meaning": "an activity or process"
+        }
+      ],
+      "meaning": "Masking is when someone changes, suppresses or hides parts of how they naturally communicate or behave to meet social expectations.",
+      "related_routes": [
+        "/understand/masking/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "camouflaging",
+      "term": "Camouflaging",
+      "kind": "word",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "camouflage",
+          "meaning": "to make something less visible or easier to blend in"
+        },
+        {
+          "label": "ing",
+          "meaning": "an activity or process"
+        }
+      ],
+      "meaning": "Camouflaging is a term used for strategies that make autistic or other neurodivergent differences less visible in social situations. It overlaps with, but is not always identical to, masking.",
+      "related_routes": [
+        "/understand/masking/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "executive-function",
+      "term": "Executive function",
+      "kind": "phrase",
+      "aliases": [
+        "executive functions",
+        "executive dysfunction"
+      ],
+      "parts": [
+        {
+          "label": "executive",
+          "meaning": "directing or carrying out actions"
+        },
+        {
+          "label": "function",
+          "meaning": "what something does"
+        }
+      ],
+      "meaning": "Executive functions are mental processes involved in starting, planning, organising, switching, remembering goals and regulating actions.",
+      "related_routes": [
+        "/understand/executive-function/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "sensory-processing",
+      "term": "Sensory processing",
+      "kind": "phrase",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "sensory",
+          "meaning": "information from the senses"
+        },
+        {
+          "label": "processing",
+          "meaning": "taking in, organising and responding to information"
+        }
+      ],
+      "meaning": "Sensory processing describes how the nervous system receives, organises and responds to sensory information.",
+      "related_routes": [
+        "/understand/sensory-processing/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "sensory-overload",
+      "term": "Sensory overload",
+      "kind": "phrase",
+      "aliases": [],
+      "parts": [
+        {
+          "label": "sensory",
+          "meaning": "information from the senses"
+        },
+        {
+          "label": "overload",
+          "meaning": "more input than can be comfortably handled"
+        }
+      ],
+      "meaning": "Sensory overload is when sensory input becomes overwhelming or difficult to manage; what causes it varies by person and context.",
+      "related_routes": [
+        "/understand/sensory-overload/"
+      ],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "developmental-coordination-disorder",
+      "term": "Developmental coordination disorder (DCD)",
+      "kind": "acronym",
+      "aliases": ["developmental coordination disorder", "DCD"],
+      "parts": [
+        {"label": "developmental", "meaning": "connected with development over time"},
+        {"label": "coordination", "meaning": "different movements working together"},
+        {"label": "disorder", "meaning": "the formal diagnostic label"},
+        {"label": "DCD", "meaning": "the abbreviation for developmental coordination disorder"}
+      ],
+      "meaning": "Developmental coordination disorder is a neurodevelopmental condition affecting the learning and performance of coordinated motor skills.",
+      "related_routes": ["/understand/developmental-coordination-disorder/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": "Developmental coordination disorder"
+    },
+    {
+      "id": "developmental-language-disorder",
+      "term": "Developmental language disorder (DLD)",
+      "kind": "acronym",
+      "aliases": ["developmental language disorder", "DLD"],
+      "parts": [
+        {"label": "developmental", "meaning": "connected with development over time"},
+        {"label": "language", "meaning": "understanding and using language"},
+        {"label": "disorder", "meaning": "the formal diagnostic label"},
+        {"label": "DLD", "meaning": "the abbreviation for developmental language disorder"}
+      ],
+      "meaning": "Developmental language disorder is a persistent difficulty with understanding and/or using spoken language that affects everyday life and is not better explained by another biomedical condition.",
+      "related_routes": ["/understand/developmental-language-disorder/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": "Developmental language disorder"
+    },
+    {
+      "id": "learning-disability",
+      "term": "Learning disability",
+      "kind": "phrase",
+      "aliases": [],
+      "parts": [
+        {"label": "learning", "meaning": "acquiring or understanding information"},
+        {"label": "disability", "meaning": "a lasting impairment or barrier affecting everyday life"}
+      ],
+      "meaning": "In UK usage, learning disability generally means significantly reduced intellectual ability together with difficulties with everyday adaptive functioning, beginning before adulthood.",
+      "related_routes": ["/understand/learning-disability/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "autistic-burnout",
+      "term": "Autistic burnout",
+      "kind": "phrase",
+      "aliases": [],
+      "parts": [
+        {"label": "autistic", "meaning": "connected with autistic experience"},
+        {"label": "burnout", "meaning": "severe, lasting exhaustion and reduced capacity in this context"}
+      ],
+      "meaning": "Autistic burnout is a community and research term for severe, long-lasting exhaustion and reduced capacity reported by some autistic people.",
+      "related_routes": ["/understand/autistic-burnout/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "communication-differences",
+      "term": "Communication differences",
+      "kind": "phrase",
+      "aliases": [],
+      "parts": [
+        {"label": "communication", "meaning": "sharing or understanding information"},
+        {"label": "differences", "meaning": "ways something varies between people"}
+      ],
+      "meaning": "Communication differences include variation in speaking, understanding, timing, non-verbal communication and use of AAC.",
+      "related_routes": ["/understand/communication-differences/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "task-initiation",
+      "term": "Task initiation",
+      "kind": "phrase",
+      "aliases": [],
+      "parts": [
+        {"label": "task", "meaning": "something you intend or need to do"},
+        {"label": "initiation", "meaning": "the act of beginning"}
+      ],
+      "meaning": "Task initiation is the step between intending to do something and actually starting it; difficulty here can have many causes.",
+      "related_routes": ["/understand/task-initiation/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "aac",
+      "term": "AAC",
+      "kind": "acronym",
+      "aliases": ["augmentative and alternative communication"],
+      "parts": [
+        {"label": "Augmentative", "meaning": "adding to existing communication"},
+        {"label": "Alternative", "meaning": "providing another way to communicate"},
+        {"label": "Communication", "meaning": "sharing information, needs, thoughts or feelings"}
+      ],
+      "meaning": "AAC means augmentative and alternative communication: methods that supplement or replace speech, including communication boards, symbols, typing and speech-generating devices.",
+      "related_routes": ["/questions/aac-and-nonspeaking-communication/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": "Augmentative and alternative communication"
+    },
+    {
+      "id": "arfid",
+      "term": "ARFID",
+      "kind": "acronym",
+      "aliases": ["avoidant/restrictive food intake disorder", "avoidant restrictive food intake disorder"],
+      "parts": [
+        {"label": "Avoidant", "meaning": "avoiding or staying away from something"},
+        {"label": "Restrictive", "meaning": "limited in range or amount"},
+        {"label": "Food intake", "meaning": "eating or taking in food"},
+        {"label": "Disorder", "meaning": "the formal diagnostic label"}
+      ],
+      "meaning": "ARFID means avoidant/restrictive food intake disorder, an eating disorder involving restricted food intake for reasons that are not primarily about body weight or shape.",
+      "related_routes": ["/questions/arfid-information-without-self-diagnosis/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": "Avoidant/restrictive food intake disorder"
+    },
+    {
+      "id": "send",
+      "term": "SEND",
+      "kind": "acronym",
+      "aliases": ["special educational needs and disabilities"],
+      "parts": [
+        {"label": "Special", "meaning": "requiring provision beyond ordinary arrangements in this context"},
+        {"label": "Educational needs", "meaning": "needs affecting learning or education"},
+        {"label": "Disabilities", "meaning": "impairments that can create barriers"}
+      ],
+      "meaning": "SEND means special educational needs and disabilities, a term used in England's education system.",
+      "related_routes": ["/questions/send-support-school-college-england/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": "Special educational needs and disabilities"
+    },
+    {
+      "id": "pda",
+      "term": "PDA",
+      "kind": "acronym",
+      "aliases": ["pathological demand avoidance", "pervasive drive for autonomy"],
+      "parts": [
+        {"label": "Pathological / pervasive", "meaning": "wording used in different versions of the label"},
+        {"label": "Demand", "meaning": "a request, expectation or perceived requirement"},
+        {"label": "Avoidance", "meaning": "avoiding or resisting the demand"}
+      ],
+      "meaning": "PDA is a contested label for a profile involving marked demand avoidance. Different organisations use different expansions and the term is not a standalone diagnosis in major diagnostic manuals.",
+      "related_routes": ["/resources/pda-society/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "ptsd",
+      "term": "PTSD",
+      "kind": "acronym",
+      "aliases": ["post-traumatic stress disorder", "post traumatic stress disorder"],
+      "parts": [
+        {"label": "Post", "meaning": "after"},
+        {"label": "Traumatic", "meaning": "connected with trauma"},
+        {"label": "Stress", "meaning": "the body's and mind's response to threat or strain"},
+        {"label": "Disorder", "meaning": "the formal diagnostic label"}
+      ],
+      "meaning": "PTSD means post-traumatic stress disorder, a mental-health condition that can develop after traumatic events.",
+      "related_routes": ["/questions/trauma-distress-ptsd-assessment-boundary/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": "Post-traumatic stress disorder"
+    },
+    {
+      "id": "melatonin",
+      "term": "Melatonin",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "melatonin", "meaning": "a hormone involved in signalling biological night and sleep timing"}],
+      "meaning": "Melatonin is a hormone produced by the body that helps regulate sleep-wake timing; it is also used as a medicine in some circumstances.",
+      "related_routes": ["/questions/sleep-medication-melatonin-boundary/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "circadian",
+      "term": "Circadian",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "circadian", "meaning": "roughly 24-hour biological timing"}],
+      "meaning": "Circadian describes biological rhythms that follow an approximately 24-hour cycle, including the sleep-wake rhythm.",
+      "related_routes": ["/questions/sleep-and-winding-down-routines/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "proprioceptive",
+      "term": "Proprioceptive",
+      "kind": "word",
+      "aliases": ["proprioception"],
+      "parts": [
+        {"label": "proprio", "meaning": "one's own or self"},
+        {"label": "ceptive", "meaning": "sensing or receiving information"}
+      ],
+      "meaning": "Proprioceptive information tells the brain about body position, movement and force from muscles and joints.",
+      "related_routes": ["/understand/sensory-processing/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "vestibular",
+      "term": "Vestibular",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "vestibular", "meaning": "connected with the inner-ear balance and movement system"}],
+      "meaning": "Vestibular information contributes to balance, head movement and the sense of motion and spatial orientation.",
+      "related_routes": ["/understand/sensory-processing/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "hyperreactivity",
+      "term": "Hyperreactivity",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "hyper", "meaning": "more, above or heightened"},{"label": "reactivity", "meaning": "how strongly something responds"}],
+      "meaning": "Hyperreactivity means responding unusually strongly to sensory input or another stimulus in the context being discussed.",
+      "related_routes": ["/understand/sensory-processing/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "hyporeactivity",
+      "term": "Hyporeactivity",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "hypo", "meaning": "less, below or reduced"},{"label": "reactivity", "meaning": "how strongly something responds"}],
+      "meaning": "Hyporeactivity means responding less strongly than expected to sensory input or another stimulus in the context being discussed.",
+      "related_routes": ["/understand/sensory-processing/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "hyperactivity",
+      "term": "Hyperactivity",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "hyper", "meaning": "more, above or heightened"},{"label": "activity", "meaning": "movement or action"}],
+      "meaning": "Hyperactivity describes unusually high levels of activity or restlessness in the context being discussed; in ADHD it forms part of one symptom domain.",
+      "related_routes": ["/understand/adhd/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "impulsivity",
+      "term": "Impulsivity",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "impulse", "meaning": "an urge or action that happens quickly"},{"label": "ity", "meaning": "a state or quality"}],
+      "meaning": "Impulsivity describes acting or responding quickly without enough time for consideration, in the context being discussed.",
+      "related_routes": ["/understand/adhd/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "co-occurrence",
+      "term": "Co-occurrence / co-occurring",
+      "kind": "word",
+      "aliases": ["co-occurrence", "co-occurring"],
+      "parts": [{"label": "co", "meaning": "together"},{"label": "occurrence", "meaning": "something being present or happening"}],
+      "meaning": "Co-occurrence means two or more conditions, traits or experiences are present in the same person or group. It does not by itself say that one causes another.",
+      "related_routes": ["/questions/co-occurring-autism-adhd-assessment-uk/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "heterogeneity",
+      "term": "Heterogeneity / heterogeneous",
+      "kind": "word",
+      "aliases": ["heterogeneous"],
+      "parts": [{"label": "heterogeneity", "meaning": "variation within a group rather than everyone being the same"}],
+      "meaning": "Heterogeneity means substantial variation within a group. Heterogeneous is the adjective.",
+      "related_routes": ["/understand/neurodiversity/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "neuropsychology",
+      "term": "Neuropsychology",
+      "kind": "word",
+      "aliases": ["neuropsychological"],
+      "parts": [{"label": "neuro", "meaning": "brain and nervous system"},{"label": "psychology", "meaning": "study of mind, behaviour and mental processes"}],
+      "meaning": "Neuropsychology examines relationships between brain function, cognition and behaviour. Neuropsychological usually describes assessment or evidence in that field.",
+      "related_routes": ["/evidence/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "transdiagnostic",
+      "term": "Transdiagnostic",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "trans", "meaning": "across or beyond"},{"label": "diagnostic", "meaning": "connected with diagnostic categories"}],
+      "meaning": "Transdiagnostic means an idea, feature or approach that cuts across more than one diagnostic category rather than belonging to only one.",
+      "related_routes": ["/evidence/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "meta-analysis",
+      "term": "Meta-analysis",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "meta", "meaning": "combining or examining across studies in this context"},{"label": "analysis", "meaning": "systematic examination of information"}],
+      "meaning": "A meta-analysis statistically combines results from multiple studies that address sufficiently similar questions.",
+      "related_routes": ["/evidence/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "longitudinal",
+      "term": "Longitudinal",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "longitudinal", "meaning": "following the same people, groups or measurements over time"}],
+      "meaning": "A longitudinal study observes change over time rather than measuring only a single point.",
+      "related_routes": ["/evidence/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "psychometric",
+      "term": "Psychometric",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "psycho", "meaning": "mind or psychological characteristics"},{"label": "metric", "meaning": "measurement"}],
+      "meaning": "Psychometric describes the measurement properties of tests or questionnaires, such as how reliably or validly they measure what they claim to measure.",
+      "related_routes": ["/evidence/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "multidisciplinary",
+      "term": "Multidisciplinary",
+      "kind": "word",
+      "aliases": [],
+      "parts": [{"label": "multi", "meaning": "many"},{"label": "disciplinary", "meaning": "connected with professional fields or disciplines"}],
+      "meaning": "Multidisciplinary means involving people from more than one professional discipline or area of expertise.",
+      "related_routes": ["/questions/other-neurodevelopmental-assessments-uk/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "occupational-therapy",
+      "term": "Occupational therapy",
+      "kind": "phrase",
+      "aliases": [],
+      "parts": [{"label": "occupational", "meaning": "connected with everyday activities and participation, not only paid work"},{"label": "therapy", "meaning": "professional support intended to improve function or participation"}],
+      "meaning": "Occupational therapy supports people to take part in everyday activities that matter to them by addressing skills, environments, routines and barriers.",
+      "related_routes": ["/questions/coordination-mobility-travel-planning/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "systematic-review",
+      "term": "Systematic review",
+      "kind": "phrase",
+      "aliases": [],
+      "parts": [{"label": "systematic", "meaning": "using a planned, explicit method"},{"label": "review", "meaning": "bringing together and assessing existing evidence"}],
+      "meaning": "A systematic review uses predefined methods to find, assess and synthesise relevant research on a specific question.",
+      "related_routes": ["/evidence/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "comorbidity",
+      "term": "Comorbidity",
+      "kind": "word",
+      "aliases": ["comorbid"],
+      "parts": [{"label": "co", "meaning": "together"},{"label": "morbidity", "meaning": "illness or health condition in the historical medical wording"}],
+      "meaning": "Comorbidity is a medical term for conditions occurring alongside one another. ND Oracle may prefer co-occurrence when no disease framing is needed.",
+      "related_routes": ["/questions/co-occurring-autism-adhd-assessment-uk/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "cognitive-accessibility",
+      "term": "Cognitive accessibility",
+      "kind": "phrase",
+      "aliases": [],
+      "parts": [{"label": "cognitive", "meaning": "connected with thinking, understanding, attention or memory"},{"label": "accessibility", "meaning": "designing so people can access and use something"}],
+      "meaning": "Cognitive accessibility means reducing barriers in information, interfaces or environments for people with different ways of thinking, understanding, remembering or concentrating.",
+      "related_routes": ["/apps-tools/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    },
+    {
+      "id": "nonspeaking",
+      "term": "Nonspeaking / non-speaking",
+      "kind": "word",
+      "aliases": ["non-speaking", "nonspeaking"],
+      "parts": [{"label": "non", "meaning": "not"},{"label": "speaking", "meaning": "using spoken words"}],
+      "meaning": "Nonspeaking describes a person who does not use speech, or does not rely on speech, to communicate. It does not mean the person has nothing to communicate.",
+      "related_routes": ["/questions/aac-and-nonspeaking-communication/"],
+      "reviewed_on": "2026-09-28",
+      "provenance": "ND Oracle governed-corpus terminology accessibility review",
+      "full_form": null
+    }
+  ]
+}

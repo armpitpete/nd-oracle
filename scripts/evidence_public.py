@@ -198,7 +198,7 @@ def render_index(projections: list[dict], *, page_shell) -> str:
         ]).casefold()
         rows.append(
             f'<article class="resource-row evidence-row" data-evidence-row data-search="{_esc(searchable)}">'
-            f'<h2><a href="{_esc(item["route"])}">{_esc(item["title"])}</a></h2>'
+            f'<h3><a href="{_esc(item["route"])}">{_esc(item["title"])}</a></h3>'
             f'<p>{_esc(item["citation"])}</p>'
             f'<p class="meta">Kind: {_esc(str(item.get("source_kind") or "other").replace("_", " "))} · '
             f'Model: {_esc("normalized v0.2" if item["evidence_model"] == "normalized_v0.2" else "accepted legacy v0.1")}</p>'

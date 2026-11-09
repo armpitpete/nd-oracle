@@ -344,7 +344,7 @@
           trace.final_reason === "clinical_diagnosis_boundary" ||
           trace.final_reason === "clinical_medication_boundary"
         ) {
-          output.innerHTML = '<h2>No governed answer</h2><p>ND Oracle cannot diagnose you or another person, choose medication or make an individual clinical decision. Try browsing <a href="/questions/">Questions</a> or <a href="/needs/">needs</a> instead.</p>';
+          output.innerHTML = '<h2>No governed answer</h2><p>ND Oracle cannot diagnose you or another person, choose medication or make an individual clinical decision.</p>';
           return;
         }
 
@@ -352,12 +352,12 @@
           const heading = trace.final_reason.startsWith("jurisdiction_")
             ? "No compatible governed route"
             : "No governed answer yet";
-          output.innerHTML = `<h2>${heading}</h2><p>The current catalogue does not have a strong enough compatible route for that wording. Your query is not stored or sent to a search service. Try <a href="/needs/">browse by need</a>, <a href="/a-z/">A–Z</a>, or report a non-private content gap through <a href="/feedback/">feedback</a>.</p>`;
+          output.innerHTML = `<h2>${heading}</h2><p>No strong match for those words. Try fewer words or a different phrase. Your search is not stored or sent to a search service.</p>`;
           return;
         }
 
         const heading = document.createElement("h2");
-        heading.textContent = "Governed routes to inspect";
+        heading.textContent = "Search results";
         output.appendChild(heading);
 
         const note = document.createElement("p");

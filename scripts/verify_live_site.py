@@ -77,7 +77,7 @@ SECURITY_HEADERS = {
     "permissions-policy": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
 }
 STABLE_BASE_MARKERS = (
-    ("/", "Understand neurodivergence without doing all the digging yourself"), ("/understand/", "<h1>Understand</h1>"),
+    ("/", "Understand neurodivergence without doing all the digging yourself"), ("/understand/", "<h1>Topics</h1>"),
     ("/resources/", "<h1>Resources</h1>"), ("/tools/", "<h1>Tools &amp; practical help</h1>"),
     ("/games/", "<h1>Games</h1>"), ("/community/", "<h1>Support &amp; organisations</h1>"),
     ("/books-media/", "<h1>Books &amp; media</h1>"), ("/questions/", "<h1>Questions</h1>"),
@@ -90,7 +90,7 @@ NAVIGATION_MARKERS = (
     ("/needs/work/", "<h1>Work</h1>"), ("/needs/education-study/", "<h1>Education &amp; study</h1>"),
     ("/needs/assessment-diagnosis/", "<h1>Assessment &amp; diagnosis</h1>"), ("/needs/health-wellbeing/", "<h1>Health &amp; wellbeing</h1>"),
     ("/needs/relationships-family/", "<h1>Relationships &amp; community</h1>"), ("/types/", "<h1>Browse by content type</h1>"),
-    ("/places/", "<h1>Browse by geographic scope</h1>"), ("/a-z/", "<h1>A–Z</h1>"), ("/find/", "<h1>Find a governed route</h1>"),
+    ("/places/", "<h1>Browse by geographic scope</h1>"), ("/a-z/", "<h1>A–Z</h1>"), ("/find/", "<h1>Find</h1>"),
 )
 ROUTES = tuple([STABLE_BASE_MARKERS[0], STABLE_BASE_MARKERS[1]] + [(p, f"<h1>{html.escape(n, quote=True)}</h1>") for p, n in CONCEPT_MARKERS_V10.items()] + list(STABLE_BASE_MARKERS[2:7]) + [(p, f"<h1>{html.escape(n, quote=True)}</h1>") for p, (n, _u) in RESOURCE_MARKERS_V10.items()] + [STABLE_BASE_MARKERS[7]] + [(p, f"<h1>{html.escape(q, quote=True)}</h1>") for p, q in QUESTION_MARKERS_V10.items()] + list(STABLE_BASE_MARKERS[8:]) + list(NAVIGATION_MARKERS))
 EVIDENCE_MARKERS = tuple(build_site.evidence_route_markers())
@@ -173,19 +173,22 @@ def verify_v06_reading_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     # contract below, but verify the currently accepted home discovery routes
     # rather than obsolete visible inventory markers.
     for marker in (
-        "What do you need right now?",
-        "Describe what is happening",
-        "I know what I need help with",
-        "I want something practical",
-        "I want to understand something",
-        "Need another way in?",
-        'href="/find/"',
+        "What are you looking for?",
+        "ADHD, autism &amp; other neurodivergence",
+        "Help with everyday life",
+        "Books, films &amp; media",
+        "Games &amp; apps",
+        "Find support",
+        "Ask a question",
+        "More ways to explore",
+        'href="/conditions/"',
+        'href="/everyday-help/"',
+        'href="/books-media/"',
+        'href="/games-apps/"',
+        'href="/organisations/"',
         'href="/questions/"',
-        'href="/resources/"',
-        'href="/understand/"',
-        'href="/places/"',
+        'href="/find/"',
         'href="/a-z/"',
-        'href="/how-it-works/"',
     ):
         if marker not in home.body: failures.append(f"/: current home discovery marker missing: {marker!r}")
     for path,first in TOPIC_FIRST_READ_MARKERS.items():
@@ -222,13 +225,14 @@ def verify_compatibility_fixture() -> list[str]:
 def verify_v08_subset_preserved() -> list[str]: return verify_compatibility_fixture()
 def verify_v10_concept_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     failures=[]; idx=fetcher(expected_url(origin,"/understand/"))
-    for marker in ("Start with what you notice","Browse by kind of topic","All topics A–Z",'href="/find/"'):
-        if marker not in idx.body: failures.append(f"/understand/: V2.4 discovery marker missing: {marker!r}")
+    for marker in ("<h1>Topics</h1>", "Choose a topic", 'class="topic-group-grid"'):
+        if marker not in idx.body: failures.append(f"/understand/: topic index marker missing: {marker!r}")
+    main=idx.body.split("<main",1)[-1].split("</main>",1)[0]
+    if 'href="/find/"' in main or 'class="topic-complete"' in main:
+        failures.append("/understand/: competing section or repeated A-Z list is present")
     for concept in CONCEPT_RECORDS:
         if f'href="/understand/{concept["id"]}/"' not in idx.body:
             failures.append(f"/understand/: governed Topic link missing: {concept['id']}")
-    if 'href="/understand/monotropism/"' in idx.body and "New word? Break it down" not in idx.body:
-        failures.append("/understand/: V2.4 word-learning example is missing")
     for concept in CONCEPT_RECORDS:
         path=f'/understand/{concept["id"]}/'; r=fetcher(expected_url(origin,path))
         for marker in (html.escape(build_site.reader_intro(concept),quote=True),html.escape(concept["summary"],quote=True),'class="review-meta">Last reviewed:','<details class="technical-summary"><summary>More precise description</summary>','<h2 id="next-routes-heading">Useful next routes</h2>','href="/how-it-works/#confidence"'):
@@ -237,15 +241,11 @@ def verify_v10_concept_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     return failures
 def verify_v10_question_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     failures=[]; idx=fetcher(expected_url(origin,"/questions/"))
-    for marker in (
-        "Choose how to start",
-        "Choose an area of life",
-        "Need the complete index?",
-        "Relevant to inspect, not recommended.",
-        'href="/find/"',
-        'href="/a-z/"',
-    ):
-        if marker not in idx.body: failures.append(f"/questions/: current discovery marker missing {marker!r}")
+    for marker in ("<h1>Questions</h1>", "What do you need help with?", "Relevant to inspect, not recommended."):
+        if marker not in idx.body: failures.append(f"/questions/: current marker missing {marker!r}")
+    main=idx.body.split("<main",1)[-1].split("</main>",1)[0]
+    if any(marker in main for marker in ('href="/find/"','href="/a-z/"',"question-start-card","question-complete")):
+        failures.append("/questions/: competing section links or redundant index present")
     for path,_q in QUESTION_MARKERS_V10.items():
         r=fetcher(expected_url(origin,path))
         for marker in ("Relevant to inspect, not recommended.",'<h2 id="current-understanding-heading">Current understanding</h2>','<h2 id="related-things-heading">Related things to inspect</h2>','<h2 id="related-questions-heading">Related questions</h2>','<h2 id="evidence-needed-heading">What evidence is still needed</h2>','<h2 id="dissent-heading">Where people may disagree</h2>','<h2 id="reopen-heading">When this answer should be revisited</h2>'):
@@ -268,13 +268,18 @@ def verify_v10_resource_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
 def verify_v10_navigation_contract(origin: str,*,fetcher=fetch_url) -> list[str]:
     failures=[]; home=fetcher(expected_url(origin,"/"))
     for marker in (
+        'href="/conditions/"',
+        'href="/books/"',
+        'href="/games/"',
+        'href="/apps-tools/"',
+        'href="/organisations/"',
+        'href="/work-education/"',
+        'href="/health-diagnosis/"',
+        'href="/daily-living/"',
+        'href="/evidence/"',
         'href="/find/"',
-        'href="/questions/"',
-        'href="/resources/"',
-        'href="/understand/"',
-        'href="/places/"',
         'href="/a-z/"',
-        'href="/how-it-works/"',
+        'href="/start/"',
     ):
         if marker not in home.body: failures.append(f"/: current navigation marker missing {marker!r}")
     needs=fetcher(expected_url(origin,"/needs/"))
@@ -291,7 +296,7 @@ def verify_v10_navigation_contract(origin: str,*,fetcher=fetch_url) -> list[str]
     for q in QUESTION_RECORDS:
         if f'href="/questions/{q["id"]}/"' not in az.body: failures.append(f"/a-z/: missing question {q['id']}")
     find=fetcher(expected_url(origin,"/find/"))
-    for marker in ("Local governed discovery.","Your words stay in this browser page",'src="/find.js"',"Relevance means worth inspecting, not recommended."):
+    for marker in ('<h1>Find</h1>', 'id="find-input"', 'id="find-button"', 'src="/find.js"', "Your words stay in this browser.", "A match is not a personal recommendation."):
         if marker not in find.body: failures.append(f"/find/: marker missing {marker!r}")
     if not failures: print("PASS v1.0 navigation/discovery contract")
     return failures

@@ -34,12 +34,9 @@ class VerifyQuestionDiscoveryV07CompatibilityTests(unittest.TestCase):
             path = url.removeprefix(origin)
             if path == "/questions/":
                 body = (
-                    "Choose how to start"
-                    "Choose an area of life"
-                    "Need the complete index?"
+                    "<h1>Questions</h1>"
+                    "What do you need help with?"
                     "Relevant to inspect, not recommended."
-                    '<a href="/find/">Find</a>'
-                    '<a href="/a-z/">A-Z</a>'
                 )
             elif path in verify_live_site.QUESTION_MARKERS_V10:
                 body = (
