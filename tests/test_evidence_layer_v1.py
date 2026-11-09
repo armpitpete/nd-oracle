@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -42,6 +43,15 @@ class EvidenceLayerV1Tests(unittest.TestCase):
         self.assertNotIn("<script", page)
         self.assertNotIn("<form", page)
         self.assertFalse((self.output / "evidence-find.js").exists())
+
+    def test_evidence_record_titles_use_resource_listing_scale(self) -> None:
+        page = self.page("/evidence/")
+        # Record titles sit below the section h2, as on other catalogue pages.
+        self.assertEqual(60, len(re.findall(r'<article class="resource-row evidence-row"[^>]*><h3>', page)))
+        self.assertNotRegex(page, r'<article class="resource-row evidence-row"[^>]*><h2>')
+        stylesheet = (self.output / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".resource-row h3 {", stylesheet)
+        self.assertIn("font-size: 1.12rem;", stylesheet)
 
     def test_normalized_projection_exposes_claim_specific_evidence_fields(self) -> None:
         page = self.page("/evidence/acas-reasonable-adjustments-2025/")
