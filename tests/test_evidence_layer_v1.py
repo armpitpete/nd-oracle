@@ -53,6 +53,19 @@ class EvidenceLayerV1Tests(unittest.TestCase):
         self.assertIn(".resource-row h3 {", stylesheet)
         self.assertIn("font-size: 1.12rem;", stylesheet)
 
+    def test_detail_headlines_use_bounded_size_without_losing_source_identity(self) -> None:
+        css = (self.output / "styles.css").read_text(encoding="utf-8")
+        rule = re.search(r"\.page--evidence \.page-heading h1\s*\{([^}]+)\}", css)
+        self.assertIsNotNone(rule)
+        self.assertIn("font-size: clamp(1.45rem, 2.8vw, 1.95rem);", rule.group(1))
+        self.assertIn("max-width: 52ch;", rule.group(1))
+        self.assertIn("overflow-wrap: anywhere;", rule.group(1))
+        detail = self.page("/evidence/acas-reasonable-adjustments-2025/")
+        self.assertIn('class="page page--evidence"', detail)
+        self.assertIn('<h1>', detail)
+        self.assertIn('id="source-heading"', detail)
+        self.assertIn('id="claims-heading"', detail)
+
     def test_normalized_projection_exposes_claim_specific_evidence_fields(self) -> None:
         page = self.page("/evidence/acas-reasonable-adjustments-2025/")
         for marker in ("Finding used here:", "Population/context:", "Method:", "Evidence limitations"):
