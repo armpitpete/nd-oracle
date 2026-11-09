@@ -2246,7 +2246,7 @@ def render_resources_navigation_v1(resources: list[dict]) -> str:
   <p class="section-intro">Choose what you are looking for.</p>
   <div class="choice-grid choice-grid--families">{cards}</div>
 </section>
-<p class="resource-listing-policy"><strong>ND Oracle describes resources; it does not recommend them.</strong></p>
+<p class="resource-listing-policy"><strong>ND Oracle describes resources; it does not recommend them.</strong> <a href="/about/#resource-listings">How resource listings work</a></p>
 <section class="resource-complete" aria-labelledby="resource-complete-heading">
   <h2 id="resource-complete-heading">All resources A–Z</h2>
   <details class="resource-catalogue">

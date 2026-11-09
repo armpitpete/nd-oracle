@@ -57,9 +57,9 @@ class SectionPurposeTests(unittest.TestCase):
         self.assertIn("<h1>Resources</h1>", page)
         self.assertNotIn('href="/conditions/"', main_html(page))
         self.assertNotIn('href="/a-z/"', main_html(page))
-        self.assertNotIn('href="/about/', main_html(page))
+        self.assertEqual(1, links(page).count("/about/#resource-listings"))
         self.assertEqual(4, page.count("choice-card choice-card--family"))
-        allowed={"/books-media/","/games/","/tools/","/community/"}
+        allowed={"/books-media/","/games/","/tools/","/community/","/about/#resource-listings"}
         self.assertTrue(all(href in allowed or href.startswith("/resources/") for href in links(page)))
         for resource in self.resources:
             self.assertEqual(1, links(page).count(f"/resources/{resource['id']}/"))
