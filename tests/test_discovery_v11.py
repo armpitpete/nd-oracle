@@ -168,6 +168,16 @@ class DiscoveryV11AcceptanceTests(unittest.TestCase):
                 failures.append(("action", action_query, action_top, action_route))
         self.assertEqual([], failures)
 
+    def test_general_peer_group_query_does_not_prioritise_gaming(self) -> None:
+        target = "/questions/find-local-neurodivergent-peer-group/"
+        for query in (
+            "where can i find an autistic peer group",
+            "find a local neurodivergent peer group",
+        ):
+            _trace, results = discovery.evaluate(query, limit=5, index=self.index)
+            self.assertTrue(results, query)
+            self.assertEqual(target, results[0].route, query)
+
     def test_precision_20_of_20_unrelated_controls_return_no_governed_result(self) -> None:
         failures = []
         for query in self.fixture["benign_unrelated"]:
