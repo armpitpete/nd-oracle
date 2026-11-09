@@ -57,7 +57,7 @@ class EvidenceLayerV1Tests(unittest.TestCase):
         css = (self.output / "styles.css").read_text(encoding="utf-8")
         rule = re.search(r"\.page--evidence \.page-heading h1\s*\{([^}]+)\}", css)
         self.assertIsNotNone(rule)
-        self.assertIn("font-size: clamp(1.45rem, 2.8vw, 1.95rem);", rule.group(1))
+        self.assertIn("font-size: clamp(1.3rem, 2vw, 1.55rem);", rule.group(1))
         self.assertIn("max-width: 52ch;", rule.group(1))
         self.assertIn("overflow-wrap: anywhere;", rule.group(1))
         detail = self.page("/evidence/acas-reasonable-adjustments-2025/")

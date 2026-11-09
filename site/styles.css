@@ -1972,7 +1972,7 @@ th {
 /* Long Evidence citations are record titles, not oversized hero headlines. */
 .page--evidence .page-heading h1 {
   max-width: 52ch;
-  font-size: clamp(1.45rem, 2.8vw, 1.95rem);
+  font-size: clamp(1.3rem, 2vw, 1.55rem);
   line-height: 1.35;
   overflow-wrap: anywhere;
 }
