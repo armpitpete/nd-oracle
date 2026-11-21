@@ -2927,35 +2927,56 @@ th {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-/* Rainbow wayfinding trial: six routes, six recognisable accents.
-   Labels, ordering, content and non-colour borders remain authoritative. */
+/* Rainbow wayfinding trial — stronger visible colour, same six routes.
+   The words and link order remain usable without recognising colour. */
 .home-category-group--primary .home-category-card--primary {
+  border-left: 0.7rem solid var(--rainbow-route);
+  background: var(--rainbow-surface);
+  padding: 1rem 1.15rem;
+}
+.home-category-group--primary .home-category-card--primary strong {
+  color: var(--rainbow-route);
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
+}
+.home-category-group--primary .home-category-card--primary:hover {
   border-left-color: var(--rainbow-route);
   background: var(--rainbow-surface);
+  box-shadow: inset 0 0 0 2px var(--rainbow-route);
 }
 .home-category-group--primary .home-category-card--primary:nth-child(1) {
-  --rainbow-route: #ad3046; /* red: neurodivergence */
-  --rainbow-surface: #fff1f2;
+  --rainbow-route: #a6293e; /* red */
+  --rainbow-surface: #ffe0e5;
 }
 .home-category-group--primary .home-category-card--primary:nth-child(2) {
-  --rainbow-route: #a35416; /* orange: everyday life */
-  --rainbow-surface: #fff2e4;
+  --rainbow-route: #9c480b; /* orange */
+  --rainbow-surface: #ffe0b7;
 }
 .home-category-group--primary .home-category-card--primary:nth-child(3) {
-  --rainbow-route: #927000; /* yellow: books and media */
-  --rainbow-surface: #fff8d7;
+  --rainbow-route: #826000; /* yellow */
+  --rainbow-surface: #ffec96;
 }
 .home-category-group--primary .home-category-card--primary:nth-child(4) {
-  --rainbow-route: #28774b; /* green: games and apps */
-  --rainbow-surface: #eaf7ed;
+  --rainbow-route: #176a37; /* green */
+  --rainbow-surface: #d0f1d7;
 }
 .home-category-group--primary .home-category-card--primary:nth-child(5) {
-  --rainbow-route: #285d9c; /* blue: support */
-  --rainbow-surface: #eaf2ff;
+  --rainbow-route: #205a9d; /* blue */
+  --rainbow-surface: #d7e8ff;
 }
 .home-category-group--primary .home-category-card--primary:nth-child(6) {
-  --rainbow-route: #704da1; /* violet: questions */
-  --rainbow-surface: #f2edff;
+  --rainbow-route: #64399a; /* violet */
+  --rainbow-surface: #e6d8ff;
+}
+@media (forced-colors: active) {
+  .home-category-group--primary .home-category-card--primary {
+    border-left-color: CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+  .home-category-group--primary .home-category-card--primary strong {
+    color: LinkText;
+  }
 }
 
 .home-more {
