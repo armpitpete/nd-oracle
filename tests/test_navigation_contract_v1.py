@@ -131,5 +131,70 @@ class NavigationContractV1Tests(unittest.TestCase):
         self.assertIn("wrong-choice recovery", md)
 
 
+class RainbowWayfindingTests(unittest.TestCase):
+    """Colour must follow subject meaning and never replace textual navigation."""
+
+    def test_six_home_destinations_keep_their_rainbow_subject_colours(self):
+        from scripts import build_site
+
+        expected = {
+            "/conditions/": "red",
+            "/understand/autism/": "red",
+            "/everyday-help/": "orange",
+            "/needs/work/": "orange",
+            "/books-media/": "yellow",
+            "/games-apps/": "green",
+            "/games/": "green",
+            "/tools/": "green",
+            "/organisations/": "blue",
+            "/community/": "blue",
+            "/questions/": "violet",
+            "/questions/task-starting-and-organisation/": "violet",
+        }
+        for path, colour in expected.items():
+            with self.subTest(path=path):
+                self.assertEqual(colour, build_site.rainbow_colour_for_route(path))
+                page = build_site.page_shell("Test", "Test summary", "<p>Test</p>", path=path)
+                self.assertIn(f'data-wayfinding="{colour}"', page)
+                self.assertIn('<a class="site-name" href="/">', page)
+
+    def test_shared_and_unknown_routes_remain_neutral(self):
+        from scripts import build_site
+
+        for path in ("/", "/resources/", "/resources/a-specific-resource/",
+                     "/find/", "/a-z/", "/evidence/", "/about/", "/privacy/"):
+            with self.subTest(path=path):
+                self.assertIsNone(build_site.rainbow_colour_for_route(path))
+                page = build_site.page_shell("Test", "Test summary", "<p>Test</p>", path=path)
+                self.assertNotIn("data-wayfinding=", page)
+
+    def test_resource_type_not_the_referring_page_sets_colour(self):
+        from scripts import build_site
+
+        expected = {
+            "book": "yellow",
+            "media": "yellow",
+            "game": "green",
+            "app": "green",
+            "tool": "green",
+            "product": "green",
+            "organisation": "blue",
+            "community": "blue",
+            "service": "blue",
+        }
+        self.assertEqual(expected, build_site.RAINBOW_RESOURCE_CATEGORY_COLOURS)
+        self.assertNotIn("accommodation", expected)
+        self.assertNotIn("practical_guide", expected)
+
+    def test_accessibility_and_palette_controls_remain_present(self):
+        css = (ROOT / "site" / "styles.css").read_text(encoding="utf-8")
+        for colour in ("red", "orange", "yellow", "green", "blue", "violet"):
+            self.assertIn(f'body[data-wayfinding="{colour}"]', css)
+        self.assertIn("@media (forced-colors: active)", css)
+        self.assertIn("border-left-color: CanvasText", css)
+        self.assertIn("color: LinkText", css)
+        self.assertIn(".home-category-card--primary", css)
+
+
 if __name__ == "__main__":
     unittest.main()
