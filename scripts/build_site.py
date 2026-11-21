@@ -90,6 +90,46 @@ def _compat06__nav(current: str | None=None) -> str:
         links.append(f'<a href="/{slug}/"{current_attr}>{_compat06__esc(label)}</a>')
     return '<nav class="primary-nav" aria-label="Primary">' + ''.join(links) + '</nav>'
 
+# Rainbow direction follows the subject, not browsing history.
+# Canonical routes keep one stable colour; mixed catalogues remain neutral.
+RAINBOW_FIXED_ROUTE_COLOURS = (
+    ('conditions/', 'red'),
+    ('understand/', 'red'),
+    ('everyday-help/', 'orange'),
+    ('daily-living/', 'orange'),
+    ('needs/', 'orange'),
+    ('work-education/', 'orange'),
+    ('books-media/', 'yellow'),
+    ('books/', 'yellow'),
+    ('games-apps/', 'green'),
+    ('games/', 'green'),
+    ('tools/', 'green'),
+    ('apps-tools/', 'green'),
+    ('organisations/', 'blue'),
+    ('community/', 'blue'),
+    ('questions/', 'violet'),
+)
+RAINBOW_RESOURCE_CATEGORY_COLOURS = {
+    'book': 'yellow',
+    'media': 'yellow',
+    'game': 'green',
+    'app': 'green',
+    'tool': 'green',
+    'product': 'green',
+    'organisation': 'blue',
+    'community': 'blue',
+    'service': 'blue',
+}
+
+def rainbow_colour_for_route(path: str | None) -> str | None:
+    if not path:
+        return None
+    route = path.strip('/') + '/'
+    return next(
+        (colour for prefix, colour in RAINBOW_FIXED_ROUTE_COLOURS if route.startswith(prefix)),
+        None,
+    )
+
 def _ux_page_kind(path: str | None) -> tuple[str, str]:
     if path == '/':
         return ('home', 'ND Oracle')
@@ -174,6 +214,8 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
         canonical = f'  <link rel="canonical" href="{_compat06__esc(canonical_url)}">\n'
     robots = '' if indexable else '  <meta name="robots" content="noindex, follow">\n'
     page_kind, page_label = _ux_page_kind(path)
+    route_colour = rainbow_colour_for_route(path)
+    route_colour_attr = f' data-wayfinding="{route_colour}"' if route_colour else ''
     lede = f'<p class="lede">{_compat06__esc(intro)}</p>' if show_intro else ''
     if path in LANDING_HEADERLESS_PATHS:
         page_heading = f'''<header class="visually-hidden" data-page-identity="true">
@@ -202,7 +244,7 @@ def _compat06__page_shell(title: str, intro: str, body: str, *, current: str | N
 {robots}{canonical}  <title>{_compat06__esc(title)} · The Neurodiverse Oracle</title>
   <link rel="stylesheet" href="/styles.css?v={_compat06__style_revision()}">
 </head>
-<body class="page page--{_compat06__esc(page_kind)}">
+<body class="page page--{_compat06__esc(page_kind)}"{route_colour_attr}>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="site-shell header-row">
@@ -1035,6 +1077,16 @@ def render_governed_resource_claims(resource: dict, evidence_map: dict[str, dict
     return '<section aria-labelledby="governed-resource-claims-heading"><h2 id="governed-resource-claims-heading">Governed claims and evidence</h2><section class="notice"><strong>A supported claim is not a recommendation or an individual decision.</strong> Read the exact wording, evidence context and open uncertainty together.</section>' + ''.join(rows) + '</section>'
 def render_resource(resource: dict, concept_map: dict[str, dict], questions: list[dict], evidence_map: dict[str, dict] | None=None) -> str:
     page = _compat09__render_resource(resource, concept_map, questions)
+    colour = RAINBOW_RESOURCE_CATEGORY_COLOURS.get(resource['category'])
+    if colour:
+        body_marker = '<body class="page page--resource">'
+        if page.count(body_marker) != 1:
+            raise ValueError(f"{resource['id']}: cannot locate uncoloured resource body")
+        page = page.replace(
+            body_marker,
+            f'<body class="page page--resource" data-wayfinding="{colour}">',
+            1,
+        )
     visual = _resource_visuals.render_resource_visual(resource)
     if visual:
         marker = '<section aria-labelledby="use-heading">'
