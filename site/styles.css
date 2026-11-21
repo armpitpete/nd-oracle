@@ -2979,6 +2979,96 @@ th {
   }
 }
 
+
+/* Rainbow subject wayfinding through destination and detail pages.
+   Only subject-level orientation changes colour: clinical boundaries,
+   evidence status, cost and warnings retain their distinct semantics. */
+body[data-wayfinding="red"] {
+  --route-colour: #a6293e;
+  --route-tint: #ffe0e5;
+}
+body[data-wayfinding="orange"] {
+  --route-colour: #9c480b;
+  --route-tint: #ffe0b7;
+}
+body[data-wayfinding="yellow"] {
+  --route-colour: #826000;
+  --route-tint: #ffec96;
+}
+body[data-wayfinding="green"] {
+  --route-colour: #176a37;
+  --route-tint: #d0f1d7;
+}
+body[data-wayfinding="blue"] {
+  --route-colour: #205a9d;
+  --route-tint: #d7e8ff;
+}
+body[data-wayfinding="violet"] {
+  --route-colour: #64399a;
+  --route-tint: #e6d8ff;
+}
+body[data-wayfinding] .compact-page-heading {
+  padding: 0.55rem 0.85rem;
+  border-left: 0.7rem solid var(--route-colour);
+  background: var(--route-tint);
+}
+body[data-wayfinding] .page-heading {
+  border-top-color: var(--route-colour);
+  border-left-color: var(--route-colour);
+  background: var(--route-tint);
+}
+body[data-wayfinding] .compact-page-heading h1,
+body[data-wayfinding] .page-heading h1,
+body[data-wayfinding] .back-link a {
+  color: var(--route-colour);
+}
+body[data-wayfinding] .nav-v1-category-list,
+body[data-wayfinding] .nav-v1-practical-groups {
+  border-left: 0.55rem solid var(--route-colour);
+  padding-left: 1rem;
+}
+body[data-wayfinding] .nav-v1-subgroup > summary {
+  border-left: 0.4rem solid var(--route-colour);
+  background: var(--route-tint);
+}
+body[data-wayfinding] .topic-row h3 a,
+body[data-wayfinding] .resource-row h3 a {
+  color: var(--route-colour);
+}
+body[data-wayfinding="red"] .topic-group {
+  border-top-color: var(--route-colour);
+}
+body[data-wayfinding="orange"] .need-hub {
+  --need-accent: var(--route-colour);
+  --need-soft: var(--route-tint);
+}
+body[data-wayfinding="violet"] .question-area-card {
+  --area-accent: var(--route-colour);
+  --area-soft: var(--route-tint);
+}
+body[data-wayfinding="violet"] .question-cluster {
+  --cluster-accent: var(--route-colour);
+  --cluster-soft: var(--route-tint);
+}
+@media (forced-colors: active) {
+  body[data-wayfinding] .compact-page-heading,
+  body[data-wayfinding] .page-heading,
+  body[data-wayfinding] .nav-v1-category-list,
+  body[data-wayfinding] .nav-v1-practical-groups,
+  body[data-wayfinding] .nav-v1-subgroup > summary {
+    background: Canvas;
+    border-left-color: CanvasText;
+    border-top-color: CanvasText;
+  }
+  body[data-wayfinding] .compact-page-heading h1,
+  body[data-wayfinding] .page-heading h1,
+  body[data-wayfinding] .back-link a,
+  body[data-wayfinding] .topic-row h3 a,
+  body[data-wayfinding] .resource-row h3 a {
+    color: LinkText;
+  }
+}
+
 .home-more {
   margin-top: 0;
   background: var(--surface);
