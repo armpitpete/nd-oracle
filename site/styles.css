@@ -2927,8 +2927,35 @@ th {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.home-category-card--primary {
-  border-left-color: var(--wayfind-green);
+/* Rainbow wayfinding trial: six routes, six recognisable accents.
+   Labels, ordering, content and non-colour borders remain authoritative. */
+.home-category-group--primary .home-category-card--primary {
+  border-left-color: var(--rainbow-route);
+  background: var(--rainbow-surface);
+}
+.home-category-group--primary .home-category-card--primary:nth-child(1) {
+  --rainbow-route: #ad3046; /* red: neurodivergence */
+  --rainbow-surface: #fff1f2;
+}
+.home-category-group--primary .home-category-card--primary:nth-child(2) {
+  --rainbow-route: #a35416; /* orange: everyday life */
+  --rainbow-surface: #fff2e4;
+}
+.home-category-group--primary .home-category-card--primary:nth-child(3) {
+  --rainbow-route: #927000; /* yellow: books and media */
+  --rainbow-surface: #fff8d7;
+}
+.home-category-group--primary .home-category-card--primary:nth-child(4) {
+  --rainbow-route: #28774b; /* green: games and apps */
+  --rainbow-surface: #eaf7ed;
+}
+.home-category-group--primary .home-category-card--primary:nth-child(5) {
+  --rainbow-route: #285d9c; /* blue: support */
+  --rainbow-surface: #eaf2ff;
+}
+.home-category-group--primary .home-category-card--primary:nth-child(6) {
+  --rainbow-route: #704da1; /* violet: questions */
+  --rainbow-surface: #f2edff;
 }
 
 .home-more {
