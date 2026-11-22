@@ -1,0 +1,14 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "mod_ndoracle_find",
+  "version": "1.0.0",
+  "assets": [
+    {
+      "name": "mod_ndoracle_find.bootstrap",
+      "type": "script",
+      "uri": "mod_ndoracle_find/find-bootstrap.js",
+      "attributes": {"defer": true},
+      "version": "1.0.0"
+    }
+  ]
+}
