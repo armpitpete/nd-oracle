@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="module" client="site" method="upgrade">
+  <name>mod_ndoracle_find</name>
+  <author>ND Oracle</author>
+  <creationDate>2026-11-22</creationDate>
+  <copyright>ND Oracle contributors</copyright>
+  <license>Apache-2.0</license>
+  <version>1.0.0</version>
+  <description>ND Oracle browser-local governed discovery interface. Uses the unchanged reviewed Find evaluator and index.</description>
+  <namespace path="src">NDOracle\Module\Find</namespace>
+  <files>
+    <folder module="mod_ndoracle_find">services</folder>
+    <folder>src</folder>
+    <folder>tmpl</folder>
+  </files>
+  <media destination="mod_ndoracle_find" folder="media">
+    <filename>joomla.asset.json</filename>
+    <folder>js</folder>
+  </media>
+</extension>
